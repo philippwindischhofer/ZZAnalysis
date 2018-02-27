@@ -141,6 +141,7 @@ void Yields::MakeHistograms( TString input_file_name )
 
       // Final event weight
       _event_weight = (_lumi * 1000 * xsec * _k_factor * overallEventWeight) / gen_sum_weights;
+
       if ( input_file_name.Contains("ggH") ) _event_weight *= ggH_NNLOPS_weight; // reweight POWHEG ggH to NNLOPS
    
       // Fill M4l histograms

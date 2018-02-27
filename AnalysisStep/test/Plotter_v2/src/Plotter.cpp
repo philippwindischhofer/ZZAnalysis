@@ -51,7 +51,7 @@ Plotter::~Plotter()
 void Plotter::MakeHistograms( TString input_file_name )
 {
 
-   input_file = new TFile(input_file_name);
+    input_file = new TFile(input_file_name);
    
    hCounters = (TH1F*)input_file->Get("ZZTree/Counters");
    n_gen_events = (Long64_t)hCounters->GetBinContent(1);

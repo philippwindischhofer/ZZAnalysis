@@ -8,6 +8,13 @@
 <library   file="../test/Plotter_v2/src/*.cpp" name="ZZAnalysisAnalysisStepTestPlotter_v2Src">
 </library>
 
+<library file="../test/ConvClassifier/src/*.cpp" name="ZZAnalysisAnalysisStepTestConvClassifierSrc">
+</library>
+
+<bin name="run_conv_classifier" file="../test/ConvClassifier/run_conv_classifier.cpp">
+  <lib name="ZZAnalysisAnalysisStepTestConvClassifierSrc"/>
+</bin>
+
 <bin name="run_helloworld" file="../test/HelloWorld/run_helloworld.cpp">
 </bin>
 
