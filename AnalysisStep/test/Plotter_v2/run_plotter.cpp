@@ -24,12 +24,12 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
    
-   TString path = "";
+   TString path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
    TString file_name = "/ZZ4lAnalysis.root";
    TString file_name_FR = "/FakeRates_SS_Moriond18.root";
    
-   TString Data        = path + "AllData" + file_name;
-	TString FakeRates   = "../../data/FakeRates" + file_name_FR;
+   //TString Data        = path + "AllData" + file_name;
+   TString FakeRates   = "../../data/FakeRates" + file_name_FR;
 	
    TString ggH125      = path + "ggH125"     + file_name;
    TString VBFH125     = path + "VBFH125"    + file_name;
@@ -52,7 +52,7 @@ int main( int argc, char *argv[] )
 
    plotter->SetBlinding(110, 150, 300, 1200);
 
-   plotter->MakeHistograms(Data);
+   //plotter->MakeHistograms(Data);
    plotter->MakeHistograms(ggH125);
    plotter->MakeHistograms(VBFH125);
    plotter->MakeHistograms(ZH125);
@@ -70,8 +70,8 @@ int main( int argc, char *argv[] )
    plotter->MakeHistograms(ggZZ2mu2tau);
 
 
-   plotter->MakeHistogramsZX(Data, FakeRates);
-   plotter->MakeM4lZX();
+   //plotter->MakeHistogramsZX(Data, FakeRates);
+   //plotter->MakeM4lZX();
 
    plotter->FillInclusive();
 
@@ -92,11 +92,11 @@ int main( int argc, char *argv[] )
    plotter->plot_1D_single("Blinded", "M4lMainHighMass", "Plots/Blinded", Settings::fs4l, Settings::inclusive);
    plotter->plot_1D_single("Blinded", "MZ1",             "Plots/Blinded", Settings::fs4l, Settings::inclusive);
    plotter->plot_1D_single("Blinded", "MZ2",             "Plots/Blinded", Settings::fs4l, Settings::inclusive);
-	plotter->plot_1D_single("Blinded", "MZ1",             "Plots/Blinded", Settings::fs4e, Settings::inclusive);
+   plotter->plot_1D_single("Blinded", "MZ1",             "Plots/Blinded", Settings::fs4e, Settings::inclusive);
    plotter->plot_1D_single("Blinded", "MZ2",             "Plots/Blinded", Settings::fs4e, Settings::inclusive);
-	plotter->plot_1D_single("Blinded", "MZ1",             "Plots/Blinded", Settings::fs4mu, Settings::inclusive);
+   plotter->plot_1D_single("Blinded", "MZ1",             "Plots/Blinded", Settings::fs4mu, Settings::inclusive);
    plotter->plot_1D_single("Blinded", "MZ2",             "Plots/Blinded", Settings::fs4mu, Settings::inclusive);
-	plotter->plot_1D_single("Blinded", "MZ1",             "Plots/Blinded", Settings::fs2e2mu, Settings::inclusive);
+   plotter->plot_1D_single("Blinded", "MZ1",             "Plots/Blinded", Settings::fs2e2mu, Settings::inclusive);
    plotter->plot_1D_single("Blinded", "MZ2",             "Plots/Blinded", Settings::fs2e2mu, Settings::inclusive);
    
    plotter->plot_1D_single("Blinded", "KD", "Plots/Blinded", Settings::fs4l, Settings::inclusive);

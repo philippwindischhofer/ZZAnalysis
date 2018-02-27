@@ -17,3 +17,7 @@
 *.pcm
 *.pyc
 __init__.py
+
+# ROOT files
+ROOT_files/*
+Plots/*

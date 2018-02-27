@@ -8,6 +8,9 @@
 <library   file="../test/Plotter_v2/src/*.cpp" name="ZZAnalysisAnalysisStepTestPlotter_v2Src">
 </library>
 
+<bin name="run_helloworld" file="../test/HelloWorld/run_helloworld.cpp">
+</bin>
+
 <bin   name="run_plotter" file="../test/Plotter_v2/run_plotter.cpp">
    <lib   name="ZZAnalysisAnalysisStepTestPlotter_v2Src"/>
 </bin>
