@@ -3,14 +3,10 @@
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
 
 ConvClassifier::ConvClassifier():Tree()
-{
-
-}
+{ }
 
 ConvClassifier::~ConvClassifier()
-{
-
-}
+{ }
 
 // returns the number of events put into each category
 void ConvClassifier::FillHistogram(TString input_file_name, float lumi, float xsec, TH1F* hist)

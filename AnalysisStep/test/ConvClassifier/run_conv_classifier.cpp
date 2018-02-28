@@ -21,11 +21,6 @@
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/src/setTDRStyle.cpp>
 
-enum SignalCategory {
-    ggH = 0,
-    VBF = 1
-};
-
 std::vector<float> renormalize_histograms(std::vector<TH1F*> hist_vec)
 {
     std::vector<float> sumvec(7);
@@ -71,10 +66,10 @@ std::vector<TH1F*> read_histos(TString file, std::vector<TString> hist_names)
     std::vector<TH1F*> hist_vec;
     TFile* infile = TFile::Open(file);
 
-    // problem is somewhere here!
-    for(unsigned int hist = 0; hist < hist_vec.size(); hist++)
+    for(unsigned int hist = 0; hist < hist_names.size(); hist++)
     {
-	hist_vec.push_back((TH1F*)(infile -> Get(hist_names[hist])));
+	TH1F* cur_hist = (TH1F*)(infile -> Get(hist_names[hist]));
+	hist_vec.push_back(cur_hist);
     }
 
     return hist_vec;
@@ -136,6 +131,8 @@ int main( int argc, char *argv[] )
     ZHhist -> SetFillStyle(1001);
     ttHhist -> SetFillStyle(1001);
 
+    // no need to fill the histograms every time!
+/*
     std::cout << "filling histograms" << std::endl;
     ConvClassifier* testclass = new ConvClassifier();
     testclass -> FillHistogram(ggH125, lumi, xsec_ggH, ggHhist);
@@ -144,14 +141,12 @@ int main( int argc, char *argv[] )
     testclass -> FillHistogram(WmH125, lumi, xsec_WmH, WHhist);
     testclass -> FillHistogram(ZH125, lumi, xsec_ZH, ZHhist);
     testclass -> FillHistogram(ttH125, lumi, xsec_ttH, ttHhist);    
-    //save_histos("histos.root", hist_vec);
+    save_histos("histos.root", hist_vec);
     std::cout << "end filling histograms" << std::endl;
-
+*/
     hist_vec = read_histos("histos.root", hist_names);
-    std::cout << "read" << std::endl;
-
+    
     std::vector<float> sums = renormalize_histograms(hist_vec);
-    std::cout << "renormalized" << std::endl;
     
     THStack* hs = new THStack("hs","");
 
@@ -160,39 +155,21 @@ int main( int argc, char *argv[] )
 	hs -> Add(hist_vec[i]);
     }
     std::cout << "added to stack" << std::endl;
-    // hs -> Add(ggHhist);
-    // hs -> Add(VBFhist);
-    // hs -> Add(WHhist);
-    // hs -> Add(ZHhist);
-    // hs -> Add(ttHhist);
 
     TCanvas* canv = new TCanvas("canv", "canv", 10, 10, 600, 600);
-    std::cout << "adding to legend" << std::endl;
     canv -> cd();
-    std::cout << "adding to legend" << std::endl;
     hs -> Draw("hist");
-    //hs -> GetYaxis() -> SetTitle("signal fraction");
-    std::cout << "adding to legend" << std::endl;
+    hs -> GetYaxis() -> SetTitle("signal fraction");
 
-    //hs -> GetHistogram() -> GetXaxis() -> SetTickLength(0);
-    //hs -> GetHistogram() -> GetXaxis() -> SetLabelOffset(999);
+    hs -> GetHistogram() -> GetXaxis() -> SetTickLength(0);
+    hs -> GetHistogram() -> GetXaxis() -> SetLabelOffset(999);
 
     TLegend* leg = new TLegend(1.0,0.72,1.2,0.92);
-
-    std::cout << "adding to legend" << std::endl;
 
     for(unsigned int i = 0; i < hist_vec.size(); i++)
     {
 	leg -> AddEntry(hist_vec[i], channel_names[i], "f");
     }
-
-    std::cout << "added to legend" << std::endl;
-
-    // leg -> AddEntry(ggHhist, "ggH", "f");
-    // leg -> AddEntry(VBFhist, "VBF", "f");
-    // leg -> AddEntry(WHhist, "WH", "f");
-    // leg -> AddEntry(ZHhist, "ZH", "f");
-    // leg -> AddEntry(ttHhist, "ttH", "f");
    
     for(unsigned int ann = 0; ann < annotations.size(); ann++)
     {
