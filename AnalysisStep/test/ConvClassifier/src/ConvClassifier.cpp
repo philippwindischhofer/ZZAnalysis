@@ -8,7 +8,6 @@ ConvClassifier::ConvClassifier():Tree()
 ConvClassifier::~ConvClassifier()
 { }
 
-// returns the number of events put into each category
 void ConvClassifier::FillHistogram(TString input_file_name, float lumi, TH1F* hist)
 {    
     input_file = new TFile(input_file_name);
@@ -47,39 +46,6 @@ void ConvClassifier::FillHistogram(TString input_file_name, float lumi, TH1F* hi
 
 int ConvClassifier::ClassifyEvent()
 {
-/*    float jetQGLikelihood[99];
-    float jetPhi[99];
-
-    for(int i = 0; i < nCleanedJetsPt30; i++)
-    {
-	jetQGLikelihood[i] = JetQGLikelihood -> at(i);
-	jetPhi[i] = JetPhi -> at(i);
-    }
-
-    return categoryMor17(
-	nExtraLep,
-	nExtraZ,
-	nCleanedJetsPt30, 
-	nCleanedJetsPt30BTagged_bTagSF,
-	jetQGLikelihood,
-	p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal,
-	p_JQCD_SIG_ghg2_1_JHUGen_JECNominal,
-	p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal,
-	p_JVBF_SIG_ghv1_1_JHUGen_JECNominal,
-	pAux_JVBF_SIG_ghv1_1_JHUGen_JECNominal,
-	p_HadWH_SIG_ghw1_1_JHUGen_JECNominal,
-	p_HadZH_SIG_ghz1_1_JHUGen_JECNominal,
-	p_HadWH_mavjj_JECNominal,
-	p_HadWH_mavjj_true_JECNominal,
-	p_HadZH_mavjj_JECNominal,
-	p_HadZH_mavjj_true_JECNominal,
-	jetPhi,
-	ZZMass,
-	PFMET,
-	true,
-	false);
-*/	
-
     // perform the classification:
     if(IsVBF2JetTagged())
     {
@@ -206,10 +172,7 @@ int ConvClassifier::IsVHLeptonicTagged()
 	{
 	    return(1);
 	}
-	/*else if((nExtraLep == 2) && 
-		( ((ExtraLepLepId -> at(0)) * (ExtraLepLepId -> at(1)) == -121) ||
-		((ExtraLepLepId -> at(0)) * (ExtraLepLepId -> at(1)) == -169) ))*/
-	else if(nExtraZ >= 1) // this is semantically the same! 
+	else if(nExtraZ >= 1)
 	{
 	    return(1);
 	}
@@ -278,17 +241,5 @@ int ConvClassifier::IsVBF1JetTagged()
 
 int ConvClassifier::NumberBTaggedJets()
 {
-/*
-    int retval = 0;
-    for(unsigned int jet = 0; jet < JetPt -> size(); jet++)
-    {
-	if(JetIsBtagged -> at(jet) > 0.5)
-	{
-	    retval += 1;
-	}
-    }
-
-    return retval;
-*/
     return nCleanedJetsPt30BTagged_bTagSF;
 }

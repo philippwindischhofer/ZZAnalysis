@@ -18,9 +18,11 @@
 
 // My own files
 #include <ZZAnalysis/AnalysisStep/test/ConvClassifier/include/ConvClassifier.h>
+#include <ZZAnalysis/AnalysisStep/test/ConvClassifier/include/Mor17Classifier.h>
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/src/setTDRStyle.cpp>
 #include <ZZAnalysis/AnalysisStep/test/ConvClassifier/include/CatPlotter.h>
+#include <ZZAnalysis/AnalysisStep/test/ConvClassifier/include/Tree.h>
 
 std::vector<float> renormalize_histograms(std::vector<TH1F*> hist_vec)
 {
@@ -76,156 +78,81 @@ std::vector<TH1F*> read_histos(TString file, std::vector<TString> hist_names)
     return hist_vec;
 }
 
+int no_cut(Tree* in)
+{
+    return kTRUE;
+}
+
+int mZZ_cut(Tree* in)
+{
+    if((in -> ZZMass > 118) && (in -> ZZMass < 130))
+	return kTRUE;
+    else
+	return kFALSE;
+}
+
 int main( int argc, char *argv[] )
 {
-    //setTDRStyle();
-
+    float lumi = 35.9f;
+    
     TString path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
     TString file_name = "/ZZ4lAnalysis.root";
     TString out_folder("../../src/ZZAnalysis/ConvClassifierPlots/");
 
-    std::vector<TString> annotations = {"Untagged", "#splitline{VBF-1jet}{ tagged}", "#splitline{VBF-2jet}{ tagged}", "#splitline{VH-leptonic}{    tagged}", "#splitline{VH-hadronic}{     tagged}", "ttH tagged", "#splitline{VH-E_{T}^{miss}}{ tagged}"};
+    std::vector<TString> cat_labels = {"Untagged", "#splitline{VBF-1jet}{ tagged}", "#splitline{VBF-2jet}{ tagged}", "#splitline{VH-leptonic}{    tagged}", "#splitline{VH-hadronic}{     tagged}", "ttH tagged", "#splitline{VH-E_{T}^{miss}}{ tagged}"};
     
-    TString ggH125      = path + "ggH125"     + file_name;
-    TString VBFH125     = path + "VBFH125"    + file_name;
-    TString WpH125      = path + "WplusH125"  + file_name;
-    TString WmH125      = path + "WminusH125" + file_name;
-    TString ZH125       = path + "ZH125"      + file_name;
-    TString ttH125      = path + "ttH125"     + file_name;
-    TString bbH125      = path + "bbH125"     + file_name;
-    TString tqH125      = path + "tqH125"     + file_name;
+    std::vector<TString> data_file_names = {"ggH125", "VBFH125", "WplusH125", "WminusH125", "ZH125", "ttH125", "bbH125", "tqH125"};
 
-    float lumi = 35.9f;
-
-    float xsec_ggH = 48.58 * 0.0002745f;
-    float xsec_VBF = 3.782 * 0.0002745f;
-    float xsec_WpH = 0.839913391993366 * 0.0002745f;
-    float xsec_WmH = 0.532731376975169 * 0.0002745f;
-    float xsec_ZH = 0.883888217433748 * 0.0007494205421886052f;
-    float xsec_ttH = 0.5071 * 0.0007694542606325344f;
+    std::vector<TString> data_path;
+    for(unsigned int i = 0; i < data_file_names.size(); i++)
+    {
+	data_path.push_back(path + data_file_names[i] + file_name);
+    }
 
     std::vector<TString> hist_names = {"ggHhist", "VBFhist", "WHhist", "ZHhist", "ttHhist"};
-    std::vector<TString> channel_names = {"ggH", "VBF", "WH", "ZH", "ttH"};
+    std::vector<TString> source_labels = {"ggH", "VBF", "WH", "ZH", "ttH"};
 
-    TH1F* ggHhist = new TH1F(hist_names[0], hist_names[0], 7, -0.5, 6.5);
-    TH1F* VBFhist = new TH1F(hist_names[1], hist_names[1], 7, -0.5, 6.5);
-    TH1F* WHhist = new TH1F(hist_names[2], hist_names[2], 7, -0.5, 6.5);
-    TH1F* ZHhist = new TH1F(hist_names[3], hist_names[3], 7, -0.5, 6.5);
-    TH1F* ttHhist = new TH1F(hist_names[4], hist_names[4], 7, -0.5, 6.5);
+    enum hist_index {
+	ggHhist = 0,
+	VBFhist = 1,
+	WHhist = 2,
+	ZHhist = 3,
+	ttHhist = 4
+    };
+	
+    std::vector<TH1F*> hist_vec(hist_names.size());
+	
+	for(unsigned int i = 0; i < hist_names.size(); i++)
+    {
+	hist_vec[i] = new TH1F(hist_names[i], hist_names[i], 7, -0.5, 6.5);
+    }
 
-    std::vector<TH1F*> hist_vec = {ggHhist, VBFhist, WHhist, ZHhist, ttHhist};
+    std::vector<int> cat_colors = {kBlue - 9, kGreen - 6, kRed - 7, kOrange + 6, kCyan - 6};
 
-    ggHhist -> SetFillColor(kBlue - 9);
-    VBFhist -> SetFillColor(kGreen - 6);
-    WHhist -> SetFillColor(kRed - 7);
-    ZHhist -> SetFillColor(kOrange + 6);
-    ttHhist -> SetFillColor(kCyan - 6);
-
-    ggHhist -> SetLineColor(kBlue - 9);
-    VBFhist -> SetLineColor(kGreen - 6);
-    WHhist -> SetLineColor(kRed - 7);
-    ZHhist -> SetLineColor(kOrange + 6);
-    ttHhist -> SetLineColor(kCyan - 6);
-
-    ggHhist -> SetFillStyle(1001);
-    VBFhist -> SetFillStyle(1001);
-    WHhist -> SetFillStyle(1001);
-    ZHhist -> SetFillStyle(1001);
-    ttHhist -> SetFillStyle(1001);
+    for(unsigned int i = 0; i < hist_names.size(); i++)
+    {
+	hist_vec[i] -> SetFillColor(cat_colors[i]);
+	hist_vec[i] -> SetLineColor(cat_colors[i]);
+	hist_vec[i] -> SetFillStyle(1001);
+    }    
 
     // No need to fill the histograms every time!
-/*
     std::cout << "filling histograms" << std::endl;
-    ConvClassifier* testclass = new ConvClassifier();
-    testclass -> FillHistogram(ggH125, lumi, ggHhist);
-    testclass -> FillHistogram(VBFH125, lumi, VBFhist);
-    testclass -> FillHistogram(WpH125, lumi, WHhist);
-    testclass -> FillHistogram(WmH125, lumi, WHhist);
-    testclass -> FillHistogram(ZH125, lumi, ZHhist);
-    testclass -> FillHistogram(ttH125, lumi, ttHhist);    
+    Mor17Classifier* testclass = new Mor17Classifier();
+    testclass -> FillHistogram(data_path[0], lumi, hist_vec[ggHhist], no_cut);
+    testclass -> FillHistogram(data_path[1], lumi, hist_vec[VBFhist], no_cut);
+    testclass -> FillHistogram(data_path[2], lumi, hist_vec[WHhist], no_cut);
+    testclass -> FillHistogram(data_path[3], lumi, hist_vec[WHhist], no_cut);
+    testclass -> FillHistogram(data_path[4], lumi, hist_vec[ZHhist], no_cut);
+    testclass -> FillHistogram(data_path[5], lumi, hist_vec[ttHhist], no_cut);    
     save_histos(out_folder + "histos.root", hist_vec);
     std::cout << "end filling histograms" << std::endl;
-*/
+
     hist_vec = read_histos(out_folder + "histos.root", hist_names);
     
     std::vector<float> sums = renormalize_histograms(hist_vec);
 
-    CatPlotter::Construct(hist_vec, annotations, channel_names, sums, out_folder + "ggh_hist.pdf");
+    CatPlotter::Construct(hist_vec, cat_labels, source_labels, sums, out_folder + "categorization.pdf");
 
-/*    
-    THStack* hs = new THStack("hs","");
-
-    for(unsigned int i = 0; i < hist_vec.size(); i++)
-    {
-	hs -> Add(hist_vec[i]);
-    }
-    std::cout << "added to stack" << std::endl;
-
-    TCanvas* canv = new TCanvas("canv", "canv", 10, 10, 800, 600);
-    TPad* pad1 = new TPad("pad1", "pad1", 0.0, 0.0, 0.85, 1.0, kWhite, 0, 0);
-    TPad* pad2 = new TPad("pad2", "pad2", 0.85, 0.0, 1.0, 1.0, kWhite, 0, 0);
-    pad1 -> SetLeftMargin(0.3);
-    pad1 -> SetTicks(1, 1);
-    pad1 -> Draw();
-    pad2 -> Draw(); 
-
-    pad1 -> cd();
-    hs -> Draw("hist hbar");
-    gStyle->SetHistTopMargin(0.);
-
-    for(unsigned int i = 0; i < hist_vec.size(); i++)
-    {
-	hist_vec[i] -> SetBarOffset(0.15);
-	hist_vec[i] -> SetBarWidth(0.7);
-    }
-
-    hs -> GetYaxis() -> SetTitle("signal fraction");
-    hs -> GetYaxis() -> SetTitleOffset(0.95);
-    hs -> GetHistogram() -> GetXaxis() -> SetNdivisions(7, 0, 0, kFALSE);
-    hs -> GetHistogram() -> GetYaxis() -> SetNdivisions(10, 2, 0, kFALSE);
-    hs -> GetHistogram() -> GetYaxis() -> SetTickLength(0.02);
-    hs -> GetHistogram() -> GetXaxis() -> SetLabelOffset(999);
-    hs -> Draw("hist hbar");
-
-    TLegend* leg = new TLegend(0.0, 0.4, 1.0, 0.6);
-
-    for(unsigned int i = 0; i < hist_vec.size(); i++)
-    {
-	leg -> AddEntry(hist_vec[i], channel_names[i], "f");
-    }
-   
-    for(unsigned int ann = 0; ann < annotations.size(); ann++)
-    {
-	pad1 -> cd();
-	TLatex* Tl = new TLatex(0.05, (float)ann, Form("%.3f expected events", sums[ann]));
-	Tl -> SetTextSize(0.025);
-	Tl -> SetTextColor(kWhite);
-	Tl -> SetTextAlign(12);
-	Tl -> Draw();
-
-	pad1 -> cd();
-	Tl = new TLatex(-0.2, (float)ann, annotations[ann]);
-	Tl -> SetTextSize(0.025);
-	Tl -> SetTextColor(kBlack);
-	Tl -> SetTextAlign(22);
-	Tl -> Draw();
-    }
-
-    pad2 -> cd();
-    leg -> SetTextColor(kBlack);
-    leg -> SetTextSize(0.13);
-    leg -> SetBorderSize(0);
-    leg -> Draw();
-
-    canv -> cd();
-    pad1 -> Draw();
-    pad2 -> Draw(); 
-    gPad -> RedrawAxis();
-    canv -> Update();
-
-    system("mkdir -p " + out_folder);
-    canv -> SaveAs(out_folder + "ggh_hist.pdf");
-    delete canv;
-*/
     return(0);
 }
