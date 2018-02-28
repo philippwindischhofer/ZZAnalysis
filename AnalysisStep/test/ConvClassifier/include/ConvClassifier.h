@@ -41,7 +41,7 @@ public:
      * 5 ... VBF-1jet tagged
      * 6 ... untagged
      */
-    void FillHistogram(TString input_file_name, float lumi, float xsec, TH1F* hist);
+    void FillHistogram(TString input_file_name, float lumi, TH1F* hist);
 
 private:
     TFile* input_file;

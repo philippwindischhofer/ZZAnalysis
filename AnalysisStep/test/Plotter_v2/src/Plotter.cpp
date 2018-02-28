@@ -52,7 +52,11 @@ void Plotter::MakeHistograms( TString input_file_name )
 {
 
     input_file = new TFile(input_file_name);
-   
+
+    std::cout << input_file_name << std::endl;
+    std::cout << "xsec = " << xsec << std::endl;
+    std::cout << "lumi = " << _lumi << std::endl;
+
    hCounters = (TH1F*)input_file->Get("ZZTree/Counters");
    n_gen_events = (Long64_t)hCounters->GetBinContent(1);
    gen_sum_weights = (Long64_t)hCounters->GetBinContent(40);

@@ -9,7 +9,7 @@ ConvClassifier::~ConvClassifier()
 { }
 
 // returns the number of events put into each category
-void ConvClassifier::FillHistogram(TString input_file_name, float lumi, float xsec, TH1F* hist)
+void ConvClassifier::FillHistogram(TString input_file_name, float lumi, TH1F* hist)
 {    
     input_file = new TFile(input_file_name);
 
@@ -47,6 +47,39 @@ void ConvClassifier::FillHistogram(TString input_file_name, float lumi, float xs
 
 int ConvClassifier::ClassifyEvent()
 {
+/*    float jetQGLikelihood[99];
+    float jetPhi[99];
+
+    for(int i = 0; i < nCleanedJetsPt30; i++)
+    {
+	jetQGLikelihood[i] = JetQGLikelihood -> at(i);
+	jetPhi[i] = JetPhi -> at(i);
+    }
+
+    return categoryMor17(
+	nExtraLep,
+	nExtraZ,
+	nCleanedJetsPt30, 
+	nCleanedJetsPt30BTagged_bTagSF,
+	jetQGLikelihood,
+	p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal,
+	p_JQCD_SIG_ghg2_1_JHUGen_JECNominal,
+	p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal,
+	p_JVBF_SIG_ghv1_1_JHUGen_JECNominal,
+	pAux_JVBF_SIG_ghv1_1_JHUGen_JECNominal,
+	p_HadWH_SIG_ghw1_1_JHUGen_JECNominal,
+	p_HadZH_SIG_ghz1_1_JHUGen_JECNominal,
+	p_HadWH_mavjj_JECNominal,
+	p_HadWH_mavjj_true_JECNominal,
+	p_HadZH_mavjj_JECNominal,
+	p_HadZH_mavjj_true_JECNominal,
+	jetPhi,
+	ZZMass,
+	PFMET,
+	true,
+	false);
+*/	
+
     // perform the classification:
     if(IsVBF2JetTagged())
     {
@@ -89,18 +122,20 @@ int ConvClassifier::IsVBF2JetTagged()
     
     float D2_jet = DVBF2j_ME(p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal, p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal, ZZMass);
 
-    if(LepPt -> size() == 4)
+    float D2_jet_WP = 0.4894;
+
+    if(nExtraLep == 0)
     {
-	if(D2_jet >= 0.5)
+	if(D2_jet >= D2_jet_WP)
 	{
-	    if((JetPt -> size() == 2) || (JetPt -> size() == 3))
+	    if((nCleanedJetsPt30 == 2) || (nCleanedJetsPt30 == 3))
 	    {
 		if(NumberBTaggedJets() <= 1)
 		{
 		    return(1);
 		}
 	    }
-	    else if(JetPt -> size() >= 4)
+	    else if(nCleanedJetsPt30 >= 4)
 	    {
 		if(NumberBTaggedJets() == 0)
 		{
@@ -126,15 +161,18 @@ int ConvClassifier::IsVHHadronicTagged()
     float D_ZH = DZHh_ME(p_HadZH_SIG_ghz1_1_JHUGen_JECNominal, p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal, p_HadZH_mavjj_JECNominal, p_HadZH_mavjj_true_JECNominal, ZZMass);
     float D_VH = std::max(D_WH, D_ZH);
 
-    if(LepPt -> size()  == 4)
+    float D_WH_WP = 0.52597;
+    float D_ZH_WP = 0.52419;
+
+    if(nExtraLep == 0)
     {
-	if(D_VH >= 0.5)
+	if((D_WH > D_WH_WP) || (D_ZH_WP > D_ZH_WP))
 	{
-	    if((JetPt -> size() == 2) || (JetPt -> size() == 3))
+	    if((nCleanedJetsPt30 == 2) || (nCleanedJetsPt30 == 3))
 	    {
 		return(1);
 	    }
-	    else if(JetPt -> size() >= 4)
+	    else if(nCleanedJetsPt30 >= 4)
 	    {
 		if(NumberBTaggedJets() == 0)
 		{
@@ -157,20 +195,21 @@ int ConvClassifier::IsVHLeptonicTagged()
      * -> OR exactly NO jet + at least one additional lepton
      */
     
-    if((JetPt -> size() == 0) && (ExtraLepPt -> size() >= 1))
+    if((nCleanedJetsPt30 == 0) && (nExtraLep >= 1))
     {
 	return(1);
     }
-    else if((JetPt -> size() <= 3) && (NumberBTaggedJets() == 0))
+    else if((nCleanedJetsPt30 <= 3) && (NumberBTaggedJets() == 0))
     {
 	// check for exactly one additional lepton OR exactly one additional pair of OS, same-flavour leptons
-	if(ExtraLepPt -> size() == 1)
+	if(nExtraLep == 1)
 	{
 	    return(1);
 	}
-	else if((ExtraLepPt -> size() == 2) && 
+	/*else if((nExtraLep == 2) && 
 		( ((ExtraLepLepId -> at(0)) * (ExtraLepLepId -> at(1)) == -121) ||
-		  ((ExtraLepLepId -> at(0)) * (ExtraLepLepId -> at(1)) == -169) ))
+		((ExtraLepLepId -> at(0)) * (ExtraLepLepId -> at(1)) == -169) ))*/
+	else if(nExtraZ >= 1) // this is semantically the same! 
 	{
 	    return(1);
 	}
@@ -186,13 +225,13 @@ int ConvClassifier::IsttHTagged()
      * -> OR at least one additional lepton
      */
 
-    if((JetPt -> size() >= 4) && (NumberBTaggedJets() >= 1))
+    if((nCleanedJetsPt30 >= 4) && (NumberBTaggedJets() >= 1))
     {
 	return(1);
     }
     else
     {
-	if(ExtraLepPt -> size() >= 1)
+	if(nExtraLep >= 1)
 	{
 	    return(1);
 	}
@@ -209,7 +248,7 @@ int ConvClassifier::IsVHEtMissTagged()
      * -> EtMiss > 100 GeV
      */
     
-    if((LepPt -> size() == 4) && (JetPt -> size() <= 1) && (PFMET >= 100))
+    if((nExtraLep == 0) && (nCleanedJetsPt30 <= 1) && (PFMET >= 100))
     {
 	return(1);
     }
@@ -225,9 +264,11 @@ int ConvClassifier::IsVBF1JetTagged()
      * -> D1_jet >= 0.5
      */
 
+    float D1_jet_WP = 0.37605;
+
     float D1_jet = DVBF1j_ME(p_JVBF_SIG_ghv1_1_JHUGen_JECNominal, pAux_JVBF_SIG_ghv1_1_JHUGen_JECNominal, p_JQCD_SIG_ghg2_1_JHUGen_JECNominal, ZZMass);
 
-    if((LepPt -> size() == 4) && (JetPt -> size() == 1) && (D1_jet >= 0.5))
+    if((nExtraLep == 0) && (nCleanedJetsPt30 == 1) && (D1_jet >= D1_jet_WP))
     {
 	return(1);
     }
@@ -237,6 +278,7 @@ int ConvClassifier::IsVBF1JetTagged()
 
 int ConvClassifier::NumberBTaggedJets()
 {
+/*
     int retval = 0;
     for(unsigned int jet = 0; jet < JetPt -> size(); jet++)
     {
@@ -247,4 +289,6 @@ int ConvClassifier::NumberBTaggedJets()
     }
 
     return retval;
+*/
+    return nCleanedJetsPt30BTagged_bTagSF;
 }
