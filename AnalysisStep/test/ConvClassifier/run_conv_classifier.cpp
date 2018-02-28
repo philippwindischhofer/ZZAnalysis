@@ -20,6 +20,7 @@
 #include <ZZAnalysis/AnalysisStep/test/ConvClassifier/include/ConvClassifier.h>
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/src/setTDRStyle.cpp>
+#include <ZZAnalysis/AnalysisStep/test/ConvClassifier/include/CatPlotter.h>
 
 std::vector<float> renormalize_histograms(std::vector<TH1F*> hist_vec)
 {
@@ -148,7 +149,10 @@ int main( int argc, char *argv[] )
     hist_vec = read_histos(out_folder + "histos.root", hist_names);
     
     std::vector<float> sums = renormalize_histograms(hist_vec);
-    
+
+    CatPlotter::Construct(hist_vec, annotations, channel_names, sums, out_folder + "ggh_hist.pdf");
+
+/*    
     THStack* hs = new THStack("hs","");
 
     for(unsigned int i = 0; i < hist_vec.size(); i++)
@@ -169,7 +173,6 @@ int main( int argc, char *argv[] )
     hs -> Draw("hist hbar");
     gStyle->SetHistTopMargin(0.);
 
-    // this doesn't seem to work yet
     for(unsigned int i = 0; i < hist_vec.size(); i++)
     {
 	hist_vec[i] -> SetBarOffset(0.15);
@@ -223,6 +226,6 @@ int main( int argc, char *argv[] )
     system("mkdir -p " + out_folder);
     canv -> SaveAs(out_folder + "ggh_hist.pdf");
     delete canv;
-
+*/
     return(0);
 }
