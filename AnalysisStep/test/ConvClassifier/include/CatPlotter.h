@@ -23,7 +23,7 @@ class CatPlotter
 {
 public:
     // makes a generic category plot
-    static void Construct(std::vector<TH1F*> hists, std::vector<TString> cat_labels, std::vector<TString> source_labels, std::vector<float> yields, TString file);
+    static void Construct(std::vector<TH1F*> hists, std::vector<TString> cat_labels, std::vector<TString> source_labels, std::vector<float> yields, float lumi, TString file);
 };
 
 #endif

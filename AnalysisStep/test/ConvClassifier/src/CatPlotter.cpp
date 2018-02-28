@@ -1,6 +1,6 @@
 #include <ZZAnalysis/AnalysisStep/test/ConvClassifier/include/CatPlotter.h>
 
-void CatPlotter::Construct(std::vector<TH1F*> hists, std::vector<TString> cat_labels, std::vector<TString> source_labels, std::vector<float> yields, TString file)
+void CatPlotter::Construct(std::vector<TH1F*> hists, std::vector<TString> cat_labels, std::vector<TString> source_labels, std::vector<float> yields, float lumi, TString file)
 {
     THStack* hs = new THStack("hs","");
 
@@ -10,10 +10,12 @@ void CatPlotter::Construct(std::vector<TH1F*> hists, std::vector<TString> cat_la
     }
 
     TCanvas* canv = new TCanvas("canv", "canv", 10, 10, 800, 600);
-    TPad* pad1 = new TPad("pad1", "pad1", 0.0, 0.0, 0.85, 1.0, kWhite, 0, 0);
-    TPad* pad2 = new TPad("pad2", "pad2", 0.85, 0.0, 1.0, 1.0, kWhite, 0, 0);
+    TPad* pad1 = new TPad("pad1", "pad1", 0.0, 0.0, 0.80, 1.0, kWhite, 0, 0);
+    TPad* pad2 = new TPad("pad2", "pad2", 0.80, 0.0, 1.0, 1.0, kWhite, 0, 0);
     pad1 -> SetLeftMargin(0.3);
     pad1 -> SetTicks(1, 1);
+    pad1 -> SetRightMargin(0.03);
+    pad2 -> SetLeftMargin(0.0);
     pad1 -> Draw();
     pad2 -> Draw(); 
 
@@ -35,7 +37,7 @@ void CatPlotter::Construct(std::vector<TH1F*> hists, std::vector<TString> cat_la
     hs -> GetHistogram() -> GetXaxis() -> SetLabelOffset(999);
     hs -> Draw("hist hbar");
 
-    TLegend* leg = new TLegend(0.0, 0.4, 1.0, 0.6);
+    TLegend* leg = new TLegend(0.0, 0.5, 1.0, 0.9);
 
     for(unsigned int i = 0; i < hists.size(); i++)
     {
@@ -59,9 +61,17 @@ void CatPlotter::Construct(std::vector<TH1F*> hists, std::vector<TString> cat_la
 	Tl -> Draw();
     }
 
+    // put the luminosity
+    pad1 -> cd();
+    TLatex* Tl = new TLatex(1.0, cat_labels.size() - 0.4, Form("%.2f fb^{-1} (13TeV)", lumi));
+    Tl -> SetTextSize(0.025);
+    Tl -> SetTextColor(kBlack);
+    Tl -> SetTextAlign(31);
+    Tl -> Draw();			    
+
     pad2 -> cd();
     leg -> SetTextColor(kBlack);
-    leg -> SetTextSize(0.13);
+    leg -> SetTextSize(0.11);
     leg -> SetBorderSize(0);
     leg -> Draw();
 

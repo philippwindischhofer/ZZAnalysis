@@ -91,6 +91,30 @@ int mZZ_cut(Tree* in)
 	return kFALSE;
 }
 
+int extraLeptons_0_cut(Tree* in)
+{
+    if(mZZ_cut(in) && (in -> nExtraLep == 0))
+	return kTRUE;
+    else
+	return kFALSE;
+}
+
+int extraLeptons_1_cut(Tree* in)
+{
+    if(mZZ_cut(in) && (in -> nExtraLep == 1))
+	return kTRUE;
+    else
+	return kFALSE;
+}
+
+int extraLeptons_2_cut(Tree* in)
+{
+    if(mZZ_cut(in) && (in -> nExtraLep == 2))
+	return kTRUE;
+    else
+	return kFALSE;
+}
+
 int main( int argc, char *argv[] )
 {
     float lumi = 35.9f;
@@ -109,25 +133,57 @@ int main( int argc, char *argv[] )
 	data_path.push_back(path + data_file_names[i] + file_name);
     }
 
-    std::vector<TString> hist_names = {"ggHhist", "VBFhist", "WHhist", "ZHhist", "ttHhist"};
-    std::vector<TString> source_labels = {"ggH", "VBF", "WH", "ZH", "ttH"};
+    std::vector<TString> hist_names = {
+	"ggHhist", 
+	"VBFhist",
+        "WHXhist", 
+	"WHlnuhist", 
+        "ZHXhist", 
+	"ZH2lhist", 
+	"ttH0lhist", 
+	"ttH1lhist", 
+        "ttH2lhist"};
+
+    std::vector<TString> source_labels = {
+	"ggH", 
+	"VBF", 
+	"WH, W #rightarrow X",
+	"WH, W #rightarrow l#nu", 
+	"ZH, Z #rightarrow X",
+	"ZH, Z #rightarrow 2l",
+	"t#bar{t}H, t#bar{t} #rightarrow 0l + X",
+	"t#bar{t}H, t#bar{t} #rightarrow 1l + X",
+        "t#bar{t}H, t#bar{t} #rightarrow 2l + X"};
 
     enum hist_index {
 	ggHhist = 0,
 	VBFhist = 1,
-	WHhist = 2,
-	ZHhist = 3,
-	ttHhist = 4
+	WHXhist = 2,
+	WHlnuhist = 3,
+	ZHXhist = 4,
+	ZH2lhist = 5,
+	ttH0lhist = 6,
+	ttH1lhist = 7,
+	ttH2lhist = 8
     };
+
+    std::vector<int> cat_colors = {
+	kBlue - 9, 
+	kGreen - 6, 
+	kRed - 7, 
+	kRed - 6, 
+	kOrange + 6, 
+	kOrange + 7, 
+	kCyan - 6,
+	kCyan - 2,
+	kCyan + 3};
 	
     std::vector<TH1F*> hist_vec(hist_names.size());
 	
-	for(unsigned int i = 0; i < hist_names.size(); i++)
+    for(unsigned int i = 0; i < hist_names.size(); i++)
     {
 	hist_vec[i] = new TH1F(hist_names[i], hist_names[i], 7, -0.5, 6.5);
     }
-
-    std::vector<int> cat_colors = {kBlue - 9, kGreen - 6, kRed - 7, kOrange + 6, kCyan - 6};
 
     for(unsigned int i = 0; i < hist_names.size(); i++)
     {
@@ -136,23 +192,27 @@ int main( int argc, char *argv[] )
 	hist_vec[i] -> SetFillStyle(1001);
     }    
 
+/*
     // No need to fill the histograms every time!
     std::cout << "filling histograms" << std::endl;
     Mor17Classifier* testclass = new Mor17Classifier();
-    testclass -> FillHistogram(data_path[0], lumi, hist_vec[ggHhist], no_cut);
-    testclass -> FillHistogram(data_path[1], lumi, hist_vec[VBFhist], no_cut);
-    testclass -> FillHistogram(data_path[2], lumi, hist_vec[WHhist], no_cut);
-    testclass -> FillHistogram(data_path[3], lumi, hist_vec[WHhist], no_cut);
-    testclass -> FillHistogram(data_path[4], lumi, hist_vec[ZHhist], no_cut);
-    testclass -> FillHistogram(data_path[5], lumi, hist_vec[ttHhist], no_cut);    
+    testclass -> FillHistogram(data_path[0], lumi, hist_vec[ggHhist], mZZ_cut);
+    testclass -> FillHistogram(data_path[1], lumi, hist_vec[VBFhist], mZZ_cut);
+    testclass -> FillHistogram(data_path[2], lumi, hist_vec[WHXhist], extraLeptons_0_cut);
+    testclass -> FillHistogram(data_path[2], lumi, hist_vec[WHlnuhist], extraLeptons_1_cut);
+    testclass -> FillHistogram(data_path[4], lumi, hist_vec[ZHXhist], extraLeptons_0_cut);
+    testclass -> FillHistogram(data_path[4], lumi, hist_vec[ZH2lhist], extraLeptons_2_cut);
+    testclass -> FillHistogram(data_path[5], lumi, hist_vec[ttH0lhist], extraLeptons_0_cut);    
+    testclass -> FillHistogram(data_path[5], lumi, hist_vec[ttH1lhist], extraLeptons_1_cut);
+    testclass -> FillHistogram(data_path[5], lumi, hist_vec[ttH2lhist], extraLeptons_2_cut);    
     save_histos(out_folder + "histos.root", hist_vec);
     std::cout << "end filling histograms" << std::endl;
-
+*/
     hist_vec = read_histos(out_folder + "histos.root", hist_names);
     
     std::vector<float> sums = renormalize_histograms(hist_vec);
 
-    CatPlotter::Construct(hist_vec, cat_labels, source_labels, sums, out_folder + "categorization.pdf");
+    CatPlotter::Construct(hist_vec, cat_labels, source_labels, sums, lumi, out_folder + "categorization.pdf");
 
     return(0);
 }
