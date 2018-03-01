@@ -22,8 +22,30 @@
 class CatPlotter
 {
 public:
+    CatPlotter();
+    ~CatPlotter();
+
     // makes a generic category plot
-    static void Construct(std::vector<TH1F*> hists, std::vector<TString> cat_labels, std::vector<TString> source_labels, std::vector<float> yields, float lumi, TString file);
+    void Construct(std::vector<TH1F*> hists, std::vector<TString> cat_labels, std::vector<TString> source_labels, std::vector<float> yields, TString title, float lumi);
+    void SaveAs(TString file);
+    THStack* GetStack();
+    void Update();
+
+private:
+    THStack* hs;
+    TCanvas* canv;
+    TPad* pad1;
+    TPad* pad2;
+    TLegend* leg;
+
+    bool draw_legend;
+    std::vector<TString> cat_labels;
+    std::vector<TString> source_labels;
+    std::vector<float> yields;
+    float lumi;
+    TString title;
+
+    void Redraw();
 };
 
 #endif

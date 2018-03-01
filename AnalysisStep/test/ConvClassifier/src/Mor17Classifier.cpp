@@ -8,7 +8,7 @@ Mor17Classifier::Mor17Classifier():Tree()
 Mor17Classifier::~Mor17Classifier()
 { }
 
-// returns the number of events put into each category
+// returns the total number of events that were classified (i.e. split into any category)
 void Mor17Classifier::FillHistogram(TString input_file_name, float lumi, TH1F* hist, const std::function<int(Tree*)>& cut)
 {    
     input_file = new TFile(input_file_name);

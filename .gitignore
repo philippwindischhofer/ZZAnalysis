@@ -21,4 +21,4 @@ __init__.py
 # ROOT files
 ROOT_files/*
 Plots/*
-ConvClassifierPlots/*
+ConvClassifierPlots/*.root
