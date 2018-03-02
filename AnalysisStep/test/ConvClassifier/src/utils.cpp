@@ -65,15 +65,7 @@ std::vector<TH1F*> read_histos(TString file, std::vector<TString> hist_names)
 
 float get_total_events(TH1F* hist)
 {
-    float total_events = 0;
-
-    // don't iterate over the under- and overflow bins
-    for(int bin = 1; bin < hist -> GetSize() - 1; bin++)
-    {
-	total_events += hist -> GetBinContent(bin);
-    }
-
-    return total_events;
+    return hist -> GetSumOfWeights();
 }
 
 /*

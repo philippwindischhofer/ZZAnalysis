@@ -10,7 +10,7 @@ Mor17Classifier::~Mor17Classifier()
 
 // returns the total number of events that were classified (i.e. split into any category)
 void Mor17Classifier::FillHistogram(TString input_file_name, float lumi, TH1F* hist, const std::function<int(Tree*)>& cut)
-{    
+{  
     input_file = new TFile(input_file_name);
 
     // read some auxiliary information
@@ -19,7 +19,10 @@ void Mor17Classifier::FillHistogram(TString input_file_name, float lumi, TH1F* h
     gen_sum_weights = (Long64_t)hCounters -> GetBinContent(40);
 
     input_tree = (TTree*)input_file -> Get("ZZTree/candTree");
+
     Init(input_tree, input_file_name);
+    
+    //input_tree -> MakeClass("mytree");
 
     if(fChain == 0) return;
 

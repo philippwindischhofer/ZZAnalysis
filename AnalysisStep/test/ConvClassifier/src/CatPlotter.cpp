@@ -14,6 +14,8 @@ void CatPlotter::Construct(std::vector<TH1F*> hists, std::vector<TString> cat_la
     this -> lumi = lumi;
     this -> title = title;
 
+    draw_legend = (source_labels.size() > 0) ? true : false;
+
     this -> hs = new THStack("hs","");
 
     for(unsigned int i = 0; i < hists.size(); i++)
@@ -25,21 +27,34 @@ void CatPlotter::Construct(std::vector<TH1F*> hists, std::vector<TString> cat_la
     for(unsigned int i = 0; i < hists.size(); i++)
     {
 	hs -> Add(hists[i]);
+	hists[i] -> GetXaxis() -> SetNdivisions(7, 0, 0, kFALSE);
+	hists[i] -> GetYaxis() -> SetNdivisions(10, 2, 0, kTRUE);    
+	hists[i] -> GetYaxis() -> SetTickLength(0.01);
+	hists[i] -> GetXaxis() -> SetTickLength(0.01);    
     }
 
     canv = new TCanvas("canv", "canv", 10, 10, 800, 600);
-    pad1 = new TPad("pad1", "pad1", 0.0, 0.0, 0.80, 1.0, kWhite, 0, 0);
-    pad2 = new TPad("pad2", "pad2", 0.80, 0.0, 1.0, 1.0, kWhite, 0, 0);
-    pad1 -> SetLeftMargin(0.3);
+
+    // depending on whether want to draw a legend, need to divide the canvas differently
+    if(draw_legend)
+    {
+	pad1 = new TPad("pad1", "pad1", 0.0, 0.0, 0.8, 1.0, kWhite, 0, 0);
+	pad2 = new TPad("pad2", "pad2", 0.80, 0.0, 1.0, 1.0, kWhite, 0, 0);
+    }
+    else
+    {
+	pad1 = new TPad("pad1", "pad1", 0.0, 0.0, 0.95, 1.0, kWhite, 0, 0);
+	pad2 = new TPad("pad2", "pad2", 0.95, 0.0, 1.0, 1.0, kWhite, 0, 0);
+    }
+
+    pad1 -> SetLeftMargin(0.25);
     pad1 -> SetTicks(1, 1);
     pad1 -> SetRightMargin(0.03);
     pad1 -> SetFillColorAlpha(kWhite, 0.0);
     pad2 -> SetLeftMargin(0.0);
     pad2 -> SetFillColorAlpha(kWhite, 0.0);
 
-    draw_legend = (source_labels.size() > 0) ? true : false;
-
-    leg = new TLegend(0.0, 0.9 - 0.4 / 9 * (hists.size()), 1.0, 0.9);
+    leg = new TLegend(0.0, 0.9 - 0.4 / 10 * (hists.size()), 0.5, 0.9);
     for(unsigned int i = 0; i < source_labels.size(); i++)
     {
 	leg -> AddEntry(hists[i], source_labels[i], "f");
@@ -61,9 +76,10 @@ void CatPlotter::Redraw()
     hs -> GetYaxis() -> SetTitleOffset(0.95);
     hs -> GetHistogram() -> GetXaxis() -> SetNdivisions(7, 0, 0, kFALSE);
     hs -> GetHistogram() -> GetYaxis() -> SetNdivisions(10, 2, 0, kTRUE);
-    hs -> GetHistogram() -> GetYaxis() -> SetTickLength(0.02);
+    hs -> GetHistogram() -> GetYaxis() -> SetTickLength(0.01);
+    hs -> GetHistogram() -> GetXaxis() -> SetTickLength(0.01);    
     hs -> GetHistogram() -> GetXaxis() -> SetLabelOffset(999);
-    hs -> Draw("hist hbar");
+    hs -> Draw("axis hist hbar");
 
     for(unsigned int yield = 0; yield < yields.size(); yield++)
     {
@@ -111,8 +127,8 @@ void CatPlotter::Redraw()
 
 void CatPlotter::SaveAs(TString file)
 {
-    this -> canv -> SaveAs(file);
-    delete this -> canv;
+    canv -> SaveAs(file);
+    delete canv;
 }
 
 THStack* CatPlotter::GetStack()

@@ -11,11 +11,15 @@
 <library file="../test/ConvClassifier/src/*.cpp" name="ZZAnalysisAnalysisStepTestConvClassifierSrc">
 </library>
 
+<library file="../test/HelloWorld/src/*.cpp" name="ZZAnalysisAnalysisStepTestHelloWorldSrc">
+</library>
+
 <bin name="run_conv_classifier" file="../test/ConvClassifier/run_conv_classifier.cpp">
   <lib name="ZZAnalysisAnalysisStepTestConvClassifierSrc"/>
 </bin>
 
 <bin name="run_helloworld" file="../test/HelloWorld/run_helloworld.cpp">
+  <lib name="ZZAnalysisAnalysisStepTestHelloWorldSrc"/>
 </bin>
 
 <bin   name="run_plotter" file="../test/Plotter_v2/run_plotter.cpp">

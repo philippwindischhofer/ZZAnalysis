@@ -15,6 +15,7 @@
 #include "THStack.h"
 #include "TLatex.h"
 #include "TLegend.h"
+#include "TMath.h"
 
 // My own files
 #include <ZZAnalysis/AnalysisStep/test/ConvClassifier/include/ConvClassifier.h>
@@ -42,6 +43,7 @@ std::vector<TString> signal_source_labels = {
     "WH, W #rightarrow X",
     "WH, W #rightarrow l#nu", 
     "ZH, Z #rightarrow X",
+    "ZH, Z #rightarrow #nu#nu",
     "ZH, Z #rightarrow 2l",
     "t#bar{t}H, t#bar{t} #rightarrow 0l + X",
     "t#bar{t}H, t#bar{t} #rightarrow 1l + X",
@@ -54,6 +56,7 @@ std::vector<TString> signal_hist_names = {
     "WHXhist", 
     "WHlnuhist", 
     "ZHXhist", 
+    "ZHnunuhist",
     "ZH2lhist", 
     "ttH0lhist", 
     "ttH1lhist", 
@@ -65,10 +68,11 @@ enum hist_index {
     WHXhist = 2,
     WHlnuhist = 3,
     ZHXhist = 4,
-    ZH2lhist = 5,
-    ttH0lhist = 6,
-    ttH1lhist = 7,
-    ttH2lhist = 8
+    ZHnunuhist = 5,
+    ZH2lhist = 6,
+    ttH0lhist = 7,
+    ttH1lhist = 8,
+    ttH2lhist = 9
 };
 
 // bin 0 is actually the underflow bin -> relevant content starts at bin 1 only
@@ -87,8 +91,9 @@ std::vector<int> signal_source_colors = {
     kGreen - 6, 
     kRed - 7, 
     kRed - 6, 
-    kOrange + 6, 
-    kOrange + 7, 
+    kYellow - 7, 
+    kYellow - 3, 
+    kYellow + 2,
     kCyan - 6,
     kCyan - 2,
     kCyan + 3
@@ -132,14 +137,14 @@ std::vector<TString> background_hist_names = {
 
 std::vector<TString> background_source_labels = {
     "ZZ #rightarrow 4l",
-    "DY",
-    "tt #rightarrow 2l2#nu",
-    "gg #rightarrow 2e2#mu",
-    "gg #rightarrow 2e2#tau",
-    "gg #rightarrow 2#mu2#tau",
-    "gg #rightarrow 4e",
-    "gg #rightarrow 4#mu",
-    "gg #rightarrow 4#tau"
+    "Z/#gamma^{*} #rightarrow ll",
+    "t#bar{t} #rightarrow 2l2#nu",
+    "gg #rightarrow ZZ #rightarrow 2e2#mu",
+    "gg #rightarrow ZZ #rightarrow 2e2#tau",
+    "gg #rightarrow ZZ #rightarrow 2#mu2#tau",
+    "gg #rightarrow ZZ #rightarrow 4e",
+    "gg #rightarrow ZZ #rightarrow 4#mu",
+    "gg #rightarrow ZZ #rightarrow 4#tau"
 };
 
 // cuts that are used to separate the individual signal contributions
@@ -156,9 +161,29 @@ int mZZ_cut(Tree* in)
 	return kFALSE;
 }
 
+int countAssocLeptons(Tree* in)
+{
+    if((in -> GenAssocLep1Id == 0) && (in -> GenAssocLep2Id == 0))
+    {
+	return 0;
+    }
+    else if( ((in -> GenAssocLep1Id != 0) && (in -> GenAssocLep2Id == 0)) ||
+	     ((in -> GenAssocLep1Id == 0) && (in -> GenAssocLep2Id != 0)) )
+    {
+	return 1;
+    }
+    else if((in -> GenAssocLep1Id != 0) && (in -> GenAssocLep2Id != 0))
+    {
+	return 2;
+    }
+
+    return 0;
+}
+
 int extraLeptons_0_cut(Tree* in)
 {
-    if(mZZ_cut(in) && (in -> GenAssocLep1Id == 0) && (in -> GenAssocLep2Id == 0))
+    //if(mZZ_cut(in) && (in -> GenAssocLep1Id == 0) && (in -> GenAssocLep2Id == 0))
+    if(mZZ_cut(in) && (countAssocLeptons(in) == 0))
 	return kTRUE;
     else
 	return kFALSE;
@@ -166,7 +191,8 @@ int extraLeptons_0_cut(Tree* in)
 
 int extraLeptons_1_cut(Tree* in)
 {
-    if(mZZ_cut(in) && (in -> GenAssocLep1Id != 0) && (in -> GenAssocLep2Id == 0))
+    //if(mZZ_cut(in) && (in -> GenAssocLep1Id != 0) && (in -> GenAssocLep2Id == 0))
+    if(mZZ_cut(in) && (countAssocLeptons(in) == 1))
 	return kTRUE;
     else
 	return kFALSE;
@@ -174,7 +200,49 @@ int extraLeptons_1_cut(Tree* in)
 
 int extraLeptons_2_cut(Tree* in)
 {
-    if(mZZ_cut(in) && (in -> GenAssocLep1Id != 0) && (in -> GenAssocLep2Id != 0))
+//    if(mZZ_cut(in) && (in -> GenAssocLep1Id != 0) && (in -> GenAssocLep2Id != 0))
+    if(mZZ_cut(in) && (countAssocLeptons(in) == 2))
+	return kTRUE;
+    else
+	return kFALSE;
+}
+
+int countNeutrinos(Tree* in)
+{
+   int number_neutrinos = 0;
+
+   if(in -> LHEAssociatedParticleId)
+   {
+       for(unsigned int i = 0; i < (in -> LHEAssociatedParticleId -> size()); i++)
+       {
+	   short pdg_code = in -> LHEAssociatedParticleId -> at(i);
+	   if((TMath::Abs(pdg_code) == 12) || (TMath::Abs(pdg_code) == 14) || (TMath::Abs(pdg_code) == 16))
+	       number_neutrinos++;
+       }
+   }
+
+   return number_neutrinos;
+}
+
+int extraNeutrinos_0_cut(Tree* in)
+{
+    if(mZZ_cut(in) && countNeutrinos(in) == 0)
+	return kTRUE;
+    else
+	return kFALSE;
+}
+
+int extraNeutrinos_2_cut(Tree* in)
+{
+    if(mZZ_cut(in) && countNeutrinos(in) == 2)
+	return kTRUE;
+    else
+	return kFALSE;
+}
+
+int extraNeutrinos_0_Leptons_0_cut(Tree* in)
+{
+    if(mZZ_cut(in) && (countAssocLeptons(in) == 0) && (countNeutrinos(in) == 0))
 	return kTRUE;
     else
 	return kFALSE;
@@ -213,7 +281,8 @@ std::vector<TH1F*> generate_signal_histvec(int fill_histos)
 	testclass -> FillHistogram(signal_path[2], lumi, hist_vec[WHlnuhist], extraLeptons_1_cut); // W decays leptonically
 	testclass -> FillHistogram(signal_path[3], lumi, hist_vec[WHXhist], extraLeptons_0_cut);
 	testclass -> FillHistogram(signal_path[3], lumi, hist_vec[WHlnuhist], extraLeptons_1_cut); // W decays leptonically
-	testclass -> FillHistogram(signal_path[4], lumi, hist_vec[ZHXhist], extraLeptons_0_cut); // no extra leptons (electrons, muons) for the non-leptonic decay of the Z
+	testclass -> FillHistogram(signal_path[4], lumi, hist_vec[ZHXhist], extraNeutrinos_0_Leptons_0_cut); // no extra leptons (electrons, muons) and neutrinos for the hadronic decay of the Z
+	testclass -> FillHistogram(signal_path[4], lumi, hist_vec[ZHnunuhist], extraNeutrinos_2_cut);
 	testclass -> FillHistogram(signal_path[4], lumi, hist_vec[ZH2lhist], extraLeptons_2_cut); // need exactly two extra leptons to have the Z decaying leptonically
 	testclass -> FillHistogram(signal_path[5], lumi, hist_vec[ttH0lhist], extraLeptons_0_cut);    
 	testclass -> FillHistogram(signal_path[5], lumi, hist_vec[ttH1lhist], extraLeptons_1_cut);
@@ -348,9 +417,13 @@ void make_SBfine_ratio(int fill_histos)
     std::vector<TH1F*> signal_hist_vec = generate_signal_histvec(fill_histos);
     std::vector<TH1F*> background_hist_vec = generate_background_histvec(fill_histos);
    
-    // the correctly classified events
-    // --------------------------------------------
-    // needs to be revised!!
+    // the correctly classified events:
+    // note that this routes 
+    //      WH, W -> X    and ZH, Z -> X   into VHhadr
+    //      WH, W -> l nu and ZH, Z -> 2 l into VHlept
+    //      ggH                            into untagged
+    //      VBF                            into VBF1jet and VBF2jet
+    //      ttH + 0,1,2 l                  into ttH
     float VBF1j_correct_events = signal_hist_vec[VBFhist] -> GetBinContent(VBF1jet_bin);
     float VBF2j_correct_events = signal_hist_vec[VBFhist] -> GetBinContent(VBF2jet_bin);
 
@@ -360,30 +433,28 @@ void make_SBfine_ratio(int fill_histos)
     float VHhadr_correct_events = signal_hist_vec[WHXhist] -> GetBinContent(VHhadronic_bin);
     VHhadr_correct_events += signal_hist_vec[ZHXhist] -> GetBinContent(VHhadronic_bin);
 
-    float VHMET_correct_events = signal_hist_vec[WHlnuhist] -> GetBinContent(VHMET_bin);
-    VHMET_correct_events += signal_hist_vec[ZHXhist] -> GetBinContent(VHMET_bin);
+    float VHMET_correct_events = signal_hist_vec[ZHnunuhist] -> GetBinContent(VHMET_bin);
 
     float ttH_correct_events = signal_hist_vec[ttH0lhist] -> GetBinContent(ttH_bin);
     ttH_correct_events += signal_hist_vec[ttH1lhist] -> GetBinContent(ttH_bin);
     ttH_correct_events += signal_hist_vec[ttH2lhist] -> GetBinContent(ttH_bin);
 
     float untagged_correct_events = signal_hist_vec[ggHhist] -> GetBinContent(untagged_bin);
-    // -------------------------------------------
 
     // generate the vector holding both signal- and background histograms: this makes sure to get the *total* background in each category: the unwanted signal contributions + the actual background
     std::vector<TH1F*> hist_vec(signal_hist_vec);
     hist_vec.insert(hist_vec.end(), background_hist_vec.begin(), background_hist_vec.end());
-    std::vector<float> sums = get_category_sums(hist_vec); sums.insert(sums.begin(), 0);     // add a new element in front to make the remaining ones effectively 1-indexed
+    std::vector<float> sums = get_category_sums(hist_vec);
     
     std::vector<TH1F*> SB_hist_vec = {new TH1F("SB_fine", "SB_fine", 7, -0.5, 6.5)};
 
-    SB_hist_vec[0] -> Fill(untagged_bin - 1, untagged_correct_events / sums[untagged_bin]);
-    SB_hist_vec[0] -> Fill(VBF1jet_bin - 1, VBF1j_correct_events / sums[VBF1jet_bin]);
-    SB_hist_vec[0] -> Fill(VBF2jet_bin - 1, VBF2j_correct_events / sums[VBF2jet_bin]);
-    SB_hist_vec[0] -> Fill(ttH_bin - 1, ttH_correct_events / sums[ttH_bin]);
-    SB_hist_vec[0] -> Fill(VHhadronic_bin - 1, VHhadr_correct_events / sums[VHhadronic_bin]);
-    SB_hist_vec[0] -> Fill(VHleptonic_bin - 1, VHlept_correct_events / sums[VHleptonic_bin]);
-    SB_hist_vec[0] -> Fill(VHMET_bin - 1, VHMET_correct_events / sums[VHMET_bin]);
+    SB_hist_vec[0] -> Fill(untagged_bin - 1, untagged_correct_events / sums[untagged_bin - 1]);
+    SB_hist_vec[0] -> Fill(VBF1jet_bin - 1, VBF1j_correct_events / sums[VBF1jet_bin - 1]);
+    SB_hist_vec[0] -> Fill(VBF2jet_bin - 1, VBF2j_correct_events / sums[VBF2jet_bin - 1]);
+    SB_hist_vec[0] -> Fill(ttH_bin - 1, ttH_correct_events / sums[ttH_bin - 1]);
+    SB_hist_vec[0] -> Fill(VHhadronic_bin - 1, VHhadr_correct_events / sums[VHhadronic_bin - 1]);
+    SB_hist_vec[0] -> Fill(VHleptonic_bin - 1, VHlept_correct_events / sums[VHleptonic_bin - 1]);
+    SB_hist_vec[0] -> Fill(VHMET_bin - 1, VHMET_correct_events / sums[VHMET_bin - 1]);
 
     CatPlotter plotter;
 
@@ -398,8 +469,7 @@ void make_punzi(int fill_histos)
     std::vector<TH1F*> signal_hist_vec = generate_signal_histvec(fill_histos);
     std::vector<TH1F*> background_hist_vec = generate_background_histvec(fill_histos);
    
-    // make the Punzi-purity plot
-    // for each signal category, need the number of signal events, the total number of signal events, and the number of background events in this category
+    // the total number of events from each category
     float VBF_events = get_total_events(signal_hist_vec[VBFhist]); // this is the sum of all VBF events (i.e. both VBF 1-jet and VBF 2-jet events)
 
     float VHhadr_events = get_total_events(signal_hist_vec[WHXhist]);
@@ -412,12 +482,17 @@ void make_punzi(int fill_histos)
     ttH_events += get_total_events(signal_hist_vec[ttH1lhist]);
     ttH_events += get_total_events(signal_hist_vec[ttH2lhist]);
 
-    // untagged are those that are neither VBF, VH or ttH, i.e. only ggH remains
+    float VHMET_events = get_total_events(signal_hist_vec[ZHnunuhist]);
+
     float untagged_events = get_total_events(signal_hist_vec[ggHhist]);
 
-    // -----------------------------------------
-    // needs to be revised!!
-    // the correctly classified events
+    // the correctly classified events:
+    // note that this routes 
+    //      WH, W -> X    and ZH, Z -> X   into VHhadr
+    //      WH, W -> l nu and ZH, Z -> 2 l into VHlept
+    //      ggH                            into untagged
+    //      VBF                            into VBF1jet and VBF2jet
+    //      ttH + 0,1,2 l                  into ttH
     float VBF1j_correct_events = signal_hist_vec[VBFhist] -> GetBinContent(VBF1jet_bin);
     float VBF2j_correct_events = signal_hist_vec[VBFhist] -> GetBinContent(VBF2jet_bin);
 
@@ -427,55 +502,59 @@ void make_punzi(int fill_histos)
     float VHhadr_correct_events = signal_hist_vec[WHXhist] -> GetBinContent(VHhadronic_bin);
     VHhadr_correct_events += signal_hist_vec[ZHXhist] -> GetBinContent(VHhadronic_bin);
 
-    float VHMET_correct_events = signal_hist_vec[WHlnuhist] -> GetBinContent(VHMET_bin);
-    VHMET_correct_events += signal_hist_vec[ZHXhist] -> GetBinContent(VHMET_bin);
-
     float ttH_correct_events = signal_hist_vec[ttH0lhist] -> GetBinContent(ttH_bin);
     ttH_correct_events += signal_hist_vec[ttH1lhist] -> GetBinContent(ttH_bin);
     ttH_correct_events += signal_hist_vec[ttH2lhist] -> GetBinContent(ttH_bin);
 
+    float VHMET_correct_events = signal_hist_vec[ZHnunuhist] -> GetBinContent(VHMET_bin);
+
     float untagged_correct_events = signal_hist_vec[ggHhist] -> GetBinContent(untagged_bin);
-    // ----------------------------------
 
     // generate the vector holding both signal- and background histograms: this makes sure to get the *total* background in each category: the unwanted signal contributions + the actual background
     std::vector<TH1F*> hist_vec(signal_hist_vec);
     hist_vec.insert(hist_vec.end(), background_hist_vec.begin(), background_hist_vec.end());
-    std::vector<float> sums = get_category_sums(hist_vec); sums.insert(sums.begin(), 0);     // add a new element in front to make the remaining ones effectively 1-indexed
+    std::vector<float> sums = get_category_sums(hist_vec);
 
     float untagged_punzi = get_punzi_purity(
-	sums[untagged_bin] - untagged_correct_events, // background in this category
-	untagged_correct_events, // signal in this category
+	sums[untagged_bin - 1] - untagged_correct_events, // background in this category
+	untagged_correct_events, // signal in this category (but spread over multiple categories)
 	untagged_events, // total signal (important for computing the efficiency)
 	5, 2);
 
     float VBF1j_punzi = get_punzi_purity(
-	sums[VBF1jet_bin] - VBF1j_correct_events,
+	sums[VBF1jet_bin - 1] - VBF1j_correct_events,
 	VBF1j_correct_events,
 	VBF_events,
 	5, 2);
 
     float VBF2j_punzi = get_punzi_purity(
-	sums[VBF2jet_bin] - VBF2j_correct_events,
+	sums[VBF2jet_bin - 1] - VBF2j_correct_events,
 	VBF2j_correct_events,
 	VBF_events,
 	5, 2);
 
     float ttH_punzi = get_punzi_purity(
-	sums[ttH_bin] - ttH_correct_events,
+	sums[ttH_bin - 1] - ttH_correct_events,
 	ttH_correct_events,
 	ttH_events,
 	5, 2);
 
     float VHhadr_punzi = get_punzi_purity(
-	sums[VHhadronic_bin] - VHhadr_correct_events,
+	sums[VHhadronic_bin - 1] - VHhadr_correct_events,
 	VHhadr_correct_events,
 	VHhadr_events,
 	5, 2);
 
     float VHlept_punzi = get_punzi_purity(
-	sums[VHleptonic_bin] - VHlept_correct_events,
+	sums[VHleptonic_bin - 1] - VHlept_correct_events,
 	VHlept_correct_events,
 	VHlept_events,
+	5, 2);
+
+    float VHMET_punzi = get_punzi_purity(
+	sums[VHMET_bin - 1] - VHMET_correct_events,
+	VHMET_correct_events,
+	VHMET_events,
 	5, 2);
     
     // make the plot of the punzi purity
@@ -487,7 +566,8 @@ void make_punzi(int fill_histos)
     punzi_hist_vec[0] -> Fill(ttH_bin - 1, ttH_punzi);
     punzi_hist_vec[0] -> Fill(VHhadronic_bin - 1, VHhadr_punzi);
     punzi_hist_vec[0] -> Fill(VHleptonic_bin - 1, VHlept_punzi);
-    
+    punzi_hist_vec[0] -> Fill(VHMET_bin - 1, VHMET_punzi);
+
     CatPlotter plotter;
     plotter.Construct(punzi_hist_vec, cat_labels, std::vector<TString>(), std::vector<float>(), "Punzi purity", lumi);   
     plotter.SaveAs(out_folder + "punzi.pdf");
@@ -495,7 +575,7 @@ void make_punzi(int fill_histos)
 
 int main( int argc, char *argv[] )
 {
-    make_SB_purity(kTRUE);
+    make_SB_purity(kFALSE);
     make_S_purity(kFALSE);
     make_punzi(kFALSE);
     make_SB_ratio(kFALSE);

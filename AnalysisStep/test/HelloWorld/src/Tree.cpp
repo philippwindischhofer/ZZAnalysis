@@ -1,8 +1,9 @@
 #define Tree_cxx
-#include <ZZAnalysis/AnalysisStep/test/ConvClassifier/include/Tree.h>
+#include <ZZAnalysis/AnalysisStep/test/HelloWorld/include/Tree.h>
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
+#include <iostream>
 
 void Tree::Loop()
 {
@@ -38,6 +39,9 @@ void Tree::Loop()
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
+
+      std::cout << LHEAssociatedParticleId -> size() << std::endl;
+
       // if (Cut(ientry) < 0) continue;
    }
 }
