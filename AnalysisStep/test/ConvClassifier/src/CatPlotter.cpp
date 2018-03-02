@@ -84,7 +84,7 @@ void CatPlotter::Redraw()
     for(unsigned int yield = 0; yield < yields.size(); yield++)
     {
 	pad1 -> cd();
-	TLatex* Tl = new TLatex(0.05, (float)yield, Form("%.3f expected events", yields[yield]));
+	TLatex* Tl = new TLatex(0.05, (float)yield, Form("%.2f expected events", yields[yield]));
 	Tl -> SetTextSize(0.025);
 	Tl -> SetTextColor(kWhite);
 	Tl -> SetTextAlign(12);

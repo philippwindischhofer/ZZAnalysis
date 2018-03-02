@@ -1,5 +1,5 @@
-#ifndef Mor17Classifier_h
-#define Mor17Classifier_h
+#ifndef Mor18Classifier_h
+#define Mor18Classifier_h
 
 // C++
 #include <iostream>
@@ -26,11 +26,11 @@
 #include "Classifier.h"
 #include "Tree.h"
 
-class Mor17Classifier: public Tree, public Classifier
+class Mor18Classifier: public Tree, public Classifier
 {
 public:
-    Mor17Classifier();
-    ~Mor17Classifier();
+    Mor18Classifier();
+    ~Mor18Classifier();
 
     /* returns the number of events put into each category (in the order prescribed by the selection)
      * 0 ... VBF-2jet tagged
