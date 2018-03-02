@@ -94,6 +94,18 @@ std::vector<int> signal_source_colors = {
     kCyan + 3
 };
 
+std::vector<int> background_source_colors = {
+    kBlue - 9,
+    kGreen - 6,
+    kRed - 9,
+    kRed - 6,
+    kRed - 2,
+    kRed + 3,
+    kCyan - 6,
+    kCyan - 2,
+    kCyan + 3    
+};
+
 std::vector<TString> background_file_names = {
     "ZZTo4l", 
     "DYJetsToLL_M50",
@@ -235,9 +247,9 @@ std::vector<TH1F*> generate_background_histvec(int fill_histos)
     for(unsigned int i = 0; i < background_hist_names.size(); i++)
     {
 	hist_vec[i] = new TH1F(background_hist_names[i], background_hist_names[i], 7, -0.5, 6.5);
-	hist_vec[i] -> SetFillColor(kGray);
-	hist_vec[i] -> SetLineColor(kGray);
-	hist_vec[i] -> SetFillStyle(1001);
+	hist_vec[i] -> SetFillColor(background_source_colors[i]);
+	hist_vec[i] -> SetLineColor(background_source_colors[i]);
+	hist_vec[i] -> SetFillStyle(3004);
     }
 
     if(fill_histos)
@@ -260,7 +272,7 @@ std::vector<TH1F*> generate_background_histvec(int fill_histos)
 
     // read the histograms back from the root file
     hist_vec = read_histos(out_folder + hist_storage, background_hist_names);
-    
+
     return hist_vec;
 }
 
@@ -337,6 +349,8 @@ void make_SBfine_ratio(int fill_histos)
     std::vector<TH1F*> background_hist_vec = generate_background_histvec(fill_histos);
    
     // the correctly classified events
+    // --------------------------------------------
+    // needs to be revised!!
     float VBF1j_correct_events = signal_hist_vec[VBFhist] -> GetBinContent(VBF1jet_bin);
     float VBF2j_correct_events = signal_hist_vec[VBFhist] -> GetBinContent(VBF2jet_bin);
 
@@ -354,6 +368,7 @@ void make_SBfine_ratio(int fill_histos)
     ttH_correct_events += signal_hist_vec[ttH2lhist] -> GetBinContent(ttH_bin);
 
     float untagged_correct_events = signal_hist_vec[ggHhist] -> GetBinContent(untagged_bin);
+    // -------------------------------------------
 
     // generate the vector holding both signal- and background histograms: this makes sure to get the *total* background in each category: the unwanted signal contributions + the actual background
     std::vector<TH1F*> hist_vec(signal_hist_vec);
@@ -385,14 +400,7 @@ void make_punzi(int fill_histos)
    
     // make the Punzi-purity plot
     // for each signal category, need the number of signal events, the total number of signal events, and the number of background events in this category
-    float total_events = 0;
-    for(unsigned int i = 0; i < signal_hist_vec.size(); i++)
-    {
-	total_events += get_total_events(signal_hist_vec[i]);
-    }
-
-    // the total number of events
-    float VBF_events = get_total_events(signal_hist_vec[VBFhist]); // this is the sum of both VBF 1-jet and VBF 2-jet events
+    float VBF_events = get_total_events(signal_hist_vec[VBFhist]); // this is the sum of all VBF events (i.e. both VBF 1-jet and VBF 2-jet events)
 
     float VHhadr_events = get_total_events(signal_hist_vec[WHXhist]);
     VHhadr_events += get_total_events(signal_hist_vec[ZHXhist]);
@@ -407,6 +415,8 @@ void make_punzi(int fill_histos)
     // untagged are those that are neither VBF, VH or ttH, i.e. only ggH remains
     float untagged_events = get_total_events(signal_hist_vec[ggHhist]);
 
+    // -----------------------------------------
+    // needs to be revised!!
     // the correctly classified events
     float VBF1j_correct_events = signal_hist_vec[VBFhist] -> GetBinContent(VBF1jet_bin);
     float VBF2j_correct_events = signal_hist_vec[VBFhist] -> GetBinContent(VBF2jet_bin);
@@ -425,6 +435,7 @@ void make_punzi(int fill_histos)
     ttH_correct_events += signal_hist_vec[ttH2lhist] -> GetBinContent(ttH_bin);
 
     float untagged_correct_events = signal_hist_vec[ggHhist] -> GetBinContent(untagged_bin);
+    // ----------------------------------
 
     // generate the vector holding both signal- and background histograms: this makes sure to get the *total* background in each category: the unwanted signal contributions + the actual background
     std::vector<TH1F*> hist_vec(signal_hist_vec);
@@ -484,7 +495,7 @@ void make_punzi(int fill_histos)
 
 int main( int argc, char *argv[] )
 {
-    make_SB_purity(kFALSE);
+    make_SB_purity(kTRUE);
     make_S_purity(kFALSE);
     make_punzi(kFALSE);
     make_SB_ratio(kFALSE);
