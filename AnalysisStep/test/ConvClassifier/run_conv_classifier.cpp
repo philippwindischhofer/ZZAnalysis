@@ -180,6 +180,7 @@ int extraLeptons_2_cut(Tree* in)
 	return kFALSE;
 }
 
+// generates a vector of histograms corresponding to the signals
 std::vector<TH1F*> generate_signal_histvec(int fill_histos)
 {
     TString hist_storage("histograms_signal.root");
@@ -195,10 +196,6 @@ std::vector<TH1F*> generate_signal_histvec(int fill_histos)
     for(unsigned int i = 0; i < signal_hist_names.size(); i++)
     {
 	hist_vec[i] = new TH1F(signal_hist_names[i], signal_hist_names[i], 7, -0.5, 6.5);
-    }
-
-    for(unsigned int i = 0; i < signal_hist_names.size(); i++)
-    {
 	hist_vec[i] -> SetFillColor(signal_source_colors[i]);
 	hist_vec[i] -> SetLineColor(signal_source_colors[i]);
 	hist_vec[i] -> SetFillStyle(1001);
@@ -206,10 +203,10 @@ std::vector<TH1F*> generate_signal_histvec(int fill_histos)
 
     if(fill_histos)
     {	
-	// No need to fill the histograms every time!
 	std::cout << "filling histograms" << std::endl;
 	Mor17Classifier* testclass = new Mor17Classifier();
 	// for the signal files, can be very specific and select precisely the correct differential channel
+	// ideally, create one separate histogram (by using generator-level cuts) for each signal category. Then, can compute the efficiency for this signal to end up in the matching signal category
 	testclass -> FillHistogram(signal_path[0], lumi, hist_vec[ggHhist], mZZ_cut);
 	testclass -> FillHistogram(signal_path[1], lumi, hist_vec[VBFhist], mZZ_cut);
 	testclass -> FillHistogram(signal_path[2], lumi, hist_vec[WHXhist], extraLeptons_0_cut);
@@ -247,9 +244,9 @@ std::vector<TH1F*> generate_background_histvec(int fill_histos)
     for(unsigned int i = 0; i < background_hist_names.size(); i++)
     {
 	hist_vec[i] = new TH1F(background_hist_names[i], background_hist_names[i], 7, -0.5, 6.5);
-	hist_vec[i] -> SetFillColor(background_source_colors[i]);
+	hist_vec[i] -> SetFillStyle(3244);
 	hist_vec[i] -> SetLineColor(background_source_colors[i]);
-	hist_vec[i] -> SetFillStyle(3004);
+	hist_vec[i] -> SetFillColor(background_source_colors[i]);
     }
 
     if(fill_histos)
@@ -308,6 +305,9 @@ void make_SB_purity(int fill_histos)
 
     CatPlotter plotter;
 
+    plotter.Construct(hist_vec, cat_labels, source_labels, std::vector<float>(), "exp. events", lumi);
+    plotter.SaveAs(out_folder + "categorization_SB_absolute.pdf");
+    
     std::vector<float> sums_SB = renormalize_histograms(hist_vec);
     plotter.Construct(hist_vec, cat_labels, source_labels, sums_SB, "signal fraction", lumi);        
     plotter.SaveAs(out_folder + "categorization_SB.pdf");

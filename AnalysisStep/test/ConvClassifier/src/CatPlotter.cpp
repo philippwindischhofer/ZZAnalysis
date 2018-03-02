@@ -33,7 +33,9 @@ void CatPlotter::Construct(std::vector<TH1F*> hists, std::vector<TString> cat_la
     pad1 -> SetLeftMargin(0.3);
     pad1 -> SetTicks(1, 1);
     pad1 -> SetRightMargin(0.03);
+    pad1 -> SetFillColorAlpha(kWhite, 0.0);
     pad2 -> SetLeftMargin(0.0);
+    pad2 -> SetFillColorAlpha(kWhite, 0.0);
 
     draw_legend = (source_labels.size() > 0) ? true : false;
 
