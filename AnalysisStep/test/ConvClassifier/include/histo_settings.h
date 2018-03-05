@@ -18,13 +18,13 @@ std::vector<TString> cat_labels = {
 
 std::vector<TString> cat_labels_text = {
     "untagged",
-    "VBF1Jet",
-    "VBF2Jet",
-    "VH-leptonic",
-    "VH-hadronic",
-    "ttH-leptonic",
-    "ttH-hadronic",
-    "VHMET"
+    "VBF-1j",
+    "VBF-2j",
+    "$VH$-lept",
+    "$VH$-hadr",
+    "$ttH$-lept",
+    "$ttH$-hadr",
+    "$VH$-MET"
 };
 
 // bin 0 is actually the underflow bin -> relevant content starts at bin 1 only
@@ -57,12 +57,12 @@ std::vector<TString> cat_labels = {
 
 std::vector<TString> cat_labels_text = {
     "untagged",
-    "VBF1Jet",
-    "VBF2Jet",
-    "VH-leptonic",
-    "VH-hadronic",
-    "ttH",
-    "VHMET"
+    "VBF-1j",
+    "VBF-2j",
+    "$VH$-lept",
+    "$VH$-hadr",
+    "$t\\bar{t}H$",
+    "$VH$-MET"
 };
 
 // bin 0 is actually the underflow bin -> relevant content starts at bin 1 only
@@ -78,7 +78,7 @@ enum bin_index {
 
 #endif // Mor17
 
-    
+// settings that are valid for both categorizations    
 std::vector<TString> signal_file_names = {"ggH125", "VBFH125", "WplusH125", "WminusH125", "ZH125", "ttH125", "bbH125", "tqH125"};
 
 std::vector<TString> signal_source_labels = {
@@ -95,16 +95,25 @@ std::vector<TString> signal_source_labels = {
 };
 
 std::vector<TString> signal_source_labels_text = {
-    "ggH",
+    "$ggH$",
     "VBF",
-    "WH, W->X",
-    "WH, W->l nu",
-    "ZH, Z->X",
-    "ZH, Z->nu nu",
-    "ZH, Z->2l",
-    "ttH, tt->0l",
-    "ttH, tt->1l",
-    "ttH, tt->2l"
+    "$WH, W \\rightarrow X$",
+    "$WH, W \\rightarrow \\ell \\nu$",
+    "$ZH, Z \\rightarrow X$",
+    "$ZH, Z \\rightarrow \\nu \\nu$",
+    "$ZH, Z \\rightarrow 2\\ell$",
+    "$ttH, tt \\rightarrow 0\\ell$",
+    "$ttH, tt \\rightarrow 1\\ell$",
+    "$ttH, tt \\rightarrow 2\\ell$"
+};
+
+
+std::vector<TString> signal_source_labels_merged_text = {
+    "$ggH$", 
+    "VBF", 
+    "$WH$",
+    "$ZH$",
+    "$t\\bar{t}H$",
 };
 
 // names of the signal histograms
@@ -120,7 +129,7 @@ std::vector<TString> signal_hist_names = {
     "ttH1lhist", 
     "ttH2lhist"};
 
-enum hist_index {
+enum signal_hist_index {
     ggHhist = 0,
     VBFhist = 1,
     WHXhist = 2,
@@ -170,40 +179,32 @@ std::vector<TString> background_file_names = {
     "ggTo4tau_Contin_MCFM701"
 };
 
+enum background_hist_index {
+    ZZ4lhist = 0,
+    DYhist = 1,
+    TThist = 2,
+    gg4lhist = 3
+};
+
 std::vector<TString> background_hist_names = {
     "ZZTo4l", 
     "DYToLL",
     "TTTo2L2Nu",
-    "ggTo2e2mu",
-    "ggTo2e2tau",
-    "ggTo2mu2tau",
-    "ggTo4e",
-    "ggTo4mu",
-    "ggTo4tau"
+    "ggTo4l"
 };
 
 std::vector<TString> background_source_labels = {
     "ZZ #rightarrow 4l",
     "Z/#gamma^{*} #rightarrow ll",
     "t#bar{t} #rightarrow 2l2#nu",
-    "gg #rightarrow ZZ #rightarrow 2e2#mu",
-    "gg #rightarrow ZZ #rightarrow 2e2#tau",
-    "gg #rightarrow ZZ #rightarrow 2#mu2#tau",
-    "gg #rightarrow ZZ #rightarrow 4e",
-    "gg #rightarrow ZZ #rightarrow 4#mu",
-    "gg #rightarrow ZZ #rightarrow 4#tau"
+    "gg #rightarrow ZZ #rightarrow 4l"
 };
 
 std::vector<TString> background_source_labels_text = {
-    "ZZ #rightarrow 4l",
-    "Z/#gamma^{*} #rightarrow ll",
-    "t#bar{t} #rightarrow 2l2#nu",
-    "gg #rightarrow ZZ #rightarrow 2e2#mu",
-    "gg #rightarrow ZZ #rightarrow 2e2#tau",
-    "gg #rightarrow ZZ #rightarrow 2#mu2#tau",
-    "gg #rightarrow ZZ #rightarrow 4e",
-    "gg #rightarrow ZZ #rightarrow 4#mu",
-    "gg #rightarrow ZZ #rightarrow 4#tau"
+    "$ZZ \\rightarrow 4l$",
+    "$Z/\\gamma^{*} \\rightarrow ll$",
+    "$t\\bar{t} \\rightarrow 2l2\\nu$",
+    "$gg \\rightarrow ZZ \\rightarrow 4l$"
 };
 
 #endif // histo_settings_h

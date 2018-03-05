@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <iomanip>
 
 // ROOT
 #include "TApplication.h"
@@ -79,7 +80,6 @@ int countAssocLeptons(Tree* in)
 
 int extraLeptons_0_cut(Tree* in)
 {
-    //if(mZZ_cut(in) && (in -> GenAssocLep1Id == 0) && (in -> GenAssocLep2Id == 0))
     if(mZZ_cut(in) && (countAssocLeptons(in) == 0))
 	return kTRUE;
     else
@@ -88,7 +88,6 @@ int extraLeptons_0_cut(Tree* in)
 
 int extraLeptons_1_cut(Tree* in)
 {
-    //if(mZZ_cut(in) && (in -> GenAssocLep1Id != 0) && (in -> GenAssocLep2Id == 0))
     if(mZZ_cut(in) && (countAssocLeptons(in) == 1))
 	return kTRUE;
     else
@@ -97,7 +96,6 @@ int extraLeptons_1_cut(Tree* in)
 
 int extraLeptons_2_cut(Tree* in)
 {
-//    if(mZZ_cut(in) && (in -> GenAssocLep1Id != 0) && (in -> GenAssocLep2Id != 0))
     if(mZZ_cut(in) && (countAssocLeptons(in) == 2))
 	return kTRUE;
     else
@@ -205,7 +203,7 @@ std::vector<TH1F*> generate_background_histvec(int fill_histos, Classifier* clas
 	background_path.push_back(path + background_file_names[i] + file_name);
     }
 
-    std::vector<TH1F*> hist_vec(background_path.size());
+    std::vector<TH1F*> hist_vec(background_hist_names.size());
 
     for(unsigned int i = 0; i < background_hist_names.size(); i++)
     {
@@ -222,11 +220,18 @@ std::vector<TH1F*> generate_background_histvec(int fill_histos, Classifier* clas
 //	Mor17Classifier* testclass = new Mor17Classifier();
 	
 	// for the background files, don't have any requirements for many categories nor for any additional cuts, they just get summed up anyways later (keep the file-induced categorization anyways)
-	for(unsigned int i = 0; i < background_path.size(); i++)
-	{
-	    std::cout << "reading from " << background_path[i] << std::endl;
-	    classifier -> FillHistogram(background_path[i], lumi, hist_vec[i], mZZ_cut);
-	}
+
+	classifier -> FillHistogram(background_path[0], lumi, hist_vec[ZZ4lhist], mZZ_cut);
+	classifier -> FillHistogram(background_path[1], lumi, hist_vec[DYhist], mZZ_cut);
+	classifier -> FillHistogram(background_path[2], lumi, hist_vec[TThist], mZZ_cut);
+
+	// aggregate all the gg -> 4l channels together
+	classifier -> FillHistogram(background_path[3], lumi, hist_vec[gg4lhist], mZZ_cut);
+	classifier -> FillHistogram(background_path[4], lumi, hist_vec[gg4lhist], mZZ_cut);
+	classifier -> FillHistogram(background_path[5], lumi, hist_vec[gg4lhist], mZZ_cut);
+	classifier -> FillHistogram(background_path[6], lumi, hist_vec[gg4lhist], mZZ_cut);
+	classifier -> FillHistogram(background_path[7], lumi, hist_vec[gg4lhist], mZZ_cut);
+	classifier -> FillHistogram(background_path[8], lumi, hist_vec[gg4lhist], mZZ_cut);
 
 	std::cout << "end filling background histograms" << std::endl;
 
@@ -262,8 +267,6 @@ void make_S_purity(int fill_histos, Classifier* classifier)
     {
 	total_events += sums_signal_only[i];
     }
-
-    std::cout << "S_purity: inclusive events = " << total_events << std::endl;
 }
 
 void make_SB_purity(int fill_histos, Classifier* classifier)
@@ -305,8 +308,6 @@ void make_SB_ratio(int fill_histos, Classifier* classifier)
     {
 	total_events += SB_sums[i];
     }
-
-    std::cout << "SB_ratio: inclusive events = " << total_events << std::endl;
 
     // make the plot of the punzi purity
     std::vector<TH1F*> SB_hist_vec = {new TH1F("SB", "SB", cat_labels.size(), -0.5, cat_labels.size() - 0.5)};
@@ -441,7 +442,7 @@ void make_punzi(int fill_histos, Classifier* classifier)
     VHhadr_correct_events += signal_hist_vec[ZHXhist] -> GetBinContent(VHhadronic_bin);
 
 #ifdef Mor17
-    Float ttH_correct_events = signal_hist_vec[ttH0lhist] -> GetBinContent(ttH_bin);
+    float ttH_correct_events = signal_hist_vec[ttH0lhist] -> GetBinContent(ttH_bin);
     ttH_correct_events += signal_hist_vec[ttH1lhist] -> GetBinContent(ttH_bin);
     ttH_correct_events += signal_hist_vec[ttH2lhist] -> GetBinContent(ttH_bin);
 #endif
@@ -485,7 +486,7 @@ void make_punzi(int fill_histos, Classifier* classifier)
 	ttH_correct_events,
 	ttH_events,
 	5, 2);
-#endif Mor17
+#endif
 
 #ifdef Mor18
     float ttH_leptonic_punzi = get_punzi_purity(
@@ -499,7 +500,7 @@ void make_punzi(int fill_histos, Classifier* classifier)
 	ttH_hadronic_correct_events,
 	ttH_hadronic_events,
 	5, 2);
-#endif Mor18
+#endif
 
     float VHhadr_punzi = get_punzi_purity(
 	sums[VHhadronic_bin - 1] - VHhadr_correct_events,
@@ -543,55 +544,109 @@ void make_punzi(int fill_histos, Classifier* classifier)
     plotter.SaveAs(out_folder + STORAGE_PREFIX + "punzi.pdf");
 }
 
-void print_yield_table(std::vector<TH1F*> hist_vec, std::vector<TString> col_labels, std::vector<TString> source_labels)
+void print_yield_table(std::vector<TH1F*> hist_vec, std::vector<TString> col_labels, std::vector<TString> source_labels, int put_tabular, int put_header, TString outpath)
 {
+    std::ofstream outfile;
+    outfile.open(outpath);
+    outfile << std::setprecision(3);
+
     std::vector<float> sums = get_category_sums(hist_vec);
 
-    // table header = category labels
-    std::cout << "\t\t";
-    for(auto cat = 0; cat < hist_vec[0] -> GetSize() - 2; cat++)
+    if(put_tabular)
     {
-	std::cout << col_labels[cat] << "\t";
+	outfile << "\\begin{tabular}{c ";
+
+	for(auto cat = 0; cat < hist_vec[0] -> GetSize() - 2 + 1; cat++)
+	{
+	    outfile << "| c";
+	}
+
+	outfile << "}\n";
     }
 
-    std::cout << std::endl;
+    if(put_header)
+    {
+	// table header = category labels
+	for(auto cat = 0; cat < hist_vec[0] -> GetSize() - 2; cat++)
+	{
+	    outfile << " & " << col_labels[cat];
+	}
+
+	outfile << " & inclusive";
+	outfile << "\\\\ \\hline \n";
+    }
 
     int hist_nr = 0;
     for(auto& hist : hist_vec)
     {
-	std::cout << source_labels[hist_nr] << "\t\t";
+	outfile << source_labels[hist_nr];
 	hist_nr++;
+
+	float running_sum = 0;
 
 	for(auto cat = 1; cat < hist -> GetSize() - 1; cat++)
 	{
-	    std::cout << hist -> GetBinContent(cat) << "\t";
+	    running_sum += hist -> GetBinContent(cat);
+	    outfile << " & " << hist -> GetBinContent(cat);
 	}
-	std::cout << std::endl;
+
+	outfile << " & " << running_sum;
+	outfile << "\\\\ \\hline \n";
     }
 
-    std::cout << "sum" << "\t\t";
-
+    outfile << "sum";
+    
+    float running_sum = 0;
     for(auto& sum : sums)
     {
-	std::cout << sum << "\t";
+	running_sum += sum;
+	outfile << " & " << sum;
     }
 
-    std::cout << std::endl;
+    outfile << " & " << running_sum;
+    outfile << "\\\\ \\hline\\hline \n";
+
+    if(put_tabular)
+	outfile << "\\end{tabular}\n";
+
+    outfile.close();
 }
 
-void print_signal_yield_table(int fill_histos, Classifier* classifier)
+void print_signal_yield_table(int fill_histos, Classifier* classifier, int merged, int put_tabular, int put_header)
 {
     std::vector<TH1F*> signal_hist_vec = generate_signal_histvec(fill_histos, classifier);
 
-    print_yield_table(signal_hist_vec, cat_labels_text, signal_source_labels_text);
+    if(merged)
+    {
+	// merge some of them into just one histogram, to make the table easier to read and compare
+	std::vector<TH1F*> signal_hist_vec_merged;
+	signal_hist_vec_merged.push_back(signal_hist_vec[ggHhist]);
+	signal_hist_vec_merged.push_back(signal_hist_vec[VBFhist]);
+
+	signal_hist_vec_merged.push_back(signal_hist_vec[WHXhist]);
+	signal_hist_vec_merged.back() -> Add(signal_hist_vec[WHlnuhist]);
+
+	signal_hist_vec_merged.push_back(signal_hist_vec[ZHXhist]);
+	signal_hist_vec_merged.back() -> Add(signal_hist_vec[ZHnunuhist]);
+	signal_hist_vec_merged.back() -> Add(signal_hist_vec[ZH2lhist]);
+
+	signal_hist_vec_merged.push_back(signal_hist_vec[ttH0lhist]);
+	signal_hist_vec_merged.back() -> Add(signal_hist_vec[ttH1lhist]);
+	signal_hist_vec_merged.back() -> Add(signal_hist_vec[ttH2lhist]);
+
+	print_yield_table(signal_hist_vec_merged, cat_labels_text, signal_source_labels_merged_text, put_tabular, put_header, out_folder + STORAGE_PREFIX + "merged_signal_yields.tex");
+    }
+    else
+    {
+	print_yield_table(signal_hist_vec, cat_labels_text, signal_source_labels_text, put_tabular, put_header, out_folder + STORAGE_PREFIX + "signal_yields.tex");
+    }
 }
 
-
-void print_background_yield_table(int fill_histos, Classifier* classifier)
+void print_background_yield_table(int fill_histos, Classifier* classifier, int put_tabular, int put_header)
 {
     std::vector<TH1F*> background_hist_vec = generate_background_histvec(fill_histos, classifier);
 
-    print_yield_table(background_hist_vec, cat_labels_text, background_source_labels_text);
+    print_yield_table(background_hist_vec, cat_labels_text, background_source_labels_text, put_tabular, put_header, out_folder + STORAGE_PREFIX + "background_yields.tex");
 }
 
 int main( int argc, char *argv[] )
@@ -610,7 +665,8 @@ int main( int argc, char *argv[] )
     make_SB_ratio(kFALSE, refclass);
     make_SBfine_ratio(kFALSE, refclass);
 
-    print_signal_yield_table(kFALSE, refclass);
-    print_background_yield_table(kFALSE, refclass);
+    print_signal_yield_table(kFALSE, refclass, kTRUE, kFALSE, kFALSE);
+    print_signal_yield_table(kFALSE, refclass, kFALSE, kFALSE, kFALSE);
+    print_background_yield_table(kFALSE, refclass, kFALSE, kTRUE);
     return(0);
 }
