@@ -8,18 +8,14 @@
 <library   file="../test/Plotter_v2/src/*.cpp" name="ZZAnalysisAnalysisStepTestPlotter_v2Src">
 </library>
 
-<library file="../test/ConvClassifier/src/*.cpp" name="ZZAnalysisAnalysisStepTestConvClassifierSrc">
+<library file="../test/Benchmarker/src/*.cpp" name="ZZAnalysisAnalysisStepTestBenchmarkerSrc">
 </library>
 
-<library file="../test/HelloWorld/src/*.cpp" name="ZZAnalysisAnalysisStepTestHelloWorldSrc">
-</library>
-
-<bin name="run_conv_classifier" file="../test/ConvClassifier/run_conv_classifier.cpp">
-  <lib name="ZZAnalysisAnalysisStepTestConvClassifierSrc"/>
+<bin name="run_benchmarker" file="../test/Benchmarker/run_benchmarker.cpp">
+  <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>
 </bin>
 
 <bin name="run_helloworld" file="../test/HelloWorld/run_helloworld.cpp">
-  <lib name="ZZAnalysisAnalysisStepTestHelloWorldSrc"/>
 </bin>
 
 <bin   name="run_plotter" file="../test/Plotter_v2/run_plotter.cpp">
