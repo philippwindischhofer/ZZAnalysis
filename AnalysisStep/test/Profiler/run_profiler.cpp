@@ -57,7 +57,9 @@ int main(int argc, char *argv[])
     Mor17Classifier* testclass = new Mor17Classifier();
 
     prof -> FillProfile(input_path, lumi, hist, 
-			[&](Tree* in) -> bool{return testclass -> ClassifyThisEvent(in) == 5 ? kTRUE : kFALSE;},
+			[&](Tree* in) -> bool{
+			    return testclass -> ClassifyThisEvent(in) == 5 ? 
+				kTRUE : kFALSE;},
 			[&](Tree* in) -> float{return in -> PFMET;}
 	);
 

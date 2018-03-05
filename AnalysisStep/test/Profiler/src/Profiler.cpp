@@ -8,6 +8,16 @@ Profiler::~Profiler()
 
 void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var)
 {
+    auto TH1F_callback = [&](TObject* hist, Tree* in, float weight) -> void {
+	TH1F* local_hist = static_cast<TH1F*>(hist);
+	local_hist -> Fill(var(in), weight);
+    };
+    
+    FillProfile(input_file_name, lumi, hist, cut, TH1F_callback);
+}
+
+void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, const std::function<bool(Tree*)>& cut, const std::function<void(TObject*, Tree*, float)>& fill_callback)
+{
     input_file = new TFile(input_file_name);
     
     std::cout << "reading from " << input_file_name << std::endl;
@@ -43,10 +53,12 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, cons
 	
 	if(cut(this))
 	{
-	    hist -> Fill(var(this), event_weight);
+	    //hist -> Fill(var(this), event_weight);
+	    fill_callback(hist, this, event_weight);
 	    fill_cnt ++;
 	}
     }
 
     std::cout << "fill_cnt = " << fill_cnt << std::endl;
 }
+
