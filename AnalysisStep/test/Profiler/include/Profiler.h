@@ -25,7 +25,7 @@ public:
     Profiler();
     ~Profiler();
 
-    void FillProfile(TString input_file_name, TH1F* hist, const std::function<bool(Tree*)>& cut);
+    void FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var);
 
 
 private:
@@ -36,6 +36,6 @@ private:
     Long64_t n_gen_events;
     Long64_t gen_sum_weights;
 
-}
+};
 
 #endif

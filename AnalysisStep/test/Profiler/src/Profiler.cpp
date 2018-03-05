@@ -1,4 +1,4 @@
-#include <ZZAnalysis/AnalysisStep/test/Profiler/include/Classifier.h>
+#include <ZZAnalysis/AnalysisStep/test/Profiler/include/Profiler.h>
 
 Profiler::Profiler():Tree()
 {  }
@@ -6,7 +6,7 @@ Profiler::Profiler():Tree()
 Profiler::~Profiler()
 {  }
 
-void Profiler::FillProfile(TString input_file_name, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<auto(Tree*)>& var)
+void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var)
 {
     input_file = new TFile(input_file_name);
     

@@ -27,7 +27,7 @@ public:
 
     void FillHistogram(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut);
 
-    virtual int ClassifyEvent() { return -1; };
+    virtual int ClassifyThisEvent(Tree* in) { return -1; };
 
 private:
     TFile* input_file;
@@ -37,6 +37,7 @@ private:
     Long64_t n_gen_events;
     Long64_t gen_sum_weights;
 
+    virtual int ClassifyEvent() { return -1; };
 };
 
 #endif
