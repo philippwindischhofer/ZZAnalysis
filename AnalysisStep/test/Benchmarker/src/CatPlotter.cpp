@@ -27,7 +27,7 @@ void CatPlotter::Construct(std::vector<TH1F*> hists, std::vector<TString> cat_la
     for(unsigned int i = 0; i < hists.size(); i++)
     {
 	hs -> Add(hists[i]);
-	hists[i] -> GetXaxis() -> SetNdivisions(7, 0, 0, kFALSE);
+	hists[i] -> GetXaxis() -> SetNdivisions(cat_labels.size(), 0, 0, kFALSE);
 	hists[i] -> GetYaxis() -> SetNdivisions(10, 2, 0, kTRUE);    
 	hists[i] -> GetYaxis() -> SetTickLength(0.01);
 	hists[i] -> GetXaxis() -> SetTickLength(0.01);    
@@ -81,7 +81,7 @@ void CatPlotter::Redraw()
     gStyle->SetHistTopMargin(0.);
     hs -> GetYaxis() -> SetTitle(title);
     hs -> GetYaxis() -> SetTitleOffset(0.95);
-    hs -> GetHistogram() -> GetXaxis() -> SetNdivisions(7, 0, 0, kFALSE);
+    hs -> GetHistogram() -> GetXaxis() -> SetNdivisions(cat_labels.size(), 0, 0, kFALSE);
     hs -> GetHistogram() -> GetYaxis() -> SetNdivisions(10, 2, 0, kTRUE);
     hs -> GetHistogram() -> GetYaxis() -> SetTickLength(0.01);
     hs -> GetHistogram() -> GetXaxis() -> SetTickLength(0.01);    
@@ -98,27 +98,30 @@ void CatPlotter::Redraw()
 	Tl -> Draw();
     }
 
+    double x_align = (pad1 -> GetUxmax() - pad1 -> GetUxmin()) * (-0.2) + pad1 -> GetUxmin();
+
     for(unsigned int ann = 0; ann < cat_labels.size(); ann++)
     {
 	pad1 -> cd();
-	TLatex* Tl = new TLatex((-0.2) * hs -> GetMaximum(), (float)ann, cat_labels[ann]);
+	TLatex* Tl = new TLatex();
 	Tl -> SetTextSize(0.025);
 	Tl -> SetTextColor(kBlack);
 	Tl -> SetTextAlign(22);
-	Tl -> Draw();
+	Tl -> DrawLatex(x_align, (float)ann, cat_labels[ann]);
     }
+
+    float upper_bound = (pad1 -> GetUymax() - pad1 -> GetUymin()) * 1.02 + pad1 -> GetUymin();
 
     // put the luminosity
     pad1 -> cd();
-    TLatex* Tl = new TLatex(hs -> GetMaximum(), cat_labels.size() - 0.4, Form("%.2f fb^{-1} (13TeV)", lumi));
+    TLatex* Tl = new TLatex();
     Tl -> SetTextSize(0.025);
     Tl -> SetTextColor(kBlack);
     Tl -> SetTextAlign(31);
-    Tl -> Draw();			    
-
+    Tl -> DrawLatex(pad1 -> GetUxmax(), upper_bound, Form("%.2f fb^{-1} (13TeV)", lumi));			    
     if(draw_label)
     {
-	TLatex* Tl = new TLatex(0.0, cat_labels.size() - 0.4, label);
+	TLatex* Tl = new TLatex(pad1 -> GetUxmin(), upper_bound, label);
 	Tl -> SetTextSize(0.025);
 	Tl -> SetTextColor(kBlack);
 	Tl -> SetTextAlign(11);

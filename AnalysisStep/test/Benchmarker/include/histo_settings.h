@@ -107,7 +107,6 @@ std::vector<TString> signal_source_labels_text = {
     "$ttH, tt \\rightarrow 2\\ell$"
 };
 
-
 std::vector<TString> signal_source_labels_merged_text = {
     "$ggH$", 
     "VBF", 
@@ -127,7 +126,8 @@ std::vector<TString> signal_hist_names = {
     "ZH2lhist", 
     "ttH0lhist", 
     "ttH1lhist", 
-    "ttH2lhist"};
+    "ttH2lhist"
+};
 
 enum signal_hist_index {
     ggHhist = 0,
@@ -179,31 +179,38 @@ std::vector<TString> background_file_names = {
     "ggTo4tau_Contin_MCFM701"
 };
 
+/*
 enum background_hist_index {
     ZZ4lhist = 0,
     DYhist = 1,
     TThist = 2,
     gg4lhist = 3
 };
+*/
+
+enum background_hist_index {
+    ZZ4lhist = 0,
+    gg4lhist = 1
+};
 
 std::vector<TString> background_hist_names = {
     "ZZTo4l", 
-    "DYToLL",
-    "TTTo2L2Nu",
+    //"DYToLL",
+    //"TTTo2L2Nu",
     "ggTo4l"
 };
 
 std::vector<TString> background_source_labels = {
-    "ZZ #rightarrow 4l",
-    "Z/#gamma^{*} #rightarrow ll",
-    "t#bar{t} #rightarrow 2l2#nu",
+    "q#bar{q} #rightarrow ZZ #rightarrow 4l",
+    //"Z/#gamma^{*} #rightarrow ll",
+    //"t#bar{t} #rightarrow 2l2#nu",
     "gg #rightarrow ZZ #rightarrow 4l"
 };
 
 std::vector<TString> background_source_labels_text = {
-    "$ZZ \\rightarrow 4l$",
-    "$Z/\\gamma^{*} \\rightarrow ll$",
-    "$t\\bar{t} \\rightarrow 2l2\\nu$",
+    "$q\\bar{q} \\rightarrow ZZ \\rightarrow 4l$",
+    //"$Z/\\gamma^{*} \\rightarrow ll$",
+    //"$t\\bar{t} \\rightarrow 2l2\\nu$",
     "$gg \\rightarrow ZZ \\rightarrow 4l$"
 };
 

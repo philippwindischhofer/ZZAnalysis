@@ -57,6 +57,7 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, c
     Long64_t n_entries = fChain -> GetEntriesFast();
     std::cout << "total number of entries = " << n_entries << std::endl;
 
+    float weight_sum = 0;
     int fill_cnt = 0;
 
     // loop over the entries in chain
@@ -73,12 +74,13 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, c
 	
 	if(cut(this))
 	{
-	    //hist -> Fill(var(this), event_weight);
 	    fill_callback(hist, this, event_weight);
-	    fill_cnt ++;
+	    weight_sum += event_weight;
+	    fill_cnt++;
 	}
     }
 
+    std::cout << "weight_sum = " << weight_sum << std::endl;
     std::cout << "fill_cnt = " << fill_cnt << std::endl;
 }
 

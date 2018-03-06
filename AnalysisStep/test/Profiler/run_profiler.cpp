@@ -15,6 +15,8 @@
 
 // own local files
 #include <ZZAnalysis/AnalysisStep/test/Profiler/include/Profiler.h>
+#include <ZZAnalysis/AnalysisStep/test/Profiler/include/ProfPlotter.h>
+#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Classifier.h>
 #include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Mor17Classifier.h>
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 
@@ -25,21 +27,14 @@ TString path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
 TString file_name = "/ZZ4lAnalysis.root";
 TString out_folder = "../../src/ZZAnalysis/ProfilerPlots/";
 
-std::vector<TString> signal_file_names = {
+std::vector<TString> file_names = {
     "ggH125",
     "VBFH125",
     "WplusH125",
     "WminusH125",
     "ZH125",
     "ttH125",
-    "bbH125",
-    "tqH125"
-};
-
-std::vector<TString> background_file_names = {
     "ZZTo4l", 
-    "DYJetsToLL_M50",
-    "TTTo2L2Nu",
     "ggTo2e2mu_Contin_MCFM701",
     "ggTo2e2tau_Contin_MCFM701",
     "ggTo2mu2tau_Contin_MCFM701",
@@ -48,37 +43,148 @@ std::vector<TString> background_file_names = {
     "ggTo4tau_Contin_MCFM701"
 };
 
-int main(int argc, char *argv[])
+std::vector<TString> hist_names = {
+    "ggHhist",
+    "VBFhist",
+    "WHhist",
+    "ZHhist",
+    "ttHhist",
+    "qqTo4lhist",
+    "ggTo4lhist"
+};
+
+std::vector<TString> source_labels = {
+    "ggH",
+    "VBF",
+    "WH",
+    "ZH",
+    "ttH",
+    "q#bar{q} #rightarrow ZZ #rightarrow 4l",
+    "gg #rightarrow ZZ #rightarrow 4l"
+};
+
+std::vector<int> source_styles = {
+    1001,
+    1001,
+    1001,
+    1001,
+    1001,
+    3244,
+    3244
+};
+
+enum hist_index {
+    ggHhist = 0,
+    VBFhist = 1,
+    WHhist = 2,
+    ZHhist = 3,
+    ttHhist = 4,
+    qqhist = 5,
+    gghist = 6
+};
+
+std::vector<int> source_colors = {
+    kBlue - 9,
+    kGreen - 6,
+    kRed - 7,
+    kYellow - 7,
+    kCyan - 6,
+    kBlue - 9,
+    kGreen - 6
+};
+
+bool no_cut(Tree* in)
+{
+    return kTRUE;
+}
+
+bool mZZ_cut(Tree* in)
+{
+    if((in -> ZZMass > 118.) && (in -> ZZMass < 130.))
+	return kTRUE;
+    else
+	return kFALSE;
+}
+
+bool final_state_4e_cut(Tree* in)
+{
+    if(((in -> Z1Flav) == -121) && ((in -> Z2Flav) == -121))
+	return kTRUE;
+    else
+	return kFALSE;
+}
+
+bool final_state_2e2mu_cut(Tree* in)
+{
+    if( (((in -> Z1Flav) == -121) && ((in -> Z2Flav) == -169)) ||
+	(((in -> Z1Flav) == -169) && ((in -> Z2Flav) == -121)) )
+	return kTRUE;
+    else
+	return kFALSE;
+}
+
+bool final_state_4mu_cut(Tree* in)
+{
+    if(((in -> Z1Flav) == -169) && ((in -> Z2Flav) == -169))
+	return kTRUE;
+    else
+	return kFALSE;
+}
+
+void make_plots(Classifier* testclass, float lumi, std::function<float(Tree*)> var, std::function<bool(Tree*)> ext_cut, int category, TString x_label, TString label_left, TString out_file)
 {
     Profiler* prof = new Profiler();
-    TH1F* hist1d = new TH1F("hist1d", "hist1d", 100, 0, 100);
-    TH3F* hist3d = new TH3F("hist3d", "hist3d", 100, -180, -110, 100, -180, -110, 100, 0, 2);
+    ProfPlotter* plotter = new ProfPlotter();
+
+    TString label_right = Form("%.2f fb^{-1} (13TeV)", lumi);
+
+    std::vector<TH1F*> hist_vec(hist_names.size());
+    std::vector<TString> path_vec(file_names.size());
+
+    for(unsigned int i = 0; i < hist_names.size(); i++)
+    {
+	hist_vec[i] = new TH1F(file_names[i], file_names[i], 100, 0, 100);
+	hist_vec[i] -> SetFillColor(source_colors[i]);
+	hist_vec[i] -> SetLineColor(source_colors[i]);
+	hist_vec[i] -> SetFillStyle(source_styles[i]);
+    }
     
-    TString input_path = path + signal_file_names[5] + file_name;
+    for(unsigned int i = 0; i < file_names.size(); i++)
+    {
+	path_vec[i] = path + file_names[i] + file_name;
+    }
 
+    auto cut = [&](Tree* in) -> bool {
+	return (testclass -> ClassifyThisEvent(in) == category &&
+		ext_cut(in) &&
+		mZZ_cut(in)) ? 
+	kTRUE : kFALSE;};
+
+    prof -> FillProfile(path_vec[0], lumi, hist_vec[ggHhist], cut, var);
+    prof -> FillProfile(path_vec[1], lumi, hist_vec[VBFhist], cut, var);
+    prof -> FillProfile(path_vec[2], lumi, hist_vec[WHhist], cut, var);
+    prof -> FillProfile(path_vec[3], lumi, hist_vec[WHhist], cut, var);
+    prof -> FillProfile(path_vec[4], lumi, hist_vec[ZHhist], cut, var);
+    prof -> FillProfile(path_vec[5], lumi, hist_vec[ttHhist], cut, var);
+    prof -> FillProfile(path_vec[6], lumi, hist_vec[qqhist], cut, var);
+    prof -> FillProfile(path_vec[7], lumi, hist_vec[gghist], cut, var);
+    prof -> FillProfile(path_vec[8], lumi, hist_vec[gghist], cut, var);
+    prof -> FillProfile(path_vec[9], lumi, hist_vec[gghist], cut, var);
+    prof -> FillProfile(path_vec[10], lumi, hist_vec[gghist], cut, var);
+    prof -> FillProfile(path_vec[11], lumi, hist_vec[gghist], cut, var);
+    prof -> FillProfile(path_vec[12], lumi, hist_vec[gghist], cut, var);
+
+    plotter -> Construct(hist_vec, source_labels, x_label, "Events", label_left, label_right);
+    plotter -> SaveAs(out_folder + out_file + ".pdf");
+}
+
+
+int main(int argc, char *argv[])
+{
     Mor17Classifier* testclass = new Mor17Classifier();
+    auto testvar = [&](Tree* in) -> float{return in -> Z1Mass;};
 
-/*
-    prof -> FillProfile(input_path, lumi, hist1d, 
-			[&](Tree* in) -> bool{
-			    return testclass -> ClassifyThisEvent(in) == 5 ? 
-				kTRUE : kFALSE;},
-			[&](Tree* in) -> float{return in -> PFMET;}
-	);
-*/
-    prof -> FillProfile(input_path, lumi, hist3d,
-			[&](Tree* in) -> bool{
-			    return testclass -> ClassifyThisEvent(in) == ttHTaggedMor17 ? 
-				kTRUE : kFALSE;},
-			[&](Tree* in) -> float{return in -> Z1Flav;},
-			[&](Tree* in) -> float{return in -> Z2Flav;},
-			[&](Tree* in) -> float{return in -> nExtraLep;}
-	);
-
-    TCanvas* canv = new TCanvas("canv", "canv", 600, 600);
-    canv -> cd();
-    hist3d -> Draw("BOX");
-    canv -> SaveAs(out_folder + "3d.pdf");
+    make_plots(testclass, lumi, testvar, final_state_4mu_cut, ttHTaggedMor17, "m(Z1)", "ZZ #rightarrow 4#mu", "testplot");
 
     return(0);
 }

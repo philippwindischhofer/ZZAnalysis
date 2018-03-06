@@ -246,7 +246,7 @@ std::vector<TH1F*> generate_background_histvec(int fill_histos, Classifier* clas
 
 	classifier -> FillHistogram(background_path[0], lumi, hist_vec[ZZ4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
 	//classifier -> FillHistogram(background_path[1], lumi, hist_vec[DYhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
-	classifier -> FillHistogram(background_path[2], lumi, hist_vec[TThist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
+	//classifier -> FillHistogram(background_path[2], lumi, hist_vec[TThist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
 
 	// aggregate all the gg -> 4l channels together
 	classifier -> FillHistogram(background_path[3], lumi, hist_vec[gg4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
@@ -685,19 +685,19 @@ int main(int argc, char *argv[])
     Classifier* refclass = new Mor18Classifier();
 #endif
 
-    make_SB_purity(kTRUE, refclass, "categorization_SB", "no_cut_data", "", no_cut);
+    make_SB_purity(kFALSE, refclass, "categorization_SB", "no_cut_data", "", no_cut);
     make_S_purity(kFALSE, refclass, "categorization_S", "no_cut_data", "", no_cut);
     make_punzi(kFALSE, refclass, "punzi", "no_cut_data", no_cut);
     make_SB_ratio(kFALSE, refclass, "SB", "no_cut_data", no_cut);
     make_SBfine_ratio(kFALSE, refclass, "SB_fine", "no_cut_data", no_cut);
 
-    make_SB_purity(kTRUE, refclass, "categorization_SB_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut);
-    make_SB_purity(kTRUE, refclass, "categorization_SB_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut);
-    make_SB_purity(kTRUE, refclass, "categorization_SB_4e", "4e_data", "ZZ #rightarrow 4e", final_state_4e_cut);
+    make_SB_purity(kFALSE, refclass, "categorization_SB_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut);
+    make_SB_purity(kFALSE, refclass, "categorization_SB_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut);
+    make_SB_purity(kFALSE, refclass, "categorization_SB_4e", "4e_data", "ZZ #rightarrow 4e", final_state_4e_cut);
 
-    make_S_purity(kTRUE, refclass, "categorization_S_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut);
-    make_S_purity(kTRUE, refclass, "categorization_S_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut);
-    make_S_purity(kTRUE, refclass, "categorization_S_4e", "4e_data", "ZZ #rightarrow 4e", final_state_4e_cut);
+    make_S_purity(kFALSE, refclass, "categorization_S_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut);
+    make_S_purity(kFALSE, refclass, "categorization_S_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut);
+    make_S_purity(kFALSE, refclass, "categorization_S_4e", "4e_data", "ZZ #rightarrow 4e", final_state_4e_cut);
 
     print_signal_yield_table(kFALSE, refclass, kTRUE, kFALSE, kFALSE, "no_cut_data");
     print_signal_yield_table(kFALSE, refclass, kFALSE, kFALSE, kFALSE, "no_cut_data");
