@@ -19,7 +19,7 @@
 #include "TMath.h"
 
 // My own files
-#define Mor17
+#define Mor18
 
 #include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Classifier.h>
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>

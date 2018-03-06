@@ -16,6 +16,9 @@
 #include "TLatex.h"
 #include "TLegend.h"
 #include "TMath.h"
+#include "TH1F.h"
+#include "TH2F.h"
+#include "TH3F.h"
 
 #include "Tree.h"
 
@@ -27,7 +30,9 @@ public:
 
     void FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var);
 
-    //void FillProfile(TString input_file_name, float lumi, TH2F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y);
+    void FillProfile(TString input_file_name, float lumi, TH2F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y);
+
+    void FillProfile(TString input_file_name, float lumi, TH3F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y, const std::function<float(Tree*)>& var_z);
 
 private:
     TFile* input_file;

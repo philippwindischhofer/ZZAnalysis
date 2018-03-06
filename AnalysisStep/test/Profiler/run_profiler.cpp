@@ -16,6 +16,7 @@
 // own local files
 #include <ZZAnalysis/AnalysisStep/test/Profiler/include/Profiler.h>
 #include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Mor17Classifier.h>
+#include <ZZAnalysis/AnalysisStep/interface/Category.h>
 
 // global file locations
 float lumi = 35.9f;
@@ -50,29 +51,34 @@ std::vector<TString> background_file_names = {
 int main(int argc, char *argv[])
 {
     Profiler* prof = new Profiler();
-    TH1F* hist = new TH1F("hist", "hist", 100, 0, 100);
-
-    TString input_path = path + signal_file_names[0] + file_name;
+    TH1F* hist1d = new TH1F("hist1d", "hist1d", 100, 0, 100);
+    TH3F* hist3d = new TH3F("hist3d", "hist3d", 100, -180, -110, 100, -180, -110, 100, 0, 2);
+    
+    TString input_path = path + signal_file_names[5] + file_name;
 
     Mor17Classifier* testclass = new Mor17Classifier();
 
-    prof -> FillProfile(input_path, lumi, hist, 
+/*
+    prof -> FillProfile(input_path, lumi, hist1d, 
 			[&](Tree* in) -> bool{
 			    return testclass -> ClassifyThisEvent(in) == 5 ? 
 				kTRUE : kFALSE;},
 			[&](Tree* in) -> float{return in -> PFMET;}
 	);
-
-    /*prof -> FillProfile(input_path, lumi, hist, 
-		      [&](Tree* in) -> bool{return kTRUE;},
-		      [&](Tree* in) -> float{return in -> PFMET;}
-		      );*/
-
+*/
+    prof -> FillProfile(input_path, lumi, hist3d,
+			[&](Tree* in) -> bool{
+			    return testclass -> ClassifyThisEvent(in) == ttHTaggedMor17 ? 
+				kTRUE : kFALSE;},
+			[&](Tree* in) -> float{return in -> Z1Flav;},
+			[&](Tree* in) -> float{return in -> Z2Flav;},
+			[&](Tree* in) -> float{return in -> nExtraLep;}
+	);
 
     TCanvas* canv = new TCanvas("canv", "canv", 600, 600);
     canv -> cd();
-    hist -> Draw();
-    canv -> SaveAs(out_folder + "HelloWorld.pdf");
+    hist3d -> Draw("BOX");
+    canv -> SaveAs(out_folder + "3d.pdf");
 
     return(0);
 }

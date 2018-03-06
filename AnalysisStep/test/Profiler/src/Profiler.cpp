@@ -6,6 +6,26 @@ Profiler::Profiler():Tree()
 Profiler::~Profiler()
 {  }
 
+void Profiler::FillProfile(TString input_file_name, float lumi, TH3F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y, const std::function<float(Tree*)>& var_z)
+{
+    auto TH3F_callback =[&](TObject* hist, Tree* in, float weight) -> void {
+	TH3F* local_hist = static_cast<TH3F*>(hist);
+	local_hist -> Fill(var_x(in), var_y(in), var_z(in), weight);
+    };
+
+    FillProfile(input_file_name, lumi, hist, cut, TH3F_callback);
+}
+
+void Profiler::FillProfile(TString input_file_name, float lumi, TH2F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y)
+{
+    auto TH2F_callback = [&](TObject* hist, Tree* in, float weight) -> void {
+	TH2F* local_hist = static_cast<TH2F*>(hist);
+	local_hist -> Fill(var_x(in), var_y(in), weight);
+    };
+
+    FillProfile(input_file_name, lumi, hist, cut, TH2F_callback);
+}
+
 void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var)
 {
     auto TH1F_callback = [&](TObject* hist, Tree* in, float weight) -> void {
