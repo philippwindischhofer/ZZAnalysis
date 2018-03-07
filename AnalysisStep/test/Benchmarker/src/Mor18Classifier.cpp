@@ -40,5 +40,5 @@ int Mor18Classifier::ClassifyEvent()
 	ZZMass,
 	PFMET,
 	true,
-	false);
+	false); // use QG tagging?
 }

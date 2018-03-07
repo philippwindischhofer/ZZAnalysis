@@ -156,8 +156,8 @@ std::vector<int> signal_source_colors = {
 };
 
 std::vector<int> background_source_colors = {
-    kBlue - 9,
-    kGreen - 6,
+    kBlack,
+    kGray,
     kRed - 9,
     kRed - 6,
     kRed - 2,

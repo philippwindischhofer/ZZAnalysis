@@ -25,7 +25,7 @@ public:
     ProfPlotter();
     ~ProfPlotter();
 
-    void Construct(std::vector<TH1F*> hist_vec, std::vector<TString> source_labels, TString label_x, TString label_y, TString label_l, TString label_r);
+    void Construct(std::vector<TH1F*> hist_vec, std::vector<TString> source_labels, TString label_x, TString label_y, TString label_l, TString label_r, TString args);
     void SaveAs(TString outfile);
 
 private:
@@ -43,7 +43,7 @@ private:
     TString label_x;
     TString label_y;
 
-    void Redraw();
+    void Redraw(TString args);
 };
 
 #endif

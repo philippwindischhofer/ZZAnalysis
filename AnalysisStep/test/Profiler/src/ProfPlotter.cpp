@@ -6,7 +6,7 @@ ProfPlotter::ProfPlotter()
 ProfPlotter::~ProfPlotter()
 {  }
 
-void ProfPlotter::Construct(std::vector<TH1F*> hist_vec, std::vector<TString> source_labels, TString label_x, TString label_y, TString label_l, TString label_r)
+void ProfPlotter::Construct(std::vector<TH1F*> hist_vec, std::vector<TString> source_labels, TString label_x, TString label_y, TString label_l, TString label_r, TString args)
 {
     this -> label_l = label_l;
     this -> label_r = label_r;
@@ -17,12 +17,12 @@ void ProfPlotter::Construct(std::vector<TH1F*> hist_vec, std::vector<TString> so
     canv = new TCanvas("canv", "canv", 10, 10, 800, 600);
     hs = new THStack();
 
-    gStyle -> SetHistTopMargin(0.);
+    //gStyle -> SetHistTopMargin(0.);
 
     pad1 = new TPad("pad1", "pad1", 0.0, 0.0, 0.8, 1.0, kWhite, 0, 0);
     pad2 = new TPad("pad2", "pad2", 0.80, 0.0, 1.0, 1.0, kWhite, 0, 0);
 
-    pad1 -> SetLeftMargin(0.13);
+    pad1 -> SetLeftMargin(0.15);
     pad1 -> SetTicks(1, 1);
     pad1 -> SetRightMargin(0.03);
     pad1 -> SetFillColorAlpha(kWhite, 0.0);
@@ -49,10 +49,10 @@ void ProfPlotter::Construct(std::vector<TH1F*> hist_vec, std::vector<TString> so
 
     std::cout << "redrawing" << std::endl;
 
-    Redraw();
+    Redraw(args);
 }
 
-void ProfPlotter::Redraw()
+void ProfPlotter::Redraw(TString args)
 {
     canv -> cd();
     pad1 -> Draw();
@@ -65,10 +65,10 @@ void ProfPlotter::Redraw()
     }
 
     pad1 -> cd();
-    hs -> Draw("hist");
+    hs -> Draw("hist " + args);
     hs -> GetXaxis() -> SetTitle(label_x);
     hs -> GetYaxis() -> SetTitle(label_y);
-    hs -> Draw("hist");
+    hs -> Draw("hist " + args);
 
     // draw left & right labels
     TLatex* Tl = new TLatex();

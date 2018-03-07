@@ -6,7 +6,7 @@ Profiler::Profiler():Tree()
 Profiler::~Profiler()
 {  }
 
-void Profiler::FillProfile(TString input_file_name, float lumi, TH3F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y, const std::function<float(Tree*)>& var_z)
+void Profiler::FillProfile(TString input_file_name, float lumi, TH3F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y, const std::function<float(Tree*)>& var_z, bool normalize)
 {
     auto TH3F_callback =[&](TObject* hist, Tree* in, float weight) -> void {
 	TH3F* local_hist = static_cast<TH3F*>(hist);
@@ -16,7 +16,7 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TH3F* hist, cons
     FillProfile(input_file_name, lumi, hist, cut, TH3F_callback);
 }
 
-void Profiler::FillProfile(TString input_file_name, float lumi, TH2F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y)
+void Profiler::FillProfile(TString input_file_name, float lumi, TH2F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y, bool normalize)
 {
     auto TH2F_callback = [&](TObject* hist, Tree* in, float weight) -> void {
 	TH2F* local_hist = static_cast<TH2F*>(hist);
@@ -26,7 +26,7 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TH2F* hist, cons
     FillProfile(input_file_name, lumi, hist, cut, TH2F_callback);
 }
 
-void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var)
+void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, bool normalize)
 {
     auto TH1F_callback = [&](TObject* hist, Tree* in, float weight) -> void {
 	TH1F* local_hist = static_cast<TH1F*>(hist);
@@ -34,6 +34,9 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, cons
     };
     
     FillProfile(input_file_name, lumi, hist, cut, TH1F_callback);
+    
+    if(normalize)
+	hist -> Scale(1.0 / hist -> Integral("width"));
 }
 
 void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, const std::function<bool(Tree*)>& cut, const std::function<void(TObject*, Tree*, float)>& fill_callback)
@@ -80,6 +83,7 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, c
 	}
     }
 
+    std::cout << "gen_sum_weights = " << gen_sum_weights << std::endl;
     std::cout << "weight_sum = " << weight_sum << std::endl;
     std::cout << "fill_cnt = " << fill_cnt << std::endl;
 }
