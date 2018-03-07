@@ -100,27 +100,49 @@ void make_plots1d(Classifier* testclass, float lumi, std::function<float(Tree*)>
     plotter -> SaveAs(out_folder + out_file + ".pdf");
 }
 
+void make_plots2d(std::function<float(Tree*)> var_x, std::function<float(Tree*)> var_y)
+{
+   TCanvas* canv = new TCanvas("canv", "canv", 800, 800);
+   TH2F* hist2d = new TH2F("hist2d", "hist2d", 100, -1.1, -0.9, 100, -1.1, -0.9);
+
+   Profiler* prof = new Profiler();
+
+   TString input_file = path + "ggH125" + file_name;
+
+   prof -> FillProfile(input_file, lumi, hist2d, no_cut, var_x, var_y, false);
+
+   canv -> cd();
+   hist2d -> Draw();
+
+   canv -> SaveAs(out_folder + "2dhist.pdf");
+}
+
 int main(int argc, char *argv[])
 {
     Mor17Classifier* testclass = new Mor17Classifier();
 
-    TCanvas* canv = new TCanvas("canv", "canv", 800, 800);
-    TH2F* hist2d = new TH2F("hist2d", "hist2d", 100, -1.1, -0.9, 100, -1.1, -0.9);
+    // auto var_x = [&](Tree* in) -> float {return in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal;};
+    // auto var_y = [&](Tree* in) -> float {return in -> p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal;};
 
-    Profiler* prof = new Profiler();
+    // make_plots2d(var_x, var_y);
 
-    TString input_file = path + "ggH125" + file_name;
+/*
+    // do a sample plot: look only at the ones that have -1
+    auto var = [&](Tree* in) -> float{return in -> ZZMass;};
+    TString plot_name = "mZZ";
+    TString quantity = "m_{4l}";
+    TString y_label = "Events";
+    TString category_name = "";
+    int number_bins = 100;
+    float axis_lower = 118.0;
+    float axis_upper = 130.0;
+    int category = -1;
+    bool normalize = false;
 
-    auto var_x = [&](Tree* in) -> float {return in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal;};
-    auto var_y = [&](Tree* in) -> float {return in -> p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal;};
+    auto local_cut = [&](Tree* in) -> bool {return (in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal == -1.0 && in -> p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal) ? kTRUE : kFALSE;};
 
-    prof -> FillProfile(input_file, lumi, hist2d, no_cut, var_x, var_y, false);
-
-    canv -> cd();
-    hist2d -> Draw();
-
-    canv -> SaveAs(out_folder + "2dhist.pdf");
-
+    make_plots1d(testclass, lumi, var, number_bins, axis_lower, axis_upper, local_cut, category, quantity, y_label, category_name, normalize, plot_name);
+*/
 /*
     // do a sample plot
     auto var = [&](Tree* in) -> float{return in -> ZZMass;};
@@ -142,7 +164,7 @@ int main(int argc, char *argv[])
 */
 
     // plot the kinematic discriminant for VBF-2j
-    //auto var = [&](Tree* in) -> float{return DVBF2j_ME(in -> p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal, in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal, in -> ZZMass);};
+    auto var = [&](Tree* in) -> float{return DVBF2j_ME(in -> p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal, in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal, in -> ZZMass);};
     
     // auto var = [&](Tree* in) -> float{return DVBF1j_ME(
     // 	    in -> p_JVBF_SIG_ghv1_1_JHUGen_JECNominal,
@@ -151,27 +173,21 @@ int main(int argc, char *argv[])
     // 	    in -> ZZMass
     // 	    );};
     
-/*
-    auto var = [&](Tree* in) -> float{
-	float c_Mela2j = 1.0;//getDVBF2jetsConstant(in->ZZMass);
-	return 1./(1.+ c_Mela2j*(in->p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal)/(in->p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal));
-    };
-
     TString plot_name = "DVBF2j_ME";
     TString quantity = "DVBF2j_ME";
     TString y_label = "normalized to 1";
     TString category_name = "";
     int number_bins = 50;
-    float axis_lower = 0.0;
-    float axis_upper = 1.0;
+    float axis_lower = 0.44;
+    float axis_upper = 0.48;
     int category = -1; // no category
     bool normalize = true;
 
     make_plots1d(testclass, lumi, var, number_bins, axis_lower, axis_upper, no_cut, category, quantity, y_label, category_name, normalize, plot_name);
-    make_plots1d(testclass, lumi, var, number_bins, axis_lower, axis_upper, final_state_4mu_cut, category, quantity, y_label, category_name + "ZZ #rightarrow 4#mu", normalize, plot_name + "_4mu");
-    make_plots1d(testclass, lumi, var, number_bins, axis_lower, axis_upper, final_state_4e_cut, category, quantity, y_label, category_name + "ZZ #rightarrow 4e", normalize, plot_name + "_4e");
-    make_plots1d(testclass, lumi, var, number_bins, axis_lower, axis_upper, final_state_2e2mu_cut, category, quantity, y_label, category_name + "ZZ #rightarrow 2e2#mu", normalize, plot_name + "_2e2mu");
-*/
+    // make_plots1d(testclass, lumi, var, number_bins, axis_lower, axis_upper, final_state_4mu_cut, category, quantity, y_label, category_name + "ZZ #rightarrow 4#mu", normalize, plot_name + "_4mu");
+    // make_plots1d(testclass, lumi, var, number_bins, axis_lower, axis_upper, final_state_4e_cut, category, quantity, y_label, category_name + "ZZ #rightarrow 4e", normalize, plot_name + "_4e");
+    // make_plots1d(testclass, lumi, var, number_bins, axis_lower, axis_upper, final_state_2e2mu_cut, category, quantity, y_label, category_name + "ZZ #rightarrow 2e2#mu", normalize, plot_name + "_2e2mu");
+
 
     return(0);
 }
