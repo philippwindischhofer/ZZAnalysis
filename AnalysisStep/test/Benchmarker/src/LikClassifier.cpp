@@ -6,6 +6,10 @@ LikClassifier::LikClassifier()
     TFile* infile = TFile::Open(hist_path + "lik_hist.root");
 
     lik_hist = (TH1F*)(infile -> Get("lik_hist"));
+
+    //working_point = lik_hist -> GetBinContent(1000 * 0.46386);
+    working_point = 0.2;
+    std::cout << "current working point = " << working_point << std::endl;
 }
 
 LikClassifier::~LikClassifier()
@@ -99,16 +103,17 @@ int LikClassifier::categoryMor18Mod(
     if(nCleanedJetsPt30==1){
       D_VBF1j = DVBF1j_ME(p_JVBF_SIG_ghv1_1_JHUGen_JECNominal, pAux_JVBF_SIG_ghv1_1_JHUGen_JECNominal, p_JQCD_SIG_ghg2_1_JHUGen_JECNominal, ZZMass);
     }else if(nCleanedJetsPt30>=2){
-      D_VBF2j = DVBF2j_ME(p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal, p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal, ZZMass);
+	//D_VBF2j = DVBF2j_ME(p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal, p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal, ZZMass);
 
       // put the likelihood-enhancement here
+      D_VBF2j = GetDiscriminant(this);
 
       D_WHh   = DWHh_ME(p_HadWH_SIG_ghw1_1_JHUGen_JECNominal, p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal, p_HadWH_mavjj_JECNominal, p_HadWH_mavjj_true_JECNominal, ZZMass);
       D_ZHh   = DZHh_ME(p_HadZH_SIG_ghz1_1_JHUGen_JECNominal, p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal, p_HadZH_mavjj_JECNominal, p_HadZH_mavjj_true_JECNominal, ZZMass);
     }
   }
 
-  float WP_VBF2j = 0.4;//getDVBF2jetsWP(ZZMass, useQGTagging); // need to change here the working point based on the output of the plot
+  float WP_VBF2j = working_point;//getDVBF2jetsWP(ZZMass, useQGTagging); // need to change here the working point based on the output of the plot
   float WP_VBF1j = getDVBF1jetWP(ZZMass, useQGTagging);
   float WP_WHh = getDWHhWP(ZZMass, useQGTagging);
   float WP_ZHh = getDZHhWP(ZZMass, useQGTagging);

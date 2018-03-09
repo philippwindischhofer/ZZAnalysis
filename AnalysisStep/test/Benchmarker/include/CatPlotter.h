@@ -18,6 +18,7 @@
 #include "THStack.h"
 #include "TLatex.h"
 #include "TLegend.h"
+#include "TLine.h"
 
 class CatPlotter
 {
@@ -28,6 +29,7 @@ public:
     // makes a generic category plot
     void Construct(std::vector<TH1F*> hists, std::vector<TString> cat_labels, std::vector<TString> source_labels, std::vector<float> yields, TString title, float lumi);
     void DrawLabel(TString label);
+    void AddLine(double coord);
     void SaveAs(TString file);
     THStack* GetStack();
     void Update();
@@ -38,6 +40,8 @@ private:
     TPad* pad1;
     TPad* pad2;
     TLegend* leg;
+
+    std::vector<double> line_coords;
 
     bool draw_legend;
     bool draw_label;

@@ -52,6 +52,7 @@ int main( int argc, char *argv[] )
     plotter.DrawLabel(name_a + " vs. " + name_b);
     plotter.GetStack() -> SetMinimum(1 - zoom_scale);
     plotter.GetStack() -> SetMaximum(1 + zoom_scale);
+    plotter.AddLine(1.0);
     plotter.Update();
     plotter.SaveAs(out_folder + STORAGE_PREFIX + "punzi_comp" + ".pdf");
 

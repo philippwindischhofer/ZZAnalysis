@@ -35,8 +35,8 @@
 #endif
 
 #ifdef Mor18
-#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Mor18Classifier.h>
-//#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/LikClassifier.h>
+//#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Mor18Classifier.h>
+#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/LikClassifier.h>
 #endif
 
 // global definitions
@@ -44,8 +44,8 @@ float lumi = 35.9f;
 
 TString path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
 TString file_name = "/ZZ4lAnalysis.root";
-TString out_folder("../../src/ZZAnalysis/BenchmarkerPlots/");
-//TString out_folder("../../src/ZZAnalysis/LikBenchmarkerPlots/");
+//TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlots/";
+TString out_folder = "../../src/ZZAnalysis/LikBenchmarkerPlots/";
 
 // generates a vector of histograms corresponding to the signals
 std::vector<TH1F*> generate_signal_histvec(int fill_histos, Classifier* classifier, const std::function<bool(Tree*)>& cut, TString data_id)
@@ -564,27 +564,27 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef Mor18
-    //Classifier* refclass = new LikClassifier();
-    Classifier* refclass = new Mor18Classifier();
+    Classifier* refclass = new LikClassifier();
+    //Classifier* refclass = new Mor18Classifier();
 #endif
 
-    make_SB_purity(kFALSE, refclass, "categorization_SB", "no_cut_data", "", no_cut);
-    make_S_purity(kFALSE, refclass, "categorization_S", "no_cut_data", "", no_cut);
-    make_punzi(kFALSE, refclass, "punzi", "no_cut_data", no_cut);
-    make_SB_ratio(kFALSE, refclass, "SB", "no_cut_data", no_cut);
-    make_SBfine_ratio(kFALSE, refclass, "SB_fine", "no_cut_data", no_cut);
+    // make_SB_purity(kFALSE, refclass, "categorization_SB", "no_cut_data", "", no_cut);
+    // make_S_purity(kFALSE, refclass, "categorization_S", "no_cut_data", "", no_cut);
+    make_punzi(kTRUE, refclass, "punzi", "no_cut_data", no_cut);
+    // make_SB_ratio(kFALSE, refclass, "SB", "no_cut_data", no_cut);
+    // make_SBfine_ratio(kFALSE, refclass, "SB_fine", "no_cut_data", no_cut);
 
-    make_SB_purity(kFALSE, refclass, "categorization_SB_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut);
-    make_SB_purity(kFALSE, refclass, "categorization_SB_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut);
-    make_SB_purity(kFALSE, refclass, "categorization_SB_4e", "4e_data", "ZZ #rightarrow 4e", final_state_4e_cut);
+    // make_SB_purity(kFALSE, refclass, "categorization_SB_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut);
+    // make_SB_purity(kFALSE, refclass, "categorization_SB_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut);
+    // make_SB_purity(kFALSE, refclass, "categorization_SB_4e", "4e_data", "ZZ #rightarrow 4e", final_state_4e_cut);
 
-    make_S_purity(kFALSE, refclass, "categorization_S_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut);
-    make_S_purity(kFALSE, refclass, "categorization_S_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut);
-    make_S_purity(kFALSE, refclass, "categorization_S_4e", "4e_data", "ZZ #rightarrow 4e", final_state_4e_cut);
+    // make_S_purity(kFALSE, refclass, "categorization_S_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut);
+    // make_S_purity(kFALSE, refclass, "categorization_S_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut);
+    // make_S_purity(kFALSE, refclass, "categorization_S_4e", "4e_data", "ZZ #rightarrow 4e", final_state_4e_cut);
 
-    print_signal_yield_table(kFALSE, refclass, kTRUE, kFALSE, kFALSE, "no_cut_data");
-    print_signal_yield_table(kFALSE, refclass, kFALSE, kFALSE, kFALSE, "no_cut_data");
-    print_background_yield_table(kFALSE, refclass, kFALSE, kTRUE, "no_cut_data");
+    // print_signal_yield_table(kFALSE, refclass, kTRUE, kFALSE, kFALSE, "no_cut_data");
+    // print_signal_yield_table(kFALSE, refclass, kFALSE, kFALSE, kFALSE, "no_cut_data");
+    // print_background_yield_table(kFALSE, refclass, kFALSE, kTRUE, "no_cut_data");
 
     return(0);
 }

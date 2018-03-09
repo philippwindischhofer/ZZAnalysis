@@ -63,6 +63,12 @@ void CatPlotter::Construct(std::vector<TH1F*> hists, std::vector<TString> cat_la
     Redraw();
 }
 
+void CatPlotter::AddLine(double coord)
+{
+    line_coords.push_back(coord);
+    Redraw();
+}
+
 void CatPlotter::DrawLabel(TString label)
 {
     draw_label = true;
@@ -135,6 +141,13 @@ void CatPlotter::Redraw()
 	leg -> SetTextSize(0.11);
 	leg -> SetBorderSize(0);
 	leg -> Draw();
+    }
+
+    TLine l;
+    l.SetLineStyle(3);
+    for(auto cur : line_coords)
+    {
+	l.DrawLine(cur, pad1 -> GetUymin(), cur, pad1 -> GetUymax());
     }
 
     canv -> cd();

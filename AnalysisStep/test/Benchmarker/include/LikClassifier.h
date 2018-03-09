@@ -29,6 +29,7 @@ public:
 
 private:
     TH1F* lik_hist;
+    float working_point;
 
 //int category(
 int categoryMor18Mod(
