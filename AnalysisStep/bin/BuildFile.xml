@@ -14,6 +14,9 @@
 <library file="../test/Profiler/src/*.cpp" name="ZZAnalysisAnalysisStepTestProfilerSrc">
 </library>
 
+<!-- <library file="../test/KDE/src/*.cpp" name="ZZAnalysisAnalysisStepTestKDESrc"> -->
+<!-- </library> -->
+
 <bin name="run_benchmarker" file="../test/Benchmarker/run_benchmarker.cpp">
   <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>
 </bin>
@@ -32,6 +35,16 @@
 
 <bin   name="run_yields" file="../test/Plotter_v2/run_yields.cpp">
    <lib   name="ZZAnalysisAnalysisStepTestPlotter_v2Src"/>
+</bin>
+
+<bin name="run_KDE" file="../test/KDE/run_KDE.cpp">
+  <lib name="ZZAnalysisAnalysisStepTestProfilerSrc"/>
+  <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>  
+</bin>
+
+<bin name="run_comp" file="../test/Comp/run_comp.cpp">
+  <lib name="ZZAnalysisAnalysisStepTestProfilerSrc"/>
+  <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>  
 </bin>
 
 <library   file="../test/ZpXEstimation/src/*.cpp" name="ZZAnalysisAnalysisStepTestZpXEstimationSrc">

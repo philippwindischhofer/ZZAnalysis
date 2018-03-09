@@ -18,6 +18,7 @@
 #include <ZZAnalysis/AnalysisStep/test/Profiler/include/ProfPlotter.h>
 #include <ZZAnalysis/AnalysisStep/test/Profiler/include/histo_settings.h>
 #include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Classifier.h>
+#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/LikClassifier.h>
 #include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Mor17Classifier.h>
 #include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Mor18Classifier.h>
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
@@ -142,25 +143,25 @@ int main(int argc, char *argv[])
 
     // ------------------------------------------------------------------
 
-    // do a sample plot
-    auto var2 = [&](Tree* in) -> float{return in -> ZZMass;};
-    plot_name = "mZZ";
-    quantity = "m_{4l}";
-    y_label = "Events";
-    category_name = "t#bar{t}H tagged";
-    number_bins = 100;
-    axis_lower = 118.0;
-    axis_upper = 130.0;
-    category = ttHTaggedMor17;
-    normalize = false;
+    // // do a sample plot
+    // auto var2 = [&](Tree* in) -> float{return in -> ZZMass;};
+    // plot_name = "mZZ";
+    // quantity = "m_{4l}";
+    // y_label = "Events";
+    // category_name = "t#bar{t}H tagged";
+    // number_bins = 100;
+    // axis_lower = 118.0;
+    // axis_upper = 130.0;
+    // category = ttHTaggedMor17;
+    // normalize = false;
 
-    make_plots1d(testclass, lumi, var2, number_bins, axis_lower, axis_upper, no_cut, category, quantity, y_label, category_name, normalize, plot_name);
+    // make_plots1d(testclass, lumi, var2, number_bins, axis_lower, axis_upper, no_cut, category, quantity, y_label, category_name, normalize, plot_name);
 
-    make_plots1d(testclass, lumi, var2, number_bins, axis_lower, axis_upper, final_state_4mu_cut, category, quantity, y_label, category_name + ", ZZ #rightarrow 4#mu", normalize, plot_name + "_4mu");
-    make_plots1d(testclass, lumi, var2, number_bins, axis_lower, axis_upper, final_state_4e_cut, category, quantity, y_label, category_name + ", ZZ #rightarrow 4e", normalize, plot_name + "_4e");
-    make_plots1d(testclass, lumi, var2, number_bins, axis_lower, axis_upper, final_state_2e2mu_cut, category, quantity, y_label, category_name + ", ZZ #rightarrow 2e2#mu", normalize, plot_name + "_2e2mu");
+    // make_plots1d(testclass, lumi, var2, number_bins, axis_lower, axis_upper, final_state_4mu_cut, category, quantity, y_label, category_name + ", ZZ #rightarrow 4#mu", normalize, plot_name + "_4mu");
+    // make_plots1d(testclass, lumi, var2, number_bins, axis_lower, axis_upper, final_state_4e_cut, category, quantity, y_label, category_name + ", ZZ #rightarrow 4e", normalize, plot_name + "_4e");
+    // make_plots1d(testclass, lumi, var2, number_bins, axis_lower, axis_upper, final_state_2e2mu_cut, category, quantity, y_label, category_name + ", ZZ #rightarrow 2e2#mu", normalize, plot_name + "_2e2mu");
 
-    // ------------------------------------------------------------------    
+    // // ------------------------------------------------------------------    
 
     // plot the kinematic discriminant for VBF-2j (as an example for a normalized distribution plot)
     auto var3 = [&](Tree* in) -> float{return DVBF2j_ME(in -> p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal, in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal, in -> ZZMass);};
@@ -178,17 +179,43 @@ int main(int argc, char *argv[])
     auto local_cut = [&](Tree* in) -> bool {return (in -> nCleanedJetsPt30 >= 2) ? kTRUE : kFALSE;};
 
     make_plots1d(testclass, lumi, var3, number_bins, axis_lower, axis_upper, local_cut, category, quantity, y_label, category_name, normalize, plot_name);
-    make_plots1d(testclass, lumi, var3, number_bins, axis_lower, axis_upper, 
-		 [&](Tree* in) -> bool {return final_state_4mu_cut(in) && local_cut(in);}, category, quantity, y_label, 
-		 category_name + "ZZ #rightarrow 4#mu", normalize, plot_name + "_4mu");
-    make_plots1d(testclass, lumi, var3, number_bins, axis_lower, axis_upper, 
-		 [&](Tree* in) -> bool {return final_state_4e_cut(in) && local_cut(in);}, category, quantity, y_label, 
-		 category_name + "ZZ #rightarrow 4e", normalize, plot_name + "_4e");
-    make_plots1d(testclass, lumi, var3, number_bins, axis_lower, axis_upper, 
-		 [&](Tree* in) -> bool {return final_state_2e2mu_cut(in) && local_cut(in);}, category, quantity, y_label, 
-		 category_name + "ZZ #rightarrow 2e2#mu", normalize, plot_name + "_2e2mu");
+    // make_plots1d(testclass, lumi, var3, number_bins, axis_lower, axis_upper, 
+    // 		 [&](Tree* in) -> bool {return final_state_4mu_cut(in) && local_cut(in);}, category, quantity, y_label, 
+    // 		 category_name + "ZZ #rightarrow 4#mu", normalize, plot_name + "_4mu");
+    // make_plots1d(testclass, lumi, var3, number_bins, axis_lower, axis_upper, 
+    // 		 [&](Tree* in) -> bool {return final_state_4e_cut(in) && local_cut(in);}, category, quantity, y_label, 
+    // 		 category_name + "ZZ #rightarrow 4e", normalize, plot_name + "_4e");
+    // make_plots1d(testclass, lumi, var3, number_bins, axis_lower, axis_upper, 
+    // 		 [&](Tree* in) -> bool {return final_state_2e2mu_cut(in) && local_cut(in);}, category, quantity, y_label, 
+    // 		 category_name + "ZZ #rightarrow 2e2#mu", normalize, plot_name + "_2e2mu");
 
     // ------------------------------------------------------------------    
+
+    LikClassifier* lik = new LikClassifier();
+    auto var4 = [&](Tree* in) -> float{return lik -> GetDiscriminant(in);};
+
+    // compare it to a plot of the likelihood-ratio improved VBF-discriminant
+    plot_name = "DVBF2j_ME_lik";
+    quantity = "DVBF2j_ME_lik";
+    y_label = "normalized to 1";
+    category_name = "";
+    number_bins = 50;
+    axis_lower = 0.0;
+    axis_upper = 1.0;
+    category = -1; // no category
+    normalize = true;
+
+    make_plots1d(testclass, lumi, var4, number_bins, axis_lower, axis_upper, local_cut, category, quantity, y_label, category_name, normalize, plot_name);
+    // make_plots1d(testclass, lumi, var3, number_bins, axis_lower, axis_upper, 
+    // 		 [&](Tree* in) -> bool {return final_state_4mu_cut(in) && local_cut(in);}, category, quantity, y_label, 
+    // 		 category_name + "ZZ #rightarrow 4#mu", normalize, plot_name + "_4mu");
+    // make_plots1d(testclass, lumi, var3, number_bins, axis_lower, axis_upper, 
+    // 		 [&](Tree* in) -> bool {return final_state_4e_cut(in) && local_cut(in);}, category, quantity, y_label, 
+    // 		 category_name + "ZZ #rightarrow 4e", normalize, plot_name + "_4e");
+    // make_plots1d(testclass, lumi, var3, number_bins, axis_lower, axis_upper, 
+    // 		 [&](Tree* in) -> bool {return final_state_2e2mu_cut(in) && local_cut(in);}, category, quantity, y_label, 
+    // 		 category_name + "ZZ #rightarrow 2e2#mu", normalize, plot_name + "_2e2mu");
+    
 
     return(0);
 }
