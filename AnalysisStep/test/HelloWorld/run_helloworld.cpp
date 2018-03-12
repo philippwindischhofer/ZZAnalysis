@@ -13,6 +13,8 @@
 #include "TString.h"
 #include "TStyle.h"
 
+std::vector<TString> test = {"Untagged"};
+
 int main( int argc, char *argv[] )
 {
     std::cout << "Hello World" << std::endl;

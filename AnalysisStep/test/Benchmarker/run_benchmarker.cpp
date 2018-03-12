@@ -35,8 +35,8 @@
 #endif
 
 #ifdef Mor18
-//#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Mor18Classifier.h>
-#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/LikClassifier.h>
+#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Mor18Classifier.h>
+//#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/LikClassifier.h>
 #endif
 
 // global definitions
@@ -44,8 +44,8 @@ float lumi = 35.9f;
 
 TString path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
 TString file_name = "/ZZ4lAnalysis.root";
-//TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlots/";
-TString out_folder = "../../src/ZZAnalysis/LikBenchmarkerPlots/";
+TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlots/";
+//TString out_folder = "../../src/ZZAnalysis/LikBenchmarkerPlots/";
 
 // generates a vector of histograms corresponding to the signals
 std::vector<TH1F*> generate_signal_histvec(int fill_histos, Classifier* classifier, const std::function<bool(Tree*)>& cut, TString data_id)
@@ -564,8 +564,8 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef Mor18
-    Classifier* refclass = new LikClassifier();
-    //Classifier* refclass = new Mor18Classifier();
+    //Classifier* refclass = new LikClassifier();
+    Classifier* refclass = new Mor18Classifier();
 #endif
 
     // make_SB_purity(kFALSE, refclass, "categorization_SB", "no_cut_data", "", no_cut);

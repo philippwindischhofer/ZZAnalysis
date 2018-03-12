@@ -14,16 +14,32 @@
 <library file="../test/Profiler/src/*.cpp" name="ZZAnalysisAnalysisStepTestProfilerSrc">
 </library>
 
+<library file="../test/Optimizer/src/*.cpp" name="ZZAnalysisAnalysisStepTestOptimizerSrc">
+  <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>  
+</library>
+
+<library file="../test/Comp/src/*.cpp" name="ZZAnalysisAnalysisStepTestCompSrc">
+  <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>
+</library>
+
 <!-- <library file="../test/KDE/src/*.cpp" name="ZZAnalysisAnalysisStepTestKDESrc"> -->
 <!-- </library> -->
 
+<!-- benchmarks a certain classifier on the MC -->
 <bin name="run_benchmarker" file="../test/Benchmarker/run_benchmarker.cpp">
   <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>
 </bin>
 
+<!-- generic tool for plotting profiles (= histograms) -->
 <bin name="run_profiler" file="../test/Profiler/run_profiler.cpp">
   <lib name="ZZAnalysisAnalysisStepTestProfilerSrc"/>
   <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>
+</bin>
+
+<bin name="run_optimizer" file="../test/Optimizer/run_optimizer.cpp">
+  <lib name="ZZAnalysisAnalysisStepTestOptimizerSrc"/>
+  <lib name="ZZAnalysisAnalysisStepTestProfilerSrc"/>
+  <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>  
 </bin>
 
 <bin name="run_helloworld" file="../test/HelloWorld/run_helloworld.cpp">
@@ -37,14 +53,17 @@
    <lib   name="ZZAnalysisAnalysisStepTestPlotter_v2Src"/>
 </bin>
 
+<!-- runs a kernel density estimation to calibrate a classifier -->
 <bin name="run_KDE" file="../test/KDE/run_KDE.cpp">
   <lib name="ZZAnalysisAnalysisStepTestProfilerSrc"/>
   <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>  
 </bin>
 
+<!-- compares different classifiers -->
 <bin name="run_comp" file="../test/Comp/run_comp.cpp">
-  <lib name="ZZAnalysisAnalysisStepTestProfilerSrc"/>
-  <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>  
+  <lib name="ZZAnalysisAnalysisStepTestCompSrc"/>
+  <!-- <lib name="ZZAnalysisAnalysisStepTestProfilerSrc"/> -->
+  <!-- <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>   -->
 </bin>
 
 <library   file="../test/ZpXEstimation/src/*.cpp" name="ZZAnalysisAnalysisStepTestZpXEstimationSrc">

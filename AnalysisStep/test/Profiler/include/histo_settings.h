@@ -1,5 +1,5 @@
-#ifndef histo_settings_h
-#define histo_settings_h
+#ifndef profiler_histo_settings_h
+#define profiler_histo_settings_h
 
 std::vector<TString> file_names = {
     "ggH125",

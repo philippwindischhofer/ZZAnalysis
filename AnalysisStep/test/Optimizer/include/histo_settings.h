@@ -1,5 +1,18 @@
-#ifndef benchmarker_histo_settings_h
-#define benchmarker_histo_settings_h
+#ifndef histo_settings_h
+#define histo_settings_h
+
+// global definitions
+float lumi = 35.9f;
+
+TString out_folder = "../../src/ZZAnalysis/OptimizerPlots/";
+
+// this is where to look for the reference Punzi plot (i.e. from the classifier that stays fixed)
+TString reference_folder = "../../src/ZZAnalysis/BenchmarkerPlots/";
+
+TString path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
+TString file_name = "/ZZ4lAnalysis.root";
+
+#define Mor18
 
 #ifdef Mor18
 
