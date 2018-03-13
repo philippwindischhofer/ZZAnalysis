@@ -5,6 +5,9 @@
 <use name="rootrflx"/>
 <use name="roofitcore"/>
 
+<library file="../test/classlib/src/*.cpp" name="class_lib">
+</library>
+
 <library   file="../test/Plotter_v2/src/*.cpp" name="ZZAnalysisAnalysisStepTestPlotter_v2Src">
 </library>
 
@@ -15,7 +18,7 @@
 </library>
 
 <library file="../test/Optimizer/src/*.cpp" name="ZZAnalysisAnalysisStepTestOptimizerSrc">
-  <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>  
+  <lib name="class_lib"/>  
 </library>
 
 <library file="../test/Comp/src/*.cpp" name="ZZAnalysisAnalysisStepTestCompSrc">
@@ -38,8 +41,7 @@
 
 <bin name="run_optimizer" file="../test/Optimizer/run_optimizer.cpp">
   <lib name="ZZAnalysisAnalysisStepTestOptimizerSrc"/>
-  <lib name="ZZAnalysisAnalysisStepTestProfilerSrc"/>
-  <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>  
+  <lib name="class_lib"/>  
 </bin>
 
 <bin name="run_helloworld" file="../test/HelloWorld/run_helloworld.cpp">
