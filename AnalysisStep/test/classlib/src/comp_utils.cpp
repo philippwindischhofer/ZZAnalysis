@@ -11,12 +11,18 @@ float compare_punzi(TString indir_a, TString indir_b, TString name_a, TString na
 
     // evaluate the metric to quantify the Punzi quality difference between the two
     unsigned int number_bins = punzi_a[0] -> GetSize() - 2;
-    float metric = 0;
-    
+    float metric = std::numeric_limits<float>::max();
+
     for(unsigned int bin = 0; bin < number_bins; bin++)
     {
-	float punzi_diff = punzi_a[0] -> GetBinContent(bin + 1) - punzi_b[0] -> GetBinContent(bin + 1);
-	metric += TMath::Power(punzi_diff, 2.0) * TMath::Sign(1, punzi_diff);
+	float punzi_diff = 1.0 - (punzi_a[0] -> GetBinContent(bin + 1)) / (punzi_b[0] -> GetBinContent(bin + 1));
+
+	// take the minimum Punzi difference as the metric to improve
+	if(punzi_diff < metric)
+	{
+	    metric = punzi_diff;
+	    //metric += TMath::Power(punzi_diff, 1.0) * TMath::Sign(1, punzi_diff);
+	}
     }
     
     std::vector<TH1F*> comp_vec;

@@ -8,6 +8,8 @@
 #ifndef Tree_h
 #define Tree_h
 
+#include <iostream>
+
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
@@ -938,8 +940,8 @@ Tree::Tree(TTree *tree) : fChain(0)
 
 Tree::~Tree()
 {
-   if (!fChain) return;
-   delete fChain->GetCurrentFile();
+    if (!fChain) return;
+    delete fChain->GetCurrentFile();
 }
 
 Int_t Tree::GetEntry(Long64_t entry)

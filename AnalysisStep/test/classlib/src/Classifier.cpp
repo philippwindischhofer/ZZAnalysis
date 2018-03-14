@@ -54,4 +54,7 @@ void Classifier::FillHistogram(TString input_file_name, float lumi, TH1F* hist, 
     }
 
     std::cout << "fill_cnt = " << fill_cnt << std::endl;
+
+    input_file -> Close();
+    delete input_file;
 }

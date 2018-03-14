@@ -16,15 +16,15 @@
 #include <ZZAnalysis/AnalysisStep/test/Comp/include/histo_settings.h>
 
 // global definitions
-TString indir_a = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/LikBenchmarkerPlots/";
+TString indir_a = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsLI/";
 TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlots/";
 
-TString name_a = "LikClass";
+TString name_a = "Mor18_{LI}";
 TString name_b = "Mor18";
 
 TString out_folder = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/CompPlots/";
 
-float zoom_scale = 0.05;
+float zoom_scale = 1.0;
 
 TString punzi_hist_name = "punzi_purity";
 TString punzi_infile = "punzi_plot_hist.root";

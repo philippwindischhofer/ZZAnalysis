@@ -40,7 +40,9 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, cons
     FillProfile(input_file_name, lumi, hist, cut, TH1F_callback);
     
     if(normalize)
+    {
 	hist -> Scale(1.0 / hist -> Integral("width"));
+    }
 }
 
 void Profiler::FillDataWeights(TString input_file_name, float lumi, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, std::vector<double>* data_vec, std::vector<double>* weight_vec)
@@ -122,7 +124,7 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, c
 	fChain -> GetEntry(j_entry);
 
 	float event_weight = (lumi * xsec * 1000. * overallEventWeight) / gen_sum_weights;
-	
+
 	if(cut(this))
 	{
 	    fill_callback(hist, this, event_weight);

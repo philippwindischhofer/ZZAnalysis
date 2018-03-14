@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
     // make_plots2d(var_x, var_y);
 
     // do a sample plot: look only at the ones that have -1
-    auto var1 = [&](Tree* in) -> float{return in -> Z1Mass;};
+    //auto var1 = [&](Tree* in) -> float{return in -> Z1Mass;};
     TString plot_name = "mZ1";
     TString quantity = "m(Z1)";
     TString y_label = "Events";
@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
     int category = -1;
     bool normalize = false;
 
-    make_plots1d(testclass, lumi, var1, number_bins, axis_lower, axis_upper, no_cut, category, quantity, y_label, category_name, normalize, plot_name);
+    //make_plots1d(testclass, lumi, var1, number_bins, axis_lower, axis_upper, no_cut, category, quantity, y_label, category_name, normalize, plot_name);
 
     // ------------------------------------------------------------------
 
@@ -166,7 +166,7 @@ int main(int argc, char *argv[])
     // plot the kinematic discriminant for VBF-2j (as an example for a normalized distribution plot)
     auto var3 = [&](Tree* in) -> float{return DVBF2j_ME(in -> p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal, in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal, in -> ZZMass);};
     
-    plot_name = "DVBF2j_ME";
+    plot_name = "DVBF2j_ME_sample";
     quantity = "DVBF2j_ME";
     y_label = "normalized to 1";
     category_name = "";
@@ -192,7 +192,7 @@ int main(int argc, char *argv[])
     // ------------------------------------------------------------------    
 
     LikClassifier* lik = new LikClassifier();
-    auto var4 = [&](Tree* in) -> float{return lik -> GetDiscriminant(in);};
+    //auto var4 = [&](Tree* in) -> float{return lik -> GetDiscriminant(in);};
 
     // compare it to a plot of the likelihood-ratio improved VBF-discriminant
     plot_name = "DVBF2j_ME_lik";
@@ -205,7 +205,7 @@ int main(int argc, char *argv[])
     category = -1; // no category
     normalize = true;
 
-    make_plots1d(testclass, lumi, var4, number_bins, axis_lower, axis_upper, local_cut, category, quantity, y_label, category_name, normalize, plot_name);
+    //make_plots1d(testclass, lumi, var4, number_bins, axis_lower, axis_upper, local_cut, category, quantity, y_label, category_name, normalize, plot_name);
     // make_plots1d(testclass, lumi, var3, number_bins, axis_lower, axis_upper, 
     // 		 [&](Tree* in) -> bool {return final_state_4mu_cut(in) && local_cut(in);}, category, quantity, y_label, 
     // 		 category_name + "ZZ #rightarrow 4#mu", normalize, plot_name + "_4mu");

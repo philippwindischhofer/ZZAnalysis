@@ -38,7 +38,6 @@ extern "C" float D_g4(
 
 
 
-
 extern "C" float DVBF2j_ME(
     float p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal,
     float p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal,

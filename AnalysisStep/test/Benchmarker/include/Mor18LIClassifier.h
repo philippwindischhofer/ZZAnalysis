@@ -1,5 +1,5 @@
-#ifndef Mor18Classifier_h
-#define Mor18Classifier_h
+#ifndef Mor18LIClassifier_h
+#define Mor18LIClassifier_h
 
 // C++
 #include <iostream>
@@ -29,13 +29,12 @@
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
 #include <ZZAnalysis/AnalysisStep/interface/cConstants.h>
-#include <ZZAnalysis/AnalysisStep/interface/Category.h>
 
-class Mor18Classifier: public Classifier
+class Mor18LIClassifier: public Classifier
 {
 public:
-    Mor18Classifier();
-    ~Mor18Classifier();
+    Mor18LIClassifier();
+    ~Mor18LIClassifier();
 
     int ClassifyEvent();
 
@@ -47,6 +46,8 @@ private:
     float WP_VBF1j_man;
     float WP_WHh_man;
     float WP_ZHh_man;
+
+    float disc(float H1_ME, float H0_ME);
 
     int categoryMor18(
 	int nExtraLep,

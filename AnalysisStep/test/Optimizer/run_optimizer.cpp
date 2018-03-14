@@ -16,6 +16,7 @@
 #include "Math/Minimizer.h"
 #include "Math/Factory.h"
 #include "Math/Functor.h"
+#include "Math/GSLSimAnMinimizer.h"
 
 // use the local style for the histograms
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/opt_utils.h>
@@ -88,12 +89,13 @@ int main( int argc, char *argv[] )
     float WP_ZHh_init = 0.91315;
 
     float var[4] = {WP_VBF2j_init, WP_VBF1j_init, WP_WHh_init, WP_ZHh_init};
-    float step[4] = {0.1, 0.1, 0.1, 0.1};
+    float step[4] = {0.01, 0.01, 0.01, 0.01};
 
-    ROOT::Math::Minimizer* min = ROOT::Math::Factory::CreateMinimizer("Minuit2", "");
-    min -> SetMaxFunctionCalls(5);
-    min -> SetMaxIterations(2);
-    min -> SetTolerance(0.1);
+    //ROOT::Math::Minimizer* min = ROOT::Math::Factory::CreateMinimizer("Minuit2", "");
+    ROOT::Math::Minimizer* min = new ROOT::Math::GSLSimAnMinimizer();
+    min -> SetMaxFunctionCalls(500);
+    min -> SetMaxIterations(500);
+    min -> SetTolerance(0.01);
     min -> SetPrintLevel(1);
 
     ROOT::Math::Functor f(&costfunc, 4);
@@ -102,7 +104,7 @@ int main( int argc, char *argv[] )
     min -> SetLimitedVariable(0, "WP_VBF2j", var[0], step[0], 0.0, 1.0);
     min -> SetLimitedVariable(1, "WP_VBF1j", var[1], step[1], 0.0, 1.0);
     min -> SetLimitedVariable(2, "WP_WHh", var[2], step[2], 0.0, 1.0);
-    min -> SetLimitedVariable(2, "WP_ZHh", var[3], step[3], 0.0, 1.0);
+    min -> SetLimitedVariable(3, "WP_ZHh", var[3], step[3], 0.0, 1.0);
 
     min -> Minimize();
 
