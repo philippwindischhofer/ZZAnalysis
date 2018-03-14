@@ -74,7 +74,7 @@ void make_plots1d(Classifier* testclass, std::function<float(Tree*)> var, int nu
 	    kTRUE : kFALSE;};
     }
 
-    prof -> FillProfile(path_vec[0], conf.lumi(), hist_vec[conf.hist_index("ggHhist")], no_cut, var, normalize);
+    prof -> FillProfile(path_vec[0], conf.lumi(), hist_vec[conf.hist_index("ggHhist")], cut, var, normalize);
     // prof -> FillProfile(path_vec[1], conf.lumi(), hist_vec[conf.hist_index("VBFhist")], cut, var, normalize);
     // prof -> FillProfile(path_vec[2], conf.lumi(), hist_vec[conf.hist_index("WHhist")], cut, var, normalize);
     // prof -> FillProfile(path_vec[3], conf.lumi(), hist_vec[conf.hist_index("WHhist")], cut, var, normalize);
