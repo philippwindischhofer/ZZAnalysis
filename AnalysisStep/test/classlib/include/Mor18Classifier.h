@@ -38,7 +38,7 @@ public:
     ~Mor18Classifier();
 
     int ClassifyEvent();
-
+    int ClassifyThisEvent(Tree* in);
     void SetWPs(float WP_VBF2j, float WP_VBF1j, float WP_WHh, float WP_ZHh);
 
 private:

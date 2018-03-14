@@ -1,5 +1,16 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Config.h>
 
+std::vector<TString> Config::file_names()
+{
+    std::vector<TString> signal = signal_file_names();
+    std::vector<TString> background = background_file_names();
+
+    std::vector<TString> file_names(signal);
+    file_names.insert(file_names.end(), background.begin(), background.end());
+
+    return file_names;
+}
+
 std::vector<TString> Config::signal_file_names()
 {
     std::vector<TString> signal_file_names = {"ggH125", "VBFH125", "WplusH125", "WminusH125", "ZH125", "ttH125", "bbH125", "tqH125"};
@@ -56,6 +67,30 @@ std::vector<TString> Config::signal_source_labels_merged_text()
     return signal_source_labels_merged_text;
 }
 
+
+std::vector<TString> Config::source_labels()
+{
+    std::vector<TString> signal = signal_source_labels();
+    std::vector<TString> background = background_source_labels();
+
+    std::vector<TString> source_labels(signal);
+    source_labels.insert(source_labels.end(), background.begin(), background.end());
+
+    return source_labels;
+}
+
+
+std::vector<TString> Config::hist_names()
+{
+    std::vector<TString> signal = signal_hist_names();
+    std::vector<TString> background = background_hist_names();
+
+    std::vector<TString> hist_names(signal);
+    hist_names.insert(hist_names.end(), background.begin(), background.end());
+
+    return hist_names;    
+}
+
 std::vector<TString> Config::signal_hist_names()
 {
     std::vector<TString> signal_hist_names = {
@@ -72,6 +107,56 @@ std::vector<TString> Config::signal_hist_names()
     };
     
     return signal_hist_names;
+}
+
+std::vector<int> Config::signal_source_styles()
+{
+    std::vector<int> signal_source_styles = {
+	1001,
+	1001,
+	1001,
+	1001,
+	1001,
+	1001,
+	1001,
+	1001,
+	1001,
+	1001
+    };
+
+    return signal_source_styles;
+}
+
+std::vector<int> Config::background_source_styles()
+{
+    std::vector<int> background_source_styles = {
+	    3244,
+	    3244
+    };
+
+    return background_source_styles;
+}
+
+std::vector<int> Config::source_styles()
+{
+    std::vector<int> signal = signal_source_styles();
+    std::vector<int> background = background_source_styles();
+    
+    std::vector<int> source_styles(signal);
+    source_styles.insert(source_styles.end(), background.begin(), background.end());
+    
+    return source_styles;        
+}
+
+std::vector<int> Config::source_colors()
+{
+    std::vector<int> signal = signal_source_colors();
+    std::vector<int> background = background_source_colors();
+
+    std::vector<int> source_colors(signal);
+    source_colors.insert(source_colors.end(), background.begin(), background.end());
+
+    return source_colors;    
 }
 
 std::vector<int> Config::signal_source_colors()
@@ -107,7 +192,7 @@ int Config::hist_index(TString desc)
 	{"ttH2lhist", 9},
 	{"ZZ4lhist", 0},
 	{"gg4lhist", 1}
-    };
+	};
 
     return hist_index_vals[desc];
 }
@@ -184,7 +269,8 @@ float Config::lumi()
 
 TString Config::MC_path()
 {
-    TString MC_path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
+    //TString MC_path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
+    TString MC_path = "/home/llr/cms/wind/CJLST_NTuples/";
     return MC_path;
 }
 

@@ -26,24 +26,13 @@ int main( int argc, char *argv[] )
     Mor18Config conf;
     ROCPlotter rp(conf);
 
+    // H0 files
     std::vector<TString> files_a = {
-	"ggH125"/*,
-	"WplusH125", 
-	"WminusH125", 
-	"ZH125", 
-	"ttH125", 
-	"ZZTo4l",     
-	"ggTo2e2mu_Contin_MCFM701",
-	"ggTo2e2tau_Contin_MCFM701",
-	"ggTo2mu2tau_Contin_MCFM701",
-	"ggTo4e_Contin_MCFM701",
-	"ggTo4mu_Contin_MCFM701",
-	"ggTo4tau_Contin_MCFM701"*/
+	"ggH125"
     };
 
+    // H1 files
     std::vector<TString> files_b = {
-	// "WplusH125", 
-	// "WminusH125"
 	"VBFH125"
     };
 
@@ -156,8 +145,6 @@ int main( int argc, char *argv[] )
 
     rp.Construct();
     
-    std::cout << "before saving" << std::endl;
-
     rp.SaveAs(out_path + "ROC_VBF.pdf");
 
     return(0);

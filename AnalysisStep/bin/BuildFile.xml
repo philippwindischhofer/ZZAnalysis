@@ -14,12 +14,9 @@
 <library file="../test/Benchmarker/src/*.cpp" name="ZZAnalysisAnalysisStepTestBenchmarkerSrc">
 </library>
 
-<library file="../test/Profiler/src/*.cpp" name="ZZAnalysisAnalysisStepTestProfilerSrc">
-</library>
-
-<library file="../test/Optimizer/src/*.cpp" name="ZZAnalysisAnalysisStepTestOptimizerSrc">
-  <lib name="class_lib"/>  
-</library>
+<!-- <library file="../test/Optimizer/src/*.cpp" name="ZZAnalysisAnalysisStepTestOptimizerSrc"> -->
+<!--   <lib name="class_lib"/>   -->
+<!-- </library> -->
 
 <library file="../test/Comp/src/*.cpp" name="ZZAnalysisAnalysisStepTestCompSrc">
   <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>
@@ -40,12 +37,10 @@
 
 <!-- generic tool for plotting profiles (= histograms) -->
 <bin name="run_profiler" file="../test/Profiler/run_profiler.cpp">
-  <lib name="ZZAnalysisAnalysisStepTestProfilerSrc"/>
-  <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>
+  <lib name="class_lib"/>
 </bin>
 
 <bin name="run_optimizer" file="../test/Optimizer/run_optimizer.cpp">
-  <lib name="ZZAnalysisAnalysisStepTestOptimizerSrc"/>
   <lib name="class_lib"/>  
 </bin>
 
@@ -61,10 +56,10 @@
 </bin>
 
 <!-- runs a kernel density estimation to calibrate a classifier -->
-<bin name="run_KDE" file="../test/KDE/run_KDE.cpp">
-  <lib name="ZZAnalysisAnalysisStepTestProfilerSrc"/>
-  <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>  
-</bin>
+<!-- <bin name="run_KDE" file="../test/KDE/run_KDE.cpp"> -->
+<!--   <lib name="ZZAnalysisAnalysisStepTestProfilerSrc"/> -->
+<!--   <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>   -->
+<!-- </bin> -->
 
 <!-- compares different classifiers -->
 <bin name="run_comp" file="../test/Comp/run_comp.cpp">

@@ -13,11 +13,11 @@
 class Mor18Config: public Config
 {
 public:
-    std::vector<TString> cat_labels();
-    std::vector<TString> cat_labels_text();
-    int bin_index(TString desc);
-    TString storage_prefix();
-    TString id();
+    virtual std::vector<TString> cat_labels();
+    virtual std::vector<TString> cat_labels_text();
+    virtual int bin_index(TString desc);
+    virtual TString storage_prefix();
+    virtual TString id();
 };
 
 #endif

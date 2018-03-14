@@ -24,6 +24,8 @@ public :
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
 
+   float testval;
+   
    // Declaration of leaf types
    Int_t           RunNumber;
    Long64_t        EventNumber;
@@ -472,6 +474,8 @@ public :
    vector<float>   *LHEAssociatedParticleMass;
 
    // List of branches
+   TBranch* b_testval;
+
    TBranch        *b_RunNumber;   //!
    TBranch        *b_EventNumber;   //!
    TBranch        *b_LumiNumber;   //!
@@ -972,6 +976,8 @@ void Tree::Init(TTree *tree, TString input_file_name)
    // (once per file to be processed).
 
    // Set object pointer
+    testval = 0;
+
    LepPt = 0;
    LepEta = 0;
    LepPhi = 0;
@@ -1015,6 +1021,7 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fCurrent = -1;
    fChain->SetMakeClass(1);
 
+   fChain->SetBranchAddress("testval", &testval, &b_testval);
    fChain->SetBranchAddress("LHEAssociatedParticleId", &LHEAssociatedParticleId, &b_LHEAssociatedParticleId);
    fChain->SetBranchAddress("LHEAssociatedParticleMass", &LHEAssociatedParticleMass, &b_LHEAssociatedParticleMass);
 

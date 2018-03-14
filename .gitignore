@@ -22,3 +22,4 @@ __init__.py
 ROOT_files/*
 Plots/*
 ConvClassifierPlots/*.root
+OptimizerPlots/*
