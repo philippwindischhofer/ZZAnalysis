@@ -55,11 +55,9 @@
    <lib   name="ZZAnalysisAnalysisStepTestPlotter_v2Src"/>
 </bin>
 
-<!-- runs a kernel density estimation to calibrate a classifier -->
-<!-- <bin name="run_KDE" file="../test/KDE/run_KDE.cpp"> -->
-<!--   <lib name="ZZAnalysisAnalysisStepTestProfilerSrc"/> -->
-<!--   <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>   -->
-<!-- </bin> -->
+<bin name="run_calibrator" file="../test/Calibrator/run_calibrator.cpp">
+  <lib name="class_lib"/>
+</bin>
 
 <!-- compares different classifiers -->
 <bin name="run_comp" file="../test/Comp/run_comp.cpp">

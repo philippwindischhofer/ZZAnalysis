@@ -1,5 +1,8 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 
+Mor18Config::Mor18Config() : Config()
+{ }
+
 std::vector<TString> Mor18Config::cat_labels()
 {
     std::vector<TString> cat_labels = {

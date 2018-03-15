@@ -47,6 +47,8 @@ std::vector<TH1F*> generate_signal_histvec(int fill_histos, Classifier* classifi
     // read the histograms back from the root file
     hist_vec = read_histos(out_path + conf.storage_prefix() + hist_storage, conf.signal_hist_names());
 
+    std::cout << "end preparing signal" << std::endl;
+
     return hist_vec;
 }
 
@@ -78,16 +80,14 @@ std::vector<TH1F*> generate_background_histvec(int fill_histos, Classifier* clas
 	// for the background files, don't have any requirements for many categories nor for any additional cuts, they just get summed up anyways later (keep the file-induced categorization anyways)
 
 	classifier -> FillHistogram(background_path[0], conf.lumi(), hist_vec[conf.hist_index("ZZ4lhist")], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
-	//classifier -> FillHistogram(background_path[1], conf.lumi(), hist_vec[conf.hist_index("DYhist")], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
-	//classifier -> FillHistogram(background_path[2], conf.lumi(), hist_vec[conf.hist_index("TThist")], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
 
 	// aggregate all the gg -> 4l channels together
+	classifier -> FillHistogram(background_path[1], conf.lumi(), hist_vec[conf.hist_index("gg4lhist")], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
+	classifier -> FillHistogram(background_path[2], conf.lumi(), hist_vec[conf.hist_index("gg4lhist")], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
 	classifier -> FillHistogram(background_path[3], conf.lumi(), hist_vec[conf.hist_index("gg4lhist")], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
 	classifier -> FillHistogram(background_path[4], conf.lumi(), hist_vec[conf.hist_index("gg4lhist")], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
 	classifier -> FillHistogram(background_path[5], conf.lumi(), hist_vec[conf.hist_index("gg4lhist")], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
 	classifier -> FillHistogram(background_path[6], conf.lumi(), hist_vec[conf.hist_index("gg4lhist")], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
-	classifier -> FillHistogram(background_path[7], conf.lumi(), hist_vec[conf.hist_index("gg4lhist")], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
-	classifier -> FillHistogram(background_path[8], conf.lumi(), hist_vec[conf.hist_index("gg4lhist")], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
 
 	std::cout << "end filling background histograms" << std::endl;
 
@@ -97,6 +97,8 @@ std::vector<TH1F*> generate_background_histvec(int fill_histos, Classifier* clas
     // read the histograms back from the root file
     hist_vec = read_histos(out_path + conf.storage_prefix() + hist_storage, conf.background_hist_names());
 
+    std::cout << "end preparing background" << std::endl;
+
     return hist_vec;
 }
 
@@ -104,6 +106,8 @@ void make_punzi(int fill_histos, Classifier* classifier, TString out_file, TStri
 {
     std::vector<TH1F*> signal_hist_vec = generate_signal_histvec(fill_histos, classifier, cut, data_id, out_path, conf);
     std::vector<TH1F*> background_hist_vec = generate_background_histvec(fill_histos, classifier, cut, data_id, out_path, conf);
+
+    std::cout << "got all histograms" << std::endl;
    
     // the total number of events from each category
     float VBF_events = get_total_events(signal_hist_vec[conf.hist_index("VBFhist")]); // this is the sum of all VBF events (i.e. both VBF 1-jet and VBF 2-jet events)
@@ -117,6 +121,8 @@ void make_punzi(int fill_histos, Classifier* classifier, TString out_file, TStri
     float VHMET_events = get_total_events(signal_hist_vec[conf.hist_index("ZHnunuhist")]);
 
     float untagged_events = get_total_events(signal_hist_vec[conf.hist_index("ggHhist")]);
+
+    std::cout << "got all total event counts" << std::endl;
 
     // the correctly classified events:
     // note that this routes 

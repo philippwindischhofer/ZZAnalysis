@@ -57,8 +57,12 @@ std::vector<TH1F*> read_histos(TString file, std::vector<TString> hist_names)
     for(unsigned int hist = 0; hist < hist_names.size(); hist++)
     {
 	TH1F* cur_hist = (TH1F*)(infile -> Get(hist_names[hist]));
+	cur_hist -> SetDirectory(0);
 	hist_vec.push_back(cur_hist);
     }
+
+    infile -> Close();
+    //delete infile;
 
     return hist_vec;
 }

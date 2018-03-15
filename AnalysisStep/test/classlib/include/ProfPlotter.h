@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <map>
 
 // ROOT
 #include "TApplication.h"
@@ -19,13 +20,20 @@
 #include "TLatex.h"
 #include "TLegend.h"
 
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/Config.h>
+
 class ProfPlotter
 {
 public:
     ProfPlotter();
     ~ProfPlotter();
 
+    void Construct(std::map<TString, TH1F*> hist_vec, Config& conf, TString label_x, TString label_y, TString label_l, TString label_r, TString args);
+
     void Construct(std::vector<TH1F*> hist_vec, std::vector<TString> source_labels, TString label_x, TString label_y, TString label_l, TString label_r, TString args);
+
+    TPad* GetCanvas();
+
     void SaveAs(TString outfile);
 
 private:

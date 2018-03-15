@@ -6,6 +6,22 @@ ProfPlotter::ProfPlotter()
 ProfPlotter::~ProfPlotter()
 {  }
 
+void ProfPlotter::Construct(std::map<TString, TH1F*> hist_vec, Config& conf, TString label_x, TString label_y, TString label_l, TString label_r, TString args)
+{
+    std::vector<TH1F*> hist_only_vec;
+    std::vector<TString> source_labels;
+
+    std::vector<TString> hist_names = conf.hist_names();
+    
+    for(auto& hist_name: hist_names)
+    {
+	hist_only_vec.push_back(hist_vec[hist_name]);
+	source_labels.push_back(conf.source_label(hist_name));
+    }
+
+    Construct(hist_only_vec, source_labels, label_x, label_y, label_l, label_r, args);
+}
+
 void ProfPlotter::Construct(std::vector<TH1F*> hist_vec, std::vector<TString> source_labels, TString label_x, TString label_y, TString label_l, TString label_r, TString args)
 {
     this -> label_l = label_l;
@@ -50,6 +66,11 @@ void ProfPlotter::Construct(std::vector<TH1F*> hist_vec, std::vector<TString> so
     std::cout << "redrawing" << std::endl;
 
     Redraw(args);
+}
+
+TPad* ProfPlotter::GetCanvas()
+{
+    return pad1;
 }
 
 void ProfPlotter::Redraw(TString args)

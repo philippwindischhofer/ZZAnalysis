@@ -122,7 +122,7 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, c
 	fChain -> GetEntry(j_entry);
 
 	float event_weight = (lumi * xsec * 1000. * overallEventWeight) / gen_sum_weights;
-	
+
 	if(cut(this))
 	{
 	    fill_callback(hist, this, event_weight);

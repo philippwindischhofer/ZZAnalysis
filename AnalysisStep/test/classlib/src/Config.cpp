@@ -1,5 +1,34 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Config.h>
 
+Config::Config()
+{
+    // set up the routing table
+    routing.push_back(std::make_pair("ggH125", new Routing(no_cut, "ggHhist")));
+    routing.push_back(std::make_pair("VBFH125", new Routing(no_cut, "VBFhist")));
+
+    routing.push_back(std::make_pair("WplusH125", new Routing(extraLeptons_0_cut, "WHXhist")));
+    routing.push_back(std::make_pair("WminusH125", new Routing(extraLeptons_0_cut, "WHXhist")));
+    routing.push_back(std::make_pair("WplusH125", new Routing(extraLeptons_1_cut, "WHlnuhist")));
+    routing.push_back(std::make_pair("WminusH125", new Routing(extraLeptons_1_cut, "WHlnuhist")));
+
+    routing.push_back(std::make_pair("ZH125", new Routing(extraNeutrinos_0_Leptons_0_cut, "ZHXhist")));
+    routing.push_back(std::make_pair("ZH125", new Routing(extraNeutrinos_2_cut, "ZHnunuhist")));
+    routing.push_back(std::make_pair("ZH125", new Routing(extraLeptons_2_cut, "ZH2lhist")));
+
+    routing.push_back(std::make_pair("ttH125", new Routing(extraLeptons_0_cut, "ttH0lhist")));
+    routing.push_back(std::make_pair("ttH125", new Routing(extraLeptons_1_cut, "ttH1lhist")));
+    routing.push_back(std::make_pair("ttH125", new Routing(extraLeptons_2_cut, "ttH2lhist")));
+
+    routing.push_back(std::make_pair("ZZTo4l", new Routing(no_cut, "qq4lhist")));
+
+    routing.push_back(std::make_pair("ggTo2e2mu_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
+    routing.push_back(std::make_pair("ggTo2e2tau_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
+    routing.push_back(std::make_pair("ggTo2mu2tau_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
+    routing.push_back(std::make_pair("ggTo4e_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
+    routing.push_back(std::make_pair("ggTo4mu_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
+    routing.push_back(std::make_pair("ggTo4tau_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
+}
+
 std::vector<TString> Config::file_names()
 {
     std::vector<TString> signal = signal_file_names();
@@ -18,6 +47,43 @@ std::vector<TString> Config::signal_file_names()
     return signal_file_names;
 }
 
+std::vector<TString> Config::signal_file_paths()
+{
+    std::vector<TString> file_names = signal_file_names();
+    std::vector<TString> file_paths;
+
+    for(auto& file: file_names)
+    {
+	file_paths.push_back(MC_path() + file + MC_filename());
+    }
+
+    return file_paths;
+}
+
+std::vector<TString> Config::background_file_paths()
+{
+    std::vector<TString> file_names = background_file_names();
+    std::vector<TString> file_paths;
+
+    for(auto& file: file_names)
+    {
+	file_paths.push_back(MC_path() + file + MC_filename());
+    }
+
+    return file_paths;
+}
+
+std::vector<TString> Config::file_paths()
+{
+    std::vector<TString> signal = signal_file_paths();
+    std::vector<TString> background = background_file_paths();
+
+    std::vector<TString> file_paths(signal);
+    file_paths.insert(file_paths.end(), background.begin(), background.end());
+
+    return file_paths;
+}
+
 std::vector<TString> Config::signal_source_labels()
 {
     std::vector<TString> signal_source_labels = {
@@ -34,6 +100,66 @@ std::vector<TString> Config::signal_source_labels()
     };
     
     return signal_source_labels;
+}
+
+TString Config::source_label(TString histname)
+{
+    std::map<TString, TString> mapping = {
+	{"ggHhist", "ggH"}, 
+	{"VBFhist", "VBF"}, 
+	{"WHXhist", "WH, W #rightarrow X"},
+	{"WHlnuhist", "WH, W #rightarrow l#nu"}, 
+	{"ZHXhist", "ZH, Z #rightarrow X"},
+	{"ZHnunuhist", "ZH, Z #rightarrow #nu#nu"},
+	{"ZH2lhist", "ZH, Z #rightarrow 2l"},
+	{"ttH0lhist", "t#bar{t}H, t#bar{t} #rightarrow 0l + X"},
+	{"ttH1lhist", "t#bar{t}H, t#bar{t} #rightarrow 1l + X"},
+	{"ttH2lhist", "t#bar{t}H, t#bar{t} #rightarrow 2l + X"},
+	{"qq4lhist", "q#bar{q} #rightarrow ZZ #rightarrow 4l"},
+	{"gg4lhist","gg #rightarrow ZZ #rightarrow 4l"}
+    };
+
+    return mapping[histname];
+}
+
+int Config::source_color(TString histname)
+{
+    std::map<TString, int> mapping = {
+	{"ggHhist", kBlue - 9}, 
+	{"VBFhist", kGreen - 6}, 
+	{"WHXhist", kRed - 7},
+	{"WHlnuhist", kRed - 6}, 
+	{"ZHXhist", kYellow - 7},
+	{"ZHnunuhist", kYellow - 3},
+	{"ZH2lhist", kYellow + 2},
+	{"ttH0lhist", kCyan - 6},
+	{"ttH1lhist", kCyan - 2},
+	{"ttH2lhist", kCyan + 3},
+	{"qq4lhist", kGray},
+	{"gg4lhist", kBlack}
+    };
+
+    return mapping[histname];
+}
+
+int Config::source_style(TString histname)
+{
+    std::map<TString, int> mapping = {
+	{"ggHhist", 1001}, 
+	{"VBFhist", 1001}, 
+	{"WHXhist", 1001},
+	{"WHlnuhist", 1001}, 
+	{"ZHXhist", 1001},
+	{"ZHnunuhist", 1001},
+	{"ZH2lhist", 1001},
+	{"ttH0lhist", 1001},
+	{"ttH1lhist", 1001},
+	{"ttH2lhist", 1001},
+	{"qq4lhist", 3244},
+	{"gg4lhist", 3244}
+    };
+
+    return mapping[histname];
 }
 
 std::vector<TString> Config::signal_source_labels_text()
@@ -190,7 +316,7 @@ int Config::hist_index(TString desc)
 	{"ttH0lhist", 7},
 	{"ttH1lhist", 8},
 	{"ttH2lhist", 9},
-	{"ZZ4lhist", 0},
+	{"qq4lhist", 0},
 	{"gg4lhist", 1}
 	};
 
@@ -201,8 +327,6 @@ std::vector<TString> Config::background_file_names()
 {    
     std::vector<TString> background_file_names = {
 	"ZZTo4l", 
-	"DYJetsToLL_M50",
-	"TTTo2L2Nu",
 	"ggTo2e2mu_Contin_MCFM701",
 	"ggTo2e2tau_Contin_MCFM701",
 	"ggTo2mu2tau_Contin_MCFM701",
@@ -237,8 +361,8 @@ std::vector<TString> Config::background_source_labels_text()
 std::vector<TString> Config::background_hist_names()
 {    
     std::vector<TString> background_hist_names = {
-	"ZZTo4l", 
-	"ggTo4l"
+	"qq4lhist", 
+	"gg4lhist"
     };
 
     return background_hist_names;
@@ -269,8 +393,8 @@ float Config::lumi()
 
 TString Config::MC_path()
 {
-    //TString MC_path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
-    TString MC_path = "/home/llr/cms/wind/CJLST_NTuples/";
+    TString MC_path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
+    //TString MC_path = "/home/llr/cms/wind/CJLST_NTuples/";
     return MC_path;
 }
 
