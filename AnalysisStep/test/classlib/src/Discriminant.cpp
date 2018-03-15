@@ -78,20 +78,23 @@ float Discriminant::Evaluate(Tree* in)
     float retval = 0;
 
     // iterate through the list of components and check each of them
-    for(auto tup: boost::combine(names, cuts, discs))
+    for(auto tup: boost::combine(names, cuts, discs, H1_calines, H0_calines))
     {
 	std::function<bool(Tree*)> cut;
 	std::function<float(Tree*)> disc;
 	TString name;
-	boost::tie(name, cut, disc) = tup;
+	TSpline3* H1_caline;
+	TSpline3* H0_caline;
+	boost::tie(name, cut, disc, H1_caline, H0_caline) = tup;
 
 	if(cut(in))
 	{
 	    // found a matching component, now evaluate its attached discriminant
-	    retval = disc(in);
-	    break;
+	    float raw_disc = disc(in);
 
-	    std::cout << name << " matched" << std::endl;
+	    // for a calibrated discriminant, now evaluate the actual likelihood ratio (or an approximation thereof)
+	    retval = (H1_caline -> Eval(raw_disc)) / (H0_caline -> Eval(raw_disc));
+	    break;
 	}
     }
 
