@@ -64,10 +64,17 @@ void Discriminant::AddComponent(TString name, const std::function<bool(Tree*)> c
 	TSpline3* H1_spline = (TSpline3*)(calib_file -> Get("H1_distrib_smooth") -> Clone());
 	TSpline3* H0_spline = (TSpline3*)(calib_file -> Get("H0_distrib_smooth") -> Clone());
 
+	TH1F* H1_calib_histo = (TH1F*)(calib_file -> Get("H1_distrib") -> Clone());
+	TH1F* H0_calib_histo = (TH1F*)(calib_file -> Get("H0_distrib") -> Clone());
+	H1_calib_histo -> SetDirectory(0);
+	H0_calib_histo -> SetDirectory(0);
+
+	H1_calib_histos.push_back(H1_calib_histo);
+	H0_calib_histos.push_back(H0_calib_histo);
+
 	H1_calines.push_back(H1_spline);
 	H0_calines.push_back(H0_spline);
 	calibration_status.push_back(true);
-
     }
 
     calib_file -> Close();
@@ -78,14 +85,16 @@ float Discriminant::Evaluate(Tree* in)
     float retval = 0;
 
     // iterate through the list of components and check each of them
-    for(auto tup: boost::combine(names, cuts, discs, H1_calines, H0_calines))
+    for(auto tup: boost::combine(names, cuts, discs, H1_calines, H0_calines, H1_calib_histos, H0_calib_histos))
     {
 	std::function<bool(Tree*)> cut;
 	std::function<float(Tree*)> disc;
 	TString name;
 	TSpline3* H1_caline;
 	TSpline3* H0_caline;
-	boost::tie(name, cut, disc, H1_caline, H0_caline) = tup;
+	TH1F* H1_calib_histo;
+	TH1F* H0_calib_histo;
+	boost::tie(name, cut, disc, H1_caline, H0_caline, H1_calib_histo, H0_calib_histo) = tup;
 
 	if(cut(in))
 	{
@@ -93,7 +102,13 @@ float Discriminant::Evaluate(Tree* in)
 	    float raw_disc = disc(in);
 
 	    // for a calibrated discriminant, now evaluate the actual likelihood ratio (or an approximation thereof)
-	    retval = (H1_caline -> Eval(raw_disc)) / (H0_caline -> Eval(raw_disc));
+	    //retval = (H1_caline -> Eval(raw_disc)) / (H0_caline -> Eval(raw_disc));
+	    
+	    // don't use interpolation at the moment
+	    retval = (H1_calib_histo -> GetBinContent(H1_calib_histo -> FindBin(raw_disc))) / (H0_calib_histo -> GetBinContent(H0_calib_histo -> FindBin(raw_disc)));
+
+	    //std::cout << "LR = " << retval << std::endl;
+	    
 	    break;
 	}
     }

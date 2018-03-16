@@ -21,22 +21,22 @@
 // My own files
 #define Mor18
 
-#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Classifier.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/Classifier.h>
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/src/setTDRStyle.cpp>
-#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/CatPlotter.h>
-#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/utils.h>
-#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Tree.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/CatPlotter.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/utils.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
 #include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/histo_settings.h>
-#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/cuts.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/cuts.h>
 
 #ifdef Mor17
-#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Mor17Classifier.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor17Classifier.h>
 #endif
 
 #ifdef Mor18
-//#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Mor18Classifier.h>
-#include <ZZAnalysis/AnalysisStep/test/Benchmarker/include/Mor18LIClassifier.h>
+//#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Classifier.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18LIClassifier.h>
 #endif
 
 // global definitions
@@ -44,7 +44,7 @@ float lumi = 35.9f;
 
 TString path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
 TString file_name = "/ZZ4lAnalysis.root";
-//TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlots/";
+//TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsReduced/";
 TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsLI/";
 
 // generates a vector of histograms corresponding to the signals
@@ -77,15 +77,15 @@ std::vector<TH1F*> generate_signal_histvec(int fill_histos, Classifier* classifi
 	classifier -> FillHistogram(signal_path[0], lumi, hist_vec[ggHhist], [&](Tree* in) -> bool{return(mZZ_cut(in) && cut(in));});
 	classifier -> FillHistogram(signal_path[1], lumi, hist_vec[VBFhist], [&](Tree* in) -> bool{return(mZZ_cut(in) && cut(in));});
 	classifier -> FillHistogram(signal_path[2], lumi, hist_vec[WHXhist], [&](Tree* in) -> bool{return(extraLeptons_0_cut(in) && cut(in));});
-	classifier -> FillHistogram(signal_path[2], lumi, hist_vec[WHlnuhist], [&](Tree* in) -> bool{return(extraLeptons_1_cut(in) && cut(in));}); // W decays leptonically
+//	classifier -> FillHistogram(signal_path[2], lumi, hist_vec[WHlnuhist], [&](Tree* in) -> bool{return(extraLeptons_1_cut(in) && cut(in));}); // W decays leptonically
 	classifier -> FillHistogram(signal_path[3], lumi, hist_vec[WHXhist], [&](Tree* in) -> bool{return(extraLeptons_0_cut(in) && cut(in));});
-	classifier -> FillHistogram(signal_path[3], lumi, hist_vec[WHlnuhist], [&](Tree* in) -> bool{return(extraLeptons_1_cut(in) && cut(in));}); // W decays leptonically
+//	classifier -> FillHistogram(signal_path[3], lumi, hist_vec[WHlnuhist], [&](Tree* in) -> bool{return(extraLeptons_1_cut(in) && cut(in));}); // W decays leptonically
 	classifier -> FillHistogram(signal_path[4], lumi, hist_vec[ZHXhist], [&](Tree* in) -> bool{return(extraNeutrinos_0_Leptons_0_cut(in) && cut(in));}); // no extra leptons (electrons, muons) and neutrinos for the hadronic decay of the Z
-	classifier -> FillHistogram(signal_path[4], lumi, hist_vec[ZHnunuhist], [&](Tree* in) -> bool{return(extraNeutrinos_2_cut(in) && cut(in));});
-	classifier -> FillHistogram(signal_path[4], lumi, hist_vec[ZH2lhist], [&](Tree* in) -> bool{return(extraLeptons_2_cut(in) && cut(in));}); // need exactly two extra leptons to have the Z decaying leptonically
-	classifier -> FillHistogram(signal_path[5], lumi, hist_vec[ttH0lhist], [&](Tree* in) -> bool{return(extraLeptons_0_cut(in) && cut(in));});    
-	classifier -> FillHistogram(signal_path[5], lumi, hist_vec[ttH1lhist], [&](Tree* in) -> bool{return(extraLeptons_1_cut(in) && cut(in));});
-	classifier -> FillHistogram(signal_path[5], lumi, hist_vec[ttH2lhist], [&](Tree* in) -> bool{return(extraLeptons_2_cut(in) && cut(in));});    
+//	classifier -> FillHistogram(signal_path[4], lumi, hist_vec[ZHnunuhist], [&](Tree* in) -> bool{return(extraNeutrinos_2_cut(in) && cut(in));});
+//	classifier -> FillHistogram(signal_path[4], lumi, hist_vec[ZH2lhist], [&](Tree* in) -> bool{return(extraLeptons_2_cut(in) && cut(in));}); // need exactly two extra leptons to have the Z decaying leptonically
+	// classifier -> FillHistogram(signal_path[5], lumi, hist_vec[ttH0lhist], [&](Tree* in) -> bool{return(extraLeptons_0_cut(in) && cut(in));});    
+	// classifier -> FillHistogram(signal_path[5], lumi, hist_vec[ttH1lhist], [&](Tree* in) -> bool{return(extraLeptons_1_cut(in) && cut(in));});
+	// classifier -> FillHistogram(signal_path[5], lumi, hist_vec[ttH2lhist], [&](Tree* in) -> bool{return(extraLeptons_2_cut(in) && cut(in));});    
 	std::cout << "end filling histograms" << std::endl;
 
 	save_histos(out_folder + STORAGE_PREFIX + hist_storage, hist_vec);
@@ -111,38 +111,38 @@ std::vector<TH1F*> generate_background_histvec(int fill_histos, Classifier* clas
 
     for(unsigned int i = 0; i < background_hist_names.size(); i++)
     {
-	hist_vec[i] = new TH1F(background_hist_names[i], background_hist_names[i], cat_labels.size(), -0.5, cat_labels.size() - 0.5);
-	hist_vec[i] -> SetFillStyle(3244);
-	hist_vec[i] -> SetLineColor(background_source_colors[i]);
-	hist_vec[i] -> SetFillColor(background_source_colors[i]);
+    	hist_vec[i] = new TH1F(background_hist_names[i], background_hist_names[i], cat_labels.size(), -0.5, cat_labels.size() - 0.5);
+    	hist_vec[i] -> SetFillStyle(3244);
+    	hist_vec[i] -> SetLineColor(background_source_colors[i]);
+    	hist_vec[i] -> SetFillColor(background_source_colors[i]);
     }
 
-    if(fill_histos)
-    {	
-	// No need to fill the histograms every time!
-	std::cout << "filling background histograms" << std::endl;
+    // if(fill_histos)
+    // {	
+    // 	// No need to fill the histograms every time!
+    // 	std::cout << "filling background histograms" << std::endl;
 	
-	// for the background files, don't have any requirements for many categories nor for any additional cuts, they just get summed up anyways later (keep the file-induced categorization anyways)
+    // 	// for the background files, don't have any requirements for many categories nor for any additional cuts, they just get summed up anyways later (keep the file-induced categorization anyways)
 
-	classifier -> FillHistogram(background_path[0], lumi, hist_vec[ZZ4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
-	//classifier -> FillHistogram(background_path[1], lumi, hist_vec[DYhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
-	//classifier -> FillHistogram(background_path[2], lumi, hist_vec[TThist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
+    // 	classifier -> FillHistogram(background_path[0], lumi, hist_vec[ZZ4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
+    // 	//classifier -> FillHistogram(background_path[1], lumi, hist_vec[DYhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
+    // 	//classifier -> FillHistogram(background_path[2], lumi, hist_vec[TThist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
 
-	// aggregate all the gg -> 4l channels together
-	classifier -> FillHistogram(background_path[3], lumi, hist_vec[gg4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
-	classifier -> FillHistogram(background_path[4], lumi, hist_vec[gg4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
-	classifier -> FillHistogram(background_path[5], lumi, hist_vec[gg4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
-	classifier -> FillHistogram(background_path[6], lumi, hist_vec[gg4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
-	classifier -> FillHistogram(background_path[7], lumi, hist_vec[gg4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
-	classifier -> FillHistogram(background_path[8], lumi, hist_vec[gg4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
+    // 	// aggregate all the gg -> 4l channels together
+    // 	classifier -> FillHistogram(background_path[3], lumi, hist_vec[gg4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
+    // 	classifier -> FillHistogram(background_path[4], lumi, hist_vec[gg4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
+    // 	classifier -> FillHistogram(background_path[5], lumi, hist_vec[gg4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
+    // 	classifier -> FillHistogram(background_path[6], lumi, hist_vec[gg4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
+    // 	classifier -> FillHistogram(background_path[7], lumi, hist_vec[gg4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
+    // 	classifier -> FillHistogram(background_path[8], lumi, hist_vec[gg4lhist], [&](Tree* in) -> int{return(mZZ_cut(in) && cut(in));});
 
-	std::cout << "end filling background histograms" << std::endl;
+    // 	std::cout << "end filling background histograms" << std::endl;
 
-	save_histos(out_folder + STORAGE_PREFIX + hist_storage, hist_vec);	
-    }    
+    // 	save_histos(out_folder + STORAGE_PREFIX + hist_storage, hist_vec);	
+    // }    
 
-    // read the histograms back from the root file
-    hist_vec = read_histos(out_folder + STORAGE_PREFIX + hist_storage, background_hist_names);
+    // // read the histograms back from the root file
+    // hist_vec = read_histos(out_folder + STORAGE_PREFIX + hist_storage, background_hist_names);
 
     return hist_vec;
 }

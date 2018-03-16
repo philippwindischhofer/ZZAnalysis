@@ -35,3 +35,15 @@ std::map<std::pair<TString, TString>, Discriminant*> DiscriminantCollection::Get
 {
     return discs;
 }
+
+std::vector<std::pair<TString, TString>> DiscriminantCollection::GetCategoryPairs()
+{
+    std::vector<std::pair<TString, TString>> retval;
+
+    for(auto& cur: discs)
+    {
+	retval.push_back(cur.first);
+    }
+
+    return retval;
+}

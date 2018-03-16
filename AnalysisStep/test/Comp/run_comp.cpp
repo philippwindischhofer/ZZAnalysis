@@ -17,14 +17,14 @@
 
 // global definitions
 TString indir_a = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsLI/";
-TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlots/";
+TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReduced/";
 
 TString name_a = "Mor18_{LI}";
-TString name_b = "Mor18";
+TString name_b = "Mor18    (simple voting)";
 
 TString out_folder = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/CompPlots/";
 
-float zoom_scale = 1.0;
+float zoom_scale = 0.10;
 
 TString punzi_hist_name = "punzi_purity";
 TString punzi_infile = "punzi_plot_hist.root";

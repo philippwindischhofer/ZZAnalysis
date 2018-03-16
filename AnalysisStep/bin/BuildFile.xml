@@ -27,7 +27,8 @@
 
 <!-- benchmarks a certain classifier on the MC -->
 <bin name="run_benchmarker" file="../test/Benchmarker/run_benchmarker.cpp">
-  <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>
+  <!-- <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/> -->
+  <lib name="class_lib"/>
 </bin>
 
 <!-- tool for plotting ROC curves of individual binary discriminants -->

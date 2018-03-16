@@ -20,7 +20,7 @@
 #include "TStyle.h"
 #include "TKDE.h"
 #include "TSpline.h"
-#include "TF1.h"
+#include "TH1F.h"
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/EventStream.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
@@ -60,6 +60,9 @@ private:
     // the calibration splines for each component
     std::vector<TSpline3*> H1_calines;
     std::vector<TSpline3*> H0_calines;
+    
+    std::vector<TH1F*> H1_calib_histos;
+    std::vector<TH1F*> H0_calib_histos;
 
     // ... and their calibration status
     std::vector<bool> calibration_status;

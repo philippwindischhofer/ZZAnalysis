@@ -26,6 +26,10 @@
 #include "Classifier.h"
 #include "Tree.h"
 
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/DiscriminantCollection.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/MEDiscriminantFactory.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/VotingMultiClassCombinator.h>
+
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
 #include <ZZAnalysis/AnalysisStep/interface/cConstants.h>
@@ -37,10 +41,14 @@ public:
     ~Mor18LIClassifier();
 
     int ClassifyEvent();
+    int ClassifyThisEvent(Tree* in);
 
     void SetWPs(float WP_VBF2j, float WP_VBF1j, float WP_WHh, float WP_ZHh);
 
 private:
+    DiscriminantCollection* coll;
+    MultiClassCombinator* comb;
+
     bool manual_WPs;
     float WP_VBF2j_man;
     float WP_VBF1j_man;
@@ -50,6 +58,7 @@ private:
     float disc(float H1_ME, float H0_ME);
 
     int categoryMor18(
+	Tree* in,
 	int nExtraLep,
 	int nExtraZ,
 	int nCleanedJetsPt30,

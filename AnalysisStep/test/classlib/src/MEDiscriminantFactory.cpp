@@ -194,7 +194,7 @@ DiscriminantCollection* MEDiscriminantFactory::GenerateDiscriminantCollection(TS
     // ---------------------------
 
     disc = new Discriminant(out_folder);
-    H1_name = "VBF";
+    H1_name = "VBFH125";
     H0_name = "WHhadr";
 
     H1Stream = new EventStream();
@@ -220,7 +220,7 @@ DiscriminantCollection* MEDiscriminantFactory::GenerateDiscriminantCollection(TS
     // ---------------------------
 
     disc = new Discriminant(out_folder);
-    H1_name = "VBF";
+    H1_name = "VBFH125";
     H0_name = "ZHhadr";
 
     H1Stream = new EventStream();
