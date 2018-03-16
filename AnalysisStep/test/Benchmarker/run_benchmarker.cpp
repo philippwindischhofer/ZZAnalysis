@@ -44,8 +44,8 @@ float lumi = 35.9f;
 
 TString path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
 TString file_name = "/ZZ4lAnalysis.root";
-TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization/";
-//TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsLI/";
+//TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization/";
+TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsLI/";
 
 // generates a vector of histograms corresponding to the signals
 std::vector<TH1F*> generate_signal_histvec(int fill_histos, Classifier* classifier, const std::function<bool(Tree*)>& cut, TString data_id)

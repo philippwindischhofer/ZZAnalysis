@@ -13,7 +13,8 @@ float compare_punzi(TString indir_a, TString indir_b, TString name_a, TString na
     unsigned int number_bins = punzi_a[0] -> GetSize() - 2;
     float metric = 0;//std::numeric_limits<float>::max();
 
-    for(unsigned int bin = 0; bin < number_bins; bin++)
+    // take all but the "untagged" bin into account for the metric!
+    for(unsigned int bin = 1; bin < number_bins; bin++)
     {
 	float punzi_diff = 1.0 - (punzi_a[0] -> GetBinContent(bin + 1)) / (punzi_b[0] -> GetBinContent(bin + 1));
 
