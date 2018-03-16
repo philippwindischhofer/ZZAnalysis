@@ -38,11 +38,11 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 
     // histograms that are going to hold the distributions of the raw MELA discriminant under the signal- and background hypothesis
     // from those, build the likelihood ratio of the MELA-discriminant
-    TH1F* H1_distrib = new TH1F("H1_distrib", "H1_distrib", 40, 0.0, 1.0);
+    TH1F* H1_distrib = new TH1F("H1_distrib", "H1_distrib", 50, -0.02, 1.02);
     H1_distrib -> SetLineColor(kBlue - 9);
     H1_distrib -> SetFillColor(kWhite);
 
-    TH1F* H0_distrib = new TH1F("H0_distrib", "H0_distrib", 40, 0.0, 1.0);
+    TH1F* H0_distrib = new TH1F("H0_distrib", "H0_distrib", 50, -0.02, 1.02);
     H0_distrib -> SetLineColor(kRed - 7);
     H0_distrib -> SetFillColor(kWhite);
 
@@ -85,8 +85,8 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
     TH1F* H0_distrib_smooth = (TH1F*)(H0_distrib -> Clone("H0_distrib_smooth"));
 
     // smoothen the histograms
-    H1_distrib_smooth -> Smooth(2);
-    H0_distrib_smooth -> Smooth(2);
+    H1_distrib_smooth -> Smooth(0);
+    H0_distrib_smooth -> Smooth(0);
 
     // now make a fit to the binned, normalized histograms
     TSpline3* H1_spline = new TSpline3(H1_distrib_smooth);
@@ -111,6 +111,8 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
     outfile -> cd();
     H1_spline -> Write();
     H0_spline -> Write();
+    H1_distrib -> Write();
+    H0_distrib -> Write();
     outfile -> Close();
     delete outfile;
 

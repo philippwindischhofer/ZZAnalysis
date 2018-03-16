@@ -37,7 +37,7 @@ TString punzi_outfile = "punzi_comp";
 
 // where all the files from the reference classifier are stored
 TString refdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlots/";
-TString outdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/OptimizerPlots/";
+TString outdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/OptimizerPlotsAllVariables/";
 
 int evalcnt = 0;
 
@@ -103,11 +103,11 @@ int main( int argc, char *argv[] )
 
     min -> SetLimitedVariable(0, "WP_VBF2j", var[0], step[0], 0.0, 1.0);
     min -> SetLimitedVariable(1, "WP_VBF1j", var[1], step[1], 0.0, 1.0);
-    min -> SetFixedVariable(2, "WP_WHh", WP_WHh_init);
-    min -> SetFixedVariable(3, "WP_ZHh", WP_ZHh_init);
+    // min -> SetFixedVariable(2, "WP_WHh", WP_WHh_init);
+    // min -> SetFixedVariable(3, "WP_ZHh", WP_ZHh_init);
 
-    // min -> SetLimitedVariable(2, "WP_WHh", var[2], step[2], 0.0, 1.0);
-    // min -> SetLimitedVariable(3, "WP_ZHh", var[3], step[3], 0.0, 1.0);
+    min -> SetLimitedVariable(2, "WP_WHh", var[2], step[2], 0.0, 1.0);
+    min -> SetLimitedVariable(3, "WP_ZHh", var[3], step[3], 0.0, 1.0);
 
     min -> Minimize();
 

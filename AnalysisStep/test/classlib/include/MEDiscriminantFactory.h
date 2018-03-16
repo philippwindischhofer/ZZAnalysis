@@ -6,6 +6,7 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/EventStream.h>
 
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
+#include <ZZAnalysis/AnalysisStep/interface/cConstants.h>
 
 class MEDiscriminantFactory
 {
