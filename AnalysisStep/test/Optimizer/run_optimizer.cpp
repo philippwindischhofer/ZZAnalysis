@@ -36,7 +36,7 @@ TString punzi_infile = "punzi_plot_hist.root";
 TString punzi_outfile = "punzi_comp";
 
 // where all the files from the reference classifier are stored
-TString refdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlots/";
+TString refdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization/";
 TString outdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/OptimizerPlotsAllVariables/";
 
 int evalcnt = 0;
