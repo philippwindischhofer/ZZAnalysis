@@ -37,7 +37,7 @@ TString punzi_outfile = "punzi_comp";
 
 // where all the files from the reference classifier are stored
 TString refdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization/";
-TString outdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/OptimizerPlotsAllVariables/";
+TString outdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/OptimizerPlotsAllVariables2/";
 
 int evalcnt = 0;
 
@@ -45,7 +45,7 @@ int evalcnt = 0;
 Classifier* varclass = new Mor18Classifier();
 
 Mor18Classifier* varclass18 = static_cast<Mor18Classifier*>(varclass);
-Mor18Config conf;
+Mor18Config* conf = new Mor18Config();
 
 // evaluates the cost when using certain values for the working points
 double costfunc(const double* params)
@@ -66,11 +66,11 @@ double costfunc(const double* params)
     std::cout << "WP_ZHh = " << WP_ZHh << std::endl;
 
     // evaluate the Punzi value with this (modified) Classifier now
-    make_punzi(kTRUE, varclass, "punzi", "no_cut_data", no_cut, outdir, conf);
+    make_punzi(kTRUE, varclass, outdir, "punzi", "no_cut_data", no_cut, conf);
     
     // load low the Punzi histogram of the optimized classifier and compare the two. From this point onwards, is exactly the same as in "Comp"
     float zoom_scale = 1.0;
-    float cost = compare_punzi(outdir, refdir, "Mor18_{opt}", "Mor18", conf.storage_prefix() + punzi_infile, punzi_hist_name, outdir, conf.storage_prefix() + punzi_outfile + Form("%i", evalcnt), zoom_scale, conf);
+    float cost = compare_punzi(outdir, refdir, "Mor18_{opt}", "Mor18", conf -> storage_prefix() + punzi_infile, punzi_hist_name, outdir, conf -> storage_prefix() + punzi_outfile + Form("%i", evalcnt), zoom_scale, conf);
 
     std::cout << "cost = " << cost << std::endl;
     std::cout << "-------------------------------------------------------" << std::endl;

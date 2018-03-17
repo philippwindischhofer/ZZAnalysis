@@ -29,79 +29,6 @@ Config::Config()
     routing.push_back(std::make_pair("ggTo4tau_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
 }
 
-std::vector<TString> Config::file_names()
-{
-    std::vector<TString> signal = signal_file_names();
-    std::vector<TString> background = background_file_names();
-
-    std::vector<TString> file_names(signal);
-    file_names.insert(file_names.end(), background.begin(), background.end());
-
-    return file_names;
-}
-
-std::vector<TString> Config::signal_file_names()
-{
-    std::vector<TString> signal_file_names = {"ggH125", "VBFH125", "WplusH125", "WminusH125", "ZH125", "ttH125", "bbH125", "tqH125"};
-   
-    return signal_file_names;
-}
-
-std::vector<TString> Config::signal_file_paths()
-{
-    std::vector<TString> file_names = signal_file_names();
-    std::vector<TString> file_paths;
-
-    for(auto& file: file_names)
-    {
-	file_paths.push_back(MC_path() + file + MC_filename());
-    }
-
-    return file_paths;
-}
-
-std::vector<TString> Config::background_file_paths()
-{
-    std::vector<TString> file_names = background_file_names();
-    std::vector<TString> file_paths;
-
-    for(auto& file: file_names)
-    {
-	file_paths.push_back(MC_path() + file + MC_filename());
-    }
-
-    return file_paths;
-}
-
-std::vector<TString> Config::file_paths()
-{
-    std::vector<TString> signal = signal_file_paths();
-    std::vector<TString> background = background_file_paths();
-
-    std::vector<TString> file_paths(signal);
-    file_paths.insert(file_paths.end(), background.begin(), background.end());
-
-    return file_paths;
-}
-
-std::vector<TString> Config::signal_source_labels()
-{
-    std::vector<TString> signal_source_labels = {
-	"ggH", 
-	"VBF", 
-	"WH, W #rightarrow X",
-	"WH, W #rightarrow l#nu", 
-	"ZH, Z #rightarrow X",
-	"ZH, Z #rightarrow #nu#nu",
-	"ZH, Z #rightarrow 2l",
-	"t#bar{t}H, t#bar{t} #rightarrow 0l + X",
-	"t#bar{t}H, t#bar{t} #rightarrow 1l + X",
-	"t#bar{t}H, t#bar{t} #rightarrow 2l + X"
-    };
-    
-    return signal_source_labels;
-}
-
 TString Config::source_label(TString histname)
 {
     std::map<TString, TString> mapping = {
@@ -162,6 +89,162 @@ int Config::source_style(TString histname)
     return mapping[histname];
 }
 
+// generates an empty set of histograms, as specified by this config class, and by the external info as to the number of bins
+std::map<TString, TH1F*> Config::generate_empty_histmap(int number_bins, float lower, float upper)
+{
+    std::map<TString, TH1F*> histmap;
+    std::vector<TString> names = hist_names();
+    
+    for(auto& name: names)
+    {
+	TH1F* cur = new TH1F(name, name, number_bins, lower, upper);
+	cur -> SetFillColor(source_color(name));
+	cur -> SetLineColor(source_color(name));
+	cur -> SetFillStyle(source_style(name));
+
+	histmap.insert(std::make_pair(name, cur));
+    }
+
+    return histmap;
+}
+
+std::vector<TString> Config::hist_names()
+{
+    std::vector<TString> signal = signal_hist_names();
+    std::vector<TString> background = background_hist_names();
+
+    std::vector<TString> hist_names(signal);
+    hist_names.insert(hist_names.end(), background.begin(), background.end());
+
+    return hist_names;    
+}
+
+std::vector<TString> Config::signal_hist_names()
+{
+    std::vector<TString> signal_hist_names = {
+	"ggHhist", 
+	"VBFhist",
+	"WHXhist", 
+	"WHlnuhist", 
+	"ZHXhist", 
+	"ZHnunuhist",
+	"ZH2lhist", 
+	"ttH0lhist", 
+	"ttH1lhist", 
+	"ttH2lhist"
+    };
+    
+    return signal_hist_names;
+}
+
+std::vector<TString> Config::background_hist_names()
+{    
+    std::vector<TString> background_hist_names = {
+	"qq4lhist", 
+	"gg4lhist"
+    };
+
+    return background_hist_names;
+}
+
+std::vector<TString> Config::file_names()
+{
+    std::vector<TString> signal = signal_file_names();
+    std::vector<TString> background = background_file_names();
+
+    std::vector<TString> file_names(signal);
+    file_names.insert(file_names.end(), background.begin(), background.end());
+
+    return file_names;
+}
+
+std::vector<TString> Config::signal_file_names()
+{
+    std::vector<TString> signal_file_names = {
+	"ggH125", 
+	"VBFH125", 
+	"WplusH125", 
+	"WminusH125", 
+	"ZH125", 
+	"ttH125", 
+	"bbH125", 
+	"tqH125"
+    };
+   
+    return signal_file_names;
+}
+
+std::vector<TString> Config::background_file_names()
+{    
+    std::vector<TString> background_file_names = {
+	"ZZTo4l", 
+	"ggTo2e2mu_Contin_MCFM701",
+	"ggTo2e2tau_Contin_MCFM701",
+	"ggTo2mu2tau_Contin_MCFM701",
+	"ggTo4e_Contin_MCFM701",
+	"ggTo4mu_Contin_MCFM701",
+	"ggTo4tau_Contin_MCFM701"
+    };
+
+    return background_file_names;
+}
+
+std::vector<TString> Config::file_paths()
+{
+    std::vector<TString> signal = signal_file_paths();
+    std::vector<TString> background = background_file_paths();
+
+    std::vector<TString> file_paths(signal);
+    file_paths.insert(file_paths.end(), background.begin(), background.end());
+
+    return file_paths;
+}
+
+std::vector<TString> Config::signal_file_paths()
+{
+    std::vector<TString> file_names = signal_file_names();
+    std::vector<TString> file_paths;
+
+    for(auto& file: file_names)
+    {
+	file_paths.push_back(MC_path() + file + MC_filename());
+    }
+
+    return file_paths;
+}
+
+std::vector<TString> Config::background_file_paths()
+{
+    std::vector<TString> file_names = background_file_names();
+    std::vector<TString> file_paths;
+
+    for(auto& file: file_names)
+    {
+	file_paths.push_back(MC_path() + file + MC_filename());
+    }
+
+    return file_paths;
+}
+
+std::vector<TString> Config::signal_source_labels()
+{
+    std::vector<TString> signal_source_labels = {
+	"ggH", 
+	"VBF", 
+	"WH, W #rightarrow X",
+	"WH, W #rightarrow l#nu", 
+	"ZH, Z #rightarrow X",
+	"ZH, Z #rightarrow #nu#nu",
+	"ZH, Z #rightarrow 2l",
+	"t#bar{t}H, t#bar{t} #rightarrow 0l + X",
+	"t#bar{t}H, t#bar{t} #rightarrow 1l + X",
+	"t#bar{t}H, t#bar{t} #rightarrow 2l + X"
+    };
+    
+    return signal_source_labels;
+}
+
+
 std::vector<TString> Config::signal_source_labels_text()
 {
     std::vector<TString> signal_source_labels_text = {
@@ -206,34 +289,6 @@ std::vector<TString> Config::source_labels()
 }
 
 
-std::vector<TString> Config::hist_names()
-{
-    std::vector<TString> signal = signal_hist_names();
-    std::vector<TString> background = background_hist_names();
-
-    std::vector<TString> hist_names(signal);
-    hist_names.insert(hist_names.end(), background.begin(), background.end());
-
-    return hist_names;    
-}
-
-std::vector<TString> Config::signal_hist_names()
-{
-    std::vector<TString> signal_hist_names = {
-	"ggHhist", 
-	"VBFhist",
-	"WHXhist", 
-	"WHlnuhist", 
-	"ZHXhist", 
-	"ZHnunuhist",
-	"ZH2lhist", 
-	"ttH0lhist", 
-	"ttH1lhist", 
-	"ttH2lhist"
-    };
-    
-    return signal_hist_names;
-}
 
 std::vector<int> Config::signal_source_styles()
 {
@@ -303,6 +358,7 @@ std::vector<int> Config::signal_source_colors()
     return signal_source_colors;
 }
 
+// can go away once store all the histos with their name in a map anyways
 int Config::hist_index(TString desc)
 {
     std::map<TString, int> hist_index_vals = {
@@ -323,20 +379,6 @@ int Config::hist_index(TString desc)
     return hist_index_vals[desc];
 }
 
-std::vector<TString> Config::background_file_names()
-{    
-    std::vector<TString> background_file_names = {
-	"ZZTo4l", 
-	"ggTo2e2mu_Contin_MCFM701",
-	"ggTo2e2tau_Contin_MCFM701",
-	"ggTo2mu2tau_Contin_MCFM701",
-	"ggTo4e_Contin_MCFM701",
-	"ggTo4mu_Contin_MCFM701",
-	"ggTo4tau_Contin_MCFM701"
-    };
-
-    return background_file_names;
-}
 
 std::vector<TString> Config::background_source_labels()
 {    
@@ -356,16 +398,6 @@ std::vector<TString> Config::background_source_labels_text()
     };
 
     return background_source_labels_text;
-}
-
-std::vector<TString> Config::background_hist_names()
-{    
-    std::vector<TString> background_hist_names = {
-	"qq4lhist", 
-	"gg4lhist"
-    };
-
-    return background_hist_names;
 }
 
 std::vector<int> Config::background_source_colors()

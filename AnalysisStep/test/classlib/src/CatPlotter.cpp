@@ -6,6 +6,30 @@ CatPlotter::CatPlotter()
 CatPlotter::~CatPlotter()
 {  }
 
+void CatPlotter::Construct(std::map<TString, TH1F*> histmap, Config* conf, std::vector<float> yields, TString title)
+{
+    std::vector<TH1F*> hists;
+    std::vector<TString> source_labels;
+
+    std::vector<TString> cat_labels = conf -> ordered_cat_labels();
+
+    for(auto hist_name: conf -> hist_names())
+    {
+	std::map<TString, TH1F*>::iterator it = histmap.find(hist_name);
+
+	if(it != histmap.end())
+	{
+	    std::cout << "plotter::construct" << hist_name << std::endl;
+	    hists.push_back(histmap[hist_name]);
+	    source_labels.push_back(conf -> source_label(hist_name));
+	}
+    }
+
+    float lumi = conf -> lumi();
+
+    Construct(hists, cat_labels, source_labels, yields, title, lumi);
+}
+
 void CatPlotter::Construct(std::vector<TH1F*> hists, std::vector<TString> cat_labels, std::vector<TString> source_labels, std::vector<float> yields, TString title, float lumi)
 {
     this -> cat_labels = cat_labels;

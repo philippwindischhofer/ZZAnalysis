@@ -1,6 +1,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/comp_utils.h>
 
-float compare_punzi(TString indir_a, TString indir_b, TString name_a, TString name_b, TString infile_name, TString hist_name, TString outdir, TString outfile_name, float zoom_scale, Config& conf)
+float compare_punzi(TString indir_a, TString indir_b, TString name_a, TString name_b, TString infile_name, TString hist_name, TString outdir, TString outfile_name, float zoom_scale, Config* conf)
 {
     std::vector<TString> hist_name_vec;
     hist_name_vec.push_back(hist_name);
@@ -34,7 +34,7 @@ float compare_punzi(TString indir_a, TString indir_b, TString name_a, TString na
 
     // now can make the ratio plot
     CatPlotter plotter;
-    plotter.Construct(comp_vec, conf.cat_labels(), std::vector<TString>(), std::vector<float>(), "Punzi purity ratio", conf.lumi());
+    plotter.Construct(comp_vec, conf -> cat_labels(), std::vector<TString>(), std::vector<float>(), "Punzi purity ratio", conf -> lumi());
     plotter.DrawLabel(name_a + " vs. " + name_b);
     plotter.GetStack() -> SetMinimum(1 - zoom_scale);
     plotter.GetStack() -> SetMaximum(1 + zoom_scale);

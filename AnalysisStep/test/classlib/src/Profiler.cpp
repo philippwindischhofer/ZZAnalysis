@@ -6,6 +6,7 @@ Profiler::Profiler():Tree()
 Profiler::~Profiler()
 {  }
 
+// for TH3F
 void Profiler::FillProfile(TString input_file_name, float lumi, TH3F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y, const std::function<float(Tree*)>& var_z, bool normalize)
 {
     auto TH3F_callback =[&](TObject* hist, Tree* in, float weight) -> void {
@@ -18,6 +19,7 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TH3F* hist, cons
     // TODO: implement the "normalize" flag
 }
 
+// for TH2F
 void Profiler::FillProfile(TString input_file_name, float lumi, TH2F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y, bool normalize)
 {
     auto TH2F_callback = [&](TObject* hist, Tree* in, float weight) -> void {
@@ -30,6 +32,7 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TH2F* hist, cons
     // TODO: implement the "normalize" flag
 }
 
+// for TH1F
 void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, bool normalize)
 {
     auto TH1F_callback = [&](TObject* hist, Tree* in, float weight) -> void {

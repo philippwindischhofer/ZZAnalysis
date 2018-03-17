@@ -1,5 +1,22 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/utils.h>
 
+std::map<int, float> get_bin_sums(std::map<TString, TH1F*> histmap, Config* conf)
+{
+    std::map<int, float> bin_sums;
+
+    std::vector<int> cats = conf -> categories();
+
+    for(auto cat: cats)
+    {
+	for(auto& hist: histmap)
+	{
+	    bin_sums[cat] += hist.second -> GetBinContent(conf -> bin_number(cat));
+	}
+    }
+
+    return bin_sums;
+}
+
 std::vector<float> get_category_sums(std::vector<TH1F*> hist_vec)
 {
     int number_bins = hist_vec[0] -> GetSize() - 2; // don't take the over- and underflow bins
@@ -35,6 +52,18 @@ std::vector<float> renormalize_histograms(std::vector<TH1F*> hist_vec)
     return sumvec;
 }
 
+std::vector<float> unitize_histmap(std::map<TString, TH1F*> histmap)
+{
+    std::vector<TH1F*> histvec;
+
+    for(auto& hist: histmap)
+    {
+	histvec.push_back(hist.second);
+    }
+
+    return renormalize_histograms(histvec);
+}
+
 void save_histos(TString file, std::vector<TH1F*>& hist_vec)
 {
     TFile* outfile = new TFile(file, "recreate");
@@ -48,6 +77,19 @@ void save_histos(TString file, std::vector<TH1F*>& hist_vec)
     outfile -> Close();
     delete outfile;
 }
+
+void save_histmap(TString file, std::map<TString, TH1F*> histos)
+{
+    std::vector<TH1F*> hist_vec;
+
+    for(auto& hist: histos)
+    {
+	hist_vec.push_back(hist.second);
+    }
+
+    save_histos(file, hist_vec);
+}
+
 
 std::vector<TH1F*> read_histos(TString file, std::vector<TString> hist_names)
 {
@@ -65,6 +107,23 @@ std::vector<TH1F*> read_histos(TString file, std::vector<TString> hist_names)
     //delete infile;
 
     return hist_vec;
+}
+
+std::map<TString, TH1F*> read_histmap(TString file, std::vector<TString> hist_names)
+{
+    std::map<TString, TH1F*> hists;
+    std::vector<TH1F*> hist_vec = read_histos(file, hist_names);
+  
+    for(auto tup: boost::combine(hist_names, hist_vec))
+    {
+	TH1F* hist;
+	TString hist_name;
+	boost::tie(hist_name, hist) = tup;
+
+	hists.insert(std::make_pair(hist_name, hist));
+    }
+
+    return hists;
 }
 
 float get_total_events(TH1F* hist)

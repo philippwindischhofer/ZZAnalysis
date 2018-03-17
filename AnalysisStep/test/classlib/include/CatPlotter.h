@@ -20,6 +20,8 @@
 #include "TLegend.h"
 #include "TLine.h"
 
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/Config.h>
+
 class CatPlotter
 {
 public:
@@ -28,6 +30,7 @@ public:
 
     // makes a generic category plot
     void Construct(std::vector<TH1F*> hists, std::vector<TString> cat_labels, std::vector<TString> source_labels, std::vector<float> yields, TString title, float lumi);
+    void Construct(std::map<TString, TH1F*> histmap, Config* conf, std::vector<float> yields, TString title);
     void DrawLabel(TString label);
     void AddLine(double coord);
     void SaveAs(TString file);
