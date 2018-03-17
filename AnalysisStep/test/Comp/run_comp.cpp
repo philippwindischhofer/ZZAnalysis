@@ -20,11 +20,11 @@ TString indir_a = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/Benchmark
 TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReduced/";
 
 TString name_a = "Mor18_{LI}";
-TString name_b = "Mor18    (simple voting)";
+TString name_b = "Mor18    (simple voting, likelihood only)";
 
 TString out_folder = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/CompPlots/";
 
-float zoom_scale = 0.10;
+float zoom_scale = 0.1;
 
 TString punzi_hist_name = "punzi_purity";
 TString punzi_infile = "punzi_plot_hist.root";

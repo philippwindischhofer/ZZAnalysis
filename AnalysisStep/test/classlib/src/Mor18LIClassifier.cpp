@@ -143,7 +143,7 @@ int Mor18LIClassifier::categoryMor18(
 	{"ggH125", UntaggedMor18}
     };
 
-    if(margin > 0.0)
+    //if(margin >= 0.0)
     {
 	return conversion[winner];
     }
