@@ -55,10 +55,4 @@ void make_SBfine_ratio(int fill_histos, Classifier* classifier, TString out_fold
 
 void make_punzi(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf);
 
-
-
-/* std::vector<TH1F*> generate_signal_histvec(int fill_histos, Classifier* classifier, const std::function<bool(Tree*)>& cut, TString data_id, TString local_path, Config& conf); */
-/* std::vector<TH1F*> generate_background_histvec(int fill_histos, Classifier* classifier, const std::function<bool(Tree*)>& cut, TString data_id, TString local_path, Config& conf); */
-/* void make_punzi(int fill_histos, Classifier* classifier, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, TString out_path, Config& conf); */
-
 #endif

@@ -27,6 +27,7 @@
 #include "Tree.h"
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/DiscriminantCollection.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MEDiscriminantFactory.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/VotingMultiClassCombinator.h>
 
@@ -40,7 +41,7 @@ public:
     Mor18LIClassifier();
     ~Mor18LIClassifier();
 
-    int ClassifyEvent();
+//    int ClassifyEvent();
     int ClassifyThisEvent(Tree* in);
 
     void SetWPs(float WP_VBF2j, float WP_VBF1j, float WP_WHh, float WP_ZHh);

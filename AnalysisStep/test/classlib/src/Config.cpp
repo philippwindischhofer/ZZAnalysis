@@ -29,6 +29,45 @@ Config::Config()
     routing.push_back(std::make_pair("ggTo4tau_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
 }
 
+std::vector<TString> Config::hist_names()
+{
+    std::vector<TString> signal = signal_hist_names();
+    std::vector<TString> background = background_hist_names();
+
+    std::vector<TString> hist_names(signal);
+    hist_names.insert(hist_names.end(), background.begin(), background.end());
+
+    return hist_names;    
+}
+
+std::vector<TString> Config::signal_hist_names()
+{
+    std::vector<TString> signal_hist_names = {
+	"ggHhist", 
+	"VBFhist",
+	"WHXhist", 
+	"WHlnuhist", 
+	"ZHXhist", 
+	"ZHnunuhist",
+	"ZH2lhist", 
+	"ttH0lhist", 
+	"ttH1lhist", 
+	"ttH2lhist"
+    };
+    
+    return signal_hist_names;
+}
+
+std::vector<TString> Config::background_hist_names()
+{    
+    std::vector<TString> background_hist_names = {
+	"qq4lhist", 
+	"gg4lhist"
+    };
+
+    return background_hist_names;
+}
+
 TString Config::source_label(TString histname)
 {
     std::map<TString, TString> mapping = {
@@ -108,313 +147,79 @@ std::map<TString, TH1F*> Config::generate_empty_histmap(int number_bins, float l
     return histmap;
 }
 
-std::vector<TString> Config::hist_names()
+int Config::abs_cat_number(TString category)
 {
-    std::vector<TString> signal = signal_hist_names();
-    std::vector<TString> background = background_hist_names();
+    std::vector<TString> cats = abstract_categories();
 
-    std::vector<TString> hist_names(signal);
-    hist_names.insert(hist_names.end(), background.begin(), background.end());
-
-    return hist_names;    
+    // histogram bins in ROOT are 1-indexed!!
+    return std::find(cats.begin(), cats.end(), category) - cats.begin();
 }
 
-std::vector<TString> Config::signal_hist_names()
+int Config::bin_number(int category)
 {
-    std::vector<TString> signal_hist_names = {
-	"ggHhist", 
-	"VBFhist",
-	"WHXhist", 
-	"WHlnuhist", 
-	"ZHXhist", 
-	"ZHnunuhist",
-	"ZH2lhist", 
-	"ttH0lhist", 
-	"ttH1lhist", 
-	"ttH2lhist"
-    };
-    
-    return signal_hist_names;
+    std::vector<int> cats = categories();
+
+    // TODO: add out-of-bounds checking!
+
+    // histogram bins in ROOT are 1-indexed!!
+    return std::find(cats.begin(), cats.end(), category) - cats.begin() + 1;
 }
 
-std::vector<TString> Config::background_hist_names()
-{    
-    std::vector<TString> background_hist_names = {
-	"qq4lhist", 
-	"gg4lhist"
-    };
-
-    return background_hist_names;
-}
-
-std::vector<TString> Config::file_names()
+std::vector<TString> Config::ordered_cat_labels()
 {
-    std::vector<TString> signal = signal_file_names();
-    std::vector<TString> background = background_file_names();
+    std::vector<int> cats = categories();
+    std::vector<TString> ordered_labels;
 
-    std::vector<TString> file_names(signal);
-    file_names.insert(file_names.end(), background.begin(), background.end());
-
-    return file_names;
-}
-
-std::vector<TString> Config::signal_file_names()
-{
-    std::vector<TString> signal_file_names = {
-	"ggH125", 
-	"VBFH125", 
-	"WplusH125", 
-	"WminusH125", 
-	"ZH125", 
-	"ttH125", 
-	"bbH125", 
-	"tqH125"
-    };
-   
-    return signal_file_names;
-}
-
-std::vector<TString> Config::background_file_names()
-{    
-    std::vector<TString> background_file_names = {
-	"ZZTo4l", 
-	"ggTo2e2mu_Contin_MCFM701",
-	"ggTo2e2tau_Contin_MCFM701",
-	"ggTo2mu2tau_Contin_MCFM701",
-	"ggTo4e_Contin_MCFM701",
-	"ggTo4mu_Contin_MCFM701",
-	"ggTo4tau_Contin_MCFM701"
-    };
-
-    return background_file_names;
-}
-
-std::vector<TString> Config::file_paths()
-{
-    std::vector<TString> signal = signal_file_paths();
-    std::vector<TString> background = background_file_paths();
-
-    std::vector<TString> file_paths(signal);
-    file_paths.insert(file_paths.end(), background.begin(), background.end());
-
-    return file_paths;
-}
-
-std::vector<TString> Config::signal_file_paths()
-{
-    std::vector<TString> file_names = signal_file_names();
-    std::vector<TString> file_paths;
-
-    for(auto& file: file_names)
+    for(auto cat: cats)
     {
-	file_paths.push_back(MC_path() + file + MC_filename());
+	ordered_labels.push_back(cat_label(cat));
     }
 
-    return file_paths;
+    return ordered_labels;
 }
 
-std::vector<TString> Config::background_file_paths()
+std::vector<TString> Config::ordered_abs_cat_labels()
 {
-    std::vector<TString> file_names = background_file_names();
-    std::vector<TString> file_paths;
+    std::vector<TString> cats = abstract_categories();
+    std::vector<TString> ordered_labels;
 
-    for(auto& file: file_names)
+    for(auto cat: cats)
     {
-	file_paths.push_back(MC_path() + file + MC_filename());
+	ordered_labels.push_back(abs_cat_label(cat));
     }
 
-    return file_paths;
+    return ordered_labels;
 }
 
-std::vector<TString> Config::signal_source_labels()
+// need to make sure that every key-value combination occurs only once, but each key can occur multiple times!
+std::vector<std::pair<TString, int>> Config::bin_assignment()
 {
-    std::vector<TString> signal_source_labels = {
-	"ggH", 
-	"VBF", 
-	"WH, W #rightarrow X",
-	"WH, W #rightarrow l#nu", 
-	"ZH, Z #rightarrow X",
-	"ZH, Z #rightarrow #nu#nu",
-	"ZH, Z #rightarrow 2l",
-	"t#bar{t}H, t#bar{t} #rightarrow 0l + X",
-	"t#bar{t}H, t#bar{t} #rightarrow 1l + X",
-	"t#bar{t}H, t#bar{t} #rightarrow 2l + X"
-    };
+    std::vector<std::pair<TString, int>> bin_assign;
+    std::vector<SignalAssignment*> assignments = signal_assignment();
+
+    for(auto& assignment: assignments)
+    {
+	auto cur = std::make_pair(assignment -> category, assignment -> bin);
+	if(std::find(bin_assign.begin(), bin_assign.end(), cur) == bin_assign.end())
+	    bin_assign.push_back(cur);
+    }
+
+    return bin_assign;
+}
+
+std::vector<std::pair<TString, TString>> Config::histogram_assignment()
+{
+    std::vector<std::pair<TString, TString>> histo_assign;
+    std::vector<SignalAssignment*> assignments = signal_assignment();
     
-    return signal_source_labels;
-}
+    for(auto& assignment: assignments)
+    {
+	auto cur = std::make_pair(assignment -> category, assignment -> histogram);
+	if(std::find(histo_assign.begin(), histo_assign.end(), cur) == histo_assign.end())
+	    histo_assign.push_back(cur);
+    }
 
-
-std::vector<TString> Config::signal_source_labels_text()
-{
-    std::vector<TString> signal_source_labels_text = {
-	"$ggH$",
-	"VBF",
-	"$WH, W \\rightarrow X$",
-	"$WH, W \\rightarrow \\ell \\nu$",
-	"$ZH, Z \\rightarrow X$",
-	"$ZH, Z \\rightarrow \\nu \\nu$",
-	"$ZH, Z \\rightarrow 2\\ell$",
-	"$ttH, tt \\rightarrow 0\\ell$",
-	"$ttH, tt \\rightarrow 1\\ell$",
-	"$ttH, tt \\rightarrow 2\\ell$"
-    };
-
-    return signal_source_labels_text;
-}
-
-std::vector<TString> Config::signal_source_labels_merged_text()
-{    
-    std::vector<TString> signal_source_labels_merged_text = {
-	"$ggH$", 
-	"VBF", 
-	"$WH$",
-	"$ZH$",
-	"$t\\bar{t}H$",
-    };
-
-    return signal_source_labels_merged_text;
-}
-
-
-std::vector<TString> Config::source_labels()
-{
-    std::vector<TString> signal = signal_source_labels();
-    std::vector<TString> background = background_source_labels();
-
-    std::vector<TString> source_labels(signal);
-    source_labels.insert(source_labels.end(), background.begin(), background.end());
-
-    return source_labels;
-}
-
-
-
-std::vector<int> Config::signal_source_styles()
-{
-    std::vector<int> signal_source_styles = {
-	1001,
-	1001,
-	1001,
-	1001,
-	1001,
-	1001,
-	1001,
-	1001,
-	1001,
-	1001
-    };
-
-    return signal_source_styles;
-}
-
-std::vector<int> Config::background_source_styles()
-{
-    std::vector<int> background_source_styles = {
-	    3244,
-	    3244
-    };
-
-    return background_source_styles;
-}
-
-std::vector<int> Config::source_styles()
-{
-    std::vector<int> signal = signal_source_styles();
-    std::vector<int> background = background_source_styles();
-    
-    std::vector<int> source_styles(signal);
-    source_styles.insert(source_styles.end(), background.begin(), background.end());
-    
-    return source_styles;        
-}
-
-std::vector<int> Config::source_colors()
-{
-    std::vector<int> signal = signal_source_colors();
-    std::vector<int> background = background_source_colors();
-
-    std::vector<int> source_colors(signal);
-    source_colors.insert(source_colors.end(), background.begin(), background.end());
-
-    return source_colors;    
-}
-
-std::vector<int> Config::signal_source_colors()
-{    
-    std::vector<int> signal_source_colors = {
-	kBlue - 9, 
-	kGreen - 6, 
-	kRed - 7, 
-	kRed - 6, 
-	kYellow - 7, 
-	kYellow - 3, 
-	kYellow + 2,
-	kCyan - 6,
-	kCyan - 2,
-	kCyan + 3
-    };
-    
-    return signal_source_colors;
-}
-
-// can go away once store all the histos with their name in a map anyways
-int Config::hist_index(TString desc)
-{
-    std::map<TString, int> hist_index_vals = {
-	{"ggHhist", 0},
-	{"VBFhist", 1},
-	{"WHXhist", 2},
-	{"WHlnuhist", 3},
-	{"ZHXhist", 4},
-	{"ZHnunuhist", 5},
-	{"ZH2lhist", 6},
-	{"ttH0lhist", 7},
-	{"ttH1lhist", 8},
-	{"ttH2lhist", 9},
-	{"qq4lhist", 0},
-	{"gg4lhist", 1}
-	};
-
-    return hist_index_vals[desc];
-}
-
-
-std::vector<TString> Config::background_source_labels()
-{    
-    std::vector<TString> background_source_labels = {
-	"q#bar{q} #rightarrow ZZ #rightarrow 4l",
-	"gg #rightarrow ZZ #rightarrow 4l"
-    };
-
-    return background_source_labels;
-}
-
-std::vector<TString> Config::background_source_labels_text()
-{
-    std::vector<TString> background_source_labels_text = {
-	"$q\\bar{q} \\rightarrow ZZ \\rightarrow 4l$",
-	"$gg \\rightarrow ZZ \\rightarrow 4l$"
-    };
-
-    return background_source_labels_text;
-}
-
-std::vector<int> Config::background_source_colors()
-{
-    std::vector<int> background_source_colors = {
-	kBlack,
-	kGray,
-	kRed - 9,
-	kRed - 6,
-	kRed - 2,
-	kRed + 3,
-	kCyan - 6,
-	kCyan - 2,
-	kCyan + 3    
-    };
-
-    return background_source_colors;
+    return histo_assign;
 }
 
 float Config::lumi()

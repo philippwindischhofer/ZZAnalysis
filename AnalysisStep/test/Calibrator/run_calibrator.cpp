@@ -20,7 +20,7 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/utils.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Profiler.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/ProfPlotter.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Config.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Discriminant.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/DiscriminantCollection.h>
@@ -155,7 +155,7 @@ void calibrate_discriminant_collection(DiscriminantCollection* coll, Config& con
 
 int main(int argc, char *argv[])
 {    
-    Config conf;
+    Mor18Config conf;
 
     DiscriminantCollection* coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
 

@@ -32,7 +32,6 @@ public:
     Mor17Classifier();
     ~Mor17Classifier();
 
-    int ClassifyEvent();
     int ClassifyThisEvent(Tree* in);
 };
 

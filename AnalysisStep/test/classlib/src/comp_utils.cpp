@@ -34,7 +34,7 @@ float compare_punzi(TString indir_a, TString indir_b, TString name_a, TString na
 
     // now can make the ratio plot
     CatPlotter plotter;
-    plotter.Construct(comp_vec, conf -> cat_labels(), std::vector<TString>(), std::vector<float>(), "Punzi purity ratio", conf -> lumi());
+    plotter.Construct(comp_vec, conf -> ordered_abs_cat_labels(), std::vector<TString>(), std::vector<float>(), "Punzi purity ratio", conf -> lumi());
     plotter.DrawLabel(name_a + " vs. " + name_b);
     plotter.GetStack() -> SetMinimum(1 - zoom_scale);
     plotter.GetStack() -> SetMaximum(1 + zoom_scale);

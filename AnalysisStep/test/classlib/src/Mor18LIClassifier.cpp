@@ -5,7 +5,7 @@ Mor18LIClassifier::Mor18LIClassifier()
     manual_WPs = false;
 
     TString out_folder = "../../src/ZZAnalysis/CalibratorPlots/";
-    Config conf;
+    Mor18Config conf;
     coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
     comb = new VotingMultiClassCombinator();
 }
@@ -48,42 +48,6 @@ int Mor18LIClassifier::ClassifyThisEvent(Tree* in)
 	in -> PFMET,
 	true,
 	false);
-}
-
-int Mor18LIClassifier::ClassifyEvent()
-{
-    float jetQGLikelihood[99];
-    float jetPhi[99];
-
-    for(int i = 0; i < nCleanedJetsPt30; i++)
-    {
-	jetQGLikelihood[i] = JetQGLikelihood -> at(i);
-	jetPhi[i] = JetPhi -> at(i);
-    }
-
-    return categoryMor18(
-	this,
-	nExtraLep,
-	nExtraZ,
-	nCleanedJetsPt30, 
-	nCleanedJetsPt30BTagged_bTagSF,
-	jetQGLikelihood,
-	p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal,
-	p_JQCD_SIG_ghg2_1_JHUGen_JECNominal,
-	p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal,
-	p_JVBF_SIG_ghv1_1_JHUGen_JECNominal,
-	pAux_JVBF_SIG_ghv1_1_JHUGen_JECNominal,
-	p_HadWH_SIG_ghw1_1_JHUGen_JECNominal,
-	p_HadZH_SIG_ghz1_1_JHUGen_JECNominal,
-	p_HadWH_mavjj_JECNominal,
-	p_HadWH_mavjj_true_JECNominal,
-	p_HadZH_mavjj_JECNominal,
-	p_HadZH_mavjj_true_JECNominal,
-	jetPhi,
-	ZZMass,
-	PFMET,
-	true,
-	false); // use QG tagging?
 }
 
 void Mor18LIClassifier::SetWPs(float WP_VBF2j, float WP_VBF1j, float WP_WHh, float WP_ZHh)

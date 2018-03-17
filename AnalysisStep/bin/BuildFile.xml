@@ -11,23 +11,8 @@
 <library file="../test/Plotter_v2/src/*.cpp" name="ZZAnalysisAnalysisStepTestPlotter_v2Src">
 </library>
 
-<library file="../test/Benchmarker/src/*.cpp" name="ZZAnalysisAnalysisStepTestBenchmarkerSrc">
-</library>
-
-<!-- <library file="../test/Optimizer/src/*.cpp" name="ZZAnalysisAnalysisStepTestOptimizerSrc"> -->
-<!--   <lib name="class_lib"/>   -->
-<!-- </library> -->
-
-<library file="../test/Comp/src/*.cpp" name="ZZAnalysisAnalysisStepTestCompSrc">
-  <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>
-</library>
-
-<!-- <library file="../test/KDE/src/*.cpp" name="ZZAnalysisAnalysisStepTestKDESrc"> -->
-<!-- </library> -->
-
 <!-- benchmarks a certain classifier on the MC -->
 <bin name="run_benchmarker" file="../test/Benchmarker/run_benchmarker.cpp">
-  <!-- <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/> -->
   <lib name="class_lib"/>
 </bin>
 
@@ -45,6 +30,15 @@
   <lib name="class_lib"/>  
 </bin>
 
+<bin name="run_calibrator" file="../test/Calibrator/run_calibrator.cpp">
+  <lib name="class_lib"/>
+</bin>
+
+<!-- compares different classifiers -->
+<bin name="run_comp" file="../test/Comp/run_comp.cpp">
+  <lib name="class_lib"/>
+</bin>
+
 <bin name="run_helloworld" file="../test/HelloWorld/run_helloworld.cpp">
 </bin>
 
@@ -54,17 +48,6 @@
 
 <bin   name="run_yields" file="../test/Plotter_v2/run_yields.cpp">
    <lib   name="ZZAnalysisAnalysisStepTestPlotter_v2Src"/>
-</bin>
-
-<bin name="run_calibrator" file="../test/Calibrator/run_calibrator.cpp">
-  <lib name="class_lib"/>
-</bin>
-
-<!-- compares different classifiers -->
-<bin name="run_comp" file="../test/Comp/run_comp.cpp">
-  <lib name="ZZAnalysisAnalysisStepTestCompSrc"/>
-  <!-- <lib name="ZZAnalysisAnalysisStepTestProfilerSrc"/> -->
-  <!-- <lib name="ZZAnalysisAnalysisStepTestBenchmarkerSrc"/>   -->
 </bin>
 
 <library   file="../test/ZpXEstimation/src/*.cpp" name="ZZAnalysisAnalysisStepTestZpXEstimationSrc">
