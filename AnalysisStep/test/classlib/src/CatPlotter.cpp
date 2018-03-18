@@ -184,7 +184,7 @@ void CatPlotter::Redraw()
 void CatPlotter::SaveAs(TString file)
 {
     canv -> SaveAs(file);
-    delete canv;
+    //delete canv;
 }
 
 THStack* CatPlotter::GetStack()

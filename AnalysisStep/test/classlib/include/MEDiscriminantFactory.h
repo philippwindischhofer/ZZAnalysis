@@ -13,9 +13,7 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/DiscriminantCollection.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/EventStream.h>
-
-#include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
-#include <ZZAnalysis/AnalysisStep/interface/cConstants.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/me_discriminants.h>
 
 class MEDiscriminantFactory
 {
