@@ -39,6 +39,10 @@
   <lib name="class_lib"/>
 </bin>
 
+<bin name="run_augment_tree" file="../test/Python/AugmentTree/run_augment_tree.cpp">
+  <lib name="class_lib"/>
+</bin>
+
 <bin name="run_helloworld" file="../test/HelloWorld/run_helloworld.cpp">
 </bin>
 
