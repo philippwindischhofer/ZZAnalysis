@@ -1,6 +1,6 @@
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/opt_utils.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/PlottingUtils.h>
 
-std::map<TString, TH1F*> generate_classifier_histmap(int fill_histos, Classifier* classifier, Config* conf, const std::function<bool(Tree*)>& ext_cut, TString data_id, TString out_path)
+std::map<TString, TH1F*> PlottingUtils::generate_classifier_histmap(int fill_histos, Classifier* classifier, Config* conf, const std::function<bool(Tree*)>& ext_cut, TString data_id, TString out_path)
 {
     TString hist_storage = data_id + "_signal.root";
     
@@ -48,7 +48,7 @@ std::map<TString, TH1F*> generate_classifier_histmap(int fill_histos, Classifier
     return histmap;
 }
 
-std::vector<TH1F*> generate_classifier_histvec(int fill_histos, Classifier* classifier, Config* conf, const std::function<bool(Tree*)>& ext_cut, TString data_id, TString out_path)
+std::vector<TH1F*> PlottingUtils::generate_classifier_histvec(int fill_histos, Classifier* classifier, Config* conf, const std::function<bool(Tree*)>& ext_cut, TString data_id, TString out_path)
 {
     std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, ext_cut, data_id, out_path);
 
@@ -62,7 +62,7 @@ std::vector<TH1F*> generate_classifier_histvec(int fill_histos, Classifier* clas
     return histvec;
 }
 
-void make_barchart(std::map<TString, TH1F*> histmap, TString out_folder, TString out_file, TString label, Config* conf)
+void PlottingUtils::make_barchart(std::map<TString, TH1F*> histmap, TString out_folder, TString out_file, TString label, Config* conf)
 {
     CatPlotter plotter;
 
@@ -77,7 +77,7 @@ void make_barchart(std::map<TString, TH1F*> histmap, TString out_folder, TString
     plotter.SaveAs(out_folder + conf -> storage_prefix() + out_file + ".pdf");
 }
 
-void make_S_barchart(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, TString label, const std::function<bool(Tree*)>& cut, Config* conf)
+void PlottingUtils::make_S_barchart(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, TString label, const std::function<bool(Tree*)>& cut, Config* conf)
 {
     // get first the total histmap (holding signal and background)
     std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder);
@@ -98,14 +98,14 @@ void make_S_barchart(int fill_histos, Classifier* classifier, TString out_folder
     make_barchart(sig_histmap, out_folder, out_file, label, conf);
 }
 
-void make_SB_barchart(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, TString label, const std::function<bool(Tree*)>& cut, Config* conf)
+void PlottingUtils::make_SB_barchart(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, TString label, const std::function<bool(Tree*)>& cut, Config* conf)
 {
     std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder);
 
     make_barchart(histmap, out_folder, out_file, label, conf);
 }
 
-std::map<TString, float> make_correct_events(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf)
+std::map<TString, float> PlottingUtils::make_correct_events(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf)
 {
     std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder);
     std::vector<SignalAssignment*> assignments = conf -> signal_assignment();
@@ -123,7 +123,7 @@ std::map<TString, float> make_correct_events(int fill_histos, Classifier* classi
     return correct_events;
 }
 
-std::map<TString, float> make_total_events(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf)
+std::map<TString, float> PlottingUtils::make_total_events(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf)
 {
     std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder);
     
@@ -141,7 +141,7 @@ std::map<TString, float> make_total_events(int fill_histos, Classifier* classifi
     return total_events;
 }
 
-std::map<TString, float> make_desired_events(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf)
+std::map<TString, float> PlottingUtils::make_desired_events(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf)
 {
     std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder);
     
@@ -159,7 +159,7 @@ std::map<TString, float> make_desired_events(int fill_histos, Classifier* classi
 }
 
 // is more refined and really takes ONLY those events as signals, whose production mode also agrees with the category
-void make_SBfine_ratio(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf)
+void PlottingUtils::make_SBfine_ratio(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf)
 {
     auto correct_events = make_correct_events(fill_histos, classifier, out_folder, out_file, data_id, cut, conf);
     auto total_events = make_total_events(kFALSE, classifier, out_folder, out_file, data_id, cut, conf);
@@ -200,7 +200,7 @@ void make_SBfine_ratio(int fill_histos, Classifier* classifier, TString out_fold
     plotter.SaveAs(out_folder + conf -> storage_prefix() + out_file + ".pdf");
 }
 
-void make_punzi(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf)
+void PlottingUtils::make_punzi(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf)
 {
     auto correct_events = make_correct_events(fill_histos, classifier, out_folder, out_file, data_id, cut, conf);
     auto total_events = make_total_events(kFALSE, classifier, out_folder, out_file, data_id, cut, conf);

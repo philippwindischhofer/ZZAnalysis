@@ -1,5 +1,5 @@
-#ifndef comp_utils_h
-#define comp_utils_h
+#ifndef CompUtils_h
+#define CompUtils_h
 
 // C++
 #include <iostream>
@@ -29,6 +29,10 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/CatPlotter.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/utils.h>
 
-float compare_punzi(TString indir_a, TString indir_b, TString name_a, TString name_b, TString infile_name, TString hist_name, TString outdir, TString outfile_name, float zoom_scale, Config* conf);
+class CompUtils
+{
+public:
+    static float compare_punzi(TString indir_a, TString indir_b, TString name_a, TString name_b, TString infile_name, TString hist_name, TString outdir, TString outfile_name, float zoom_scale, Config* conf);
+};
 
 #endif

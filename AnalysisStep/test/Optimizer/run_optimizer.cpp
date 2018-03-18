@@ -19,13 +19,13 @@
 #include "Math/GSLSimAnMinimizer.h"
 
 // use the local style for the histograms
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/opt_utils.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/PlottingUtils.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Classifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/CatPlotter.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/utils.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/cuts.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/comp_utils.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/CompUtils.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 
@@ -66,11 +66,11 @@ double costfunc(const double* params)
     std::cout << "WP_ZHh = " << WP_ZHh << std::endl;
 
     // evaluate the Punzi value with this (modified) Classifier now
-    make_punzi(kTRUE, varclass, outdir, "punzi", "no_cut_data", no_cut, conf);
+    PlottingUtils::make_punzi(kTRUE, varclass, outdir, "punzi", "no_cut_data", no_cut, conf);
     
     // load low the Punzi histogram of the optimized classifier and compare the two. From this point onwards, is exactly the same as in "Comp"
     float zoom_scale = 1.0;
-    float cost = compare_punzi(outdir, refdir, "Mor18_{opt}", "Mor18", conf -> storage_prefix() + punzi_infile, punzi_hist_name, outdir, conf -> storage_prefix() + punzi_outfile + Form("%i", evalcnt), zoom_scale, conf);
+    float cost = CompUtils::compare_punzi(outdir, refdir, "Mor18_{opt}", "Mor18", conf -> storage_prefix() + punzi_infile, punzi_hist_name, outdir, conf -> storage_prefix() + punzi_outfile + Form("%i", evalcnt), zoom_scale, conf);
 
     std::cout << "cost = " << cost << std::endl;
     std::cout << "-------------------------------------------------------" << std::endl;

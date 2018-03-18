@@ -1,6 +1,6 @@
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/comp_utils.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/CompUtils.h>
 
-float compare_punzi(TString indir_a, TString indir_b, TString name_a, TString name_b, TString infile_name, TString hist_name, TString outdir, TString outfile_name, float zoom_scale, Config* conf)
+float CompUtils::compare_punzi(TString indir_a, TString indir_b, TString name_a, TString name_b, TString infile_name, TString hist_name, TString outdir, TString outfile_name, float zoom_scale, Config* conf)
 {
     std::vector<TString> hist_name_vec;
     hist_name_vec.push_back(hist_name);

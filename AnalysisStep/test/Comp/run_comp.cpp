@@ -12,7 +12,7 @@
 #include "TString.h"
 #include "TStyle.h"
 
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/comp_utils.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/CompUtils.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 
 // global definitions
@@ -33,7 +33,7 @@ TString punzi_outfile = "punzi_comp";
 int main( int argc, char *argv[] )
 {
     Mor18Config* conf = new Mor18Config();
-    compare_punzi(indir_a, indir_b, name_a, name_b, conf -> storage_prefix() + punzi_infile, punzi_hist_name, out_folder, conf -> storage_prefix() + punzi_outfile, zoom_scale, conf);
+    CompUtils::compare_punzi(indir_a, indir_b, name_a, name_b, conf -> storage_prefix() + punzi_infile, punzi_hist_name, out_folder, conf -> storage_prefix() + punzi_outfile, zoom_scale, conf);
 
     return(0);
 }

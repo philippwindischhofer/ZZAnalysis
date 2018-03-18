@@ -23,7 +23,7 @@
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/SignalAssignment.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Classifier.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/opt_utils.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/PlottingUtils.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/src/setTDRStyle.cpp>
@@ -60,18 +60,18 @@ int main(int argc, char *argv[])
 
     Mor18Config* conf = new Mor18Config();
 
-    make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", no_cut, conf);
-    make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", no_cut, conf);
-    make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", no_cut, conf);
-    make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", no_cut, conf);
+    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", no_cut, conf);
+    PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", no_cut, conf);
+    PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", no_cut, conf);
+    PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", no_cut, conf);
 
-    make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut, conf);
-    make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut, conf);
-    make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_4e", "4e_data", "ZZ #rightarrow 4e", final_state_4e_cut, conf);
+    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut, conf);
+    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut, conf);
+    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_4e", "4e_data", "ZZ #rightarrow 4e", final_state_4e_cut, conf);
 
-    make_S_barchart(kTRUE, refclass, out_folder, "categorization_S_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut, conf);
-    make_S_barchart(kTRUE, refclass, out_folder, "categorization_S_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut, conf);
-    make_S_barchart(kTRUE, refclass, out_folder, "categorization_S_4e", "4e_data", "ZZ #rightarrow 4e", final_state_4e_cut, conf);
+    PlottingUtils::make_S_barchart(kTRUE, refclass, out_folder, "categorization_S_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut, conf);
+    PlottingUtils::make_S_barchart(kTRUE, refclass, out_folder, "categorization_S_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut, conf);
+    PlottingUtils::make_S_barchart(kTRUE, refclass, out_folder, "categorization_S_4e", "4e_data", "ZZ #rightarrow 4e", final_state_4e_cut, conf);
 
     return(0);
 }
