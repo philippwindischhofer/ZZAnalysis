@@ -16,11 +16,17 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 
 // global definitions
-TString indir_a = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsLI/";
-TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReduced/";
+// TString indir_a = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsLI/";
+// TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReduced/";
 
-TString name_a = "Mor18_{LI}";
-TString name_b = "Mor18    (simple voting, likelihood only)";
+TString indir_a = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsOptMor18/";
+TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization/";
+
+// TString name_a = "Mor18_{LI}";
+// TString name_b = "Mor18    (simple voting, likelihood only)";
+
+TString name_a = "Mor18_{OPT}";
+TString name_b = "Mor18";
 
 TString out_folder = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/CompPlots/";
 
@@ -34,6 +40,8 @@ int main( int argc, char *argv[] )
 {
     Mor18Config* conf = new Mor18Config();
     CompUtils::compare_punzi(indir_a, indir_b, name_a, name_b, conf -> storage_prefix() + punzi_infile, punzi_hist_name, out_folder, conf -> storage_prefix() + punzi_outfile, zoom_scale, conf);
+
+    std::cout << "done" << std::endl;
 
     return(0);
 }
