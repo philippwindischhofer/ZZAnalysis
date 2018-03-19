@@ -90,6 +90,8 @@ int Mor18LIClassifier::categoryMor18(
 			     )
 {
 
+    std::cout << "-------------------------------------------------" << std::endl;
+
     // try first the likelihood approach
     comb -> Evaluate(in, coll);
     TString winner = comb -> GetWinningCategory();
@@ -107,10 +109,18 @@ int Mor18LIClassifier::categoryMor18(
 	{"ggH125", UntaggedMor18}
     };
 
-    if(margin > 0.0)
+    //if(margin > 0.0)
     {
+	std::cout << "no draw, returning result" << std::endl;
+	
+	std::cout << "-------------------------------------------------" << std::endl;
+
 	return conversion[winner];
     }
+
+    std::cout << "draw, falling back to legacy algorithm" << std::endl;
+
+    std::cout << "-------------------------------------------------" << std::endl;
 
     // doesn't give a clear candidate, fall back to the standard categorization
 

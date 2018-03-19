@@ -30,13 +30,12 @@ int main(int argc, char *argv[])
 {
 
 //TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization/";
-//TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsReferenceReducedCategorySet/";
 
+//TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsReferenceReducedCategorySet/";
 TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsLIReducedCategorySet/";
 
 //    TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsSandbox/";
 //    TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsOptMor18/";
-
 
 //    Classifier* refclass = new Mor18Classifier();
 
@@ -51,10 +50,15 @@ TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsLIReducedCategorySet/
     // Mor18Classifier* refclass18 = static_cast<Mor18Classifier*>(refclass);
     // refclass18 -> SetWPs(WP_VBF2j, WP_VBF1j, WP_WHh, WP_ZHh);
 
-    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", no_cut, conf);
-    PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", no_cut, conf);
-    PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", no_cut, conf);
-    PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", no_cut, conf);
+    // the cuts that will be needed
+    auto jcut = [&](Tree* in) -> bool {
+    	return (((in -> nCleanedJetsPt30 >= 1) ? kTRUE : kFALSE)) ? 
+    	kTRUE : kFALSE;};
+
+    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", jcut, conf);
+    PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", jcut, conf);
+    PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", jcut, conf);
+    PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", jcut, conf);
 
     // PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut, conf);
     // PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut, conf);

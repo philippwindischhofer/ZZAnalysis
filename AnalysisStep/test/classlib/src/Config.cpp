@@ -204,8 +204,8 @@ float Config::lumi()
 
 TString Config::MC_path()
 {
-    TString MC_path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
-    //TString MC_path = "/home/llr/cms/wind/CJLST_NTuples/";
+    //TString MC_path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
+    TString MC_path = "/data_CMS/cms/wind/CJLST_NTuples/";
     return MC_path;
 }
 

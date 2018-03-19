@@ -29,6 +29,15 @@ public :
    // placeholder for output from Python-based classifier or discriminant
    float testval;
 
+   // values of the MELA-discriminants for this event (as computed by the functions in me_discriminants.cpp)
+   float D_VBF2j_ggH_ME;
+   float D_VBF1j_ggH_ME;
+   float D_WHh_ggH_ME;
+   float D_ZHh_ggH_ME;
+   float D_WHh_ZHh_ME;
+   float D_VBF2j_WHh_ME;
+   float D_VBF2j_ZHh_ME;
+
    // Declaration of leaf types
    Int_t           RunNumber;
    Long64_t        EventNumber;
@@ -478,6 +487,14 @@ public :
 
    // List of branches
    TBranch* b_testval;
+
+   TBranch* b_D_VBF2j_ggH_ME;
+   TBranch* b_D_VBF1j_ggH_ME;
+   TBranch* b_D_WHh_ggH_ME;
+   TBranch* b_D_ZHh_ggH_ME;
+   TBranch* b_D_WHh_ZHh_ME;
+   TBranch* b_D_VBF2j_WHh_ME;
+   TBranch* b_D_VBF2j_ZHh_ME;
 
    TBranch        *b_RunNumber;   //!
    TBranch        *b_EventNumber;   //!
@@ -979,7 +996,14 @@ void Tree::Init(TTree *tree, TString input_file_name)
    // (once per file to be processed).
 
    // Set object pointer
-    testval = 0;
+   testval = 0;
+   D_VBF2j_ggH_ME = 0;
+   D_VBF1j_ggH_ME = 0;
+   D_WHh_ggH_ME = 0;
+   D_ZHh_ggH_ME = 0;
+   D_WHh_ZHh_ME = 0;
+   D_VBF2j_WHh_ME = 0;
+   D_VBF2j_ZHh_ME = 0;
 
    LepPt = 0;
    LepEta = 0;
@@ -1025,6 +1049,14 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetMakeClass(1);
 
    fChain->SetBranchAddress("testval", &testval, &b_testval);
+
+   fChain->SetBranchAddress("D_VBF2j_ggH_ME", &D_VBF2j_ggH_ME, &b_D_VBF2j_ggH_ME);
+   fChain->SetBranchAddress("D_VBF1j_ggH_ME", &D_VBF1j_ggH_ME, &b_D_VBF1j_ggH_ME);
+   fChain->SetBranchAddress("D_WHh_ggH_ME", &D_WHh_ggH_ME, &b_D_WHh_ggH_ME);
+   fChain->SetBranchAddress("D_ZHh_ggH_ME", &D_ZHh_ggH_ME, &b_D_ZHh_ggH_ME);
+   fChain->SetBranchAddress("D_WHh_ZHh_ME", &D_WHh_ZHh_ME, &b_D_WHh_ZHh_ME);
+   fChain->SetBranchAddress("D_VBF2j_WHh_ME", &D_VBF2j_WHh_ME, &b_D_VBF2j_WHh_ME);
+   fChain->SetBranchAddress("D_VBF2j_ZHh_ME", &D_VBF2j_ZHh_ME, &b_D_VBF2j_ZHh_ME);
 
    fChain->SetBranchAddress("LHEAssociatedParticleId", &LHEAssociatedParticleId, &b_LHEAssociatedParticleId);
    fChain->SetBranchAddress("LHEAssociatedParticleMass", &LHEAssociatedParticleMass, &b_LHEAssociatedParticleMass);

@@ -38,6 +38,9 @@ public:
     void SetH1Source(EventStream* H1_source);
     void SetH0Source(EventStream* H0_source);
 
+    void SetH1Weight(float weight);
+    void SetH0Weight(float weight);
+
     std::vector<TString> GetNames();
     std::vector<std::function<bool(Tree*)>> GetCuts();
     std::vector<std::function<float(Tree*)>> GetDiscs();
@@ -51,6 +54,9 @@ private:
     // the two streams of data this discriminant is supposed to separate. this is needed in order to compute the distributions of its pieces on the H1- and H0 files
     EventStream* H1_source;
     EventStream* H0_source;
+
+    float H1_weight;
+    float H0_weight;
 
     // a list of cuts and corresponding discriminants. when evaluating the global discriminant, this list is traversed one by one. the discriminant that corresponds to the first matching cut is evaluated
     std::vector<TString> names;

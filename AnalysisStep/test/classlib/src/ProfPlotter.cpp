@@ -10,12 +10,12 @@ void ProfPlotter::Construct(std::map<TString, TH1F*> hist_vec, Config& conf, TSt
 {
     std::vector<TH1F*> hist_only_vec;
     std::vector<TString> source_labels;
-
-    std::vector<TString> hist_names = conf.hist_names();
     
-    for(auto& hist_name: hist_names)
-    {
-	hist_only_vec.push_back(hist_vec[hist_name]);
+    for(auto& hist: hist_vec)
+    {	
+	TString hist_name = hist.first;
+	
+	hist_only_vec.push_back(hist.second);
 	source_labels.push_back(conf.source_label(hist_name));
     }
 
@@ -55,7 +55,8 @@ void ProfPlotter::Construct(std::vector<TH1F*> hist_vec, std::vector<TString> so
 
     for(unsigned int i = 0; i < source_labels.size(); i++)
     {
-	leg -> AddEntry(hist_vec[i], source_labels[i], "f");
+	if(source_labels[i] != NULL)
+	    leg -> AddEntry(hist_vec[i], source_labels[i], "f");
     }
     
     for(auto& hist : hist_vec)

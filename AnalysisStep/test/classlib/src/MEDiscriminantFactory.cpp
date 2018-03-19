@@ -2,6 +2,17 @@
 
 DiscriminantCollection* MEDiscriminantFactory::GenerateDiscriminantCollection(TString out_folder, Config& conf)
 {
+    // for the weights:
+    // float ggH_xs = 50.35;
+    // float VBF_xs = 4.17;
+    // float ZHhadr_xs = 0.88 * 0.7;
+    // float WHhadr_xs = 1.50 * 0.67;
+
+    float ggH_xs = 1.0;
+    float VBF_xs = 1.0;
+    float ZHhadr_xs = 1.0;
+    float WHhadr_xs = 1.0;
+
     // the cuts that will be needed
     auto j2cut = [&](Tree* in) -> bool {
     	return (((in -> nCleanedJetsPt30 >= 2) ? kTRUE : kFALSE)) ? 
@@ -11,7 +22,6 @@ DiscriminantCollection* MEDiscriminantFactory::GenerateDiscriminantCollection(TS
     	return (((in -> nCleanedJetsPt30 == 1) ? kTRUE : kFALSE)) ? 
     	kTRUE : kFALSE;};
 
-    
     DiscriminantCollection* coll = new DiscriminantCollection();
     Discriminant* disc;
 
@@ -39,6 +49,8 @@ DiscriminantCollection* MEDiscriminantFactory::GenerateDiscriminantCollection(TS
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(VBF_xs);
+    disc -> SetH0Weight(ggH_xs);
 
     // now set the components of this discriminant. for VBF, it needs to distinguish between events with 1 jet and events with 2 jets
     disc -> AddComponent("VBF2j_ME", j2cut, DVBF2j_ME_disc);    
@@ -66,6 +78,8 @@ DiscriminantCollection* MEDiscriminantFactory::GenerateDiscriminantCollection(TS
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(WHhadr_xs);
+    disc -> SetH0Weight(ggH_xs);
 
     // now set the components of this discriminant. for VBF, it needs to distinguish between events with 1 jet and events with 2 jets
     disc -> AddComponent("WHhadr_ME", j2cut, DWHh_ME_disc);    
@@ -90,6 +104,8 @@ DiscriminantCollection* MEDiscriminantFactory::GenerateDiscriminantCollection(TS
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHhadr_xs);
+    disc -> SetH0Weight(ggH_xs);
 
     // now set the components of this discriminant. for VBF, it needs to distinguish between events with 1 jet and events with 2 jets
     disc -> AddComponent("ZHhadr_ME", j2cut, DZHh_ME_disc);    
@@ -116,6 +132,8 @@ DiscriminantCollection* MEDiscriminantFactory::GenerateDiscriminantCollection(TS
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(WHhadr_xs);
+    disc -> SetH0Weight(ZHhadr_xs);
 
     // now set the components of this discriminant. require two jets such that both sides of the discriminant can be evaluated
     disc -> AddComponent("ZHhadrWHhadr_ME", j2cut, DWHZH_ME_disc);    
@@ -142,6 +160,8 @@ DiscriminantCollection* MEDiscriminantFactory::GenerateDiscriminantCollection(TS
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(VBF_xs);
+    disc -> SetH0Weight(WHhadr_xs);
 
     // now set the components of this discriminant. require two jets such that both sides of the discriminant can be evaluated
     disc -> AddComponent("VBFWHhadr_ME", j2cut, DVBFWH_ME_disc);    
@@ -166,6 +186,8 @@ DiscriminantCollection* MEDiscriminantFactory::GenerateDiscriminantCollection(TS
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(VBF_xs);
+    disc -> SetH0Weight(ZHhadr_xs);
 
     // now set the components of this discriminant. require two jets such that both sides of the discriminant can be evaluated
     disc -> AddComponent("VBFZHhadr_ME", j2cut, DVBFZH_ME_disc);    

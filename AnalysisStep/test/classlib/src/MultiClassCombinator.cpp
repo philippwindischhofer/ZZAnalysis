@@ -31,6 +31,9 @@ float MultiClassCombinator::GetWinningMargin()
     TString next_winner = find_max(last_result_copy);
     float next_winner_score = last_result_copy[next_winner];
 
+    std::cout << "winner = " << winner + " (" << winner_score << ")" << std::endl;
+    std::cout << "next_winner = " << next_winner + " (" << next_winner_score << ")" << std::endl;
+
     return winner_score - next_winner_score;
 }
 

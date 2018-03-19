@@ -2,6 +2,10 @@
 
 Discriminant::Discriminant(TString calib_dir)
 {
+    // don't use any nontrivial weights by default
+    SetH1Weight(1.0);
+    SetH0Weight(1.0);
+
     this -> calib_dir = calib_dir;
 }
 
@@ -31,6 +35,16 @@ void Discriminant::SetH1Source(EventStream* H1_source)
 void Discriminant::SetH0Source(EventStream* H0_source)
 {
     this -> H0_source = H0_source;
+}
+
+void Discriminant::SetH1Weight(float weight)
+{
+    H1_weight = weight;
+}
+
+void Discriminant::SetH0Weight(float weight)
+{
+    H0_weight = weight;
 }
 
 EventStream* Discriminant::GetH1Source()
@@ -84,6 +98,8 @@ float Discriminant::Evaluate(Tree* in)
 {
     float retval = 0;
 
+    std::cout << "n_jets = " << in -> nCleanedJetsPt30 << std::endl;
+
     // iterate through the list of components and check each of them
     for(auto tup: boost::combine(names, cuts, discs, H1_calines, H0_calines, H1_calib_histos, H0_calib_histos))
     {
@@ -104,8 +120,11 @@ float Discriminant::Evaluate(Tree* in)
 	    // for a calibrated discriminant, now evaluate the actual likelihood ratio (or an approximation thereof)
 	    //retval = (H1_caline -> Eval(raw_disc)) / (H0_caline -> Eval(raw_disc));
 	    
+	    std::cout << "raw_disc = " << raw_disc << std::endl;
+
 	    // don't use interpolation at the moment
 	    retval = (H1_calib_histo -> GetBinContent(H1_calib_histo -> FindBin(raw_disc))) / (H0_calib_histo -> GetBinContent(H0_calib_histo -> FindBin(raw_disc)));
+	    retval = retval * H1_weight / H0_weight; // apply the weights
 
 	    //std::cout << "LR = " << retval << std::endl;
 	    
