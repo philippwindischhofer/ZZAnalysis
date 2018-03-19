@@ -27,7 +27,7 @@ TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/Benchmark
 // TString name_b = "Mor18    (simple voting, likelihood only)";
 
 TString name_a = "Mor18_{LI}";
-TString name_b = "Mor18  (weighted voting)  [nCleanedJetsPt30 >= 1]";
+TString name_b = "Mor18  (simple voting)  [nCleanedJetsPt30 >= 1]";
 
 TString out_folder = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/CompPlots/";
 

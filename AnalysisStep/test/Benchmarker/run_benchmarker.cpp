@@ -50,7 +50,7 @@ TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsLIReducedCategorySet/
     // Mor18Classifier* refclass18 = static_cast<Mor18Classifier*>(refclass);
     // refclass18 -> SetWPs(WP_VBF2j, WP_VBF1j, WP_WHh, WP_ZHh);
 
-    // the cuts that will be needed
+    // this jet cut is needed to make sure both classifiers (the standard Mor18 and the MELA-LI improved version) are operated in their allowed region
     auto jcut = [&](Tree* in) -> bool {
     	return (((in -> nCleanedJetsPt30 >= 1) ? kTRUE : kFALSE)) ? 
     	kTRUE : kFALSE;};
