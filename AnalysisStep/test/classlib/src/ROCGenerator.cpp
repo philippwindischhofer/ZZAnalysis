@@ -27,7 +27,14 @@ void ROCGenerator::GenerateROC(std::vector<float> disc_values, std::vector<bool>
 	}
     }
 
-    for(double threshold = 0.0; threshold < 1.0; threshold += 1.0 / num_pts)
+    // find the range of the discriminating variable
+    auto min_el = std::min_element(std::begin(disc_values), std::end(disc_values));
+    auto max_el = std::max_element(std::begin(disc_values), std::end(disc_values));
+
+    std::cout << "min. value of the discriminating variable = " << *min_el << std::endl;
+    std::cout << "max. value of the discriminating variable = " << *max_el << std::endl;
+
+    for(double threshold = *min_el; threshold < *max_el; threshold += (*max_el - *min_el) / num_pts)
     {
 	float cur_H1_eff = 0.0;
 	float cur_H0_eff = 0.0;
@@ -56,6 +63,33 @@ void ROCGenerator::GenerateROC(std::vector<float> disc_values, std::vector<bool>
     
     H1_efficiency.push_back(0.0);
     H0_efficiency.push_back(0.0);
+}
+
+float ROCGenerator::GetAUC()
+{
+    // first, build the combined data that is contained in the ROC
+    std::vector<std::pair<float, float>> xy_data;
+    for(auto tup: boost::combine(H0_efficiency, H1_efficiency))
+    {
+	float H0_eff;
+	float H1_eff;
+	boost::tie(H0_eff, H1_eff) = tup;
+
+	xy_data.push_back(std::make_pair(H0_eff, H1_eff));
+    }
+
+    // then, sort everything in order of increasing H0 efficiency (which is the x-axis label)
+    std::sort(xy_data.begin(), xy_data.end(), [&](std::pair<float, float>& a, std::pair<float, float>& b){return a.first < b.first;});
+
+    // then, can easily integrate it
+    float auc = 0.0;
+
+    for(unsigned int i = 0; i < xy_data.size() - 1; i++)
+    {
+	auc += 0.5 * (xy_data[i].second + xy_data[i+1].second) * (xy_data[i+1].first - xy_data[i].first);
+    }
+
+    return auc;
 }
 
 float* ROCGenerator::GetH0Efficiency()

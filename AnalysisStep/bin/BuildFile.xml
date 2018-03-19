@@ -44,6 +44,7 @@
 </bin>
 
 <bin name="run_helloworld" file="../test/HelloWorld/run_helloworld.cpp">
+  <lib name="class_lib"/>  
 </bin>
 
 <bin   name="run_plotter" file="../test/Plotter_v2/run_plotter.cpp">

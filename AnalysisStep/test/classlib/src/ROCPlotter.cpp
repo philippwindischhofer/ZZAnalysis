@@ -42,7 +42,12 @@ void ROCPlotter::AddROCCurve(std::vector<TString> H0_files, std::vector<TString>
 
     graphs.push_back(tg);
     names.push_back(disc_name);
-    //auc.push_back(roc.GetROCIntegral(50));
+    auc.push_back(rg.GetAUC());
+}
+
+std::vector<float> ROCPlotter::GetAUC()
+{
+    return auc;
 }
 
 // adds a single file to the queue on which the ROC is going to be evaluated

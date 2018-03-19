@@ -27,26 +27,26 @@ int main( int argc, char *argv[] )
     ROCPlotter rp(conf);
 
     // H0 files
-    std::vector<TString> files_a = {
+    std::vector<TString> H0_files = {
 	"ggH125"
     };
 
     // H1 files
-    std::vector<TString> files_b = {
+    std::vector<TString> H1_files = {
 	"VBFH125"
     };
 
-    std::vector<TString> paths_a;
-    std::vector<TString> paths_b;
+    std::vector<TString> H0_paths;
+    std::vector<TString> H1_paths;
 
-    for(auto& file_a: files_a)
+    for(auto& H0_file: H0_files)
     {
-	paths_a.push_back(conf.MC_path() + file_a + conf.MC_filename());
+	H0_paths.push_back(conf.MC_path() + H0_file + conf.MC_filename());
     }
 
-    for(auto& file_b: files_b)
+    for(auto& H1_file: H1_files)
     {
-	paths_b.push_back(conf.MC_path() + file_b + conf.MC_filename());
+	H1_paths.push_back(conf.MC_path() + H1_file + conf.MC_filename());
     }
     
     TString out_path = "../../src/ZZAnalysis/ROCs/";
@@ -57,7 +57,7 @@ int main( int argc, char *argv[] )
     auto disc = [&](Tree* in) -> float {return gen -> Rndm();}; 
 
     auto disc2 = [&](Tree* in) -> float {
-	return DVBF2j_ME(in -> p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal, in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal, in -> ZZMass);
+	return 2. * DVBF2j_ME(in -> p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal, in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal, in -> ZZMass);
     }; 
 
     auto disc3 = [&](Tree* in) -> float {
@@ -116,8 +116,8 @@ int main( int argc, char *argv[] )
 	    return kFALSE;
     };
 
-    rp.AddROCCurve(paths_a,
-    		   paths_b,
+    rp.AddROCCurve(H0_paths,
+    		   H1_paths,
     		   disc,
     		   cut2,
     		   "ggH efficiency",
@@ -125,8 +125,8 @@ int main( int argc, char *argv[] )
     		   "random"
     	);
 
-    rp.AddROCCurve(paths_a,
-    		   paths_b,
+    rp.AddROCCurve(H0_paths,
+    		   H1_paths,
     		   disc2,
     		   cut2,
 		   "ggH efficiency",
@@ -134,8 +134,8 @@ int main( int argc, char *argv[] )
 		   "D_{VBF2j}^{ME}"
 	);
     
-    rp.AddROCCurve(paths_a,
-    		   paths_b,
+    rp.AddROCCurve(H0_paths,
+    		   H1_paths,
     		   disc3,
     		   cut2,
     		   "ggH efficiency",
@@ -144,6 +144,13 @@ int main( int argc, char *argv[] )
     	);
 
     rp.Construct();
+
+    auto AUCs = rp.GetAUC();
+
+    for(auto AUC: AUCs)
+    {
+	std::cout << AUC << std::endl;
+    }
     
     rp.SaveAs(out_path + "ROC_VBF.pdf");
 

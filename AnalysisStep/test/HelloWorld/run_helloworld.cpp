@@ -16,49 +16,59 @@
 #include "TGraph.h"
 #include "TMultiGraph.h"
 
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
+
 int main( int argc, char *argv[] )
 {
     std::cout << "Hello World" << std::endl;
 
-    TCanvas* canv = new TCanvas("canv", "canv", 800, 600);
-    TPad* pad = new TPad("pad", "pad", 0.0, 0.0, 1.0, 1.0, kWhite, 0, 0);
-    TMultiGraph* tmg = new TMultiGraph();
-
-    std::vector<TGraph*> graphs;
-
-    Double_t x[1000];
-    Int_t n = 1000;
-    for (Int_t i=0;i<n;i++) {
-	x[i] = i*0.1;
-    }
+    float lumi = 35.9;
     
-    TGraph* tg = new TGraph(n,x,x);
-    tg -> SetLineColor(kBlack);
-    graphs.push_back(tg);
+    TString input_file_name = "/data_CMS/cms/wind/CJLST_NTuples/ggH125/ZZ4lAnalysis.root";
+    TFile* input_file = new TFile(input_file_name);
+    
+    std::cout << "reading from " << input_file_name << std::endl;
+    
+    // read some auxiliary information
+    TH1F* hCounters = (TH1F*)input_file -> Get("ZZTree/Counters");
+    Long64_t n_gen_events = (Long64_t)hCounters -> GetBinContent(1);
+    Long64_t gen_sum_weights = (Long64_t)hCounters -> GetBinContent(40);
 
-    for(unsigned int i = 0; i < graphs.size(); i++)
+    TTree* input_tree = (TTree*)input_file -> Get("ZZTree/candTree");
+    
+    Tree* buffer = new Tree();
+    buffer -> Init(input_tree, input_file_name);
+    
+    if(buffer -> fChain == 0) return -1;
+
+    // total number of entries stored in the entire chain
+    Long64_t n_entries = buffer -> fChain -> GetEntriesFast();
+    std::cout << "total number of entries = " << n_entries << std::endl;
+
+    float weight_sum = 0;
+    int fill_cnt = 0;
+
+    TH1F* datahist = new TH1F("datahist", "datahist", 100, 0, 100);
+
+    // loop over the entries in chain
+    for(Long64_t j_entry = 0; j_entry < n_entries / 10; j_entry++)
     {
-    	tmg -> Add(graphs.at(i));
+	// get the correct tree in the chain that contains this event
+	Long64_t i_entry = buffer -> LoadTree(j_entry);
+	if(i_entry < 0) break;
+
+	// now actually read this entry
+	buffer -> fChain -> GetEntry(j_entry);
+
+	float event_weight = (lumi * buffer -> xsec * 1000. * buffer -> overallEventWeight) / gen_sum_weights;
+
+	datahist -> Fill(buffer -> PFMET, event_weight);
+	weight_sum += event_weight;
+	fill_cnt++;
     }
 
-    TH1F* hist = new TH1F("hist", "hist", 100, 0.0, 1.0);
-    
-    canv -> cd();
-    pad -> Draw();
-    pad -> cd();
-    
-    tmg -> SetTitle("test");
-    tmg -> Draw("AC*");
-//    tmg -> Draw("same");
-
-    //hist -> Draw();
-
-    canv -> cd();
-    pad -> Draw();
-    gPad -> RedrawAxis();
-    canv -> Update();
-
-    canv -> SaveAs("test.pdf");
-
+    TCanvas* canv = new TCanvas("canv", "canv", 800, 600);
+    datahist -> Draw();
+    canv -> SaveAs("biascheck.pdf");
     return(0);
 }

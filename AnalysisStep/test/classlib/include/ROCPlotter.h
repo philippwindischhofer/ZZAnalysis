@@ -33,6 +33,7 @@ public:
     ~ROCPlotter();
 
     void AddROCCurve(std::vector<TString> H0_files, std::vector<TString> H1_files, const std::function<float(Tree*)>& disc, const std::function<bool(Tree*)>& cut, TString H0_desc, TString H1_desc, TString disc_name);
+    std::vector<float> GetAUC();
     void Construct();
     void SaveAs(TString path);
 

@@ -6,6 +6,9 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
+
+#include <boost/range/combine.hpp>
 
 class ROCGenerator
 {
@@ -15,6 +18,7 @@ public:
     void GenerateROC(std::vector<float> disc_values, std::vector<bool> true_values, std::vector<float> weight_values, int num_pts);
     float* GetH0Efficiency();
     float* GetH1Efficiency();
+    float GetAUC();
     int GetNumPoints();
 
 private:
