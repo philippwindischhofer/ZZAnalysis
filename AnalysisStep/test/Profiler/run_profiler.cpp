@@ -23,7 +23,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor17Classifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Classifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/cuts.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18CoarseConfig.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
