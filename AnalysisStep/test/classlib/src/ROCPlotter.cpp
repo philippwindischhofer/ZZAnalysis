@@ -1,27 +1,72 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/ROCPlotter.h>
 
-ROCPlotter::ROCPlotter(Config& conf)
+ROCPlotter::ROCPlotter(Config& conf, float start_fraction, float end_fraction)
 {  
     this -> lumi = conf.lumi();
+    this -> start_fraction = start_fraction;
+    this -> end_fraction = end_fraction;
 }
 
 ROCPlotter::~ROCPlotter()
 {  }
 
+void ROCPlotter::AddROCCurve(Discriminant* disc, TString H0_desc, TString H1_desc, TString disc_name)
+{
+    EventStream* H0_stream = disc -> GetH0Source();
+    EventStream* H1_stream = disc -> GetH1Source();
+
+    auto disc_wrapper = [&](Tree* in) -> float {
+	return disc -> Evaluate(in);
+    };
+
+    AddROCCurve(H0_stream, H1_stream, disc_wrapper, H0_desc, H1_desc, disc_name);
+}
+
 void ROCPlotter::AddROCCurve(std::vector<TString> H0_files, std::vector<TString> H1_files, const std::function<float(Tree*)>& disc, const std::function<bool(Tree*)>& cut, TString H0_desc, TString H1_desc, TString disc_name)
+{
+    // build the intermediate-level objects and call the other signature
+    EventStream* H0_stream = new EventStream();
+    EventStream* H1_stream = new EventStream();
+
+    for(auto& H0_file: H0_files)
+    {
+	H0_stream -> AddEventSource(H0_file, cut);
+    }
+    
+    for(auto& H1_file: H1_files)
+    {
+	H1_stream -> AddEventSource(H1_file, cut);
+    }
+
+    AddROCCurve(H0_stream, H1_stream, disc, H0_desc, H1_desc, disc_name);
+}
+
+void ROCPlotter::AddROCCurve(EventStream* H0_stream, EventStream* H1_stream, const std::function<float(Tree*)>& disc, TString H0_desc, TString H1_desc, TString disc_name)
 {
     disc_values.clear();
     weight_values.clear();
     true_values.clear();
 
     // first, need to evaluate the discriminant on all events contained in the two files: the one consisting purely of H0 events, and the other with H1 events only
-    for(auto& H0_file: H0_files)
+    std::vector<TString> H0_files = H0_stream -> GetPaths();
+    std::vector<std::function<bool(Tree*)>> H0_cuts = H0_stream -> GetCuts();
+    for(auto tup: boost::combine(H0_files, H0_cuts))
     {
+	TString H0_file;
+	std::function<bool(Tree*)> cut;
+	boost::tie(H0_file, cut) = tup;
+
 	IterateThroughFile(H0_file, false, disc, cut);
     }
 
-    for(auto& H1_file: H1_files)
+    std::vector<TString> H1_files = H1_stream -> GetPaths();
+    std::vector<std::function<bool(Tree*)>> H1_cuts = H1_stream -> GetCuts();
+    for(auto tup: boost::combine(H1_files, H1_cuts))
     {
+	TString H1_file;
+	std::function<bool(Tree*)> cut;
+	boost::tie(H1_file, cut) = tup;
+
 	IterateThroughFile(H1_file, true, disc, cut);
     }
         
@@ -73,7 +118,7 @@ void ROCPlotter::IterateThroughFile(TString input_file_name, bool truth, const s
     std::cout << "total number of entries = " << n_entries << std::endl;
 
     // loop over the entries in chain
-    for(Long64_t j_entry = 0; j_entry < n_entries; j_entry++)
+    for(Long64_t j_entry = (Long64_t)(n_entries * start_fraction); j_entry < (Long64_t)(n_entries * end_fraction); j_entry++)
     {
     	// get the correct tree in the chain that contains this event
     	Long64_t i_entry = LoadTree(j_entry);

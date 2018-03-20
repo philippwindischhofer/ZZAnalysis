@@ -24,7 +24,11 @@
 int main( int argc, char *argv[] )
 {
     Mor18Config conf;
-    ROCPlotter rp(conf);
+
+    // make sure to only use the second half of each file, i.e. the portion reserved for the validation data!
+    float start_fraction = 0.5;
+    float end_fraction = 1.0;
+    ROCPlotter rp(conf, start_fraction, end_fraction); 
 
     // H0 files
     std::vector<TString> H0_files = {
@@ -51,14 +55,28 @@ int main( int argc, char *argv[] )
     
     TString out_path = "../../src/ZZAnalysis/ROCs/";
 
-    TRandom3* gen = new TRandom3();
-    gen -> SetSeed(0);
-
-    auto disc = [&](Tree* in) -> float {return gen -> Rndm();}; 
-
     auto disc2 = [&](Tree* in) -> float {
-	return 2. * DVBF2j_ME(in -> p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal, in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal, in -> ZZMass);
+	return in -> D_VBF2j_ggH_ME;
     }; 
+
+    auto cut2 = [&](Tree* in) -> bool {
+	if(mZZ_cut(in) && (in -> nCleanedJetsPt30 >= 2))
+	    return kTRUE;
+	else
+	    return kFALSE;
+    };
+
+    Discriminant* sample_disc = new Discriminant("insert_calib_dir_here");
+    EventStream* H1Stream = new EventStream();
+    H1Stream -> AddEventSource(H1_paths[0], cut2);
+
+    EventStream* H0Stream = new EventStream();
+    H0Stream -> AddEventSource(H0_paths[0], cut2);
+
+    sample_disc -> SetH1Source(H1Stream);
+    sample_disc -> SetH0Source(H0Stream);
+
+    sample_disc -> AddComponent("VBF2j", no_cut, disc2);
 
     auto disc3 = [&](Tree* in) -> float {
     	float jetQGLikelihood[99];
@@ -78,60 +96,19 @@ int main( int argc, char *argv[] )
     	    jetPhi);
     };
 
-    // auto disc2 = [&](Tree* in) -> float {    
-    // 	return DWHh_ME(
-    // 	    in -> p_HadWH_SIG_ghw1_1_JHUGen_JECNominal,
-    // 	    in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal,
-    // 	    in -> p_HadWH_mavjj_JECNominal,
-    // 	    in -> p_HadWH_mavjj_true_JECNominal,
-    // 	    in -> ZZMass);
-    // };
+    // rp.AddROCCurve(H0_paths,
+    // 		   H1_paths,
+    // 		   disc2,
+    // 		   cut2,
+    // 		   "ggH efficiency",
+    // 		   "WBF efficiency",
+    // 		   "D_{VBF2j}^{ME}"
+    // 	);
 
-    // auto disc3 = [&](Tree* in) -> float {
-    // 	float jetQGLikelihood[99];
-    // 	float jetPhi[99];
-
-    // 	for(int i = 0; i < in -> nCleanedJetsPt30; i++)
-    // 	{
-    // 	    jetQGLikelihood[i] = in -> JetQGLikelihood -> at(i);
-    // 	    jetPhi[i] = in -> JetPhi -> at(i);
-    // 	}
-
-    // 	return DWHh_ME_QG(
-    // 	    in -> p_HadWH_SIG_ghw1_1_JHUGen_JECNominal,
-    // 	    in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal,
-    // 	    in -> p_HadWH_mavjj_JECNominal,
-    // 	    in -> p_HadWH_mavjj_true_JECNominal,
-    // 	    in -> ZZMass,
-    // 	    jetQGLikelihood,
-    // 	    jetPhi
-    // 	    );
-    // };
-
-    //auto cut = [&](Tree* in) -> bool {return mZZ_cut(in);};
-    auto cut2 = [&](Tree* in) -> bool {
-	if(mZZ_cut(in) && (in -> nCleanedJetsPt30 >= 2))
-	    return kTRUE;
-	else
-	    return kFALSE;
-    };
-
-    rp.AddROCCurve(H0_paths,
-    		   H1_paths,
-    		   disc,
-    		   cut2,
-    		   "ggH efficiency",
-    		   "VBF efficiency",
-    		   "random"
-    	);
-
-    rp.AddROCCurve(H0_paths,
-    		   H1_paths,
-    		   disc2,
-    		   cut2,
+    rp.AddROCCurve(sample_disc,
 		   "ggH efficiency",
-    		   "WBF efficiency",
-		   "D_{VBF2j}^{ME}"
+    		   "VBF efficiency",
+    		   "D_{VBF2j}^{ME}"
 	);
     
     rp.AddROCCurve(H0_paths,
@@ -148,9 +125,7 @@ int main( int argc, char *argv[] )
     auto AUCs = rp.GetAUC();
 
     for(auto AUC: AUCs)
-    {
 	std::cout << AUC << std::endl;
-    }
     
     rp.SaveAs(out_path + "ROC_VBF.pdf");
 

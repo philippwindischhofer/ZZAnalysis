@@ -70,6 +70,13 @@ void Discriminant::AddComponent(TString name, const std::function<bool(Tree*)> c
     {
 	// calibration does not yet exist
 	std::cerr << "Warning: component " << name << " will be used without calibration" << std::endl;
+
+	H1_calib_histos.push_back(NULL);
+	H0_calib_histos.push_back(NULL);
+
+	H1_calines.push_back(NULL);
+	H0_calines.push_back(NULL);
+
 	calibration_status.push_back(false);
     }
     else
@@ -122,11 +129,19 @@ float Discriminant::Evaluate(Tree* in)
 	    
 	    std::cout << "raw_disc = " << raw_disc << std::endl;
 
-	    // don't use interpolation at the moment
-	    retval = (H1_calib_histo -> GetBinContent(H1_calib_histo -> FindBin(raw_disc))) / (H0_calib_histo -> GetBinContent(H0_calib_histo -> FindBin(raw_disc)));
-	    retval = retval * H1_weight / H0_weight; // apply the weights
+	    if((H1_calib_histo != NULL) && (H0_calib_histo != NULL))
+	    {
+		// don't use interpolation at the moment
+		retval = (H1_calib_histo -> GetBinContent(H1_calib_histo -> FindBin(raw_disc))) / (H0_calib_histo -> GetBinContent(H0_calib_histo -> FindBin(raw_disc)));
+		retval = retval * H1_weight / H0_weight; // apply the weights
 
-	    //std::cout << "LR = " << retval << std::endl;
+		//std::cout << "LR = " << retval << std::endl;
+	    }
+	    else
+	    {
+		// if have no access to calibration information, return the raw (= uncalibrated) value instead!
+		retval = raw_disc;
+	    }
 	    
 	    break;
 	}

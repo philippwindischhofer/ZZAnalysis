@@ -6,6 +6,8 @@
 #include <fstream>
 #include <string>
 
+#include <boost/range/combine.hpp>
+
 // ROOT
 #include "TApplication.h"
 #include "TROOT.h"
@@ -25,20 +27,32 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/ROCGenerator.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/EventStream.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/Discriminant.h>
 
 class ROCPlotter: public Tree
 {
 public:
-    ROCPlotter(Config& conf);
+    ROCPlotter(Config& conf, float start_fraction, float end_fraction);
     ~ROCPlotter();
 
+    void AddROCCurve(Discriminant* disc, TString H0_desc, TString H1_desc, TString disc_name);
+
+    // this is the intermediate-level signature
+    void AddROCCurve(EventStream* H0_stream, EventStream* H1_stream, const std::function<float(Tree*)>& disc, TString H0_desc, TString H1_desc, TString disc_name);
+
+    // this is the low-level signature
     void AddROCCurve(std::vector<TString> H0_files, std::vector<TString> H1_files, const std::function<float(Tree*)>& disc, const std::function<bool(Tree*)>& cut, TString H0_desc, TString H1_desc, TString disc_name);
+
     std::vector<float> GetAUC();
     void Construct();
     void SaveAs(TString path);
 
 private:
     float lumi;
+
+    float start_fraction;
+    float end_fraction;
 
     TFile* input_file;
     TTree* input_tree;
