@@ -37,11 +37,11 @@ int main( int argc, char *argv[] )
 
     DiscriminantCollection* ME_coll = MEDiscriminantFactory::GenerateRawDiscriminantCollection(conf, false);
     DiscriminantCollection* ME_QG_coll = MEDiscriminantFactory::GenerateRawDiscriminantCollection(conf, true);
-    DiscriminantCollection* ML_coll = MLDiscriminantFactory::GenerateDiscriminantCollection(conf);
+    DiscriminantCollection* ML_coll = MLDiscriminantFactory::GenerateDiscriminantCollection("no_dir", conf);
 
     Discriminant* ME_disc = ME_coll -> GetDiscriminant(std::make_pair("VBF2jH125", "ggH125"));
     Discriminant* ME_QG_disc = ME_QG_coll -> GetDiscriminant(std::make_pair("VBF2jH125", "ggH125"));
-    Discriminant* ML_disc = ML_coll -> GetDiscriminant(std::make_pair("VBF2jH125", "ggH125"));
+    Discriminant* ML_disc = ML_coll -> GetDiscriminant(std::make_pair("VBFH125", "ggH125"));
 
     rp.AddROCCurve(ME_disc,
 		   "ggH efficiency",

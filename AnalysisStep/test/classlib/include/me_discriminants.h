@@ -1,6 +1,10 @@
 #ifndef me_discriminants_h
 #define me_discriminants_h
 
+#include <iostream>
+#include <cmath>
+#include <cfloat>
+
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
 #include <ZZAnalysis/AnalysisStep/interface/cConstants.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>

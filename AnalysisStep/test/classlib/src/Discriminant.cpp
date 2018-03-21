@@ -132,7 +132,7 @@ float Discriminant::Evaluate(Tree* in)
 	    if((H1_calib_histo != NULL) && (H0_calib_histo != NULL))
 	    {
 		// don't use interpolation at the moment
-		retval = (H1_calib_histo -> GetBinContent(H1_calib_histo -> FindBin(raw_disc))) / (H0_calib_histo -> GetBinContent(H0_calib_histo -> FindBin(raw_disc)));
+		retval = (H1_calib_histo -> GetBinContent(H1_calib_histo -> FindBin(raw_disc))) / (0.001 + H0_calib_histo -> GetBinContent(H0_calib_histo -> FindBin(raw_disc)));
 		retval = retval * H1_weight / H0_weight; // apply the weights
 
 		//std::cout << "LR = " << retval << std::endl;

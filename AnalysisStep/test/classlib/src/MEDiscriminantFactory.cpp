@@ -37,9 +37,9 @@ DiscriminantCollection* MEDiscriminantFactory::GenerateRawDiscriminantCollection
     disc -> SetH0Source(H0Stream);
 
     if(use_QG_tagging)
-	disc -> AddComponent("VBF2j", no_cut, DVBF2j_ME_QG_disc);
+	disc -> AddComponent("VBF2j_ME_raw", no_cut, DVBF2j_ME_QG_disc);
     else
-	disc -> AddComponent("VBF2j", no_cut, DVBF2j_ME_disc);
+	disc -> AddComponent("VBF2j_ME_raw", no_cut, DVBF2j_ME_disc);
 
     coll -> AddDiscriminant(std::make_pair(H1_name, H0_name), disc);
 
@@ -184,7 +184,7 @@ DiscriminantCollection* MEDiscriminantFactory::GenerateDiscriminantCollection(TS
     disc -> SetH0Weight(ZHhadr_xs);
 
     // now set the components of this discriminant. require two jets such that both sides of the discriminant can be evaluated
-    disc -> AddComponent("ZHhadrWHhadr_ME", j2cut, DWHZH_ME_disc);    
+    disc -> AddComponent("WHhadrZHhadr_ME", j2cut, DWHZH_ME_disc);    
 
     coll -> AddDiscriminant(std::make_pair(H1_name, H0_name), disc);
 

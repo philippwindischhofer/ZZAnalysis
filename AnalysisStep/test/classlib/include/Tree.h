@@ -39,7 +39,12 @@ public :
    float D_VBF2j_ZHh_ME;
 
    // values for the ML-discriminants for this event (as computed by the neural networks and appended to the tree)
-   float VBF_ggH;
+   float D_VBF_ggH_ML;
+   float D_WHh_ggH_ML;
+   float D_ZHh_ggH_ML;
+   float D_WHh_ZHh_ML;
+   float D_VBF_WHh_ML;
+   float D_VBF_ZHh_ML;
 
    // Declaration of leaf types
    Int_t           RunNumber;
@@ -499,7 +504,12 @@ public :
    TBranch* b_D_VBF2j_WHh_ME;
    TBranch* b_D_VBF2j_ZHh_ME;
 
-   TBranch* b_VBF_ggH;
+   TBranch* b_D_VBF_ggH_ML;
+   TBranch* b_D_WHh_ggH_ML;
+   TBranch* b_D_ZHh_ggH_ML;
+   TBranch* b_D_WHh_ZHh_ML;
+   TBranch* b_D_VBF_WHh_ML;
+   TBranch* b_D_VBF_ZHh_ML;
 
    TBranch        *b_RunNumber;   //!
    TBranch        *b_EventNumber;   //!
@@ -1002,6 +1012,7 @@ void Tree::Init(TTree *tree, TString input_file_name)
 
    // Set object pointer
    testval = 0;
+
    D_VBF2j_ggH_ME = 0;
    D_VBF1j_ggH_ME = 0;
    D_WHh_ggH_ME = 0;
@@ -1010,8 +1021,13 @@ void Tree::Init(TTree *tree, TString input_file_name)
    D_VBF2j_WHh_ME = 0;
    D_VBF2j_ZHh_ME = 0;
 
-   VBF_ggH = 0;
-
+   D_VBF_ggH_ML = 0;
+   D_WHh_ggH_ML = 0;
+   D_ZHh_ggH_ML = 0;
+   D_WHh_ZHh_ML = 0;
+   D_VBF_WHh_ML = 0;
+   D_VBF_ZHh_ML = 0;
+    
    LepPt = 0;
    LepEta = 0;
    LepPhi = 0;
@@ -1065,7 +1081,12 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetBranchAddress("D_VBF2j_WHh_ME", &D_VBF2j_WHh_ME, &b_D_VBF2j_WHh_ME);
    fChain->SetBranchAddress("D_VBF2j_ZHh_ME", &D_VBF2j_ZHh_ME, &b_D_VBF2j_ZHh_ME);
 
-   fChain->SetBranchAddress("VBF_ggH", &VBF_ggH, &b_VBF_ggH);
+   fChain->SetBranchAddress("D_VBF_ggH_ML", &D_VBF_ggH_ML, &b_D_VBF_ggH_ML);
+   fChain->SetBranchAddress("D_WHh_ggH_ML", &D_WHh_ggH_ML, &b_D_WHh_ggH_ML);
+   fChain->SetBranchAddress("D_ZHh_ggH_ML", &D_ZHh_ggH_ML, &b_D_ZHh_ggH_ML);
+   fChain->SetBranchAddress("D_WHh_ZHh_ML", &D_WHh_ZHh_ML, &b_D_WHh_ZHh_ML);
+   fChain->SetBranchAddress("D_VBF_WHh_ML", &D_VBF_WHh_ML, &b_D_VBF_WHh_ML);
+   fChain->SetBranchAddress("D_VBF_ZHh_ML", &D_VBF_ZHh_ML, &b_D_VBF_ZHh_ML);
 
    fChain->SetBranchAddress("LHEAssociatedParticleId", &LHEAssociatedParticleId, &b_LHEAssociatedParticleId);
    fChain->SetBranchAddress("LHEAssociatedParticleMass", &LHEAssociatedParticleMass, &b_LHEAssociatedParticleMass);

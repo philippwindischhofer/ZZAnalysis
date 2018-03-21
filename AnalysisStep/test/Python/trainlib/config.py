@@ -1,6 +1,6 @@
 class Config:
     # the branches that are always going to be loaded and on which any preprocessor will act
-    branches = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", "nExtraLep", "D_VBF2j_ggH_ME"]
+    branches = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", "nExtraLep", "D_VBF2j_ggH_ME", "D_VBF1j_ggH_ME", "D_WHh_ggH_ME", "D_ZHh_ggH_ME", "D_WHh_ZHh_ME", "D_VBF2j_WHh_ME", "D_VBF2j_ZHh_ME"]
     MC_filename = "/ZZ4lAnalysis.root"
 
 class TrainingConfig:

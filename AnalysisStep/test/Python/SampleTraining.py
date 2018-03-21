@@ -38,7 +38,7 @@ K.set_session(session)
 mcolls = ModelFactory.GenerateModelCollections(SimpleModel)
 
 train = Trainer("/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/training_area/")
-sgd = optimizers.SGD(lr = 0.1)
+sgd = optimizers.SGD(lr = 0.01)
 
 for mcoll in mcolls:
     train.train(mcoll, optimizer = sgd)

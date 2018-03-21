@@ -36,16 +36,22 @@ class PCAWhiteningPreprocessor(Preprocessor):
 
         input_data = self._rowcol_cut(input_data)
 
+        print str(len(input_data)) + " remaining after the cuts"
+        #print input_data
+
         # determine the PCA parameters (eigenvectors and -values) on this set of data
         input_data = input_data.as_matrix()
         self.pca.fit(input_data)
 
     def process(self, data):
-        processed_data = self._rowcol_cut(data)
-        processed_data = self.pca.transform(processed_data)
+        cut_data = self._rowcol_cut(data)
+
+        # print cut_data
+
+        processed_data = self.pca.transform(cut_data.as_matrix())
 
         # it is expected to return the processed data in form of a pandas dataframe again
-        retval = pd.DataFrame(processed_data, columns = self.outcol_names)
+        retval = pd.DataFrame(processed_data, columns = self.outcol_names, index = cut_data.index)
         return retval
 
     def save(self, folder, filename):
@@ -64,5 +70,7 @@ class PCAWhiteningPreprocessor(Preprocessor):
 
         # apply the column selection
         output_data = data.loc[:, self.processed_columns]
+
+        #print output_data
                 
         return output_data

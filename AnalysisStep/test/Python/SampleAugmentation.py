@@ -92,7 +92,7 @@ def main():
     data_outpath = "/data_CMS/cms/wind/processed/"
 
     # files to which this discriminant should be augmented
-    data_files = ["ggH125", "VBFH125"]
+    data_files = ["ggH125", "VBFH125", "ZH125", "WplusH125", "WminusH125"]
 
     mcolls = ModelFactory.GenerateModelCollections(SimpleModel, weight_path = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/training_area/")
 

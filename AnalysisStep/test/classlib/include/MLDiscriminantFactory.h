@@ -15,7 +15,7 @@
 class MLDiscriminantFactory
 {
 public:
-    static DiscriminantCollection* GenerateDiscriminantCollection(Config& conf);
+    static DiscriminantCollection* GenerateDiscriminantCollection(TString outdir, Config& conf);
 };
 
 #endif

@@ -26,6 +26,7 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/DiscriminantCollection.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/EventStream.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MEDiscriminantFactory.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactory.h>
 
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
 
@@ -157,7 +158,8 @@ int main(int argc, char *argv[])
 {    
     Mor18Config conf;
 
-    DiscriminantCollection* coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+//    DiscriminantCollection* coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+    DiscriminantCollection* coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
 
     calibrate_discriminant_collection(coll, conf);
 

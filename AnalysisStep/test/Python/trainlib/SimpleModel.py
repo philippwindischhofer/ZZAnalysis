@@ -14,12 +14,10 @@ class SimpleModel(Model):
     # actually constructs the model
     def build(self, number_inputs):
         in_layer = Input(shape = (number_inputs,))
-        x = Dense(128, activation = "relu")(in_layer)
-        x = Dense(128, activation = "relu")(x)
-        x = Dense(128, activation = "relu")(x)
-        x = Dense(16, activation = "relu")(x)
+        x = Dense(128, activation = "tanh")(in_layer)
+        x = Dense(16, activation = "tanh")(x)
         out_layer = Dense(1, activation = "tanh", name = "out_layer")(x)
-        self.model = keras.engine.training.Model(in_layer, out_layer, name = "testmodel")
+        self.model = keras.engine.training.Model(in_layer, out_layer, name = "simple_model")
 
     def get_keras_model(self):
         return self.model

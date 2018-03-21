@@ -7,6 +7,7 @@ Mor18LIClassifier::Mor18LIClassifier()
     TString out_folder = "../../src/ZZAnalysis/CalibratorPlots/";
     Mor18Config conf;
     coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+    //coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
     comb = new VotingMultiClassCombinator();
 }
 
