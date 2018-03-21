@@ -4,6 +4,7 @@ import tensorflow as tf
 from keras import backend as K
 from trainlib.SimpleModel import SimpleModel
 from trainlib.ModelCollection import ModelCollection
+from trainlib.ModelFactory import ModelFactory
 from trainlib.FileCollection import FileCollection
 from trainlib.Trainer import Trainer
 from trainlib.config import Config
@@ -58,39 +59,42 @@ def augment_file(data_inpath, data_outpath, data_file, mcolls):
 
 
 def main():
+    # --------------------------------------------------------------
+
+    # # later, the construction of the ModelCollection etc. is all going to be handled by a factory (which will look up the settings in some dictionary, based on the passed name of the discriminant)
+    # def trivial_preprocessor(frame):
+    #     return frame
+
+    # # input model file for augmenting the trained discriminant to the tree
+    # disc_inpath = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/training_logs/"
+    # disc_name = "simplecoll"
+
+
+    # mcoll1 = ModelCollection("simplecoll1")
+    # mcoll2 = ModelCollection("simplecoll2")
+    # mcolls = []
+
+    # mod1 = SimpleModel("simplemodel")
+    # mod1.build()
+    # mcoll1.add_model(trivial_preprocessor, mod1)
+    # mcoll1.load_weights(disc_inpath + "simplecoll1")
+    # mcolls.append(mcoll1)
+
+    # mod2 = SimpleModel("simplemodel")
+    # mod2.build()
+    # mcoll2.add_model(trivial_preprocessor, mod2)
+    # mcoll2.load_weights(disc_inpath + "simplecoll2")
+    # mcolls.append(mcoll2)
+
+    # # ------------------------------------------------------------
+
     data_inpath = "/data_CMS/cms/wind/CJLST_NTuples/"
     data_outpath = "/data_CMS/cms/wind/processed/"
 
-    # --------------------------------------------------------------
-
-    # later, the construction of the ModelCollection etc. is all going to be handled by a factory (which will look up the settings in some dictionary, based on the passed name of the discriminant)
-    def trivial_preprocessor(frame):
-        return frame
-
-    # input model file for augmenting the trained discriminant to the tree
-    disc_inpath = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/training_logs/"
-    disc_name = "simplecoll"
-
     # files to which this discriminant should be augmented
-    data_files = ["ggH125"]
+    data_files = ["ggH125", "VBFH125"]
 
-    mcoll1 = ModelCollection("simplecoll1")
-    mcoll2 = ModelCollection("simplecoll2")
-    mcolls = []
-
-    mod1 = SimpleModel("simplemodel")
-    mod1.build()
-    mcoll1.add_model(trivial_preprocessor, mod1)
-    mcoll1.load_weights(disc_inpath + "simplecoll1")
-    mcolls.append(mcoll1)
-
-    mod2 = SimpleModel("simplemodel")
-    mod2.build()
-    mcoll2.add_model(trivial_preprocessor, mod2)
-    mcoll2.load_weights(disc_inpath + "simplecoll2")
-    mcolls.append(mcoll2)
-
-    # ------------------------------------------------------------
+    mcolls = ModelFactory.GenerateModelCollections(SimpleModel, weight_path = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/training_area/")
 
     for data_file in data_files:
         augment_file(data_inpath, data_outpath, data_file, mcolls)

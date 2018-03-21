@@ -77,6 +77,27 @@ float DVBFZH_ME_disc(Tree* in)
 	);
 };
 
+// as well have the discriminants using QG likelihoods
+float DVBF2j_ME_QG_disc(Tree* in)
+{
+    int n_jets = in -> nCleanedJetsPt30;
+    float jetQGLikelihood[n_jets];
+    float jetPhi[n_jets];
+    
+    for(int i = 0; i < n_jets; i++)
+    {
+	jetQGLikelihood[i] = in -> JetQGLikelihood -> at(i);
+	jetPhi[i] = in -> JetPhi -> at(i);
+    }
+    
+    return DVBF2j_ME_QG(
+	in -> p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal,
+	in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal,
+	in -> ZZMass,
+	jetQGLikelihood,
+	jetPhi);
+}
+
 float generic_disc(float H1_ME, float H0_ME)
 {
     return 1.0 / (1.0 + H0_ME / H1_ME);

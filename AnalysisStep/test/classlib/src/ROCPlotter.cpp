@@ -5,6 +5,9 @@ ROCPlotter::ROCPlotter(Config& conf, float start_fraction, float end_fraction)
     this -> lumi = conf.lumi();
     this -> start_fraction = start_fraction;
     this -> end_fraction = end_fraction;
+
+    this -> label_left = "";
+    this -> label_right = "";
 }
 
 ROCPlotter::~ROCPlotter()
@@ -151,7 +154,7 @@ void ROCPlotter::Construct()
 
     TGaxis::SetMaxDigits(2);
 
-    TLegend* leg = new TLegend(0.6, 0.2 + 0.07 * graphs.size(), 0.9, 0.2);
+    leg = new TLegend(0.6, 0.2 + 0.07 * graphs.size(), 0.9, 0.2);
     leg -> SetTextColor(kBlack);
     leg -> SetTextSize(0.035);
     leg -> SetBorderSize(0);
@@ -163,28 +166,13 @@ void ROCPlotter::Construct()
 	leg -> AddEntry(graphs.at(i), names.at(i), "l");
     }
 
-    canv -> cd();
-    pad -> Draw();
-    pad -> cd();
+    Redraw();
+}
 
-    tmg -> Draw("AC");
-    gPad -> SetTickx();
-    gPad -> SetTicky();
-    tmg -> GetXaxis() -> SetRangeUser(0.0, 1.0);
-    tmg -> GetYaxis() -> SetRangeUser(0.0, 1.0);
-    tmg -> GetXaxis() -> SetNdivisions(10, 5, 0, kFALSE);
-    tmg -> GetYaxis() -> SetNdivisions(10, 5, 0, kFALSE);
-    tmg -> GetXaxis() -> SetTitle(xlabel);
-    tmg -> GetYaxis() -> SetTitle(ylabel);
-    pad -> SetGrid();
-    tmg -> Draw("AC");
-    leg -> Draw();
-
-    canv -> cd();
-    pad -> Draw();
-    gPad -> RedrawAxis();
-    canv -> Update();
-
+void ROCPlotter::SetLabel(TString label_left, TString label_right)
+{
+    this -> label_left = label_left;
+    this -> label_right = label_right;
     Redraw();
 }
 
@@ -211,5 +199,37 @@ void ROCPlotter::Reset()
 
 void ROCPlotter::Redraw()
 {
+    canv -> cd();
+    pad -> Draw();
+    pad -> cd();
 
+    tmg -> Draw("AC");
+    gPad -> SetTickx();
+    gPad -> SetTicky();
+    tmg -> GetXaxis() -> SetRangeUser(0.0, 1.0);
+    tmg -> GetYaxis() -> SetRangeUser(0.0, 1.0);
+    tmg -> GetXaxis() -> SetNdivisions(10, 5, 0, kFALSE);
+    tmg -> GetYaxis() -> SetNdivisions(10, 5, 0, kFALSE);
+    tmg -> GetXaxis() -> SetTitle(xlabel);
+    tmg -> GetYaxis() -> SetTitle(ylabel);
+    pad -> SetGrid();
+    
+    tmg -> Draw("AC");
+    leg -> Draw();
+
+    TLatex* Tl = new TLatex();
+    Tl -> SetTextSize(0.025);
+    Tl -> SetTextColor(kBlack);
+    float upper_bound = (pad -> GetUymax() - pad -> GetUymin()) * 1.02 + pad -> GetUymin();
+    float side_length = pad -> GetUxmax() - pad -> GetUxmin();
+    Tl -> SetTextAlign(31);
+    Tl -> DrawLatex(pad -> GetUxmax() - 0.01 * side_length, upper_bound, label_right);
+    Tl -> SetTextAlign(11);
+    Tl -> DrawLatex(pad -> GetUxmin() + 0.01 * side_length, upper_bound, label_left);
+
+    canv -> cd();
+    pad -> Draw();
+
+    gPad -> RedrawAxis();
+    canv -> Update();
 }

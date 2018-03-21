@@ -12,8 +12,8 @@ class SimpleModel(Model):
         self.name = name
 
     # actually constructs the model
-    def build(self):
-        in_layer = Input(shape = (2,))
+    def build(self, number_inputs):
+        in_layer = Input(shape = (number_inputs,))
         x = Dense(128, activation = "relu")(in_layer)
         x = Dense(128, activation = "relu")(x)
         x = Dense(128, activation = "relu")(x)

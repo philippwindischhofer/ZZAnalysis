@@ -1,18 +1,19 @@
 from abc import ABCMeta, abstractmethod
 
-class Model:
+class Preprocessor:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def __init__(self, name):
+    def __init__(self, processed_columns, cuts):
+        pass
+
+    # pass the entire data generator here, to have the preprocessor get as much data as it might desire
+    @abstractmethod
+    def setup(self, datagen, len_setupdata):
         pass
 
     @abstractmethod
-    def build(self, number_inputs):
-        pass
-
-    @abstractmethod
-    def get_keras_model(self):
+    def process(self, data):
         pass
 
     @abstractmethod

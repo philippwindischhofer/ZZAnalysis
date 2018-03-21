@@ -5,18 +5,32 @@ import os
 class ModelCollection:
 
     def __init__(self, name = "noname", H1_paths = None, H0_paths = None):
-        self.models = {}
-        self.preprocessors = {}
+        self.model_dict = {}
+        self.preprocessor_dict = {}
+        self.settings_dict = {}
         self.name = name
 
         self.H1_paths = H1_paths
         self.H0_paths = H0_paths
 
-    def add_model(self, preprocessor, model):
-        self.models[model.name] = model
-        self.preprocessors[model.name] = preprocessor
+    def get_models(self):
+        return self.model_dict.values()
+
+    def get_preprocessors(self):
+        return self.preprocessor_dict.values()
+
+    def get_settings(self):
+        return self.settings_dict.values()
+
+    def add_model(self, preprocessor, model, settings):
+        self.model_dict[model.name] = model
+        self.preprocessor_dict[model.name] = preprocessor
+        self.settings_dict[model.name] = settings
 
     def load_weights(self, path):
+        if path is None:
+            return
+
         # look at the directory structure starting at path, and attempt to load the weights of all the models that are contained in this collection
 
         # remove the last slash, if there is one (to ensure os.path.basename can operate correctly)
@@ -32,23 +46,27 @@ class ModelCollection:
         model_dirs = []
         print "found the following models belonging to this collection:"
         for model_dir in possible_model_dirs:
-            if model_dir in self.models:
+            if model_dir in self.model_dict:
                 model_dirs.append(model_dir)
                 print model_dir
 
         for model_dir in model_dirs:
             model_path = path + "/" + model_dir + "/"
             print "now attempting to load model '" + model_dir + "' from file '" + model_path + "final.hdf5"
-            self.models[model_dir].load(model_path, "final.hdf5")
+            self.model_dict[model_dir].load(model_path, "final.hdf5")
+
+            # also read back the preprocessor information here from its own file!
+            print "now attempting to load preprocessor settings for '" + model_dir + "' from file '" + model_path + "preprocessor.pkl"
+            self.preprocessor_dict[model_dir].load(model_path, "preprocessor.pkl")
 
     # contrary to its low-level equivalent model.predict, this one works directly on the Pandas dataframe, and not on the numpy array itself
     def predict(self, dataframe):
         # now need to sift through the dataframe, and apply each model on the slice that it is designed to treat. Important: all the preprocessors need to be unitary!
         predictions = []
 
-        for (model, preprocessor) in zip(self.models.values(), self.preprocessors.values()):
+        for (model, preprocessor) in zip(self.get_models(), self.get_preprocessors()):
             # have each model give predictions on the relevant pieces of the full data
-            cur_data = preprocessor(dataframe)
+            cur_data = preprocessor.process(dataframe)
             cur_prediction = model.get_keras_model().predict(x = cur_data.as_matrix(), verbose = 2, batch_size = len(cur_data)).flatten()
             
             # then, keep track of the indices (i.e. the positions of the individual chunks in the main datastream)

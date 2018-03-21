@@ -26,6 +26,11 @@ float DiscriminantCollection::Evaluate(std::pair<TString, TString> combination, 
     return retval;
 }
 
+Discriminant* DiscriminantCollection::GetDiscriminant(std::pair<TString, TString> combination)
+{
+    return discs.at(combination);
+}
+
 void DiscriminantCollection::AddDiscriminant(std::pair<TString, TString> combination, Discriminant* disc)
 {
     discs[combination] = disc;

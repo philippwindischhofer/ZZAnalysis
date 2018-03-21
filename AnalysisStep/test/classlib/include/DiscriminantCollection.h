@@ -29,6 +29,7 @@ public:
     void AddDiscriminant(std::pair<TString, TString> combination, Discriminant* disc);
     std::map<std::pair<TString, TString>, Discriminant*> GetDiscs();
     std::vector<std::pair<TString, TString>> GetCategoryPairs(); // returns only the actually existing discriminant pairs, not the opposite-direction ones
+    Discriminant* GetDiscriminant(std::pair<TString, TString> combination);
 
 private:
     std::map<std::pair<TString, TString>, Discriminant*> discs;

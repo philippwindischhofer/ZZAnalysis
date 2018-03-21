@@ -48,13 +48,17 @@ class Trainer:
         self.branches = Config.branches
 
     def train(self, collection, optimizer, steps_per_epoch = 128, max_epochs = 5):
-        print "now training model collection '" + collection.name + "', containing " + str(len(collection.models)) + " models"
+        models = collection.get_models()
+        preprocessors = collection.get_preprocessors()
+        settings = collection.get_settings()
+        
+        print "now training model collection '" + collection.name + "', containing " + str(len(models)) + " models"
 
         collection_outfolder = self.outfolder + collection.name + "/"
         if not os.path.exists(collection_outfolder):
             os.makedirs(collection_outfolder)
 
-        for (cur_model, cur_preprocessor) in zip(collection.models, collection.preprocessors):
+        for (cur_model, cur_preprocessor, setting) in zip(models, preprocessors, settings):
             print "now training model '" + cur_model.name + "'"
             cur_model.get_keras_model().compile(loss = "mean_squared_error", optimizer = optimizer, metrics = ["accuracy"])
 
@@ -62,9 +66,13 @@ class Trainer:
             if not os.path.exists(model_outfolder):
                 os.makedirs(model_outfolder)
 
-            # the generators yielding the training and validation data
-            train_gen = generate_training_data(collection.H1_paths, collection.H0_paths, self.branches, preprocessor = cur_preprocessor, chunks = 100)
-            val_gen = generate_validation_data(collection.H1_paths, collection.H0_paths, self.branches, preprocessor = cur_preprocessor, chunks = 100)
+            # may need to set up the preprocessor here, given some raw data. Important: don't do any preprocessing here, but just forward everything. The preprocessor may need access to the full, raw information to set itself up!!
+            train_gen = generate_training_data(collection.H1_paths, collection.H0_paths, self.branches, preprocessor = None, training_split = 0.5, chunks = 100, as_matrix = False)
+            cur_preprocessor.setup(train_gen, len_setupdata = 20000)
+
+            # recreate the generators yielding the training and validation data for the actual training procedure
+            train_gen = generate_training_data(collection.H1_paths, collection.H0_paths, self.branches, preprocessor = cur_preprocessor.process, chunks = 100)
+            val_gen = generate_validation_data(collection.H1_paths, collection.H0_paths, self.branches, preprocessor = cur_preprocessor.process, chunks = 100)
 
             # stops the training as soon as the loss starts to saturate
             early_stop = EarlyStopping(monitor = 'val_loss',
@@ -77,7 +85,7 @@ class Trainer:
             logger = Logger()
             history = History()
 
-            cur_model.get_keras_model().fit_generator(train_gen, steps_per_epoch = steps_per_epoch, epochs = max_epochs, verbose = 2, 
+            cur_model.get_keras_model().fit_generator(train_gen, steps_per_epoch = setting.steps_per_epoch, epochs = setting.max_epochs, verbose = 2, 
                                                       validation_data = val_gen, validation_steps = 10, 
                                                       callbacks = [early_stop, checkpointer, logger, history])
 
@@ -85,3 +93,6 @@ class Trainer:
             logger.report_batches(model_outfolder)
             logger.report_epochs(model_outfolder, history.history)
             cur_model.save(model_outfolder, "final.hdf5")
+
+            # save also the preprocessor information for this model
+            cur_preprocessor.save(model_outfolder, "preprocessor.pkl")

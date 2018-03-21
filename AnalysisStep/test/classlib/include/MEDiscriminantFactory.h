@@ -19,6 +19,8 @@ class MEDiscriminantFactory
 {
 public:
     static DiscriminantCollection* GenerateDiscriminantCollection(TString out_folder, Config& conf);
+
+    static DiscriminantCollection* GenerateRawDiscriminantCollection(Config& conf, bool use_QG_tagging);
 };
 
 #endif

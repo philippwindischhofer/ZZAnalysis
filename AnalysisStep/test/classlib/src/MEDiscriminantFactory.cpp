@@ -1,5 +1,52 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MEDiscriminantFactory.h>
 
+// this puts all discriminant components into separate discriminants, also does not use calibration
+DiscriminantCollection* MEDiscriminantFactory::GenerateRawDiscriminantCollection(Config& conf, bool use_QG_tagging)
+{
+    DiscriminantCollection* coll = new DiscriminantCollection();
+    Discriminant* disc;
+
+    // the cuts that will be needed
+    auto j2cut = [&](Tree* in) -> bool {
+    	return (((in -> nCleanedJetsPt30 >= 2 && mZZ_cut(in)) ? kTRUE : kFALSE)) ? 
+    	kTRUE : kFALSE;};
+
+    TString H1_name;
+    TString H1_file_name;
+    TString H0_name;
+    TString H0_file_name;
+
+    EventStream* H1Stream;
+    EventStream* H0Stream;
+
+    // ---------------------------    
+
+    disc = new Discriminant("no_dir");
+    H1_name = "VBF2jH125";
+    H0_name = "ggH125";
+
+    H1Stream = new EventStream();
+    H1_file_name = "VBFH125";
+    H1Stream -> AddEventSource(conf.MC_path() + H1_file_name + conf.MC_filename(), j2cut);
+
+    H0Stream = new EventStream();
+    H0_file_name = "ggH125";
+    H0Stream -> AddEventSource(conf.MC_path() + H0_file_name + conf.MC_filename(), j2cut);
+
+    disc -> SetH1Source(H1Stream);
+    disc -> SetH0Source(H0Stream);
+
+    if(use_QG_tagging)
+	disc -> AddComponent("VBF2j", no_cut, DVBF2j_ME_QG_disc);
+    else
+	disc -> AddComponent("VBF2j", no_cut, DVBF2j_ME_disc);
+
+    coll -> AddDiscriminant(std::make_pair(H1_name, H0_name), disc);
+
+    return coll;
+}
+
+// this generates the calibrated and integrated ensemble of discriminants
 DiscriminantCollection* MEDiscriminantFactory::GenerateDiscriminantCollection(TString out_folder, Config& conf)
 {
     // for the weights:
@@ -8,6 +55,7 @@ DiscriminantCollection* MEDiscriminantFactory::GenerateDiscriminantCollection(TS
     // float ZHhadr_xs = 0.88 * 0.7;
     // float WHhadr_xs = 1.50 * 0.67;
 
+    // (don't use them for the moment)
     float ggH_xs = 1.0;
     float VBF_xs = 1.0;
     float ZHhadr_xs = 1.0;

@@ -45,7 +45,9 @@ public:
     void AddROCCurve(std::vector<TString> H0_files, std::vector<TString> H1_files, const std::function<float(Tree*)>& disc, const std::function<bool(Tree*)>& cut, TString H0_desc, TString H1_desc, TString disc_name);
 
     std::vector<float> GetAUC();
+
     void Construct();
+    void SetLabel(TString label_left, TString label_right);
     void SaveAs(TString path);
 
 private:
@@ -84,6 +86,8 @@ private:
 
     TString xlabel;
     TString ylabel;
+    TString label_left;
+    TString label_right;
 
     void IterateThroughFile(TString input_file_name, bool truth, const std::function<float(Tree*)>& disc, const std::function<bool(Tree*)>& cut);
     void Redraw();
