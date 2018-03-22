@@ -145,13 +145,13 @@ float Discriminant::Evaluate(Tree* in)
 		retval = (H1_calib_histo -> GetBinContent(H1_calib_histo -> FindBin(raw_disc))) / (0.00001 + H0_calib_histo -> GetBinContent(H0_calib_histo -> FindBin(raw_disc)));
 		retval = retval * H1_weight / H0_weight; // apply the weights
 
-		std::cout << "LR = " << retval << std::endl;
+		//std::cout << "LR = " << retval << std::endl;
 	    }
 	    else
 	    {
 		// if have no access to calibration information, return the raw (= uncalibrated) value instead!
 		retval = raw_disc;
-		std::cout << "no_calib" << std::endl;
+		//std::cout << "no_calib" << std::endl;
 	    }
 	    
 	    break;

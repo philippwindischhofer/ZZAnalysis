@@ -7,17 +7,17 @@ class ModelFactory:
 
     # this will generate a list of ModelCollections, each one of which will have to be trained later one
     @staticmethod
-    def GenerateModelCollections(base_model, weight_path = None):
+    def GenerateModelCollections(base_model, MC_path, weight_path = None):
         mcolls = []
-        global_max_epochs = 1
+        global_max_epochs = 5
 
         WHhadr_cut = lambda row: cuts.countAssocLeptons(row) == 0 and cuts.mZZ_cut(row)
         ZHhadr_cut = lambda row: cuts.countAssocLeptons(row) == 0 and cuts.countNeutrinos(row) == 0 and cuts.mZZ_cut(row)
 
         # ---------------------------------------------
 
-        H1_stream = {"/data_CMS/cms/wind/CJLST_NTuples/VBFH125/ZZ4lAnalysis.root": cuts.mZZ_cut}
-        H0_stream = {"/data_CMS/cms/wind/CJLST_NTuples/ggH125/ZZ4lAnalysis.root": cuts.mZZ_cut}
+        H1_stream = {MC_path + "VBFH125/ZZ4lAnalysis.root": cuts.mZZ_cut}
+        H0_stream = {MC_path + "ggH125/ZZ4lAnalysis.root": cuts.mZZ_cut}
 
         mcoll_name = "D_VBF_ggH_ML"
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream)
@@ -48,9 +48,9 @@ class ModelFactory:
 
         # # ---------------------------------------------
 
-        H1_stream = {"/data_CMS/cms/wind/CJLST_NTuples/WplusH125/ZZ4lAnalysis.root": WHhadr_cut,
-                    "/data_CMS/cms/wind/CJLST_NTuples/WminusH125/ZZ4lAnalysis.root": WHhadr_cut}
-        H0_stream = {"/data_CMS/cms/wind/CJLST_NTuples/ggH125/ZZ4lAnalysis.root": cuts.mZZ_cut}
+        H1_stream = {MC_path + "WplusH125/ZZ4lAnalysis.root": WHhadr_cut,
+                     MC_path + "WminusH125/ZZ4lAnalysis.root": WHhadr_cut}
+        H0_stream = {MC_path + "ggH125/ZZ4lAnalysis.root": cuts.mZZ_cut}
 
         mcoll_name = "D_WHh_ggH_ML"
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream)
@@ -70,8 +70,8 @@ class ModelFactory:
 
         # # ---------------------------------------------
 
-        H1_stream = {"/data_CMS/cms/wind/CJLST_NTuples/ZH125/ZZ4lAnalysis.root": ZHhadr_cut}
-        H0_stream = {"/data_CMS/cms/wind/CJLST_NTuples/ggH125/ZZ4lAnalysis.root": cuts.mZZ_cut}
+        H1_stream = {MC_path + "ZH125/ZZ4lAnalysis.root": ZHhadr_cut}
+        H0_stream = {MC_path + "ggH125/ZZ4lAnalysis.root": cuts.mZZ_cut}
 
         mcoll_name = "D_ZHh_ggH_ML"
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream)
@@ -91,9 +91,9 @@ class ModelFactory:
 
         # # ---------------------------------------------
 
-        H1_stream = {"/data_CMS/cms/wind/CJLST_NTuples/WplusH125/ZZ4lAnalysis.root": WHhadr_cut,
-                    "/data_CMS/cms/wind/CJLST_NTuples/WminusH125/ZZ4lAnalysis.root": WHhadr_cut}
-        H0_stream = {"/data_CMS/cms/wind/CJLST_NTuples/ZH125/ZZ4lAnalysis.root": ZHhadr_cut}
+        H1_stream = {MC_path + "WplusH125/ZZ4lAnalysis.root": WHhadr_cut,
+                     MC_path + "WminusH125/ZZ4lAnalysis.root": WHhadr_cut}
+        H0_stream = {MC_path + "ZH125/ZZ4lAnalysis.root": ZHhadr_cut}
 
         mcoll_name = "D_WHh_ZHh_ML"
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream)
@@ -113,9 +113,9 @@ class ModelFactory:
 
         # # ---------------------------------------------
 
-        H1_stream = {"/data_CMS/cms/wind/CJLST_NTuples/VBFH125/ZZ4lAnalysis.root": cuts.mZZ_cut}
-        H0_stream = {"/data_CMS/cms/wind/CJLST_NTuples/WplusH125/ZZ4lAnalysis.root": WHhadr_cut,
-                    "/data_CMS/cms/wind/CJLST_NTuples/WminusH125/ZZ4lAnalysis.root": WHhadr_cut}
+        H1_stream = {MC_path + "VBFH125/ZZ4lAnalysis.root": cuts.mZZ_cut}
+        H0_stream = {MC_path + "WplusH125/ZZ4lAnalysis.root": WHhadr_cut,
+                     MC_path + "WminusH125/ZZ4lAnalysis.root": WHhadr_cut}
 
         mcoll_name = "D_VBF_WHh_ML"
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream)
@@ -136,8 +136,8 @@ class ModelFactory:
 
         # # ---------------------------------------------
 
-        H1_stream = {"/data_CMS/cms/wind/CJLST_NTuples/VBFH125/ZZ4lAnalysis.root": cuts.mZZ_cut}
-        H0_stream = {"/data_CMS/cms/wind/CJLST_NTuples/ZH125/ZZ4lAnalysis.root": ZHhadr_cut}
+        H1_stream = {MC_path + "VBFH125/ZZ4lAnalysis.root": cuts.mZZ_cut}
+        H0_stream = {MC_path + "ZH125/ZZ4lAnalysis.root": ZHhadr_cut}
 
         mcoll_name = "D_VBF_ZHh_ML"
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream)

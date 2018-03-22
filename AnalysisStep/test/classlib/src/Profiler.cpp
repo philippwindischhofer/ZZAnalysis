@@ -7,46 +7,46 @@ Profiler::~Profiler()
 {  }
 
 // for TH3F
-void Profiler::FillProfile(TString input_file_name, float lumi, TH3F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y, const std::function<float(Tree*)>& var_z, bool normalize)
+void Profiler::FillProfile(TString input_file_name, float lumi, TH3F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y, const std::function<float(Tree*)>& var_z, bool normalize, float start_fraction, float end_fraction)
 {
     auto TH3F_callback =[&](TObject* hist, Tree* in, float weight) -> void {
 	TH3F* local_hist = static_cast<TH3F*>(hist);
 	local_hist -> Fill(var_x(in), var_y(in), var_z(in), weight);
     };
 
-    FillProfile(input_file_name, lumi, hist, cut, TH3F_callback);
+    FillProfile(input_file_name, lumi, hist, cut, TH3F_callback, start_fraction, end_fraction);
 
     // TODO: implement the "normalize" flag
 }
 
 // for TH2F
-void Profiler::FillProfile(TString input_file_name, float lumi, TH2F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y, bool normalize)
+void Profiler::FillProfile(TString input_file_name, float lumi, TH2F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var_x, const std::function<float(Tree*)>& var_y, bool normalize, float start_fraction, float end_fraction)
 {
     auto TH2F_callback = [&](TObject* hist, Tree* in, float weight) -> void {
 	TH2F* local_hist = static_cast<TH2F*>(hist);
 	local_hist -> Fill(var_x(in), var_y(in), weight);
     };
 
-    FillProfile(input_file_name, lumi, hist, cut, TH2F_callback);
+    FillProfile(input_file_name, lumi, hist, cut, TH2F_callback, start_fraction, end_fraction);
 
     // TODO: implement the "normalize" flag
 }
 
 // for TH1F
-void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, bool normalize)
+void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, bool normalize, float start_fraction, float end_fraction)
 {
     auto TH1F_callback = [&](TObject* hist, Tree* in, float weight) -> void {
 	TH1F* local_hist = static_cast<TH1F*>(hist);
 	local_hist -> Fill(var(in), weight);
     };
     
-    FillProfile(input_file_name, lumi, hist, cut, TH1F_callback);
+    FillProfile(input_file_name, lumi, hist, cut, TH1F_callback, start_fraction, end_fraction);
     
     if(normalize)
 	hist -> Scale(1.0 / hist -> Integral("width"));
 }
 
-void Profiler::FillDataWeights(TString input_file_name, float lumi, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, std::vector<double>* data_vec, std::vector<double>* weight_vec)
+void Profiler::FillDataWeights(TString input_file_name, float lumi, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, std::vector<double>* data_vec, std::vector<double>* weight_vec, float start_fraction, float end_fraction)
 {
     input_file = new TFile(input_file_name);
     
@@ -68,7 +68,7 @@ void Profiler::FillDataWeights(TString input_file_name, float lumi, const std::f
     std::cout << "total number of entries = " << n_entries << std::endl;
 
     // loop over the entries in chain
-    for(Long64_t j_entry = 0; j_entry < n_entries; j_entry++)
+    for(Long64_t j_entry = (Long64_t)(n_entries * start_fraction); j_entry < (Long64_t)(n_entries * end_fraction); j_entry++)
     {
 	// get the correct tree in the chain that contains this event
 	Long64_t i_entry = LoadTree(j_entry);
@@ -77,7 +77,7 @@ void Profiler::FillDataWeights(TString input_file_name, float lumi, const std::f
 	// now actually read this entry
 	fChain -> GetEntry(j_entry);
 
-	float event_weight = (lumi * xsec * 1000. * overallEventWeight) / gen_sum_weights;
+	float event_weight = (lumi * xsec * 1000. * overallEventWeight) / (gen_sum_weights * (end_fraction - start_fraction));
 	
 	if(cut(this))
 	{
@@ -90,7 +90,7 @@ void Profiler::FillDataWeights(TString input_file_name, float lumi, const std::f
     delete input_file;
 }
 
-void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, const std::function<bool(Tree*)>& cut, const std::function<void(TObject*, Tree*, float)>& fill_callback)
+void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, const std::function<bool(Tree*)>& cut, const std::function<void(TObject*, Tree*, float)>& fill_callback, float start_fraction, float end_fraction)
 {
     input_file = new TFile(input_file_name);
     
@@ -115,7 +115,7 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, c
     int fill_cnt = 0;
 
     // loop over the entries in chain
-    for(Long64_t j_entry = 0; j_entry < n_entries; j_entry++)
+    for(Long64_t j_entry = (Long64_t)(n_entries * start_fraction); j_entry < (Long64_t)(n_entries * end_fraction); j_entry++)
     {
 	// get the correct tree in the chain that contains this event
 	Long64_t i_entry = LoadTree(j_entry);
@@ -124,7 +124,7 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, c
 	// now actually read this entry
 	fChain -> GetEntry(j_entry);
 
-	float event_weight = (lumi * xsec * 1000. * overallEventWeight) / gen_sum_weights;
+	float event_weight = (lumi * xsec * 1000. * overallEventWeight) / (gen_sum_weights * (end_fraction - start_fraction));
 
 	if(cut(this))
 	{

@@ -8,6 +8,7 @@ from trainlib.ModelCollection import ModelCollection
 from trainlib.Trainer import Trainer
 from trainlib.SimplePreprocessor import SimplePreprocessor
 from trainlib.ModelFactory import ModelFactory
+import sys
 
 print "imports done"
 
@@ -16,30 +17,22 @@ config = tf.ConfigProto(intra_op_parallelism_threads = 10, inter_op_parallelism_
 session = tf.Session(config = config)
 K.set_session(session)
 
-# #input training files for training this discriminant
-# inpath = "/data_CMS/cms/wind/CJLST_NTuples/"
-# filename = "/ZZ4lAnalysis.root"
-# H1_files = ["VBFH125"]
-# H0_files = ["ggH125"]
+def main():
+    
+    if len(sys.argv) != 3:
+        print "Error: exactly 2 arguments are required"
 
-# H1_paths = [inpath + H1_file + filename for H1_file in H1_files]
-# H0_paths = [inpath + H0_file + filename for H0_file in H0_files]
+    #/data_CMS/cms/wind/CJLST_NTuples/
+    MC_dir = sys.argv[1]
+    training_dir = sys.argv[2]
 
-# # def no_preprocessor(frame):
-# #     return frame.loc[frame["nCleanedJetsPt30"] >= 2]
+    mcolls = ModelFactory.GenerateModelCollections(SimpleModel, MC_dir)
 
-# mod = SimpleModel("simplemodel")
-# mod.build()
+    train = Trainer(training_dir)
+    sgd = optimizers.SGD(lr = 0.01, momentum = 0.9)
 
-# coll = ModelCollection("simplecoll", H1_paths, H0_paths)
-# pre = SimplePreprocessor()
-# coll.add_model(pre, mod)
+    for mcoll in mcolls:
+        train.train(mcoll, optimizer = sgd)
 
-mcolls = ModelFactory.GenerateModelCollections(SimpleModel)
-
-train = Trainer("/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/training_area/")
-sgd = optimizers.SGD(lr = 0.01)
-
-for mcoll in mcolls:
-    train.train(mcoll, optimizer = sgd)
-
+if __name__ == "__main__":
+    main()

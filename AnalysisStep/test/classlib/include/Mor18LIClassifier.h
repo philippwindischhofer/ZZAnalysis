@@ -39,7 +39,7 @@
 class Mor18LIClassifier: public Classifier
 {
 public:
-    Mor18LIClassifier();
+    Mor18LIClassifier(TString out_folder = "../../src/ZZAnalysis/CalibratorPlots/");
     ~Mor18LIClassifier();
 
 //    int ClassifyEvent();

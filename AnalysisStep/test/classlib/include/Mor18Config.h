@@ -21,7 +21,7 @@
 class Mor18Config: public Config
 {
 public:
-    Mor18Config();
+    Mor18Config(TString MCpath = "/data_CMS/cms/wind/processed/");
 
     virtual std::vector<int> categories();
     virtual TString cat_label(int category);

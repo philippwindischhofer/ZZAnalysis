@@ -26,9 +26,18 @@
 
 int main( int argc, char *argv[] )
 {
-    Mor18Config conf;
+    if(argc != 3)
+    {
+	std::cerr << "Error: exactly 2 arguments are required" << std::endl;
+	return(-1);
+    }
 
-    TString out_path = "../../src/ZZAnalysis/ROCs/";
+    TString MCpath = argv[1];
+    TString out_path = argv[2];
+
+    Mor18Config conf(MCpath);
+
+    //TString out_path = "../../src/ZZAnalysis/ROCs/";
 
     DiscriminantCollection* ME_coll = MEDiscriminantFactory::GenerateRawDiscriminantCollection(conf, false);
     DiscriminantCollection* ME_QG_coll = MEDiscriminantFactory::GenerateRawDiscriminantCollection(conf, true);

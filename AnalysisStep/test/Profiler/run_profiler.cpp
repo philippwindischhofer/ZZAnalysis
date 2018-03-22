@@ -15,22 +15,21 @@
 
 #include <boost/range/combine.hpp>
 
+#include <ZZAnalysis/AnalysisStep/interface/Category.h>
+#include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
+#include <ZZAnalysis/AnalysisStep/interface/cConstants.h>
 
 // own local files
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Profiler.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/ProfPlotter.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Classifier.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor17Classifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Classifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/cuts.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
-#include <ZZAnalysis/AnalysisStep/interface/Category.h>
-#include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
-#include <ZZAnalysis/AnalysisStep/interface/cConstants.h>
 
 TString out_folder = "../../src/ZZAnalysis/ProfilerPlots/";
 
-void make_plots1d(Classifier* testclass, std::function<float(Tree*)> var, int number_bins, float lower, float upper, std::function<bool(Tree*)> ext_cut, int category, TString x_label, TString y_label, TString label_left, bool normalize, TString out_file, Config& conf)
+void make_plots1d(Classifier* testclass, std::function<float(Tree*)> var, int number_bins, float lower, float upper, std::function<bool(Tree*)> ext_cut, int category, TString x_label, TString y_label, TString label_left, bool normalize, TString out_file, Config& conf, float start_fraction = 0.0, float end_fraction = 1.0)
 {
     Profiler* prof = new Profiler();
     ProfPlotter* plotter = new ProfPlotter();
@@ -88,7 +87,7 @@ void make_plots1d(Classifier* testclass, std::function<float(Tree*)> var, int nu
 		kTRUE : kFALSE;};
 	}
 	
-	prof -> FillProfile(file_path, conf.lumi(), hist_vec[routing -> hist_name], cut, var, normalize);
+	prof -> FillProfile(file_path, conf.lumi(), hist_vec[routing -> hist_name], cut, var, normalize, start_fraction, end_fraction);
     }
 
     if(normalize)
@@ -99,7 +98,7 @@ void make_plots1d(Classifier* testclass, std::function<float(Tree*)> var, int nu
     plotter -> SaveAs(out_folder + out_file + ".pdf");
 }
 
-void make_plot1d(TString file_name, Routing* routing, std::function<float(Tree*)> var, int number_bins, float lower, float upper, bool normalize, TString x_label, TString y_label, TString label_left, TString out_file, Config& conf)
+void make_plot1d(TString file_name, Routing* routing, std::function<float(Tree*)> var, int number_bins, float lower, float upper, bool normalize, TString x_label, TString y_label, TString label_left, TString out_file, Config& conf, float start_fraction = 0.0, float end_fraction = 1.0)
 {
     Profiler* prof = new Profiler();
     ProfPlotter* plotter = new ProfPlotter();
@@ -123,13 +122,13 @@ void make_plot1d(TString file_name, Routing* routing, std::function<float(Tree*)
     TString file_path = conf.MC_path() + file_name + conf.MC_filename();
     std::function<bool(Tree*)> cut;
     
-    prof -> FillProfile(file_path, conf.lumi(), hist_vec[routing -> hist_name], routing -> cut, var, normalize);
+    prof -> FillProfile(file_path, conf.lumi(), hist_vec[routing -> hist_name], routing -> cut, var, normalize, start_fraction, end_fraction);
     plotter -> Construct(hist_vec, conf, x_label, y_label, label_left, label_right, "");
     plotter -> SaveAs(out_folder + out_file + ".pdf");
 }
 
 // skeleton code for doing 2d histograms also. to be completed
-void make_plots2d(std::function<float(Tree*)> var_x, std::function<float(Tree*)> var_y, Config& conf)
+void make_plots2d(std::function<float(Tree*)> var_x, std::function<float(Tree*)> var_y, Config& conf, float start_fraction, float end_fraction)
 {
    TCanvas* canv = new TCanvas("canv", "canv", 800, 800);
    TH2F* hist2d = new TH2F("hist2d", "hist2d", 100, -1.1, -0.9, 100, -1.1, -0.9);
@@ -138,7 +137,7 @@ void make_plots2d(std::function<float(Tree*)> var_x, std::function<float(Tree*)>
 
    TString input_file = conf.MC_path() + "ggH125" + conf.MC_filename();
 
-   prof -> FillProfile(input_file, conf.lumi(), hist2d, no_cut, var_x, var_y, false);
+   prof -> FillProfile(input_file, conf.lumi(), hist2d, no_cut, var_x, var_y, false, start_fraction, end_fraction);
 
    canv -> cd();
    hist2d -> Draw();

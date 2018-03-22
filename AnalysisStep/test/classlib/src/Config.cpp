@@ -1,6 +1,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Config.h>
 
-Config::Config()
+Config::Config(TString MCpath) : MCpath(MCpath)
 { }
 
 std::vector<TString> Config::hist_names()
@@ -206,8 +206,8 @@ TString Config::MC_path()
 {
     //TString MC_path = "/data_CMS/cms/tsculac/CJLST_NTuples/";
     //TString MC_path = "/data_CMS/cms/wind/CJLST_NTuples/";
-    TString MC_path = "/data_CMS/cms/wind/processed/";
-    return MC_path;
+    //TString MC_path = "/data_CMS/cms/wind/processed/";
+    return MCpath;
 }
 
 TString Config::MC_filename()

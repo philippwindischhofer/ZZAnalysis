@@ -21,7 +21,7 @@
 class Mor18ConfigReducedCategorySet: public Config
 {
 public:
-    Mor18ConfigReducedCategorySet();
+    Mor18ConfigReducedCategorySet(TString MCpath = "/data_CMS/cms/wind/processed/");
 
     virtual std::vector<int> categories();
     virtual TString cat_label(int category);

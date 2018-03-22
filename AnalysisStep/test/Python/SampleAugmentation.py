@@ -15,6 +15,7 @@ import numpy as np
 from rootpy.io import root_open
 from shutil import copyfile
 import os
+import sys
 
 print "imports done"
 
@@ -64,45 +65,21 @@ def augment_file(data_inpath, data_outpath, data_file, mcolls):
 
 
 def main():
-    # --------------------------------------------------------------
 
-    # # later, the construction of the ModelCollection etc. is all going to be handled by a factory (which will look up the settings in some dictionary, based on the passed name of the discriminant)
-    # def trivial_preprocessor(frame):
-    #     return frame
+    if len(sys.argv) != 4:
+        print "Error: exactly 3 arguments are required"
 
-    # # input model file for augmenting the trained discriminant to the tree
-    # disc_inpath = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/training_logs/"
-    # disc_name = "simplecoll"
-
-
-    # mcoll1 = ModelCollection("simplecoll1")
-    # mcoll2 = ModelCollection("simplecoll2")
-    # mcolls = []
-
-    # mod1 = SimpleModel("simplemodel")
-    # mod1.build()
-    # mcoll1.add_model(trivial_preprocessor, mod1)
-    # mcoll1.load_weights(disc_inpath + "simplecoll1")
-    # mcolls.append(mcoll1)
-
-    # mod2 = SimpleModel("simplemodel")
-    # mod2.build()
-    # mcoll2.add_model(trivial_preprocessor, mod2)
-    # mcoll2.load_weights(disc_inpath + "simplecoll2")
-    # mcolls.append(mcoll2)
-
-    # # ------------------------------------------------------------
-
-    data_inpath = "/data_CMS/cms/wind/CJLST_NTuples/"
-    data_outpath = "/data_CMS/cms/wind/processed/"
+    MC_dir = sys.argv[1]
+    training_path = sys.argv[2]#"/data_CMS/cms/wind/CJLST_NTuples/"
+    data_outpath = sys.argv[3]#"/data_CMS/cms/wind/processed/"
 
     # files to which this discriminant should be augmented
     data_files = ["ggH125", "VBFH125", "ZH125", "WplusH125", "WminusH125"]
 
-    mcolls = ModelFactory.GenerateModelCollections(SimpleModel, weight_path = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/training_area/")
+    mcolls = ModelFactory.GenerateModelCollections(SimpleModel, MC_dir, weight_path = training_path)
 
     for data_file in data_files:
-        augment_file(data_inpath, data_outpath, data_file, mcolls)
+        augment_file(MC_dir, data_outpath, data_file, mcolls)
 
 if __name__ == "__main__":
     main()

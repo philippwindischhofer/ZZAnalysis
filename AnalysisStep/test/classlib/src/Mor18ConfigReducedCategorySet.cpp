@@ -1,6 +1,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18ConfigReducedCategorySet.h>
 
-Mor18ConfigReducedCategorySet::Mor18ConfigReducedCategorySet() : Config()
+Mor18ConfigReducedCategorySet::Mor18ConfigReducedCategorySet(TString MCpath) : Config(MCpath)
 { 
     // most minimal input signal routing imaginable: take only the part of the signal for which MELA discriminants are available, no backgrounds
     routing.push_back(std::make_pair("ggH125", new Routing(no_cut, "ggHhist")));

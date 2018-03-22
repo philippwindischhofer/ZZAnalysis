@@ -30,9 +30,7 @@
 
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
 
-TString out_folder = "../../src/ZZAnalysis/CalibratorPlots/";
-
-void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::function<bool(Tree*)>> H1_cuts, std::vector<TString> H0_paths, std::vector<std::function<bool(Tree*)>> H0_cuts, const std::function<bool(Tree*)>& disc_cut, const std::function<float(Tree*)>& disc, TString disc_name, Config& conf)
+void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::function<bool(Tree*)>> H1_cuts, std::vector<TString> H0_paths, std::vector<std::function<bool(Tree*)>> H0_cuts, const std::function<bool(Tree*)>& disc_cut, const std::function<float(Tree*)>& disc, TString disc_name, Config& conf, TString out_folder)
 {
     Profiler* prof = new Profiler();
     ProfPlotter* plotter = new ProfPlotter();
@@ -120,8 +118,7 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
     plotter -> SaveAs(out_folder + disc_name + ".pdf");
 }
 
-
-void calibrate_discriminant(Discriminant* disc, Config& conf)
+void calibrate_discriminant(Discriminant* disc, Config& conf, TString out_folder)
 {
     std::vector<TString> H1_paths = disc -> GetH1Source() -> GetPaths();
     std::vector<std::function<bool(Tree*)>> H1_cuts = disc -> GetH1Source() -> GetCuts();
@@ -140,29 +137,56 @@ void calibrate_discriminant(Discriminant* disc, Config& conf)
 	TString name;
 	boost::tie(name, cut, disc) = tup;
 
-	calibrate_discriminant(H1_paths, H1_cuts, H0_paths, H0_cuts, cut, disc, name, conf);
+	calibrate_discriminant(H1_paths, H1_cuts, H0_paths, H0_cuts, cut, disc, name, conf, out_folder);
     }
 }
 
-void calibrate_discriminant_collection(DiscriminantCollection* coll, Config& conf)
+void calibrate_discriminant_collection(DiscriminantCollection* coll, Config& conf, TString out_folder)
 {
     std::map<std::pair<TString, TString>, Discriminant*> discs = coll -> GetDiscs();
 
     for(auto cur: discs)
     {
-	calibrate_discriminant(cur.second, conf);
+	calibrate_discriminant(cur.second, conf, out_folder);
     }
 }
 
 int main(int argc, char *argv[])
 {    
-    Mor18Config conf;
+    if(argc != 4)
+    {
+	std::cerr << "Error: exactly 3 arguments are required" << std::endl;
+	return(-1);
+    }
+
+    TString MCpath = argv[1];
+    TString switchval = argv[2];
+    TString out_folder = argv[3];
+
+    //TString out_folder = "../../src/ZZAnalysis/CalibratorPlots/";
+
+    Mor18Config conf(MCpath);
 
     //DiscriminantCollection* coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
     //DiscriminantCollection* coll = MLDiscriminantFactory::GenerateMorCompatibleDiscriminantCollection(out_folder, conf);
-    DiscriminantCollection* coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+    //DiscriminantCollection* coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
 
-    calibrate_discriminant_collection(coll, conf);
+    DiscriminantCollection* coll;
+    if(switchval == "ME")
+    {
+	coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+    }
+    else if(switchval = "ML")
+    {
+	coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+    }
+    else
+    {
+	std::cerr << "Error: did not specify any correct option (ME / ML)" << std::endl;
+	return(-1);
+    }
+	
+    calibrate_discriminant_collection(coll, conf, out_folder);
 
     // TString H1_file = "VBFH125";
     // TString H0_file = "ggH125";

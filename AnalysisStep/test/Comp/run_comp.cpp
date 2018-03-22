@@ -17,8 +17,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18ConfigReducedCategorySet.h>
 
 // global definitions
-TString indir_a = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsLIReducedCategorySet/";
-TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceReducedCategorySet/";
 
 // TString indir_a = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsOptMor18/";
 // TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization/";
@@ -29,9 +27,7 @@ TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/Benchmark
 TString name_a = "Mor18_{LI}";
 TString name_b = "Mor18  (experimental)  [nCleanedJetsPt30 >= 1]";
 
-TString out_folder = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/CompPlots/";
-
-float zoom_scale = 0.1;
+float zoom_scale = 0.2;
 
 TString punzi_hist_name = "punzi_purity";
 TString punzi_infile = "punzi_plot_hist.root";
@@ -39,6 +35,20 @@ TString punzi_outfile = "punzi_comp";
 
 int main( int argc, char *argv[] )
 {
+    if(argc != 4)
+    {
+	std::cerr << "Error: exactly 3 arguments are required" << std::endl;
+	return(-1);
+    }
+
+    // TString out_folder = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/CompPlots/";
+    // TString indir_a = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsLIReducedCategorySet/";
+    // TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceReducedCategorySet/";
+
+    TString indir_a = argv[1];
+    TString indir_b = argv[2];
+    TString out_folder = argv[3];
+    
     //Mor18Config* conf = new Mor18Config();
     Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet();
 

@@ -61,8 +61,9 @@ public:
     TString MC_filename();
 
 protected:
-    Config();
+    Config(TString MCpath = "/data_CMS/cms/wind/processed/");
     std::vector<std::pair<TString, Routing*>> routing;
+    TString MCpath;
 };
 
 #endif

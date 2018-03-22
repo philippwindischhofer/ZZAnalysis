@@ -1,6 +1,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 
-Mor18Config::Mor18Config() : Config()
+Mor18Config::Mor18Config(TString MCpath) : Config(MCpath)
 { 
     // set up the routing table for the data files
     routing.push_back(std::make_pair("ggH125", new Routing(no_cut, "ggHhist")));
