@@ -19,9 +19,11 @@ OUT_DIR="/data_CMS/cms/wind/"
 # ---------------------------------------------
 #  settings for this training campaign
 # ---------------------------------------------
-CAMPAIGN_NAME="test_training"
+CAMPAIGN_NAME="test_training_100epochs"
 MC_DIR="/data_CMS/cms/wind/CJLST_NTuples/"
 COMP_REF_DIR="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceReducedCategorySet/"
+
+# ---------------------------------------------
 
 CAMPAIGN_DIR=$OUT_DIR$CAMPAIGN_NAME
 TRAINING_DIR=${CAMPAIGN_DIR}"/training/"

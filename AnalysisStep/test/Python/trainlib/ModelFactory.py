@@ -9,7 +9,7 @@ class ModelFactory:
     @staticmethod
     def GenerateModelCollections(base_model, MC_path, weight_path = None):
         mcolls = []
-        global_max_epochs = 5
+        global_max_epochs = 100
 
         WHhadr_cut = lambda row: cuts.countAssocLeptons(row) == 0 and cuts.mZZ_cut(row)
         ZHhadr_cut = lambda row: cuts.countAssocLeptons(row) == 0 and cuts.countNeutrinos(row) == 0 and cuts.mZZ_cut(row)

@@ -263,8 +263,8 @@ DiscriminantCollection* MLDiscriminantFactory::GenerateDiscriminantCollection(TS
 	return in -> D_VBF_ggH_ML;
     };
 
-    disc -> AddComponent("D_VBF_ggH_ML", j2cut, D_VBF_ML_disc);
-    disc -> AddComponent("D_VBF_ggH_ML", j1cut, D_VBF_ML_disc);
+    disc -> AddComponent("D_VBF2j_ggH_ML", j2cut, D_VBF_ML_disc);
+    disc -> AddComponent("D_VBF1j_ggH_ML", j1cut, D_VBF_ML_disc);
     
     coll -> AddDiscriminant(std::make_pair(H1_name, H0_name), disc);
 
