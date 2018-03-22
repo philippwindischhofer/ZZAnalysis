@@ -9,10 +9,7 @@ float DVBF2j_ME_disc(Tree* in)
 	in -> ZZMass
 	);
 
-    if(std::isfinite(retval))
-	return retval;
-    else
-	return 0.0;
+    return retval;
 };
 
 float DVBF1j_ME_disc(Tree* in)
@@ -24,10 +21,7 @@ float DVBF1j_ME_disc(Tree* in)
 	in -> ZZMass
 	);
 
-    if(std::isfinite(retval))
-	return retval;
-    else
-	return 0.0;
+    return retval;
 };
 
 float DWHh_ME_disc(Tree* in)
@@ -40,11 +34,7 @@ float DWHh_ME_disc(Tree* in)
 	in -> ZZMass
 	);
 
-    if(std::isfinite(retval))
-	return retval;
-    else
-	return 0.0;
-
+    return retval;
 };
 
 float DZHh_ME_disc(Tree* in)
@@ -57,10 +47,7 @@ float DZHh_ME_disc(Tree* in)
 	in -> ZZMass
 	);
 
-    if(std::isfinite(retval))
-	return retval;
-    else
-	return 0.0;
+    return retval;
 };
 
 // here come the "non-standard" discriminants between several *tagged* categories
@@ -75,11 +62,7 @@ float DWHZH_ME_disc(Tree* in)
 	(c_MelaZH * (in -> p_HadZH_mavjj_true_JECNominal))
 	);
 
-    if(std::isfinite(retval))
-	return retval;
-    else
-	return 0.0;
-
+    return retval;
 };
 
 float DVBFWH_ME_disc(Tree* in)
@@ -91,12 +74,8 @@ float DVBFWH_ME_disc(Tree* in)
 	(in -> p_HadWH_SIG_ghw1_1_JHUGen_JECNominal) * (in -> p_HadWH_mavjj_JECNominal) / 
 	(c_MelaWH * (in -> p_HadWH_mavjj_true_JECNominal))
 	);
-
-    if(std::isfinite(retval))
-	return retval;
-    else
-	return 0.0;
-
+    
+    return retval;
 };
 
 float DVBFZH_ME_disc(Tree* in)
@@ -109,11 +88,7 @@ float DVBFZH_ME_disc(Tree* in)
 	(c_MelaZH * (in -> p_HadZH_mavjj_true_JECNominal))
 	);
 
-    if(std::isfinite(retval))
-	return retval;
-    else
-	return 0.0;
-
+    return retval;
 };
 
 // as well have the discriminants using QG likelihoods
@@ -136,20 +111,126 @@ float DVBF2j_ME_QG_disc(Tree* in)
 	jetQGLikelihood,
 	jetPhi);
 
-    if(std::isfinite(retval))
-	return retval;
-    else
-	return 0.0;
+    return retval;
+}
 
+float DVBF1j_ME_QG_disc(Tree* in)
+{
+    int n_jets = in -> nCleanedJetsPt30;
+    float jetQGLikelihood[n_jets];
+    float jetPhi[n_jets];
+    
+    for(int i = 0; i < n_jets; i++)
+    {
+	jetQGLikelihood[i] = in -> JetQGLikelihood -> at(i);
+	jetPhi[i] = in -> JetPhi -> at(i);
+    }
+    
+    float retval = DVBF1j_ME_QG(
+	in -> p_JVBF_SIG_ghv1_1_JHUGen_JECNominal,
+	in -> pAux_JVBF_SIG_ghv1_1_JHUGen_JECNominal,
+	in -> p_JQCD_SIG_ghg2_1_JHUGen_JECNominal,
+	in -> ZZMass,
+	jetQGLikelihood,
+	jetPhi);
+
+    return retval;
+}
+
+float DWHh_ME_QG_disc(Tree* in)
+{
+    int n_jets = in -> nCleanedJetsPt30;
+    float jetQGLikelihood[n_jets];
+    float jetPhi[n_jets];
+    
+    for(int i = 0; i < n_jets; i++)
+    {
+	jetQGLikelihood[i] = in -> JetQGLikelihood -> at(i);
+	jetPhi[i] = in -> JetPhi -> at(i);
+    }
+    
+    float retval = DWHh_ME_QG(
+	in -> p_HadWH_SIG_ghw1_1_JHUGen_JECNominal,
+	in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal,
+	in -> p_HadWH_mavjj_JECNominal,
+	in -> p_HadWH_mavjj_true_JECNominal,
+	in -> ZZMass,
+	jetQGLikelihood,
+	jetPhi);
+
+    return retval;
+}
+
+float DZHh_ME_QG_disc(Tree* in)
+{
+    int n_jets = in -> nCleanedJetsPt30;
+    float jetQGLikelihood[n_jets];
+    float jetPhi[n_jets];
+    
+    for(int i = 0; i < n_jets; i++)
+    {
+	jetQGLikelihood[i] = in -> JetQGLikelihood -> at(i);
+	jetPhi[i] = in -> JetPhi -> at(i);
+    }
+    
+    float retval = DZHh_ME_QG(
+	in -> p_HadZH_SIG_ghz1_1_JHUGen_JECNominal,
+	in -> p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal,
+	in -> p_HadZH_mavjj_JECNominal,
+	in -> p_HadZH_mavjj_true_JECNominal,
+	in -> ZZMass,
+	jetQGLikelihood,
+	jetPhi);
+
+    return retval;
+}
+
+float DWHZH_ME_QG_disc(Tree* in)
+{
+    float QG_correction = TMath::Power(generic_Pg_Pq(in), 1. / 3.);
+    float raw_disc = DWHZH_ME_disc(in);
+    float retval = 1.0 / (1.0 + (1.0 / raw_disc - 1.0) * QG_correction);
+
+    return retval;
+}
+
+float DVBFWH_ME_QG_disc(Tree* in)
+{
+    float QG_correction = TMath::Power(generic_Pg_Pq(in), 1. / 3.);
+    float raw_disc = DVBFWH_ME_disc(in);
+    float retval = 1.0 / (1.0 + (1.0 / raw_disc - 1.0) * QG_correction);
+
+    return retval;
+}
+
+float DVBFZH_ME_QG_disc(Tree* in)
+{
+    float QG_correction = TMath::Power(generic_Pg_Pq(in), 1. / 3.);
+    float raw_disc = DVBFZH_ME_disc(in);
+    float retval = 1.0 / (1.0 + (1.0 / raw_disc - 1.0) * QG_correction);
+
+    return retval;
 }
 
 float generic_disc(float H1_ME, float H0_ME)
 {
     if(H1_ME == 0.0)
+	return 0.0;
+    else
+	return 1.0 / (1.0 + H0_ME / H1_ME);
+};
+
+float generic_Pg_Pq(Tree* in)
+{
+    int n_jets = in -> nCleanedJetsPt30;
+    float retval = 1.0;
+    
+    for(int i = 0; i < n_jets; i++)
     {
-	std::cout << "caught potential NaN" << std::endl;
-	H1_ME = 0.0001;
+	float jetQGLikelihood = in -> JetQGLikelihood -> at(i);
+	float jetPhi = in -> JetPhi -> at(i);
+	retval *= jetPgOverPq(jetQGLikelihood, jetPhi);
     }
 
-    return 1.0 / (1.0 + H0_ME / H1_ME);
-};
+    return retval;
+}

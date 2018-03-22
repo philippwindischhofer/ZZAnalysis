@@ -28,48 +28,62 @@ int main( int argc, char *argv[] )
 {
     Mor18Config conf;
 
-    // make sure to only use the second half of each file, i.e. the portion reserved for the validation data!
-    float start_fraction = 0.5;
-    float end_fraction = 1.0;
-    ROCPlotter rp(conf, start_fraction, end_fraction); 
-
     TString out_path = "../../src/ZZAnalysis/ROCs/";
 
     DiscriminantCollection* ME_coll = MEDiscriminantFactory::GenerateRawDiscriminantCollection(conf, false);
     DiscriminantCollection* ME_QG_coll = MEDiscriminantFactory::GenerateRawDiscriminantCollection(conf, true);
-    DiscriminantCollection* ML_coll = MLDiscriminantFactory::GenerateDiscriminantCollection("no_dir", conf);
+    DiscriminantCollection* ML_coll = MLDiscriminantFactory::GenerateMorCompatibleDiscriminantCollection("no_dir", conf);
 
-    Discriminant* ME_disc = ME_coll -> GetDiscriminant(std::make_pair("VBF2jH125", "ggH125"));
-    Discriminant* ME_QG_disc = ME_QG_coll -> GetDiscriminant(std::make_pair("VBF2jH125", "ggH125"));
-    Discriminant* ML_disc = ML_coll -> GetDiscriminant(std::make_pair("VBFH125", "ggH125"));
+    // Discriminant* ME_disc = ME_coll -> GetDiscriminant(std::make_pair("VBF2jH125", "ggH125"));
+    // Discriminant* ME_QG_disc = ME_QG_coll -> GetDiscriminant(std::make_pair("VBF2jH125", "ggH125"));
+    // Discriminant* ML_disc = ML_coll -> GetDiscriminant(std::make_pair("VBFH125", "ggH125"));
 
-    rp.AddROCCurve(ME_disc,
-		   "ggH efficiency",
-    		   "VBF efficiency",
-    		   "D_{VBF2j}^{ME}"
-	);
+    auto ME_discs = ME_coll -> GetDiscs();
+
+    for(auto& ME_disc: ME_discs)
+    {
+	std::pair<TString, TString> combination = ME_disc.first;
+	Discriminant* cur_ME_disc = ME_disc.second;
+	Discriminant* cur_ME_QG_disc = ME_QG_coll -> GetDiscriminant(combination);
+	Discriminant* cur_ML_disc = ML_coll -> GetDiscriminant(combination);
+
+	// make sure to only use the second half of each file, i.e. the portion reserved for the validation data!
+	float start_fraction = 0.0;
+	float end_fraction = 1.0;
+	ROCPlotter rp(conf, start_fraction, end_fraction); 
+
+	rp.AddROCCurve(cur_ME_disc,
+		       combination.second + " efficiency",
+		       combination.first + " efficiency",
+		       cur_ME_disc -> GetDiscriminantName()
+	    );
     
-    rp.AddROCCurve(ME_QG_disc,
-    		   "ggH efficiency",
-    		   "VBF efficiency",
-    		   "D_{VBF2j}^{ME, QG}"
-    	);
+	rp.AddROCCurve(cur_ME_QG_disc,
+		       combination.second + " efficiency",
+		       combination.first + " efficiency",
+		       cur_ME_QG_disc -> GetDiscriminantName()
+	    );
 
-    rp.AddROCCurve(ML_disc,
-    		   "ggH efficiency",
-    		   "VBF efficiency",
-    		   "D_{VBF2j}^{ML}"
-    	);
+	rp.AddROCCurve(cur_ML_disc,
+		       combination.second + " efficiency",
+		       combination.first + " efficiency",
+		       cur_ML_disc -> GetDiscriminantName()
+	    );
 
-    rp.Construct();
-    rp.SetLabel("nCleanedJetsPt30 >= 2", "");
+	rp.Construct();
 
-    auto AUCs = rp.GetAUC();
+	if(combination.first == "VBF1j")
+	    rp.SetLabel("nCleanedJetsPt30 == 1", "");
+	else
+	    rp.SetLabel("nCleanedJetsPt30 >= 2", "");
 
-    for(auto AUC: AUCs)
-	std::cout << AUC << std::endl;
+	auto AUCs = rp.GetAUC();
+
+	for(auto AUC: AUCs)
+	    std::cout << AUC << std::endl;
     
-    rp.SaveAs(out_path + "ROC_VBF.pdf");
+	rp.SaveAs(out_path + "ROC_" + combination.first + "_" + combination.second + ".pdf");
+    }
 
     return(0);
 }

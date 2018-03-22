@@ -5,7 +5,7 @@ from keras import losses
 import matplotlib.pyplot as plt
 import os
 
-from generator import generate_training_data, generate_validation_data
+from generator import Generator
 
 # records the training history and makes nice plots at the end
 class Logger(Callback):
@@ -67,12 +67,15 @@ class Trainer:
                 os.makedirs(model_outfolder)
 
             # may need to set up the preprocessor here, given some raw data. Important: don't do any preprocessing here, but just forward everything. The preprocessor may need access to the full, raw information to set itself up!!
-            train_gen = generate_training_data(collection.H1_paths, collection.H0_paths, self.branches, preprocessor = None, training_split = 0.5, chunks = 100, as_matrix = False)
-            cur_preprocessor.setup(train_gen, len_setupdata = 20000)
+            setup_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = None, training_split = 0.5, chunks = 100, as_matrix = False)
+            len_setup_data = setup_gen.setup_training_data()
+            cur_preprocessor.setup(setup_gen.generator(), len_setupdata = len_setup_data)
 
             # recreate the generators yielding the training and validation data for the actual training procedure
-            train_gen = generate_training_data(collection.H1_paths, collection.H0_paths, self.branches, preprocessor = cur_preprocessor.process, chunks = 100)
-            val_gen = generate_validation_data(collection.H1_paths, collection.H0_paths, self.branches, preprocessor = cur_preprocessor.process, chunks = 100)
+            train_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor.process, chunks = 100)            
+            train_gen.setup_training_data()
+            val_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor.process, chunks = 100)
+            val_gen.setup_validation_data()
 
             # stops the training as soon as the loss starts to saturate
             early_stop = EarlyStopping(monitor = 'val_loss',
@@ -85,8 +88,8 @@ class Trainer:
             logger = Logger()
             history = History()
 
-            cur_model.get_keras_model().fit_generator(train_gen, steps_per_epoch = setting.steps_per_epoch, epochs = setting.max_epochs, verbose = 2, 
-                                                      validation_data = val_gen, validation_steps = 10, 
+            cur_model.get_keras_model().fit_generator(train_gen.generator(), steps_per_epoch = setting.steps_per_epoch, epochs = setting.max_epochs, verbose = 2, 
+                                                      validation_data = val_gen.generator(), validation_steps = 10, 
                                                       callbacks = [early_stop, checkpointer, logger, history])
 
             # save the training report as well as the final version of the trained model

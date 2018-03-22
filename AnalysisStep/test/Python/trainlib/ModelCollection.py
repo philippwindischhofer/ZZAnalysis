@@ -4,14 +4,14 @@ import os
 # describes an ensemble of classifiers for a specific pair of categories. Each model in the collection targets a different region in the event space (as filtered out by the corresponding preprocessors)
 class ModelCollection:
 
-    def __init__(self, name = "noname", H1_paths = None, H0_paths = None, default_value = 0.0):
+    def __init__(self, name = "noname", H1_stream = None, H0_stream = None, default_value = 0.0):
         self.model_dict = {}
         self.preprocessor_dict = {}
         self.settings_dict = {}
         self.name = name
 
-        self.H1_paths = H1_paths
-        self.H0_paths = H0_paths
+        self.H1_stream = H1_stream
+        self.H0_stream = H0_stream
 
         self.default_value = default_value
 

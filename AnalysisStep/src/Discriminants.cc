@@ -45,6 +45,10 @@ extern "C" float DVBF2j_ME(
 			   )
 {
   float c_Mela2j = getDVBF2jetsConstant(ZZMass);
+
+  if(p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal == 0.0)
+      return 0.0;
+
   return 1./(1.+ c_Mela2j*p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal/p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal);
 }
 
@@ -55,8 +59,11 @@ extern "C" float DVBF1j_ME(
     float ZZMass
 			   )
 {
-  float c_Mela1j = getDVBF1jetConstant(ZZMass);
-  return 1./(1.+ c_Mela1j*p_JQCD_SIG_ghg2_1_JHUGen_JECNominal/(p_JVBF_SIG_ghv1_1_JHUGen_JECNominal*pAux_JVBF_SIG_ghv1_1_JHUGen_JECNominal));
+    if(p_JVBF_SIG_ghv1_1_JHUGen_JECNominal*pAux_JVBF_SIG_ghv1_1_JHUGen_JECNominal == 0.0)
+	return 0.0;
+
+    float c_Mela1j = getDVBF1jetConstant(ZZMass);
+    return 1./(1.+ c_Mela1j*p_JQCD_SIG_ghg2_1_JHUGen_JECNominal/(p_JVBF_SIG_ghv1_1_JHUGen_JECNominal*pAux_JVBF_SIG_ghv1_1_JHUGen_JECNominal));
 }
 
 extern "C" float DWHh_ME(
@@ -67,8 +74,11 @@ extern "C" float DWHh_ME(
     float ZZMass
 			 )
 {
-  float c_MelaWH = getDWHhConstant(ZZMass);
-  return 1./(1.+ c_MelaWH*(p_HadWH_mavjj_true_JECNominal*p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal)/(p_HadWH_mavjj_JECNominal*p_HadWH_SIG_ghw1_1_JHUGen_JECNominal));
+    if(p_HadWH_mavjj_JECNominal*p_HadWH_SIG_ghw1_1_JHUGen_JECNominal == 0.0)
+	return 0.0;
+
+    float c_MelaWH = getDWHhConstant(ZZMass);
+    return 1./(1.+ c_MelaWH*(p_HadWH_mavjj_true_JECNominal*p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal)/(p_HadWH_mavjj_JECNominal*p_HadWH_SIG_ghw1_1_JHUGen_JECNominal));
 }
 
 extern "C" float DZHh_ME(
@@ -79,8 +89,12 @@ extern "C" float DZHh_ME(
     float ZZMass
 			 )
 {
-  float c_MelaZH = getDZHhConstant(ZZMass);
-  return 1./(1.+ c_MelaZH*(p_HadZH_mavjj_true_JECNominal*p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal)/(p_HadZH_mavjj_JECNominal*p_HadZH_SIG_ghz1_1_JHUGen_JECNominal));
+    float c_MelaZH = getDZHhConstant(ZZMass);
+    
+    if(p_HadZH_mavjj_JECNominal*p_HadZH_SIG_ghz1_1_JHUGen_JECNominal == 0.0)
+	return 0.0;
+    
+    return 1./(1.+ c_MelaZH*(p_HadZH_mavjj_true_JECNominal*p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal)/(p_HadZH_mavjj_JECNominal*p_HadZH_SIG_ghz1_1_JHUGen_JECNominal));
 }
 
 float jetPgOverPq(float jetQGLikelihood, float jetPhi)

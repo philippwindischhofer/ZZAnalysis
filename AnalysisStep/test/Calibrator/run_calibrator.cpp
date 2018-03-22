@@ -158,7 +158,8 @@ int main(int argc, char *argv[])
 {    
     Mor18Config conf;
 
-//    DiscriminantCollection* coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+    //DiscriminantCollection* coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+    //DiscriminantCollection* coll = MLDiscriminantFactory::GenerateMorCompatibleDiscriminantCollection(out_folder, conf);
     DiscriminantCollection* coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
 
     calibrate_discriminant_collection(coll, conf);

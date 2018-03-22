@@ -12,6 +12,16 @@ Discriminant::Discriminant(TString calib_dir)
 Discriminant::~Discriminant()
 { }
 
+void Discriminant::SetDiscriminantName(TString disc_name)
+{
+    this -> disc_name = disc_name;
+}
+
+TString Discriminant::GetDiscriminantName()
+{
+    return disc_name;
+}
+
 std::vector<TString> Discriminant::GetNames()
 {
     return names;
@@ -105,7 +115,7 @@ float Discriminant::Evaluate(Tree* in)
 {
     float retval = 0;
 
-    std::cout << "n_jets = " << in -> nCleanedJetsPt30 << std::endl;
+    //std::cout << "n_jets = " << in -> nCleanedJetsPt30 << std::endl;
 
     // iterate through the list of components and check each of them
     for(auto tup: boost::combine(names, cuts, discs, H1_calines, H0_calines, H1_calib_histos, H0_calib_histos))
@@ -127,20 +137,21 @@ float Discriminant::Evaluate(Tree* in)
 	    // for a calibrated discriminant, now evaluate the actual likelihood ratio (or an approximation thereof)
 	    //retval = (H1_caline -> Eval(raw_disc)) / (H0_caline -> Eval(raw_disc));
 	    
-	    std::cout << "raw_disc = " << raw_disc << std::endl;
+	    //std::cout << "raw_disc = " << raw_disc << std::endl;
 
 	    if((H1_calib_histo != NULL) && (H0_calib_histo != NULL))
 	    {
 		// don't use interpolation at the moment
-		retval = (H1_calib_histo -> GetBinContent(H1_calib_histo -> FindBin(raw_disc))) / (0.001 + H0_calib_histo -> GetBinContent(H0_calib_histo -> FindBin(raw_disc)));
+		retval = (H1_calib_histo -> GetBinContent(H1_calib_histo -> FindBin(raw_disc))) / (0.00001 + H0_calib_histo -> GetBinContent(H0_calib_histo -> FindBin(raw_disc)));
 		retval = retval * H1_weight / H0_weight; // apply the weights
 
-		//std::cout << "LR = " << retval << std::endl;
+		std::cout << "LR = " << retval << std::endl;
 	    }
 	    else
 	    {
 		// if have no access to calibration information, return the raw (= uncalibrated) value instead!
 		retval = raw_disc;
+		std::cout << "no_calib" << std::endl;
 	    }
 	    
 	    break;

@@ -47,6 +47,9 @@ public:
 
     EventStream* GetH1Source();
     EventStream* GetH0Source();
+
+    void SetDiscriminantName(TString disc_name);
+    TString GetDiscriminantName();
     
 private:
     TString calib_dir;
@@ -57,6 +60,9 @@ private:
 
     float H1_weight;
     float H0_weight;
+    
+    // this is the name of the global discriminant
+    TString disc_name;
 
     // a list of cuts and corresponding discriminants. when evaluating the global discriminant, this list is traversed one by one. the discriminant that corresponds to the first matching cut is evaluated
     std::vector<TString> names;

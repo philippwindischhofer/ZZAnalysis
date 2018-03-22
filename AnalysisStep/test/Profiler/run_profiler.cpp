@@ -159,7 +159,7 @@ int main(int argc, char *argv[])
     	return (((in -> nCleanedJetsPt30 >= 2) && mZZ_cut(in) ? kTRUE : kFALSE)) ? 
     	kTRUE : kFALSE;};
 
-    auto var = [&](Tree* in) -> float{return in -> D_VBF_ggH_ML;};
+    auto var = [&](Tree* in) -> float{return in -> D_WHh_ggH_ML;};
 
     TString plot_name = "VBF_ggH";
     TString quantity = "VBF_ggH";
@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
     int category = -1;
     bool normalize = false;
 
-    make_plot1d("ggH125", new Routing(j2cut, "VBFhist"), var, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+    make_plot1d("WplusH125", new Routing(j2cut, "VBFhist"), var, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
 
     //make_plots1d(testclass, var, number_bins, axis_lower, axis_upper, j2cut, category, quantity, y_label, category_name, normalize, plot_name, conf);
 

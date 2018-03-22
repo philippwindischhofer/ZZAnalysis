@@ -4,13 +4,16 @@ import numpy as np
 # this simulates a single ROOT file that is actually distributed over multiple "physical" ROOT trees. From each file in the list,
 # only the portion between start_fraction and end_fraction is considered
 class FileCollection:
-    def __init__(self, files, start_fraction, end_fraction):
-        self.files = files
+    def __init__(self, files_cuts, start_fraction, end_fraction):
+        self.files_cuts = files_cuts
+        self.files = self.files_cuts.keys()
+        self.cuts = self.files_cuts.values()
+
         self.start_fraction = start_fraction
         self.end_fraction = end_fraction
 
         # the number of entries in each file, and the local start- and endpositions
-        self.lengths = [get_size(file_path) for file_path in files]
+        self.lengths = [get_size(file_path) for file_path in self.files]
         self.minpos = [int(length * start_fraction) for length in self.lengths]
         self.maxpos = [int(length * end_fraction) for length in self.lengths]
         
@@ -19,7 +22,7 @@ class FileCollection:
         self.total_length = sum(self.lengths)
         self.used_length = sum(self.used_lengths)
         
-        print "collection set up: " + str(len(files)) + " files, " + str(self.total_length) + " entries in total, " + str(self.used_length) + " of which will be used"
+        print "collection set up: " + str(len(self.files)) + " files, " + str(self.total_length) + " entries in total, " + str(self.used_length) + " of which will be used"
         
     def get_length(self):
         return self.used_length
@@ -67,6 +70,6 @@ class FileCollection:
             needed_min_index = min(needed_local_indices)
             needed_max_index = max(needed_local_indices)
             
-            retval.append([needed_file, needed_min_index, needed_max_index])
+            retval.append([needed_file, self.files_cuts[needed_file], needed_min_index, needed_max_index])
         
         return retval

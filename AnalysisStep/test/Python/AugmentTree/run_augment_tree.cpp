@@ -95,10 +95,12 @@ int main( int argc, char *argv[] )
     for(auto& routing: routing_table)
     {
 	TString cur_file = routing.first;
-	if(std::find(infile_paths.begin(), infile_paths.end(), cur_file) == infile_paths.end())
+	if(std::find(infile_paths.begin(), infile_paths.end(), conf -> MC_path() + cur_file + conf -> MC_filename()) == infile_paths.end())
 	{
 	    infile_paths.push_back(conf -> MC_path() + cur_file + conf -> MC_filename());
 	    outfile_paths.push_back(out_dir + cur_file + conf -> MC_filename());
+
+	    std::cout << "added " << conf -> MC_path() + cur_file + conf -> MC_filename() << " to queue" << std::endl;
 	}
     }
 
