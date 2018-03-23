@@ -4,11 +4,11 @@ class Model:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def __init__(self, name):
+    def __init__(self, name, input_columns):
         pass
 
     @abstractmethod
-    def build(self, number_inputs):
+    def build(self, hyperparameters = None):
         pass
 
     @abstractmethod

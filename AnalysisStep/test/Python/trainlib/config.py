@@ -5,6 +5,17 @@ class Config:
     MC_filename = "/ZZ4lAnalysis.root"
 
 class TrainingConfig:
-    def __init__(self, steps_per_epoch = 128, max_epochs = 100):
+    def __init__(self, steps_per_epoch = 128, max_epochs = 1):
         self.steps_per_epoch = steps_per_epoch
         self.max_epochs = max_epochs
+
+import cuts
+from SimpleModel import SimpleModel
+
+class ConfigFileConfig:
+    cuts_translation = {"no_cut": cuts.no_cut, 
+                        "mZZ_cut": cuts.mZZ_cut, 
+                        "WHhadr_cut": cuts.WHhadr_cut, 
+                        "ZHhadr_cut": cuts.ZHhadr_cut}
+    
+    model_translation = {"SimpleModel": SimpleModel}

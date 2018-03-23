@@ -29,3 +29,8 @@ def countAssocLeptons(row):
     return 0
 
 
+def WHhadr_cut(row):
+    return countAssocLeptons(row) == 0 and mZZ_cut(row)
+
+def ZHhadr_cut(row):
+    return countAssocLeptons(row) == 0 and countNeutrinos(row) == 0 and mZZ_cut(row)

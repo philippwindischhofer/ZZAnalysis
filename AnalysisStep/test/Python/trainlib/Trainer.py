@@ -72,14 +72,14 @@ class Trainer:
             cur_preprocessor.setup(setup_gen.generator(), len_setupdata = len_setup_data)
 
             # recreate the generators yielding the training and validation data for the actual training procedure
-            train_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor.process, chunks = 100)            
+            train_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor.process, chunks = setting.steps_per_epoch)            
             train_gen.setup_training_data()
-            val_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor.process, chunks = 100)
+            val_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor.process, chunks = setting.steps_per_epoch)
             val_gen.setup_validation_data()
 
             # stops the training as soon as the loss starts to saturate
             early_stop = EarlyStopping(monitor = 'val_loss',
-                                       patience = 10,
+                                       patience = 15,
                                        verbose = 1,
                                        mode = 'auto')
 
@@ -89,7 +89,7 @@ class Trainer:
             history = History()
 
             cur_model.get_keras_model().fit_generator(train_gen.generator(), steps_per_epoch = setting.steps_per_epoch, epochs = setting.max_epochs, verbose = 2, 
-                                                      validation_data = val_gen.generator(), validation_steps = 10, 
+                                                      validation_data = val_gen.generator(), validation_steps = setting.steps_per_epoch, 
                                                       callbacks = [early_stop, checkpointer, logger, history])
 
             # save the training report as well as the final version of the trained model

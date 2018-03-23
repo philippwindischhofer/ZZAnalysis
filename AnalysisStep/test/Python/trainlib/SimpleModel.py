@@ -7,12 +7,21 @@ from Model import Model
 
 class SimpleModel(Model):
 
-    def __init__(self, name):
+    def __init__(self, name, input_columns):
         self.model = None
+        self.input_columns = input_columns
         self.name = name
+        self.hyperparameters = None
 
     # actually constructs the model
-    def build(self, number_inputs):
+    def build(self, hyperparameters = None):
+        if hyperparameters is not None:
+            print "got the following list of hyperparams: " + str(hyperparameters)
+            self.hyperparameters = hyperparameters
+
+        print "building network with inputs: " + str(self.input_columns)
+        number_inputs = len(self.input_columns)
+
         in_layer = Input(shape = (number_inputs,))
         x = Dense(128, activation = "tanh")(in_layer)
         x = Dense(16, activation = "tanh")(x)

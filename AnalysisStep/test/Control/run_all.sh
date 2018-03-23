@@ -19,13 +19,15 @@ OUT_DIR="/data_CMS/cms/wind/"
 # ---------------------------------------------
 #  settings for this training campaign
 # ---------------------------------------------
-CAMPAIGN_NAME="test_training_100epochs"
+
+CAMPAIGN_NAME="test_training_config_file"
 MC_DIR="/data_CMS/cms/wind/CJLST_NTuples/"
 COMP_REF_DIR="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceReducedCategorySet/"
 
 # ---------------------------------------------
 
 CAMPAIGN_DIR=$OUT_DIR$CAMPAIGN_NAME
+SETTINGS_DIR=$CAMPAIGN_DIR"/"
 TRAINING_DIR=${CAMPAIGN_DIR}"/training/"
 AUGMENTATION_DIR=${CAMPAIGN_DIR}"/augmentation/"
 CALIBRATION_DIR=${CAMPAIGN_DIR}"/calibration/"
@@ -33,7 +35,7 @@ ROC_DIR=${CAMPAIGN_DIR}"/ROCs/"
 BENCHMARK_DIR=${CAMPAIGN_DIR}"/benchmark/"
 COMP_DIR=${CAMPAIGN_DIR}"/comp/"
 
-rm -r $CAMPAIGN_DIR
+#rm -r $CAMPAIGN_DIR
 mkdir $CAMPAIGN_DIR
 mkdir $TRAINING_DIR
 mkdir $AUGMENTATION_DIR
@@ -43,10 +45,10 @@ mkdir $BENCHMARK_DIR
 mkdir $COMP_DIR
 
 # launch the training
-python $PYTHON_DIR$TRAINER $MC_DIR $TRAINING_DIR
+#python $PYTHON_DIR$TRAINER $SETTINGS_DIR $TRAINING_DIR
 
 # launch the augmentation
-python $PYTHON_DIR$AUGMENTER $MC_DIR $TRAINING_DIR $AUGMENTATION_DIR
+#python $PYTHON_DIR$AUGMENTER $MC_DIR $SETTINGS_DIR $TRAINING_DIR $AUGMENTATION_DIR
 
 # launch the calibration
 $BIN_DIR$CALIBRATOR $AUGMENTATION_DIR "ML" $CALIBRATION_DIR

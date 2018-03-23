@@ -7,6 +7,7 @@ from trainlib.ModelCollection import ModelCollection
 from trainlib.ModelFactory import ModelFactory
 from trainlib.FileCollection import FileCollection
 from trainlib.Trainer import Trainer
+from trainlib.ConfigFileHandler import ConfigFileHandler
 from trainlib.config import Config
 import trainlib.utils as utils
 import trainlib.cuts as cuts
@@ -47,7 +48,9 @@ def augment_file(data_inpath, data_outpath, data_file, mcolls):
     for mcoll in mcolls:
         out_branches.append(mcoll.predict(indata))
         branch_names.append(mcoll.name)
-        prepared_dtype.append((mcoll.name, 'f4'))
+        prepared_dtype.append((mcoll.name.encode("ascii"), 'f4'))
+
+    print prepared_dtype
 
     # make it into the correct type and shape
     new_branches = np.array(np.zeros(length), dtype = prepared_dtype)
@@ -66,17 +69,22 @@ def augment_file(data_inpath, data_outpath, data_file, mcolls):
 
 def main():
 
-    if len(sys.argv) != 4:
-        print "Error: exactly 3 arguments are required"
+    if len(sys.argv) != 5:
+        print "Error: exactly 4 arguments are required"
 
     MC_dir = sys.argv[1]
-    training_path = sys.argv[2]#"/data_CMS/cms/wind/CJLST_NTuples/"
-    data_outpath = sys.argv[3]#"/data_CMS/cms/wind/processed/"
+    setting_dir = sys.argv[2]
+    training_path = sys.argv[3]
+    data_outpath = sys.argv[4]
 
     # files to which this discriminant should be augmented
     data_files = ["ggH125", "VBFH125", "ZH125", "WplusH125", "WminusH125"]
 
-    mcolls = ModelFactory.GenerateModelCollections(SimpleModel, MC_dir, weight_path = training_path)
+    #mcolls = ModelFactory.GenerateStandardModelCollections(SimpleModel, MC_dir, weight_path = training_path)
+
+    confhandler = ConfigFileHandler()
+    confhandler.LoadConfiguration(setting_dir + "settings.conf")
+    mcolls = confhandler.GetModelCollection(weightpath = training_path)
 
     for data_file in data_files:
         augment_file(MC_dir, data_outpath, data_file, mcolls)

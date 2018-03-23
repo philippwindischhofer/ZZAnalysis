@@ -8,6 +8,7 @@ from trainlib.ModelCollection import ModelCollection
 from trainlib.Trainer import Trainer
 from trainlib.SimplePreprocessor import SimplePreprocessor
 from trainlib.ModelFactory import ModelFactory
+from trainlib.ConfigFileHandler import ConfigFileHandler
 import sys
 
 print "imports done"
@@ -23,10 +24,14 @@ def main():
         print "Error: exactly 2 arguments are required"
 
     #/data_CMS/cms/wind/CJLST_NTuples/
-    MC_dir = sys.argv[1]
+    #MC_dir = sys.argv[1]
+    setting_dir = sys.argv[1]
     training_dir = sys.argv[2]
 
-    mcolls = ModelFactory.GenerateModelCollections(SimpleModel, MC_dir)
+    #mcolls = ModelFactory.GenerateStandardModelCollections(SimpleModel, MC_dir)
+    confhandler = ConfigFileHandler()
+    confhandler.LoadConfiguration(setting_dir + "settings.conf")
+    mcolls = confhandler.GetModelCollection()
 
     train = Trainer(training_dir)
     sgd = optimizers.SGD(lr = 0.01, momentum = 0.9)
