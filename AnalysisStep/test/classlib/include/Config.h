@@ -42,8 +42,10 @@ public:
     virtual int number_abstract_categories() {return abstract_categories().size();};
     virtual int abs_cat_number(TString category);
     virtual std::vector<TString> ordered_abs_cat_labels();
+    virtual std::vector<TString> ordered_abs_cat_labels_text();
 
     virtual TString abs_cat_label(TString abs_cat) = 0;
+    virtual TString abs_cat_label_text(TString abs_cat) = 0;
 
     virtual int bin_number(int category);
 

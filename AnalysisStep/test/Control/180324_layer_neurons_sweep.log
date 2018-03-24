@@ -1,0 +1,148 @@
+preparing filesystem for training campaign
+Using TensorFlow backend.
+[?1034hattempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/campaign.conf
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_VBF2j_ggH_ME']
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_VBF1j_ggH_ME']
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_WHh_ggH_ME']
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_ZHh_ggH_ME']
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_WHh_ZHh_ME']
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_VBF2j_WHh_ME']
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_VBF2j_ZHh_ME']
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_128.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_160.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_192.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_224.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_256.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_288.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_320.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_352.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_384.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_416.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_448.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_480.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_512.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_128.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_160.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_192.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_224.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_256.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_288.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_320.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_352.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_384.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_416.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_448.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_480.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_512.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_128.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_160.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_192.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_224.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_256.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_288.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_320.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_352.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_384.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_416.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_448.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_480.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_512.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_128.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_160.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_192.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_224.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_256.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_288.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_320.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_352.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_384.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_416.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_448.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_480.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_512.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_128.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_160.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_192.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_224.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_256.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_288.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_320.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_352.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_384.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_416.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_448.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_480.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_512.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_128.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_160.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_192.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_224.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_256.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_288.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_320.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_352.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_384.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_416.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_448.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_480.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_512.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_128.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_160.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_192.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_224.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_256.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_288.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_320.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_352.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_384.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_416.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_448.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_480.0_extraparams_0/
+creating /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_512.0_extraparams_0/
+have 0 python instances running and resources for 20 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_128.0_extraparams_0
+have 1 python instances running and resources for 19 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_160.0_extraparams_0
+have 2 python instances running and resources for 18 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_192.0_extraparams_0
+have 3 python instances running and resources for 17 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_224.0_extraparams_0
+have 4 python instances running and resources for 16 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_256.0_extraparams_0
+have 5 python instances running and resources for 15 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_288.0_extraparams_0
+have 6 python instances running and resources for 14 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_320.0_extraparams_0
+have 7 python instances running and resources for 13 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_352.0_extraparams_0
+have 8 python instances running and resources for 12 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_384.0_extraparams_0
+have 9 python instances running and resources for 11 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_416.0_extraparams_0
+have 10 python instances running and resources for 10 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_448.0_extraparams_0
+have 11 python instances running and resources for 9 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_480.0_extraparams_0
+have 12 python instances running and resources for 8 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_512.0_extraparams_0
+have 13 python instances running and resources for 7 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_128.0_extraparams_0
+have 14 python instances running and resources for 6 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_160.0_extraparams_0
+have 15 python instances running and resources for 5 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_192.0_extraparams_0
+have 16 python instances running and resources for 4 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_224.0_extraparams_0
+have 17 python instances running and resources for 3 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_256.0_extraparams_0
+have 18 python instances running and resources for 2 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_288.0_extraparams_0
+have 19 python instances running and resources for 1 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_320.0_extraparams_0

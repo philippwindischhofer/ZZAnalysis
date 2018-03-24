@@ -110,6 +110,23 @@ TString Mor18Config::abs_cat_label(TString abs_cat)
     return mapping[abs_cat];
 }
 
+
+TString Mor18Config::abs_cat_label_text(TString abs_cat)
+{
+   std::map<TString, TString> mapping = {
+	{"UntaggedMor18", "Untagged"},
+	{"VBF1jTaggedMor18", "VBF1j"},
+	{"VBF2jTaggedMor18", "VBF2j"},
+	{"VHLeptTaggedMor18", "VHlept"},
+	{"VHHadrTaggedMor18", "VHhadr"},
+	{"ttHLeptTaggedMor18", "ttHlept"},
+	{"ttHHadrTaggedMor18", "ttHhadr"},
+	{"VHMETTaggedMor18", "VHMET"}	
+    };
+
+    return mapping[abs_cat];
+}
+
 std::vector<SignalAssignment*> Mor18Config::signal_assignment()
 {
     std::vector<SignalAssignment*> assignment = {

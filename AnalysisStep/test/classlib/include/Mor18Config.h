@@ -29,6 +29,7 @@ public:
 
     virtual std::vector<TString> abstract_categories();
     virtual TString abs_cat_label(TString abs_cat);
+    virtual TString abs_cat_label_text(TString abs_cat);
 
     virtual std::vector<SignalAssignment*> signal_assignment();
 

@@ -42,6 +42,17 @@ float CompUtils::compare_punzi(TString indir_a, TString indir_b, TString name_a,
     plotter.Update();
     plotter.SaveAs(outdir + outfile_name + ".pdf");
 
+    ConfigFileHandler* handler = new ConfigFileHandler(outdir + outfile_name + ".conf");
+    handler -> AddSection("Punzi");
+    int bin = 1;
+    for(auto label: conf -> ordered_abs_cat_labels_text())
+    {
+	handler -> AddField(label, comp_vec[0] -> GetBinContent(bin));
+	bin++;
+    }
+
+    handler -> SaveConfiguration();
+
     return metric;
 }
 

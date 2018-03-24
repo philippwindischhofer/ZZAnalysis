@@ -8,7 +8,7 @@ from trainlib.ModelCollection import ModelCollection
 from trainlib.Trainer import Trainer
 from trainlib.SimplePreprocessor import SimplePreprocessor
 from trainlib.ModelFactory import ModelFactory
-from trainlib.ConfigFileHandler import ConfigFileHandler
+from trainlib.ModelCollectionConfigFileHandler import ModelCollectionConfigFileHandler
 import sys
 
 print "imports done"
@@ -29,7 +29,7 @@ def main():
     training_dir = sys.argv[2]
 
     #mcolls = ModelFactory.GenerateStandardModelCollections(SimpleModel, MC_dir)
-    confhandler = ConfigFileHandler()
+    confhandler = ModelCollectionConfigFileHandler()
     confhandler.LoadConfiguration(setting_dir + "settings.conf")
     mcolls = confhandler.GetModelCollection()
 

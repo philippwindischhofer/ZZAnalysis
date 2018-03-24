@@ -28,6 +28,7 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/CatPlotter.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/utils.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/ConfigFileHandler.h>
 
 class CompUtils
 {

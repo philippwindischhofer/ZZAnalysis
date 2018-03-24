@@ -165,6 +165,19 @@ std::vector<TString> Config::ordered_abs_cat_labels()
     return ordered_labels;
 }
 
+std::vector<TString> Config::ordered_abs_cat_labels_text()
+{
+    std::vector<TString> cats = abstract_categories();
+    std::vector<TString> ordered_labels;
+
+    for(auto cat: cats)
+    {
+	ordered_labels.push_back(abs_cat_label_text(cat));
+    }
+
+    return ordered_labels;
+}
+
 // need to make sure that every key-value combination occurs only once, but each key can occur multiple times!
 std::vector<std::pair<TString, int>> Config::bin_assignment()
 {

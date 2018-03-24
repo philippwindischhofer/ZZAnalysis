@@ -7,7 +7,7 @@ from trainlib.ModelCollection import ModelCollection
 from trainlib.ModelFactory import ModelFactory
 from trainlib.FileCollection import FileCollection
 from trainlib.Trainer import Trainer
-from trainlib.ConfigFileHandler import ConfigFileHandler
+from trainlib.ModelCollectionConfigFileHandler import ModelCollectionConfigFileHandler
 from trainlib.config import Config
 import trainlib.utils as utils
 import trainlib.cuts as cuts
@@ -82,7 +82,7 @@ def main():
 
     #mcolls = ModelFactory.GenerateStandardModelCollections(SimpleModel, MC_dir, weight_path = training_path)
 
-    confhandler = ConfigFileHandler()
+    confhandler = ModelCollectionConfigFileHandler()
     confhandler.LoadConfiguration(setting_dir + "settings.conf")
     mcolls = confhandler.GetModelCollection(weightpath = training_path)
 
