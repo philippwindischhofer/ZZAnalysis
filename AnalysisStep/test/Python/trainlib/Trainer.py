@@ -1,8 +1,11 @@
 from trainlib.config import Config
 
+import matplotlib as mpl
+mpl.use('Agg')
+import matplotlib.pyplot as plt
+
 from keras.callbacks import Callback, EarlyStopping, ModelCheckpoint, History
 from keras import losses
-import matplotlib.pyplot as plt
 import os
 
 from generator import Generator

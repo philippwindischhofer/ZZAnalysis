@@ -144,6 +144,10 @@ class ModelCollectionConfigFileHandler(ConfigFileHandler):
             for model in self._get_model_list(model_collection):
                 self.AddInputParameterLocally(model, parameter)
 
+    def GetInputParameterList(self, model):
+        current = self.GetModelParameter(model, 'input_columns')
+        return self._process_list(current, lambda x: x)
+
     def SetHyperparametersLocally(self, model, hyperparameters):
         self.ModelDiff(model, 'hyperparameters', self._assemble_dict(hyperparameters, lambda x: str(x)))
 
