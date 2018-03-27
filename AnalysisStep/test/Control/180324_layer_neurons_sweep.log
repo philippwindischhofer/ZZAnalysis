@@ -83,3 +83,78 @@ have 18 python instances running and resources for 2 more
 launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_384.0_extraparams_0
 have 19 python instances running and resources for 1 more
 launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_512.0_extraparams_0
+have 19 python instances running and resources for 1 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_128.0_extraparams_0
+have 19 python instances running and resources for 1 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_256.0_extraparams_0
+have 19 python instances running and resources for 1 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_384.0_extraparams_0
+have 19 python instances running and resources for 1 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_512.0_extraparams_0
+have 19 python instances running and resources for 1 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_128.0_extraparams_0
+have 19 python instances running and resources for 1 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_256.0_extraparams_0
+have 19 python instances running and resources for 1 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_384.0_extraparams_0
+have 19 python instances running and resources for 1 more
+launching pipeline on /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_512.0_extraparams_0
+launched all jobs, waiting for them to finish
+all jobs finished
+Using TensorFlow backend.
+[?1034hattempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_256.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_256.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_512.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_512.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_128.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_128.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_384.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_384.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_128.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_128.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_384.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_384.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_128.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_128.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_256.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_256.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_512.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_512.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_128.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_128.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_256.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_256.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_384.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_384.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_512.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_1.0_number_neurons_512.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_128.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_128.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_256.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_256.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_384.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_384.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_512.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_2.0_number_neurons_512.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_128.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_128.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_256.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_256.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_384.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_384.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_512.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_3.0_number_neurons_512.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_128.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_128.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_384.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_4.0_number_neurons_384.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_256.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_256.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_512.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_5.0_number_neurons_512.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_256.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_256.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_512.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_6.0_number_neurons_512.0_extraparams_0/comp/Mor18_punzi_comp.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_384.0_extraparams_0/settings.conf
+attempting to load configuration file from /data_CMS/cms/wind/180324_layer_neurons_sweep/number_layers_7.0_number_neurons_384.0_extraparams_0/comp/Mor18_punzi_comp.conf

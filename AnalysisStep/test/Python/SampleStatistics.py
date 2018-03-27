@@ -58,6 +58,9 @@ def main():
     if not os.path.exists(statistics_dir):
         os.makedirs(statistics_dir)
 
+    # sort the pandas dataframe ascending by number of hidden layers
+    df = df.sort_values("number_layers")
+
     for num in number_neurons:
         number_layers = df.loc[df["number_neurons"] == num, ["number_layers"]].as_matrix().flatten().astype(int)
         punzi_data = df.loc[df["number_neurons"] == num, bin_dir.keys()].as_matrix()

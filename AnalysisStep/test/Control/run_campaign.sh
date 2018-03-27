@@ -11,7 +11,7 @@ RUN_PIPELINE="run_pipeline.sh"
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
 
-MAX_PYTHONS=20
+MAX_PYTHONS=10
 
 echo "preparing filesystem for training campaign"
 
@@ -48,7 +48,7 @@ wait
 echo "all jobs finished"
 
 # now launch statistics on the campaign directory
-python $PYTHON_DIR$STATISTICS_GEN $CAMPAIGN_DIR
+# python $PYTHON_DIR$STATISTICS_GEN $CAMPAIGN_DIR
 
 # return to the original directory once done
 cd $CURRENT_DIR

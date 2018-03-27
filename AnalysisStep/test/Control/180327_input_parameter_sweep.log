@@ -1,0 +1,37 @@
+preparing filesystem for training campaign
+Using TensorFlow backend.
+[?1034hattempting to load configuration file from /data_CMS/cms/wind/180327_input_parameter_sweep/campaign.conf
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_VBF2j_ggH_ME']
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_VBF1j_ggH_ME']
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_WHh_ggH_ME']
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_ZHh_ggH_ME']
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_WHh_ZHh_ME']
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_VBF2j_WHh_ME']
+got the following list of hyperparams: {'number_layers': 2}
+building network with inputs: ['PFMET', 'nCleanedJetsPt30', 'nCleanedJetsPt30BTagged_bTagSF', 'nExtraLep', 'D_VBF2j_ZHh_ME']
+creating /data_CMS/cms/wind/180327_input_parameter_sweep/number_layers_1.0_number_neurons_128.0_extraparams_1/
+creating /data_CMS/cms/wind/180327_input_parameter_sweep/number_layers_1.0_number_neurons_128.0_extraparams_2/
+creating /data_CMS/cms/wind/180327_input_parameter_sweep/number_layers_1.0_number_neurons_128.0_extraparams_3/
+creating /data_CMS/cms/wind/180327_input_parameter_sweep/number_layers_1.0_number_neurons_128.0_extraparams_4/
+creating /data_CMS/cms/wind/180327_input_parameter_sweep/number_layers_1.0_number_neurons_128.0_extraparams_5/
+creating /data_CMS/cms/wind/180327_input_parameter_sweep/number_layers_1.0_number_neurons_128.0_extraparams_6/
+have 0 python instances running and resources for 10 more
+launching pipeline on /data_CMS/cms/wind/180327_input_parameter_sweep/number_layers_1.0_number_neurons_128.0_extraparams_1
+have 1 python instances running and resources for 9 more
+launching pipeline on /data_CMS/cms/wind/180327_input_parameter_sweep/number_layers_1.0_number_neurons_128.0_extraparams_2
+have 2 python instances running and resources for 8 more
+launching pipeline on /data_CMS/cms/wind/180327_input_parameter_sweep/number_layers_1.0_number_neurons_128.0_extraparams_3
+have 3 python instances running and resources for 7 more
+launching pipeline on /data_CMS/cms/wind/180327_input_parameter_sweep/number_layers_1.0_number_neurons_128.0_extraparams_4
+have 4 python instances running and resources for 6 more
+launching pipeline on /data_CMS/cms/wind/180327_input_parameter_sweep/number_layers_1.0_number_neurons_128.0_extraparams_5
+have 5 python instances running and resources for 5 more
+launching pipeline on /data_CMS/cms/wind/180327_input_parameter_sweep/number_layers_1.0_number_neurons_128.0_extraparams_6
+launched all jobs, waiting for them to finish
+all jobs finished
