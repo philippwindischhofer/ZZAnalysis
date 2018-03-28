@@ -10,6 +10,8 @@ class ListPreprocessor(Preprocessor):
         self.name = name
         self.processed_columns = processed_columns
         self.cuts = cuts
+
+        # create the underlying preprocessor object that is going to handle the unpacked lists
         self.base_preprocessor = preprocessor_base_type("unpacked", processed_columns, cuts)
         
     def setup_generator(self, datagen, len_setupdata):

@@ -54,8 +54,8 @@ class ModelCollection:
 
         for model_dir in model_dirs:
             model_path = path + "/" + model_dir + "/"
-            print "now attempting to load model '" + model_dir + "' from file '" + model_path + "final.hdf5"
-            self.model_dict[model_dir].load(model_path, "final.hdf5")
+            print "now attempting to load model '" + model_dir + "' from file '" + model_path + "checkpoint.hdf5"
+            self.model_dict[model_dir].load(model_path, "checkpoint.hdf5")
 
             # also read back the preprocessor information here from its own file!
             print "now attempting to load preprocessor settings for '" + model_dir + "' from file '" + model_path + "preprocessor.pkl"
