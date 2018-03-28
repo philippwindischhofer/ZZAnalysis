@@ -6,7 +6,8 @@ import numpy as np
 
 class RNNPreprocessor(Preprocessor):
     
-    def __init__(self, nonperiodic_columns, periodic_columns, sorted_column, cuts, preprocessor_basetype):
+    def __init__(self, name, nonperiodic_columns, periodic_columns, sorted_column, cuts, preprocessor_basetype):
+        self.name = name
         self.nonperiodic_columns = nonperiodic_columns
         self.periodic_columns = periodic_columns
         self.sorted_column = sorted_column
@@ -21,7 +22,7 @@ class RNNPreprocessor(Preprocessor):
         self.processed_columns = self.nonperiodic_columns + self.periodic_columns_encoded
 
         # now create the list preprocessor that is going to be used
-        self.list_preprocessor = ListPreprocessor(self.processed_columns, self.cuts, preprocessor_basetype)
+        self.list_preprocessor = ListPreprocessor(name, self.processed_columns, self.cuts, preprocessor_basetype)
         
     def setup_generator(self, datagen, len_setupdata):
         self.len_setupdata = len_setupdata
@@ -29,8 +30,8 @@ class RNNPreprocessor(Preprocessor):
         extracted_rows = 0
         
         for data in datagen:
-            extracted_data.append(data[0])
-            extracted_rows += len(data[0])
+            extracted_data.append(data)
+            extracted_rows += len(data)
             
             if extracted_rows > self.len_setupdata:
                 break
@@ -38,6 +39,8 @@ class RNNPreprocessor(Preprocessor):
         print "setting up list preprocessor on " + str(extracted_rows) + " events"
         
         input_data = pd.concat(extracted_data)
+        input_data = input_data.reset_index(drop = True)
+
         self.setup(input_data)
     
     def setup(self, data):
@@ -45,7 +48,7 @@ class RNNPreprocessor(Preprocessor):
         self.list_preprocessor.setup(prepared_data)
         
     def process(self, data):
-                
+        # prepare the data by adding the encoded angle columns
         prepared_data = self._prepare_data(data, self.sorted_column)
         
         # run it through the list preprocessor
@@ -75,7 +78,7 @@ class RNNPreprocessor(Preprocessor):
         # now, add back the non-periodic (i.e. non-angle) columns
         prepared_data = data[self.nonperiodic_columns].join(angles_encoded)
     
-        # and sort it in p_t
+        # and sort it in p_t (highest p_t comes first)
         prepared_data = self._sort_dataframe(prepared_data, sorted_column, True)
     
         return prepared_data
@@ -90,11 +93,10 @@ class RNNPreprocessor(Preprocessor):
         df_out = df_out.reset_index(drop = True)
         return df_out
 
-
     def _sort_dataframe(self, df, col_name, inverted = False):
         df_out = pd.DataFrame()
     
-        # make sure to use always the correct column for sorting (namely the one containing the Pt)
+        # make sure to use always the correct column for sorting
         sort_index = df.columns.get_loc(col_name)
         
         for index, row in df.iterrows():

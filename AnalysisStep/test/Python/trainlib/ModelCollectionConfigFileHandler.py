@@ -25,7 +25,7 @@ class ModelCollectionConfigFileHandler(ConfigFileHandler):
         hyperparameters = self._process_dict(model_section['hyperparameters'], lambda x: float(x))
         preprocessor_cuts = eval(model_section['preprocessor_cuts'])
     
-        pre = PCAWhiteningPreprocessor(processed_columns = input_columns, cuts = preprocessor_cuts)
+        pre = PCAWhiteningPreprocessor(name = model_name + "_input", processed_columns = input_columns, cuts = preprocessor_cuts)
     
         mod = base_model(model_name, input_columns)
         mod.build(hyperparameters)

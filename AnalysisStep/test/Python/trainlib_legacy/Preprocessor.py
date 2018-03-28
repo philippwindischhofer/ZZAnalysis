@@ -4,17 +4,12 @@ class Preprocessor:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def __init__(self, name, processed_columns, cuts):
+    def __init__(self, processed_columns, cuts):
         pass
 
     # pass the entire data generator here, to have the preprocessor get as much data as it might desire
     @abstractmethod
-    def setup_generator(self, datagen, len_setupdata):
-        pass
-
-    # set itself up on a given chunk of data (passed as a Pandas frame)
-    @abstractmethod
-    def setup(self, data):
+    def setup(self, datagen, len_setupdata):
         pass
 
     @abstractmethod

@@ -54,8 +54,8 @@ class ModelCollection:
 
         for model_dir in model_dirs:
             model_path = path + "/" + model_dir + "/"
-            print "now attempting to load model '" + model_dir + "' from file '" + model_path + "checkpoint.hdf5"
-            self.model_dict[model_dir].load(model_path, "checkpoint.hdf5")
+            print "now attempting to load model '" + model_dir + "' from file '" + model_path + "final.hdf5"
+            self.model_dict[model_dir].load(model_path, "final.hdf5")
 
             # also read back the preprocessor information here from its own file!
             print "now attempting to load preprocessor settings for '" + model_dir + "' from file '" + model_path + "preprocessor.pkl"
@@ -71,11 +71,11 @@ class ModelCollection:
             
             # have each model give predictions on the relevant pieces of the full data
             cur_data = preprocessor.process(dataframe)
-            cur_prediction = model.get_keras_model().predict(x = cur_data.as_matrix(), verbose = 2, batch_size = len(cur_data)).flatten()
+            cur_prediction = model.get_keras_model().predict(x = cur_data, verbose = 2, batch_size = len(cur_data)).flatten()
             
             # then, keep track of the indices (i.e. the positions of the individual chunks in the main datastream)
             #print cur_data
-            cur_series = pd.Series(cur_prediction, index = cur_data.index)
+            cur_series = pd.Series(cur_prediction, index = preprocessor.get_last_indices())
             #print cur_series
 
             predictions.append(cur_series)

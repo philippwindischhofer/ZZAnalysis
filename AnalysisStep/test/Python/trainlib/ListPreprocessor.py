@@ -18,10 +18,12 @@ class ListPreprocessor(Preprocessor):
         self.len_setupdata = len_setupdata
         extracted_data = []
         extracted_rows = 0
+
+        print "drawing data from generator"
         
         for data in datagen:
-            extracted_data.append(data[0])
-            extracted_rows += len(data[0])
+            extracted_data.append(data)
+            extracted_rows += len(data)
             
             if extracted_rows > self.len_setupdata:
                 break
@@ -29,28 +31,32 @@ class ListPreprocessor(Preprocessor):
         print "setting up list preprocessor on " + str(extracted_rows) + " events"
         
         input_data = pd.concat(extracted_data)
+        input_data = input_data.reset_index(drop = True)
+
         self.setup(input_data)
     
     def setup(self, data):
         # first reduce the passed dataframe to the needed columns (these must be the ones having lists as entries!)
-        data = self._rowcol_cut(data)
+        cut_data = self._rowcol_cut(data)
         
-        print str(len(data)) + " remaining after the cuts"
+        print str(len(cut_data)) + " remaining after the cuts"
         
         # unpack the list data ...
-        unpacked_data = self._unpack_series(data)
+        unpacked_data = self._unpack_series(cut_data)
         
         # ... and set up the base preprocessor on this unpacked data
         self.base_preprocessor.setup(unpacked_data)
+
+        # determine also the maximum length of the stored lists (defines the zero-padding length as well)
+        representative_column = self.processed_columns[0]
+        list_lengths = [len(entry) for index, entry in cut_data[representative_column].iteritems()]
+        self.maxlen = max(np.max(list_lengths), 1)
+
+        print "found a maximum list length in the setup data of " + str(self.maxlen) + ": will pad or truncate to this length from now on"
         
     def process(self, data):        
         # again apply the cuts first (this leaves the series unpacked, of course)
         cut_data = self._rowcol_cut(data)
-
-        # determine the maximum length of the stored lists (defines the zero-padding length as well)
-        representative_column = self.processed_columns[0]
-        number_jets = [len(entry) for index, entry in cut_data[representative_column].iteritems()]
-        maxlen = max(np.max(number_jets), 1)
         
         data_out = []
 
@@ -67,7 +73,8 @@ class ListPreprocessor(Preprocessor):
                                                 
             processed_row = np.swapaxes(processed_row, 0, 1)
             
-            padded_row = pad_sequences(processed_row, maxlen = 4, dtype = 'float32', padding = 'post', truncating = 'post', value = 0.0)
+            padded_row = pad_sequences(processed_row, maxlen = self.maxlen, dtype = 'float32', padding = 'post', truncating = 'post', value = 0.0)
+
             data_out.append(padded_row)
         
         data_out = np.array(data_out)

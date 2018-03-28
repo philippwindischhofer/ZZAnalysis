@@ -1,31 +1,34 @@
 import pandas as pd
 import numpy as np
-from Preprocessor import Preprocessor
-from config import Config
+from trainlib.Preprocessor import Preprocessor
+from trainlib.config import Config
 from sklearn.decomposition import PCA
 import pickle
 
 class PCAWhiteningPreprocessor(Preprocessor):
     
     # requires the name of the data columns that should be whitened in the end
-    def __init__(self, processed_columns, cuts):
+    def __init__(self, name, processed_columns, cuts):
+        self.name = name
         self.processed_columns = processed_columns
         self.outcol_names = ["PCA_w_" + str(i) for i in range(len(self.processed_columns))]
         self.cuts = cuts
         n_inputs = len(processed_columns)
         self.pca = PCA(n_components = n_inputs, svd_solver = 'auto', whiten = True)
 
-    def setup(self, datagen, len_setupdata):
+        self.last_indices = None
+
+    def setup_generator(self, datagen, len_setupdata):
         self.len_setupdata = len_setupdata
 
         # draw some data from the generator to find the eigenvectors
         extracted_data = []
         extracted_rows = 0
 
-        # data gives a tuple [raw columns, target data], don't take the target information
+        # the raw-scrambled generator gives a single Pandas table, containing the data
         for data in datagen:
-            extracted_data.append(data[0])
-            extracted_rows += len(data[0])
+            extracted_data.append(data)
+            extracted_rows += len(data)
 
             if extracted_rows > self.len_setupdata:
                 break
@@ -33,26 +36,35 @@ class PCAWhiteningPreprocessor(Preprocessor):
         print "setting up PCA whitening on " + str(extracted_rows) + " events"
 
         input_data = pd.concat(extracted_data)
+        input_data = input_data.reset_index(drop = True)
 
-        input_data = self._rowcol_cut(input_data)
+        self.setup(input_data)
 
-        print str(len(input_data)) + " remaining after the cuts"
-        #print input_data
+    def setup(self, data):
+        data = self._rowcol_cut(data)
+
+        print str(len(data)) + " remaining after the cuts"
+        #print data
 
         # determine the PCA parameters (eigenvectors and -values) on this set of data
-        input_data = input_data.as_matrix()
-        self.pca.fit(input_data)
+        data = data.as_matrix()
+        self.pca.fit(data)
+
+    def get_last_indices(self):
+        return self.last_indices
 
     def process(self, data):
         cut_data = self._rowcol_cut(data)
 
-        # print cut_data
+        self.last_indices = cut_data.index
 
-        processed_data = self.pca.transform(cut_data.as_matrix())
+        if len(cut_data) != 0:
+            processed_data = self.pca.transform(cut_data.as_matrix())
+            #processed_data = cut_data.as_matrix()
+        else:
+            processed_data = [[]]
 
-        # it is expected to return the processed data in form of a pandas dataframe again
-        retval = pd.DataFrame(processed_data, columns = self.outcol_names, index = cut_data.index)
-        return retval
+        return {self.name: np.array(processed_data)}
 
     def save(self, folder, filename):
         outfile = open(folder + filename, "wb")
@@ -74,3 +86,6 @@ class PCAWhiteningPreprocessor(Preprocessor):
         #print output_data
                 
         return output_data
+
+    def _as_matrix(self, df):
+        return np.array(df.as_matrix().tolist())

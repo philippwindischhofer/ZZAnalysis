@@ -1,11 +1,10 @@
 from FileCollection import FileCollection
 from utils import read_data
 import pandas as pd
-import numpy as np
 
 class Generator:
     
-    def __init__(self, H1_stream, H0_stream, branches, preprocessor, training_split = 0.5, chunks = 1000):
+    def __init__(self, H1_stream, H0_stream, branches, preprocessor, training_split = 0.5, chunks = 1000, as_matrix = True):
         self.H1_stream = H1_stream
         self.H0_stream = H0_stream
 
@@ -14,7 +13,7 @@ class Generator:
 
         self.training_split = training_split
         self.chunks = chunks
-#        self.as_matrix = as_matrix
+        self.as_matrix = as_matrix
 
         self.H1_collection = None
         self.H0_collection = None
@@ -29,7 +28,7 @@ class Generator:
         self.H0_collection = FileCollection(self.H0_stream, start_fraction = self.training_split, end_fraction = 1.0)
         return self.H1_collection.get_length() + self.H0_collection.get_length()
         
-    def raw_generator(self):
+    def generator(self):
         H1_curpos = 0
         H0_curpos = 0
 
@@ -61,38 +60,29 @@ class Generator:
             H1_curpos += H1_chunksize
             H0_curpos += H0_chunksize
 
-            yield H1_data, H0_data
-        
-    def raw_generator_scrambled(self):
-        for H1_data, H0_data in self.raw_generator():
-            data_chunk = pd.concat([H1_data, H0_data])
-            
-            # scramble it
-            scrambled_data = data_chunk.sample(frac = 1)
-
-            yield scrambled_data
-
-    def preprocessed_generator(self):
-        for H1_data, H0_data in self.raw_generator():
             # run the preprocessing: this will in general change the number of rows (if there are cuts hidden inside the preprocessor) AND the number of columns (if not all loaded columns are meant as input to the classifier)
-            H1_processed = self.preprocessor(H1_data)
-            H0_processed = self.preprocessor(H0_data)
+            if self.preprocessor is not None:
+                H1_data = self.preprocessor(H1_data)
+                H0_data = self.preprocessor(H0_data)
 
-            # len() automatically maps to the first dimension of a numpy array!
-            # implicit assumption: all dictionaries delivered by a preprocessor must have the same length
-            H1_samples = len(H1_processed.values()[0])
-            H0_samples = len(H0_processed.values()[0])
+            # add the truth information
+            H1_data["target"] = 1.0
+            H0_data["target"] = 0.0
 
-            target_data = np.concatenate([np.ones(H1_samples), np.zeros(H0_samples)], axis = 0)
-            perm = np.random.permutation(len(target_data))
+            data_chunk = pd.concat([H1_data, H0_data])
 
-            # now concatenate all input array found in H1_processed & H0_processed
-            input_data = {}
-            for key in H1_processed:
-                temp = np.concatenate([H1_processed[key], H0_processed[key]], axis = 0)
-                input_data[key] = temp[perm]
+            # return a randomized signal + background sample
+            training_data = data_chunk.sample(frac = 1)
 
-            target_data = {"target": target_data[perm]}
+            # the target data for the training is the one that has just been added...
+            target_data = training_data["target"]
+            if self.as_matrix:
+                target_data = target_data.as_matrix()
+    
+            # ... and the input data for the training is everything else
+            input_data = training_data.loc[:, training_data.columns != "target"]
+            if self.as_matrix:
+                input_data = input_data.as_matrix()
 
             yield input_data, target_data
 

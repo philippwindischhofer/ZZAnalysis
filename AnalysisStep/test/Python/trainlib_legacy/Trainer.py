@@ -70,9 +70,9 @@ class Trainer:
                 os.makedirs(model_outfolder)
 
             # may need to set up the preprocessor here, given some raw data. Important: don't do any preprocessing here, but just forward everything. The preprocessor may need access to the full, raw information to set itself up!!
-            setup_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = None, training_split = 0.5, chunks = 100)
+            setup_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = None, training_split = 0.5, chunks = 100, as_matrix = False)
             len_setup_data = setup_gen.setup_training_data()
-            cur_preprocessor.setup_generator(setup_gen.raw_generator_scrambled(), len_setupdata = len_setup_data)
+            cur_preprocessor.setup(setup_gen.generator(), len_setupdata = len_setup_data)
 
             # recreate the generators yielding the training and validation data for the actual training procedure
             train_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor.process, chunks = setting.steps_per_epoch)            
@@ -91,8 +91,8 @@ class Trainer:
             logger = Logger()
             history = History()
 
-            cur_model.get_keras_model().fit_generator(train_gen.preprocessed_generator(), steps_per_epoch = setting.steps_per_epoch, epochs = setting.max_epochs, verbose = 2, 
-                                                      validation_data = val_gen.preprocessed_generator(), validation_steps = setting.steps_per_epoch, 
+            cur_model.get_keras_model().fit_generator(train_gen.generator(), steps_per_epoch = setting.steps_per_epoch, epochs = setting.max_epochs, verbose = 2, 
+                                                      validation_data = val_gen.generator(), validation_steps = setting.steps_per_epoch, 
                                                       callbacks = [early_stop, checkpointer, logger, history])
 
             # save the training report as well as the final version of the trained model

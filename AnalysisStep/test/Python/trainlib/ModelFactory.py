@@ -21,21 +21,23 @@ class ModelFactory:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream)
 
         # this is the model that will take the place of the VBF2jet/ggH discriminant.
+        model_name = "D_VBF_ggH_2j_ML"
         input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                          "nExtraLep", "D_VBF2j_ggH_ME"]
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2
-        pre = PCAWhiteningPreprocessor(processed_columns = input_columns, cuts = preprocessor_cuts)
-        mod = base_model("D_VBF_ggH_2j_ML", input_columns)
+        pre = PCAWhiteningPreprocessor(name = model_name + "_input", processed_columns = input_columns, cuts = preprocessor_cuts)
+        mod = base_model(model_name, input_columns)
         mod.build(global_hyperparams)
         sett = TrainingConfig(max_epochs = global_max_epochs)
         mcoll.add_model(pre, mod, sett)
 
         # this is the model that will take the place of the VBF2jet/ggH discriminant.
+        model_name = "D_VBF_ggH_1j_ML"
         input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                          "nExtraLep", "D_VBF1j_ggH_ME"]
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] == 1
-        pre = PCAWhiteningPreprocessor(processed_columns = input_columns, cuts = preprocessor_cuts)
-        mod = base_model("D_VBF_ggH_1j_ML", input_columns)
+        pre = PCAWhiteningPreprocessor(name = model_name + "_input", processed_columns = input_columns, cuts = preprocessor_cuts)
+        mod = base_model(model_name, input_columns)
         mod.build(global_hyperparams)
         sett = TrainingConfig(max_epochs = global_max_epochs)
         mcoll.add_model(pre, mod, sett)
@@ -53,11 +55,12 @@ class ModelFactory:
         mcoll_name = "D_WHh_ggH_ML"
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream)
 
+        model_name = "D_WHh_ggH_2j_ML"
         input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                          "nExtraLep", "D_WHh_ggH_ME"]
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2
-        pre = PCAWhiteningPreprocessor(processed_columns = input_columns, cuts = preprocessor_cuts)
-        mod = base_model("D_WHh_ggH_2j_ML", input_columns)
+        pre = PCAWhiteningPreprocessor(name = model_name + "_input", processed_columns = input_columns, cuts = preprocessor_cuts)
+        mod = base_model(model_name, input_columns)
         mod.build(global_hyperparams)
         sett = TrainingConfig(max_epochs = global_max_epochs)
         mcoll.add_model(pre, mod, sett)
@@ -74,11 +77,12 @@ class ModelFactory:
         mcoll_name = "D_ZHh_ggH_ML"
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream)
 
+        model_name = "D_ZHh_ggH_2j_ML"
         input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                          "nExtraLep", "D_ZHh_ggH_ME"]
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2
-        pre = PCAWhiteningPreprocessor(processed_columns = input_columns, cuts = preprocessor_cuts)
-        mod = base_model("D_ZHh_ggH_2j_ML", input_columns)
+        pre = PCAWhiteningPreprocessor(name = model_name + "_input", processed_columns = input_columns, cuts = preprocessor_cuts)
+        mod = base_model(model_name, input_columns)
         mod.build(global_hyperparams)
         sett = TrainingConfig(max_epochs = global_max_epochs)
         mcoll.add_model(pre, mod, sett)
@@ -96,11 +100,12 @@ class ModelFactory:
         mcoll_name = "D_WHh_ZHh_ML"
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream)
 
+        model_name = "D_WHh_ZHh_2j_ML"
         input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                          "nExtraLep", "D_WHh_ZHh_ME"]
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2
-        pre = PCAWhiteningPreprocessor(processed_columns = input_columns, cuts = preprocessor_cuts)
-        mod = base_model("D_WHh_ZHh_2j_ML", input_columns)
+        pre = PCAWhiteningPreprocessor(name = model_name + "_input", processed_columns = input_columns, cuts = preprocessor_cuts)
+        mod = base_model(model_name, input_columns)
         mod.build(global_hyperparams)
         sett = TrainingConfig(max_epochs = global_max_epochs)
         mcoll.add_model(pre, mod, sett)
@@ -118,12 +123,12 @@ class ModelFactory:
         mcoll_name = "D_VBF_WHh_ML"
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream)
 
-        # this is the model that will take the place of the VBF2jet/ggH discriminant.
+        model_name = "D_VBF_WHh_2j_ML"
         input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                          "nExtraLep", "D_VBF2j_WHh_ME"]
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2
-        pre = PCAWhiteningPreprocessor(processed_columns = input_columns, cuts = preprocessor_cuts)
-        mod = base_model("D_VBF_WHh_2j_ML", input_columns)
+        pre = PCAWhiteningPreprocessor(name = model_name + "_input", processed_columns = input_columns, cuts = preprocessor_cuts)
+        mod = base_model(model_name + "_input", input_columns)
         mod.build(global_hyperparams)
         sett = TrainingConfig(max_epochs = global_max_epochs)
         mcoll.add_model(pre, mod, sett)
@@ -140,12 +145,12 @@ class ModelFactory:
         mcoll_name = "D_VBF_ZHh_ML"
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream)
 
-        # this is the model that will take the place of the VBF2jet/ggH discriminant.
+        model_name = "D_VBF_ZHh_2j_ML"
         input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                          "nExtraLep", "D_VBF2j_ZHh_ME"]
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2
-        pre = PCAWhiteningPreprocessor(processed_columns = input_columns, cuts = preprocessor_cuts)
-        mod = base_model("D_VBF_ZHh_2j_ML", input_columns)
+        pre = PCAWhiteningPreprocessor(model_name + "_input", processed_columns = input_columns, cuts = preprocessor_cuts)
+        mod = base_model(model_name, input_columns)
         mod.build(global_hyperparams)
         sett = TrainingConfig(max_epochs = global_max_epochs)
         mcoll.add_model(pre, mod, sett)
