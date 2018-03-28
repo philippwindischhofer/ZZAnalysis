@@ -14,6 +14,8 @@ class ListPreprocessor(Preprocessor):
         # create the underlying preprocessor object that is going to handle the unpacked lists
         self.base_preprocessor = preprocessor_base_type("unpacked", processed_columns, cuts)
         
+        self.last_indices = None
+        
     def setup_generator(self, datagen, len_setupdata):
         self.len_setupdata = len_setupdata
         extracted_data = []
@@ -37,15 +39,23 @@ class ListPreprocessor(Preprocessor):
     
     def setup(self, data):
         # first reduce the passed dataframe to the needed columns (these must be the ones having lists as entries!)
+        print "cut start"
+
         cut_data = self._rowcol_cut(data)
         
+        print "cut end"
+
         print str(len(cut_data)) + " remaining after the cuts"
-        
+
         # unpack the list data ...
         unpacked_data = self._unpack_series(cut_data)
         
+        print "unpack end"
+
         # ... and set up the base preprocessor on this unpacked data
         self.base_preprocessor.setup(unpacked_data)
+
+        print "base preprocessor setup end"
 
         # determine also the maximum length of the stored lists (defines the zero-padding length as well)
         representative_column = self.processed_columns[0]
@@ -57,7 +67,8 @@ class ListPreprocessor(Preprocessor):
     def process(self, data):        
         # again apply the cuts first (this leaves the series unpacked, of course)
         cut_data = self._rowcol_cut(data)
-        
+        self.last_indices = cut_data.index
+
         data_out = []
 
         for index, row in cut_data.iterrows():
@@ -88,6 +99,9 @@ class ListPreprocessor(Preprocessor):
     def load(self, folder, filename):
         self.base_preprocessor.load(folder, filename)
     
+    def get_last_indices(self):
+        return self.last_indices
+
     # can this be put into the abstract class??
     def _rowcol_cut(self, data):
         # apply the row selection
