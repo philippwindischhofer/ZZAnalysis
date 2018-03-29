@@ -95,4 +95,3 @@ class Generator:
             target_data = {"target": target_data[perm]}
 
             yield input_data, target_data
-

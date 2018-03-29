@@ -21,6 +21,7 @@ class Preprocessor:
     def process(self, data):
         pass
 
+    # returns the indices of the Pandas frame that was the last one that got processed
     @abstractmethod
     def get_last_indices(self):
         pass

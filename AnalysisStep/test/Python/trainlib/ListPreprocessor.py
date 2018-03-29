@@ -39,23 +39,15 @@ class ListPreprocessor(Preprocessor):
     
     def setup(self, data):
         # first reduce the passed dataframe to the needed columns (these must be the ones having lists as entries!)
-        print "cut start"
-
         cut_data = self._rowcol_cut(data)
         
-        print "cut end"
-
         print str(len(cut_data)) + " remaining after the cuts"
 
         # unpack the list data ...
         unpacked_data = self._unpack_series(cut_data)
         
-        print "unpack end"
-
         # ... and set up the base preprocessor on this unpacked data
         self.base_preprocessor.setup(unpacked_data)
-
-        print "base preprocessor setup end"
 
         # determine also the maximum length of the stored lists (defines the zero-padding length as well)
         representative_column = self.processed_columns[0]
@@ -114,18 +106,10 @@ class ListPreprocessor(Preprocessor):
 
     # unpacks the columns containing numpy arrays as entries
     def _unpack_series(self, df):
-        cols = df.columns
-        df_out = pd.DataFrame(columns = df.columns)
+        def flatten_column(col):
+            test = np.array(col).tolist()
+            return np.concatenate(test)
 
-        for index, row in df.iterrows():
-            # check that the arrays in the columns all have a common length
-            lengths = [len(row[col]) for col in cols]
-            assert(min(lengths) == max(lengths))
-            length = lengths[0]
-    
-            for i in range(length):
-                df_out = df_out.append(pd.DataFrame([[row[col][i] for col in cols]], columns = cols))
+        df_dict = {col: flatten_column(df[col]) for col in df.columns}
         
-        df_out = df_out.reset_index(drop = True)   
-    
-        return df_out
+        return pd.DataFrame(df_dict, columns = df.columns)
