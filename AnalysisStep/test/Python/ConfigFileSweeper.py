@@ -9,6 +9,7 @@ from trainlib.SimpleModel import SimpleModel
 from trainlib.ModelFactory import ModelFactory
 from trainlib.ConfigFileHandler import ConfigFileHandler
 from trainlib.ModelCollectionConfigFileHandler import ModelCollectionConfigFileHandler
+from trainlib.ConfigFileUtils import ConfigFileUtils
 
 def dict_to_dirname(in_dict):
     dirname = ""
@@ -42,7 +43,7 @@ def augment_config(mcoll, hyperparams, inputs_to_add, parent_dir):
         os.makedirs(confdir)
     
     # save the config file there
-    mconfhandler.SaveConfiguration(confdir + "settings.conf")
+    mconfhandler.save_configuration(confdir + "settings.conf")
 
 # performs a dynamic number of nested iterations
 def iterate(start, end, step, fixed, callback):
@@ -84,19 +85,20 @@ def main():
         campaign_dir += "/"
 
     confhandler = ConfigFileHandler()
-    confhandler.LoadConfiguration(campaign_dir + "campaign.conf")
+    confhandler.load_configuration(campaign_dir + "campaign.conf")
 
     # build the standard configuration from which to start
-    mcoll = ModelFactory.GenerateStandardModelCollections(SimpleModel, "/data_CMS/cms/wind/CJLST_NTuples/")
+    #mcoll = ModelFactory.GenerateSimpleModelCollections("/data_CMS/cms/wind/CJLST_NTuples/")
+    mcoll = ModelFactory.GenerateCombinedModelCollections("/data_CMS/cms/wind/CJLST_NTuples/")
 
     # load the sweep parameters for the hyperparameters
-    start_dict = confhandler._process_dict(confhandler._get_field('hyperparameters', 'start'), lambda x: float(x))
-    end_dict = confhandler._process_dict(confhandler._get_field('hyperparameters', 'end'), lambda x: float(x))
-    step_dict = confhandler._process_dict(confhandler._get_field('hyperparameters', 'step'), lambda x: float(x))
+    start_dict = ConfigFileUtils.parse_dict(confhandler.get_field('hyperparameters', 'start'), lambda x: float(x))
+    end_dict = ConfigFileUtils.parse_dict(confhandler.get_field('hyperparameters', 'end'), lambda x: float(x))
+    step_dict = ConfigFileUtils.parse_dict(confhandler.get_field('hyperparameters', 'step'), lambda x: float(x))
 
     # load the information about which input parameters to add
-    start_params = confhandler._process_list(confhandler._get_field('input_columns', 'start'), lambda x: x)
-    end_params = confhandler._process_list(confhandler._get_field('input_columns', 'end'), lambda x: x)
+    start_params = ConfigFileUtils.parse_list(confhandler.get_field('input_columns', 'start'), lambda x: x)
+    end_params = ConfigFileUtils.parse_list(confhandler.get_field('input_columns', 'end'), lambda x: x)
 
     params_to_add = [param for param in end_params if param not in start_params]
 

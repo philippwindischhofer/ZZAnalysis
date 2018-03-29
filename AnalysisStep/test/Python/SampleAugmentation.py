@@ -80,10 +80,8 @@ def main():
     # files to which this discriminant should be augmented
     data_files = ["ggH125", "VBFH125", "ZH125", "WplusH125", "WminusH125"]
 
-    #mcolls = ModelFactory.GenerateStandardModelCollections(SimpleModel, MC_dir, weight_path = training_path)
-
     confhandler = ModelCollectionConfigFileHandler()
-    confhandler.LoadConfiguration(setting_dir + "settings.conf")
+    confhandler.load_configuration(setting_dir + "settings.conf")
     mcolls = confhandler.GetModelCollection(weightpath = training_path)
 
     for data_file in data_files:

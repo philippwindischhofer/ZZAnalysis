@@ -12,9 +12,18 @@ class ListPreprocessor(Preprocessor):
         self.cuts = cuts
 
         # create the underlying preprocessor object that is going to handle the unpacked lists
-        self.base_preprocessor = preprocessor_base_type("unpacked", processed_columns, cuts)
+        self.base_preprocessor = preprocessor_base_type(self.name + "_base", processed_columns, cuts)
         
         self.last_indices = None
+
+        print "ListPreprocessor for stream '" + self.name + "'"
+
+    @classmethod
+    def from_config(cls, config_section):
+        raise NotImplementedError("Still to be done!")
+
+    def to_config(self, confhandler):
+        raise NotImplementedError("Still to be done!")        
         
     def setup_generator(self, datagen, len_setupdata):
         self.len_setupdata = len_setupdata
@@ -41,6 +50,8 @@ class ListPreprocessor(Preprocessor):
         # first reduce the passed dataframe to the needed columns (these must be the ones having lists as entries!)
         cut_data = self._rowcol_cut(data)
         
+        print "List: " + str(data.columns)
+
         print str(len(cut_data)) + " remaining after the cuts"
 
         # unpack the list data ...
@@ -70,7 +81,7 @@ class ListPreprocessor(Preprocessor):
         
             # push it into the processor, if there are jets available, otherwise make a default answer that then gets padded
             if len(unpacked_row) != 0:
-                processed_row = self.base_preprocessor.process(unpacked_row).get("unpacked")
+                processed_row = self.base_preprocessor.process(unpacked_row).get(self.name+ "_base")
             else:
                 processed_row = np.zeros((1, len(cut_data.columns)))
                                                 

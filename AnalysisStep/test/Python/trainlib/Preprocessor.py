@@ -7,6 +7,10 @@ class Preprocessor:
     def __init__(self, name, processed_columns, cuts):
         pass
 
+    @abstractmethod
+    def to_config(self, confhandler):
+        pass
+
     # pass the entire data generator here, to have the preprocessor get as much data as it might desire
     @abstractmethod
     def setup_generator(self, datagen, len_setupdata):

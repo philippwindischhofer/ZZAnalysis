@@ -28,9 +28,8 @@ def main():
     setting_dir = sys.argv[1]
     training_dir = sys.argv[2]
 
-    #mcolls = ModelFactory.GenerateStandardModelCollections(SimpleModel, MC_dir)
     confhandler = ModelCollectionConfigFileHandler()
-    confhandler.LoadConfiguration(setting_dir + "settings.conf")
+    confhandler.load_configuration(setting_dir + "settings.conf")
     mcolls = confhandler.GetModelCollection()
 
     train = Trainer(training_dir)

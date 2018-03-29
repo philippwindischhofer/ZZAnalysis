@@ -23,6 +23,15 @@ class RNNPreprocessor(Preprocessor):
 
         # now create the list preprocessor that is going to be used
         self.list_preprocessor = ListPreprocessor(name, self.processed_columns, self.cuts, preprocessor_basetype)
+
+        print "RNN preprocessor for stream '" + self.name + "'"
+
+    @classmethod
+    def from_config(cls, config_section):
+        raise NotImplementedError("Still to be done!")
+
+    def to_config(self, confhandler):
+        raise NotImplementedError("Still to be done!")        
         
     def setup_generator(self, datagen, len_setupdata):
         self.len_setupdata = len_setupdata
@@ -36,7 +45,7 @@ class RNNPreprocessor(Preprocessor):
             if extracted_rows > self.len_setupdata:
                 break
                 
-        print "setting up list preprocessor on " + str(extracted_rows) + " events"
+        print "setting up RNN preprocessor on " + str(extracted_rows) + " events"
                 
         input_data = pd.concat(extracted_data)
         input_data = input_data.reset_index(drop = True)
@@ -110,3 +119,13 @@ class RNNPreprocessor(Preprocessor):
         df_out[col + "_cos"] = cos_encoding
 
         return df_out
+
+    # can this be put into the abstract class??
+    def _rowcol_cut(self, data):
+        # apply the row selection
+        data = data.loc[data.apply(self.cuts, axis = 1)]
+        
+        # apply the column selection
+        output_data = data.loc[:, self.processed_columns]
+        
+        return output_data

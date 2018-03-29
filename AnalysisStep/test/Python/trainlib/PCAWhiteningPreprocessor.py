@@ -1,9 +1,11 @@
 import pandas as pd
 import numpy as np
-from trainlib.Preprocessor import Preprocessor
-from trainlib.config import Config
 from sklearn.decomposition import PCA
 import pickle
+import re
+
+from Preprocessor import Preprocessor
+from ConfigFileUtils import ConfigFileUtils
 
 class PCAWhiteningPreprocessor(Preprocessor):
     
@@ -11,12 +13,34 @@ class PCAWhiteningPreprocessor(Preprocessor):
     def __init__(self, name, processed_columns, cuts):
         self.name = name
         self.processed_columns = processed_columns
+
+        print "PCA setup for '" + self.name + "': " + str(self.processed_columns)
         self.outcol_names = ["PCA_w_" + str(i) for i in range(len(self.processed_columns))]
         self.cuts = cuts
         n_inputs = len(processed_columns)
         self.pca = PCA(n_components = n_inputs, svd_solver = 'auto', whiten = True)
 
         self.last_indices = None
+
+        print "PCAWhiteningPreprocessor for stream '" + self.name + "'"
+
+    @classmethod
+    def from_config(cls, config_section):
+        preprocessor_name = re.sub('[<>]', '', config_section.name)
+        processed_columns = ConfigFileUtils.parse_list(config_section['processed_columns'], lambda x: x)
+        preprocessor_cuts = ConfigFileUtils.parse_lambda(config_section['preprocessor_cuts'])
+
+        obj = cls(name = preprocessor_name, processed_columns = processed_columns, cuts = preprocessor_cuts)
+
+        return obj
+
+    def to_config(self, confhandler):
+        section_name = '<' + self.name
+        confhandler.new_section(section_name)
+
+        confhandler.set_field(section_name, 'preprocessor_type', 'PCAWhiteningPreprocessor')
+        confhandler.set_field(section_name, 'processed_columns', ConfigFileUtils.serialize_list(self.processed_columns, lambda x: x))
+        confhandler.set_field(section_name, 'preprocessor_cuts', ConfigFileUtils.serialize_lambda(self.cuts))
 
     def setup_generator(self, datagen, len_setupdata):
         self.len_setupdata = len_setupdata
@@ -33,18 +57,17 @@ class PCAWhiteningPreprocessor(Preprocessor):
             if extracted_rows > self.len_setupdata:
                 break
 
-        print "setting up PCA whitening on " + str(extracted_rows) + " events"
-
         input_data = pd.concat(extracted_data)
         input_data = input_data.reset_index(drop = True)
 
         self.setup(input_data)
 
     def setup(self, data):
+        print "setting up PCA whitening on " + str(len(data)) + " events"
+
         data = self._rowcol_cut(data)
 
         print str(len(data)) + " remaining after the cuts"
-        #print data
 
         # determine the PCA parameters (eigenvectors and -values) on this set of data
         data = data.as_matrix()
@@ -72,7 +95,10 @@ class PCAWhiteningPreprocessor(Preprocessor):
         outfile.close()
 
     def load(self, folder, filename):
-        infile = open(folder + filename, "rb")
+        path = folder + filename
+        print "now attempting to load preprocessor settings from file " + path
+
+        infile = open(path, "rb")
         self.pca = pickle.load(infile)
         infile.close()
 
@@ -82,8 +108,6 @@ class PCAWhiteningPreprocessor(Preprocessor):
 
         # apply the column selection
         output_data = data.loc[:, self.processed_columns]
-
-        #print output_data
                 
         return output_data
 

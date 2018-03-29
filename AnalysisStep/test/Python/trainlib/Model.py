@@ -8,6 +8,10 @@ class Model:
         pass
 
     @abstractmethod
+    def to_config(self, confhandler):
+        pass
+
+    @abstractmethod
     def build(self, hyperparameters = None):
         pass
 
