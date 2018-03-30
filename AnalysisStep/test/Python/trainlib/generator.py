@@ -56,6 +56,10 @@ class Generator:
             # prepare next training data chunk set by drawing events randomly from the two files
             H1_data = read_data(self.H1_collection, branches = self.branches, start = H1_curpos, stop = H1_curpos + H1_chunksize)
             H0_data = read_data(self.H0_collection, branches = self.branches, start = H0_curpos, stop = H0_curpos + H0_chunksize)
+
+            # fix the indexing (indices can occur multiple times, if H1_data comes (say) from two different files, during the overlap)
+            H1_data = H1_data.reset_index(drop = True)
+            H0_data = H0_data.reset_index(drop = True)
         
             # update the starting position for the next chunk
             H1_curpos += H1_chunksize

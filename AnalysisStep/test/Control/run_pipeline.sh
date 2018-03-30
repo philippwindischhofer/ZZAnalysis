@@ -1,33 +1,14 @@
 #!/bin/bash
 
 # ---------------------------------------------
-#  global settings
-# ---------------------------------------------
-PYTHON_DIR="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/"
-TRAINER="SampleTraining.py"
-AUGMENTER="SampleAugmentation.py"
-
-BIN_DIR="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
-CALIBRATOR="./run_calibrator"
-BENCHMARKER="./run_benchmarker"
-ROC_PLOTTER="./run_roc_plotter"
-COMPARER="./run_comp"
-
-# directory where all the outputs will be stored
-#OUT_DIR="/data_CMS/cms/wind/"
-
-# ---------------------------------------------
 #  settings for this training campaign
 # ---------------------------------------------
 
-#CAMPAIGN_NAME="test_training_config_file"
-#CAMPAIGN_NAME=$1
 MC_DIR="/data_CMS/cms/wind/CJLST_NTuples/"
 COMP_REF_DIR="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceReducedCategorySet/"
 
 # ---------------------------------------------
 
-#$OUT_DIR$CAMPAIGN_NAME
 CAMPAIGN_DIR=$1
 SETTINGS_DIR=$CAMPAIGN_DIR"/"
 TRAINING_DIR=${CAMPAIGN_DIR}"/training/"
@@ -36,10 +17,24 @@ CALIBRATION_DIR=${CAMPAIGN_DIR}"/calibration/"
 ROC_DIR=${CAMPAIGN_DIR}"/ROCs/"
 BENCHMARK_DIR=${CAMPAIGN_DIR}"/benchmark/"
 COMP_DIR=${CAMPAIGN_DIR}"/comp/"
+BIN_DIR=${CAMPAIGN_DIR}"/../bin/"
 
-#rm -r $CAMPAIGN_DIR
-#mkdir $CAMPAIGN_DIR
+# ---------------------------------------------
+#  global settings
+# ---------------------------------------------
+#PYTHON_DIR="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/"
+PYTHON_DIR=$BIN_DIR
+TRAINER="SampleTraining.py"
+AUGMENTER="SampleAugmentation.py"
 
+#BIN_DIR="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
+BIN_DIR=$BIN_DIR
+CALIBRATOR="run_calibrator"
+BENCHMARKER="run_benchmarker"
+ROC_PLOTTER="run_roc_plotter"
+COMPARER="run_comp"
+
+# create the folder structure that is needed for this step
 mkdir $TRAINING_DIR
 mkdir $AUGMENTATION_DIR
 mkdir $CALIBRATION_DIR
@@ -48,10 +43,10 @@ mkdir $BENCHMARK_DIR
 mkdir $COMP_DIR
 
 # launch the training
-python $PYTHON_DIR$TRAINER $SETTINGS_DIR $TRAINING_DIR
+python $BIN_DIR$TRAINER $SETTINGS_DIR $TRAINING_DIR
 
 # launch the augmentation
-#python $PYTHON_DIR$AUGMENTER $MC_DIR $SETTINGS_DIR $TRAINING_DIR $AUGMENTATION_DIR
+python $BIN_DIR$AUGMENTER $MC_DIR $SETTINGS_DIR $TRAINING_DIR $AUGMENTATION_DIR
 
 # launch the calibration
 #$BIN_DIR$CALIBRATOR $AUGMENTATION_DIR "ML" $CALIBRATION_DIR

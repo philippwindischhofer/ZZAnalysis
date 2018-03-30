@@ -17,17 +17,12 @@ class ModelCollectionConfigFileHandler(ConfigFileHandler):
 
     def __init__(self):
         ConfigFileHandler.__init__(self)
-        # self.cuts_translation = ConfigFileConfig.cuts_translation
-        # self.model_translation = ConfigFileConfig.model_translation
-        # self.preprocessor_translation = ConfigFileConfig.preprocessor_translation
 
     def _parse_model(self, model_name):
         model_section = self.get_section('[' + model_name)
-        #base_model = self.model_translation[model_section['model_type']]
         base_model = eval(model_section['model_type'])
         preprocessor_name = model_section['preprocessor']
         preprocessor_section = self.get_section('<' + preprocessor_name)
-        #preprocessor_base = self.preprocessor_translation[preprocessor_section['preprocessor_type']]
         preprocessor_base = eval(preprocessor_section['preprocessor_type'])
 
         mod = base_model.from_config(model_section)
@@ -39,8 +34,6 @@ class ModelCollectionConfigFileHandler(ConfigFileHandler):
         cur_sect = self.get_section(section)
     
         mcoll_name = section
-        # H1_stream = ConfigFileUtils.parse_dict(cur_sect['H1_stream'], lambda x: ConfigFileUtils.dict_processor(x, self.cuts_translation))
-        # H0_stream = ConfigFileUtils.parse_dict(cur_sect['H0_stream'], lambda x: ConfigFileUtils.dict_processor(x, self.cuts_translation))
 
         H1_stream = ConfigFileUtils.parse_dict(cur_sect['H1_stream'], lambda x: eval(x))
         H0_stream = ConfigFileUtils.parse_dict(cur_sect['H0_stream'], lambda x: eval(x))
@@ -78,9 +71,6 @@ class ModelCollectionConfigFileHandler(ConfigFileHandler):
         self.new_section(mcoll_name)
         cur_sect = self.get_section(mcoll_name)
     
-        # cur_sect['H1_stream'] = ConfigFileUtils.serialize_dict(H1_stream, lambda x: ConfigFileUtils.inverse_dict_processor(x, self.cuts_translation))
-        # cur_sect['H0_stream'] = ConfigFileUtils.serialize_dict(H0_stream, lambda x: ConfigFileUtils.inverse_dict_processor(x, self.cuts_translation))
-
         cur_sect['H1_stream'] = ConfigFileUtils.serialize_dict(H1_stream, lambda x: inspect.getmodule(x).__name__ + "." + x.__name__)
         cur_sect['H0_stream'] = ConfigFileUtils.serialize_dict(H0_stream, lambda x: inspect.getmodule(x).__name__ + "." + x.__name__)
 

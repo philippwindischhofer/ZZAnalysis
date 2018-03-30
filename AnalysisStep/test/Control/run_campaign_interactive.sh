@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 # ---------------------------------------------
@@ -21,7 +22,7 @@ python $PYTHON_DIR$CONFIG_FILE_GEN $CAMPAIGN_DIR
 # now should have plenty of prepared directories on which to run
 cd $CAMPAIGN_DIR
 
-DIRLIST=`ls -d */`
+DIRLIST=`ls -d */ | egrep -v 'bin|statistics'`
 
 for DIR in $DIRLIST
 do

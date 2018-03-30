@@ -21,8 +21,6 @@ class CombinedModel(Model):
 
     @classmethod
     def from_config(cls, config_section):
-#        preprocessor_translation = ConfigFileConfig.preprocessor_translation
-
         model_name = re.sub('[\[\]]', '', config_section.name)
 
         scalar_inputs = ConfigFileUtils.parse_list(config_section['scalar_input_columns'], lambda x: x)

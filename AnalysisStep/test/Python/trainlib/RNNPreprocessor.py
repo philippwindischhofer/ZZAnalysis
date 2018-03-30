@@ -81,14 +81,16 @@ class RNNPreprocessor(Preprocessor):
             periodic_data_encoded.append(self._encode_angles(data, periodic_column))
 
         # now need to join the list of dataframes holding the encoded angles: take the first one ...
-        angles_encoded = periodic_data_encoded[0]
-        
-        # ... and join it sequentially with all the other ones:
-        for periodic_column_encoded in periodic_data_encoded[1:]:
-            angles_encoded = angles_encoded.join(periodic_column_encoded)
+        prepared_data = pd.concat(periodic_data_encoded + [data[self.nonperiodic_columns]], axis = 1)
 
-        # now, add back the non-periodic (i.e. non-angle) columns
-        prepared_data = data[self.nonperiodic_columns].join(angles_encoded)
+        # angles_encoded = periodic_data_encoded[0]
+        
+        # # ... and join it sequentially with all the other ones:
+        # for periodic_column_encoded in periodic_data_encoded[1:]:
+        #     angles_encoded = angles_encoded.join(periodic_column_encoded)
+
+        # # now, add back the non-periodic (i.e. non-angle) columns
+        # prepared_data = data[self.nonperiodic_columns].join(angles_encoded)
     
         def sort_row(row, sorted_col):
             sorted_ind = row[sorted_col].argsort()
@@ -103,9 +105,6 @@ class RNNPreprocessor(Preprocessor):
 
         prepared_data = prepared_data.apply(lambda row: sort_row(row, sort_index), raw = True, axis = 1)
 
-        # and sort it in p_t (highest p_t comes first)
-        # prepared_data = self._sort_dataframe(prepared_data, sorted_column, True)
-    
         return prepared_data
 
     # encode an angle phi as the tuple (sin(phi), cos(phi))

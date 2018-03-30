@@ -51,13 +51,10 @@ class CombinedPreprocessor(Preprocessor):
             
     @classmethod
     def from_config(cls, config_section):
-        #preprocessor_translation = ConfigFileConfig.preprocessor_translation
-
         preprocessor_name = re.sub('[<>]', '', config_section.name)
         scalar_inputs = ConfigFileUtils.parse_list(config_section['processed_scalar_columns'], lambda x: x.encode("ascii"))
-        #scalar_preprocessor_type = preprocessor_translation[config_section['scalar_preprocessor_type']]
+ 
         scalar_preprocessor_type = eval(config_section['scalar_preprocessor_type'])
-        #list_preprocessor_type = preprocessor_translation[config_section['list_preprocessor_type']]
         list_preprocessor_type = eval(config_section['list_preprocessor_type'])
         list_inputs = ConfigFileUtils.parse_dict(config_section['processed_list_columns'], 
                                                  lambda x: ConfigFileUtils.parse_list(x, lambda y: y.encode("ascii")))
@@ -135,7 +132,7 @@ class CombinedPreprocessor(Preprocessor):
         # load them back separately as well
         self.scalar_preprocessor.load(folder, "scalar_" + filename)
         
-        for name, pre in self.list_preprocessor.iteritems():
+        for name, pre in self.list_preprocessors.iteritems():
             pre.load(folder, "list_" + name + "_" + filename)
             
     def _rowcol_cut(self, data):

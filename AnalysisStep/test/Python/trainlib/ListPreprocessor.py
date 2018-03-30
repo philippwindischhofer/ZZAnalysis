@@ -2,6 +2,7 @@ from Preprocessor import Preprocessor
 from keras.preprocessing.sequence import pad_sequences
 import pandas as pd
 import numpy as np
+import pickle
 
 # this is a wrapper class around a given preprocessor of type "preprocessor_base_type" that makes it also work on lists
 class ListPreprocessor(Preprocessor):
@@ -98,9 +99,21 @@ class ListPreprocessor(Preprocessor):
     
     def save(self, folder, filename):
         self.base_preprocessor.save(folder, filename)
+
+        path = folder + "padding_" + filename
+        outfile = open(path, "wb")
+        pickle.dump(self.maxlen, outfile)
+        outfile.close()
         
     def load(self, folder, filename):
         self.base_preprocessor.load(folder, filename)
+
+        path = folder + "padding_" + filename        
+        print "now attempting to load padding settings from file " + path
+
+        infile = open(path, "rb")
+        self.maxlen = pickle.load(infile)
+        infile.close()
     
     def get_last_indices(self):
         return self.last_indices
