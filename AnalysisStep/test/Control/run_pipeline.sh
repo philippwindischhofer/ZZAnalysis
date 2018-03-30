@@ -22,13 +22,9 @@ BIN_DIR=${CAMPAIGN_DIR}"/../bin/"
 # ---------------------------------------------
 #  global settings
 # ---------------------------------------------
-#PYTHON_DIR="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/"
-PYTHON_DIR=$BIN_DIR
 TRAINER="SampleTraining.py"
 AUGMENTER="SampleAugmentation.py"
 
-#BIN_DIR="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
-BIN_DIR=$BIN_DIR
 CALIBRATOR="run_calibrator"
 BENCHMARKER="run_benchmarker"
 ROC_PLOTTER="run_roc_plotter"
@@ -49,17 +45,17 @@ python $BIN_DIR$TRAINER $SETTINGS_DIR $TRAINING_DIR
 python $BIN_DIR$AUGMENTER $MC_DIR $SETTINGS_DIR $TRAINING_DIR $AUGMENTATION_DIR
 
 # launch the calibration
-#$BIN_DIR$CALIBRATOR $AUGMENTATION_DIR "ML" $CALIBRATION_DIR
+$BIN_DIR$CALIBRATOR $AUGMENTATION_DIR "ML" $CALIBRATION_DIR
 
 # launch the benchmarking
-#$BIN_DIR$BENCHMARKER $CALIBRATION_DIR $AUGMENTATION_DIR $BENCHMARK_DIR
+$BIN_DIR$BENCHMARKER $CALIBRATION_DIR $AUGMENTATION_DIR $BENCHMARK_DIR
 
 # launch the comparison to the reference
-#$BIN_DIR$COMPARER $BENCHMARK_DIR $COMP_REF_DIR $COMP_DIR
+$BIN_DIR$COMPARER $BENCHMARK_DIR $COMP_REF_DIR $COMP_DIR
 
 # launch the plotting of ROCs
-#$BIN_DIR$ROC_PLOTTER $AUGMENTATION_DIR $ROC_DIR
+$BIN_DIR$ROC_PLOTTER $AUGMENTATION_DIR $ROC_DIR
 
 # delete again the large augmented ROOT files (can always be regenerated, if necessary)
-#echo "removing "$AUGMENTATION_DIR
-#rm -r $AUGMENTATION_DIR
+echo "removing "$AUGMENTATION_DIR
+rm -r $AUGMENTATION_DIR

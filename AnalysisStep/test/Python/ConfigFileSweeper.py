@@ -88,8 +88,8 @@ def main():
     confhandler.load_configuration(campaign_dir + "campaign.conf")
 
     # build the standard configuration from which to start
-    #mcoll = ModelFactory.GenerateSimpleModelCollections("/data_CMS/cms/wind/CJLST_NTuples/")
-    mcoll = ModelFactory.GenerateCombinedModelCollections("/data_CMS/cms/wind/CJLST_NTuples/")
+    mcoll = ModelFactory.GenerateSimpleModelCollections("/data_CMS/cms/wind/CJLST_NTuples/")
+    #mcoll = ModelFactory.GenerateCombinedModelCollections("/data_CMS/cms/wind/CJLST_NTuples/")
 
     # load the sweep parameters for the hyperparameters
     start_dict = ConfigFileUtils.parse_dict(confhandler.get_field('hyperparameters', 'start'), lambda x: float(x))
