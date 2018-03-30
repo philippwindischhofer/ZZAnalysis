@@ -10,7 +10,7 @@ import cuts
 class ModelFactory:
 
     @staticmethod
-    def GenerateCombinedModelCollections(MC_path, weight_path = None):
+    def GenerateCombinedModelCollectionsReducedCategorySet(MC_path, weight_path = None):
         mcolls = []
         global_max_epochs = 100
         global_hyperparams = {'LSTM_units': 16, 'LSTM_output_size': 4, 'number_dense_layers': 2, 'number_dense_neurons': 128}
@@ -180,7 +180,7 @@ class ModelFactory:
 
     # this will generate a list of ModelCollections, each one of which will have to be trained later one
     @staticmethod
-    def GenerateSimpleModelCollections(MC_path, weight_path = None):
+    def GenerateSimpleModelCollectionsReducedCategorySet(MC_path, weight_path = None):
         mcolls = []
         global_max_epochs = 100
         global_hyperparams = {'number_layers': 2}

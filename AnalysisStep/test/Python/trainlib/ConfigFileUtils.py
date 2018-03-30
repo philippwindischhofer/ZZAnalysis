@@ -11,6 +11,13 @@ class ConfigFileUtils:
         return retlist
 
     @staticmethod
+    def is_dict(rawstring):
+        if ":" in rawstring:
+            return True
+        else:
+            return False
+
+    @staticmethod
     def parse_dict(rawstring, processor):
         retdict = {}
         if rawstring:

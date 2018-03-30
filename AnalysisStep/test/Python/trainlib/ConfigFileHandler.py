@@ -8,7 +8,13 @@ class ConfigFileHandler:
     def get_sections(self):
         return self.config.sections()
 
-    def get_section(self,section):
+    def has_field(self, section, field):
+        if field in self.get_section(section):
+            return True
+        else:
+            return False
+
+    def get_section(self, section):
         return self.config[section]
 
     def get_field(self, section, field):

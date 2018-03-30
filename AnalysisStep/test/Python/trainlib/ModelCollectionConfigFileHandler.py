@@ -2,6 +2,7 @@ import configparser
 import inspect
 import utils as utils
 import trainlib.cuts
+import re
 
 from ConfigFileHandler import ConfigFileHandler
 from ConfigFileUtils import ConfigFileUtils
@@ -11,6 +12,7 @@ from ModelFactory import ModelFactory
 from ModelCollection import ModelCollection
 from PCAWhiteningPreprocessor import PCAWhiteningPreprocessor
 from CombinedPreprocessor import CombinedPreprocessor
+from ConfigFileUtils import ConfigFileUtils
 from config import TrainingConfig
 
 class ModelCollectionConfigFileHandler(ConfigFileHandler):
@@ -83,7 +85,7 @@ class ModelCollectionConfigFileHandler(ConfigFileHandler):
 
     def _get_model_collection_list(self):
         raw_sections = self.get_sections()
-        main_sections = [name for name in raw_sections if not (name.startswith('[') or name.startswith('<'))]
+        main_sections = [name for name in raw_sections if not (name.startswith('[') or name.startswith('<') or name.startswith('!'))]
         return main_sections
 
     def _get_model_list(self, model_collection):
@@ -103,9 +105,63 @@ class ModelCollectionConfigFileHandler(ConfigFileHandler):
         
         return mcolls
 
-    def _get_models(self, model_collection):
-        field = self.get_field(model_collection, 'models')
-        return self.process_list(field, lambda x: x)
+    # ------------------------------------
+    # these methods are only used by the ConfigFileSweeper
+    # ------------------------------------
+
+    def AddListEntry(self, section, field, to_add, processor, reverse_processor):
+        if 'all' in section:
+            available_sections = self.get_sections()
+            if section.startswith('[') or section.startswith('<'):
+                r = re.compile('^\\' + section[0])
+                available_sections = filter(r.match, available_sections)
+            for available_section in available_sections:
+                if self.has_field(available_section, field):
+                    self.AddListEntry(available_section, field, to_add, processor, reverse_processor)
+        else:
+            cur_list = ConfigFileUtils.parse_list(self.get_field(section, field), processor)
+            cur_list += to_add
+            self.set_field(section, field, ConfigFileUtils.serialize_list(cur_list, reverse_processor))
+
+    def AddDictEntry(self, section, field, to_add, processor, reverse_processor):
+        if 'all' in section:
+            available_sections = self.get_sections()
+            if section.startswith('[') or section.startswith('<'):
+                r = re.compile('^\\' + section[0])
+                available_sections = filter(r.match, available_sections)
+            for available_section in available_sections:
+                if self.has_field(available_section, field):
+                    self.AddDictEntry(available_section, field, to_add, processor, reverse_processor)
+        else:
+            cur_dict = ConfigFileUtils.parse_dict(self.get_field(section, field), processor)
+            cur_dict.update(to_add)
+            self.set_field(section, field, ConfigFileUtils.serialize_dict(cur_dict, reverse_processor))
+
+    def SetList(self, section, field, in_list, processor):
+        if 'all' in section:
+            available_sections = self.get_sections()
+            if section.startswith('[') or section.startswith('<'):
+                r = re.compile('^\\' + section[0])
+                available_sections = filter(r.match, available_sections)
+            for available_section in available_sections:
+                if self.has_field(available_section, field):
+                    self.SetList(available_section, field, in_list, processor)
+        else:
+            self.set_field(section, field, ConfigFileUtils.serialize_list(in_list, processor))
+
+    def SetDict(self, section, field, in_dict, processor):
+        if 'all' in section:
+            available_sections = self.get_sections()
+            if section.startswith('[') or section.startswith('<'):
+                r = re.compile('^\\' + section[0])
+                available_sections = filter(r.match, available_sections)
+            for available_section in available_sections:
+                if self.has_field(available_section, field):
+                    self.SetDict(available_section, field, in_dict, processor)
+        else:
+            self.set_field(section, field, ConfigFileUtils.serialize_dict(in_dict, processor))
+
+    # ------------------------------------
 
     def ModelCollectionDiff(self, model_collection, parameter, new_value):
         self.set_field(model_collection, parameter, new_value)
@@ -129,7 +185,8 @@ class ModelCollectionConfigFileHandler(ConfigFileHandler):
         return self.get_field('[' + model, parameter)
 
     def AddInputParameterLocally(self, model, parameter):
-        current = self.GetModelParameter(model, 'input_columns')
+        current = ConfigFileUtils.parse_list(self.GetModelParameter(model, 'input_columns'), lambda x: x)
+        current += [parameter]
         self.ModelDiff(model, 'input_columns', current + ', ' + parameter)
 
     def AddInputParameterGlobally(self, parameter):
