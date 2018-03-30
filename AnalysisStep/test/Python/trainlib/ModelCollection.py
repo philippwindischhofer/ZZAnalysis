@@ -54,7 +54,11 @@ class ModelCollection:
 
         for model_dir in model_dirs:
             model_path = path + "/" + model_dir + "/"
-            self.model_dict[model_dir].load(model_path, "final.hdf5")
+            # in loading back the model, prefer to use the checkpoint file. Only if this is not available, go for the final training output
+            try:
+                self.model_dict[model_dir].load(model_path, "checkpoint.hdf5")
+            except FileNotFoundError:
+                self.model_dict[model_dir].load(model_path, "final.hdf5")
 
             # also read back the preprocessor information here from its own file!
             self.preprocessor_dict[model_dir].load(model_path, "preprocessor.pkl")

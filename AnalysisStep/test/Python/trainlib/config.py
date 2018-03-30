@@ -5,6 +5,6 @@ class Config:
     MC_filename = "/ZZ4lAnalysis.root"
 
 class TrainingConfig:
-    def __init__(self, steps_per_epoch = 128, max_epochs = 1):
+    def __init__(self, steps_per_epoch = 128, max_epochs = 100):
         self.steps_per_epoch = steps_per_epoch
         self.max_epochs = max_epochs

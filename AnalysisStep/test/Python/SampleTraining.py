@@ -33,10 +33,11 @@ def main():
     mcolls = confhandler.GetModelCollection()
 
     train = Trainer(training_dir)
-    sgd = optimizers.SGD(lr = 0.01, momentum = 0.9)
+    #opt = optimizers.SGD(lr = 0.01, momentum = 0.9)
+    opt = optimizers.Adam(lr = 0.001, beta_1 = 0.9, beta_2 = 0.999, epsilon = K.epsilon(), decay = 0.0)
 
     for mcoll in mcolls:
-        train.train(mcoll, optimizer = sgd)
+        train.train(mcoll, optimizer = opt)
 
 if __name__ == "__main__":
     main()
