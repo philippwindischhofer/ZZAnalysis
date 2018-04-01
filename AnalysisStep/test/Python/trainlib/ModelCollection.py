@@ -57,7 +57,7 @@ class ModelCollection:
             # in loading back the model, prefer to use the checkpoint file. Only if this is not available, go for the final training output
             try:
                 self.model_dict[model_dir].load(model_path, "checkpoint.hdf5")
-            except FileNotFoundError:
+            except IOError:
                 self.model_dict[model_dir].load(model_path, "final.hdf5")
 
             # also read back the preprocessor information here from its own file!
@@ -73,17 +73,19 @@ class ModelCollection:
             
             # have each model give predictions on the relevant pieces of the full data
             cur_data = preprocessor.process(dataframe)
-            cur_prediction = model.get_keras_model().predict(x = cur_data, verbose = 2, batch_size = len(cur_data)).flatten()
-            
-            # then, keep track of the indices (i.e. the positions of the individual chunks in the main datastream)
-            #print cur_data
-            cur_series = pd.Series(cur_prediction, index = preprocessor.get_last_indices())
-            #print cur_series
 
-            predictions.append(cur_series)
+            if len(preprocessor.get_last_indices()) != 0:
+                cur_prediction = model.get_keras_model().predict(x = cur_data, verbose = 2, batch_size = len(cur_data)).flatten()
+                # then, keep track of the indices (i.e. the positions of the individual chunks in the main datastream)
+                cur_series = pd.Series(cur_prediction, index = preprocessor.get_last_indices())
 
-        # merge the individual chunks of predictions ...
-        retval = pd.concat(predictions).sort_index()
+                predictions.append(cur_series)
+
+        if len(predictions) != 0:
+            # merge the individual chunks of predictions ...
+            retval = pd.concat(predictions).sort_index()
+        else:
+            retval = pd.DataFrame(columns = dataframe.columns)
 
         # now, need to fill in any open spots that no preprocessor took (e.g. because there hasn't been a model defined (yet) for this region in event space)
         missed_indices = [ind for ind in dataframe.index if ind not in retval.index]

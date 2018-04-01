@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 #include <functional>
+#include <math.h>
 
 #include <boost/range/combine.hpp>
 

@@ -48,6 +48,19 @@ void augment_tree(TString inpath, TString outpath)
     output_tree -> Branch("D_VBF2j_WHh_ME", &(buffer -> D_VBF2j_WHh_ME), "D_VBF2j_WHh_ME/F");
     output_tree -> Branch("D_VBF2j_ZHh_ME", &(buffer -> D_VBF2j_ZHh_ME), "D_VBF2j_ZHh_ME/F");
 
+    // also homogenize in the information needed for the cuts on the Python side, i.e. add dummy values for "LHEAssociatedparticleId"
+    TBranch* br_lhe = (TBranch*)(buffer -> fChain -> GetListOfBranches() -> FindObject("LHEAssociatedParticleId"));
+
+    if(br_lhe)
+    {
+	std::cout << "LHEAssociatedParticleId available in file " << inpath << std::endl;
+    }
+    else
+    {
+	std::cout << "adding LHEAssociatedParticleId in file " << inpath << std::endl;
+	output_tree -> Branch("LHEAssociatedParticleId", &(buffer -> LHEAssociatedParticleId));
+    }
+    
     // loop over the entries in chain
     for(Long64_t j_entry = 0; j_entry < n_entries; j_entry++)
     {
@@ -60,6 +73,11 @@ void augment_tree(TString inpath, TString outpath)
 
 	// fill the placeholder variable
 	buffer -> testval = 3.14;
+
+	if(!br_lhe)
+	{
+	    buffer -> LHEAssociatedParticleId = new std::vector<short>();
+	}
 
 	// fill the variables holding the ME discriminants (don't care about their validity here, just compute everything. later on, when reading them, will need to check the number of jets etc. to make sure the MELA discriminants actually make sense)
 	buffer -> D_VBF2j_ggH_ME = DVBF2j_ME_disc(buffer);

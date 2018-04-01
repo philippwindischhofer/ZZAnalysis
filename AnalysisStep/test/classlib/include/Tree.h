@@ -46,6 +46,37 @@ public :
    float D_VBF_WHh_ML;
    float D_VBF_ZHh_ML;
 
+   float D_WHl_ggH_ML;
+   float D_WHl_VBF_ML;
+   float D_WHl_WHh_ML;
+   float D_WHl_ZHh_ML;
+   float D_WHl_ZHl_ML;
+   float D_WHl_ZHMET_ML;
+   float D_WHl_ttHh_ML;
+   float D_WHl_ttHl_ML;
+   float D_ZHh_ZHl_ML;
+   float D_ZHh_ZHMET_ML;
+   float D_ZHh_ttHh_ML;
+   float D_ZHh_ttHl_ML;
+   float D_ZHl_ggH_ML;
+   float D_ZHl_VBF_ML;
+   float D_ZHl_WHh_ML;
+   float D_ZHl_ZHMET_ML;
+   float D_ZHl_ttHh_ML;
+   float D_ZHl_ttHl_ML;
+   float D_ZHMET_ggH_ML;
+   float D_ZHMET_VBF_ML;
+   float D_ZHMET_WHh_ML;
+   float D_ZHMET_ttHh_ML;
+   float D_ZHMET_ttHl_ML;
+   float D_ttHh_ggH_ML;
+   float D_ttHh_VBF_ML;
+   float D_ttHh_WHh_ML;
+   float D_ttHh_ttHl_ML;
+   float D_ttHl_ggH_ML;
+   float D_ttHl_VBF_ML;
+   float D_ttHl_WHh_ML;
+
    // Declaration of leaf types
    Int_t           RunNumber;
    Long64_t        EventNumber;
@@ -510,6 +541,37 @@ public :
    TBranch* b_D_WHh_ZHh_ML;
    TBranch* b_D_VBF_WHh_ML;
    TBranch* b_D_VBF_ZHh_ML;
+
+   TBranch* b_D_WHl_ggH_ML;
+   TBranch* b_D_WHl_VBF_ML;
+   TBranch* b_D_WHl_WHh_ML;
+   TBranch* b_D_WHl_ZHh_ML;
+   TBranch* b_D_WHl_ZHl_ML;
+   TBranch* b_D_WHl_ZHMET_ML;
+   TBranch* b_D_WHl_ttHh_ML;
+   TBranch* b_D_WHl_ttHl_ML;
+   TBranch* b_D_ZHh_ZHl_ML;
+   TBranch* b_D_ZHh_ZHMET_ML;
+   TBranch* b_D_ZHh_ttHh_ML;
+   TBranch* b_D_ZHh_ttHl_ML;
+   TBranch* b_D_ZHl_ggH_ML;
+   TBranch* b_D_ZHl_VBF_ML;
+   TBranch* b_D_ZHl_WHh_ML;
+   TBranch* b_D_ZHl_ZHMET_ML;
+   TBranch* b_D_ZHl_ttHh_ML;
+   TBranch* b_D_ZHl_ttHl_ML;
+   TBranch* b_D_ZHMET_ggH_ML;
+   TBranch* b_D_ZHMET_VBF_ML;
+   TBranch* b_D_ZHMET_WHh_ML;
+   TBranch* b_D_ZHMET_ttHh_ML;
+   TBranch* b_D_ZHMET_ttHl_ML;
+   TBranch* b_D_ttHh_ggH_ML;
+   TBranch* b_D_ttHh_VBF_ML;
+   TBranch* b_D_ttHh_WHh_ML;
+   TBranch* b_D_ttHh_ttHl_ML;
+   TBranch* b_D_ttHl_ggH_ML;
+   TBranch* b_D_ttHl_VBF_ML;
+   TBranch* b_D_ttHl_WHh_ML;
 
    TBranch        *b_RunNumber;   //!
    TBranch        *b_EventNumber;   //!
@@ -1027,6 +1089,37 @@ void Tree::Init(TTree *tree, TString input_file_name)
    D_WHh_ZHh_ML = 0;
    D_VBF_WHh_ML = 0;
    D_VBF_ZHh_ML = 0;
+
+   D_WHl_ggH_ML = 0;
+   D_WHl_VBF_ML = 0;
+   D_WHl_WHh_ML = 0;
+   D_WHl_ZHh_ML = 0;
+   D_WHl_ZHl_ML = 0;
+   D_WHl_ZHMET_ML = 0;
+   D_WHl_ttHh_ML = 0;
+   D_WHl_ttHl_ML = 0;
+   D_ZHh_ZHl_ML = 0;
+   D_ZHh_ZHMET_ML = 0;
+   D_ZHh_ttHh_ML = 0;
+   D_ZHh_ttHl_ML = 0;
+   D_ZHl_ggH_ML = 0;
+   D_ZHl_VBF_ML = 0;
+   D_ZHl_WHh_ML = 0;
+   D_ZHl_ZHMET_ML = 0;
+   D_ZHl_ttHh_ML = 0;
+   D_ZHl_ttHl_ML = 0;
+   D_ZHMET_ggH_ML = 0;
+   D_ZHMET_VBF_ML = 0;
+   D_ZHMET_WHh_ML = 0;
+   D_ZHMET_ttHh_ML = 0;
+   D_ZHMET_ttHl_ML = 0;
+   D_ttHh_ggH_ML = 0;
+   D_ttHh_VBF_ML = 0;
+   D_ttHh_WHh_ML = 0;
+   D_ttHh_ttHl_ML = 0;
+   D_ttHl_ggH_ML = 0;
+   D_ttHl_VBF_ML = 0;
+   D_ttHl_WHh_ML = 0;
     
    LepPt = 0;
    LepEta = 0;
@@ -1087,6 +1180,38 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetBranchAddress("D_WHh_ZHh_ML", &D_WHh_ZHh_ML, &b_D_WHh_ZHh_ML);
    fChain->SetBranchAddress("D_VBF_WHh_ML", &D_VBF_WHh_ML, &b_D_VBF_WHh_ML);
    fChain->SetBranchAddress("D_VBF_ZHh_ML", &D_VBF_ZHh_ML, &b_D_VBF_ZHh_ML);
+
+   fChain->SetBranchAddress("D_WHl_ggH_ML", &D_WHl_ggH_ML, &b_D_WHl_ggH_ML);
+   fChain->SetBranchAddress("D_WHl_VBF_ML", &D_WHl_VBF_ML, &b_D_WHl_VBF_ML);
+   fChain->SetBranchAddress("D_WHl_WHh_ML", &D_WHl_WHh_ML, &b_D_WHl_WHh_ML);
+   fChain->SetBranchAddress("D_WHl_ZHh_ML", &D_WHl_ZHh_ML, &b_D_WHl_ZHh_ML);
+   fChain->SetBranchAddress("D_WHl_ZHl_ML", &D_WHl_ZHl_ML, &b_D_WHl_ZHl_ML);
+   fChain->SetBranchAddress("D_WHl_ZHMET_ML", &D_WHl_ZHMET_ML, &b_D_WHl_ZHMET_ML);
+   fChain->SetBranchAddress("D_WHl_ttHh_ML", &D_WHl_ttHh_ML, &b_D_WHl_ttHh_ML);
+   fChain->SetBranchAddress("D_WHl_ttHl_ML", &D_WHl_ttHl_ML, &b_D_WHl_ttHl_ML);
+   fChain->SetBranchAddress("D_ZHh_ZHl_ML", &D_ZHh_ZHl_ML, &b_D_ZHh_ZHl_ML);
+   fChain->SetBranchAddress("D_ZHh_ZHMET_ML", &D_ZHh_ZHMET_ML, &b_D_ZHh_ZHMET_ML);
+   fChain->SetBranchAddress("D_ZHh_ttHh_ML", &D_ZHh_ttHh_ML, &b_D_ZHh_ttHh_ML);
+   fChain->SetBranchAddress("D_ZHh_ttHl_ML", &D_ZHh_ttHl_ML, &b_D_ZHh_ttHl_ML);
+   fChain->SetBranchAddress("D_ZHl_ggH_ML", &D_ZHl_ggH_ML, &b_D_ZHl_ggH_ML);
+   fChain->SetBranchAddress("D_ZHl_VBF_ML", &D_ZHl_VBF_ML, &b_D_ZHl_VBF_ML);
+   fChain->SetBranchAddress("D_ZHl_WHh_ML", &D_ZHl_WHh_ML, &b_D_ZHl_WHh_ML);
+   fChain->SetBranchAddress("D_ZHl_ZHMET_ML", &D_ZHl_ZHMET_ML, &b_D_ZHl_ZHMET_ML);
+   fChain->SetBranchAddress("D_ZHl_ttHh_ML", &D_ZHl_ttHh_ML, &b_D_ZHl_ttHh_ML);
+   fChain->SetBranchAddress("D_ZHl_ttHl_ML", &D_ZHl_ttHl_ML, &b_D_ZHl_ttHl_ML);
+   fChain->SetBranchAddress("D_ZHMET_ggH_ML", &D_ZHMET_ggH_ML, &b_D_ZHMET_ggH_ML);
+   fChain->SetBranchAddress("D_ZHMET_VBF_ML", &D_ZHMET_VBF_ML, &b_D_ZHMET_VBF_ML);
+   fChain->SetBranchAddress("D_ZHMET_WHh_ML", &D_ZHMET_WHh_ML, &b_D_ZHMET_WHh_ML);
+   fChain->SetBranchAddress("D_ZHMET_ttHh_ML", &D_ZHMET_ttHh_ML, &b_D_ZHMET_ttHh_ML);
+   fChain->SetBranchAddress("D_ZHMET_ttHl_ML", &D_ZHMET_ttHl_ML, &b_D_ZHMET_ttHl_ML);
+   fChain->SetBranchAddress("D_ttHh_ggH_ML", &D_ttHh_ggH_ML, &b_D_ttHh_ggH_ML);
+   fChain->SetBranchAddress("D_ttHh_VBF_ML", &D_ttHh_VBF_ML, &b_D_ttHh_VBF_ML);
+   fChain->SetBranchAddress("D_ttHh_WHh_ML", &D_ttHh_WHh_ML, &b_D_ttHh_WHh_ML);
+   fChain->SetBranchAddress("D_ttHh_ttHl_ML", &D_ttHh_ttHl_ML, &b_D_ttHh_ttHl_ML);
+   fChain->SetBranchAddress("D_ttHl_ggH_ML", &D_ttHl_ggH_ML, &b_D_ttHl_ggH_ML);
+   fChain->SetBranchAddress("D_ttHl_VBF_ML", &D_ttHl_VBF_ML, &b_D_ttHl_VBF_ML);
+   fChain->SetBranchAddress("D_ttHl_WHh_ML", &D_ttHl_WHh_ML, &b_D_ttHl_WHh_ML);
+
 
    fChain->SetBranchAddress("LHEAssociatedParticleId", &LHEAssociatedParticleId, &b_LHEAssociatedParticleId);
    fChain->SetBranchAddress("LHEAssociatedParticleMass", &LHEAssociatedParticleMass, &b_LHEAssociatedParticleMass);

@@ -8,6 +8,7 @@ bool mZZ_cut(Tree* in);
 bool extraLeptons_0_cut(Tree* in);
 bool extraLeptons_1_cut(Tree* in);
 bool extraLeptons_2_cut(Tree* in);
+bool extraLeptons_12_cut(Tree* in);
 bool extraNeutrinos_0_cut(Tree* in);
 bool extraNeutrinos_2_cut(Tree* in);
 bool extraNeutrinos_0_Leptons_0_cut(Tree* in);

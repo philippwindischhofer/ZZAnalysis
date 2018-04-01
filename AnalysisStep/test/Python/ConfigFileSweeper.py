@@ -7,7 +7,11 @@ import sys
 
 from trainlib.config import Config
 from trainlib.SimpleModel import SimpleModel
+
+# fix the naming!
 from trainlib.ModelFactory import ModelFactory
+from trainlib.ModelFactoryFullCategorySet import ModelFactoryFullCategorySet
+
 from trainlib.ConfigFileHandler import ConfigFileHandler
 from trainlib.ModelCollectionConfigFileHandler import ModelCollectionConfigFileHandler
 from trainlib.ConfigFileUtils import ConfigFileUtils
@@ -211,7 +215,8 @@ def main():
     model_type = confhandler.get_field('global', 'model_type') 
 
     if model_type == 'SimpleModel':
-        mcoll = ModelFactory.GenerateSimpleModelCollectionsReducedCategorySet(MC_path)
+        #mcoll = ModelFactory.GenerateSimpleModelCollectionsReducedCategorySet(MC_path)
+        mcoll = ModelFactoryFullCategorySet.GenerateSimpleModelCollections(MC_path)
     elif model_type == 'CombinedModel':
         mcoll = ModelFactory.GenerateCombinedModelCollectionsReducedCategorySet(MC_path)
         

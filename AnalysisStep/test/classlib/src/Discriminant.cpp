@@ -134,6 +134,12 @@ float Discriminant::Evaluate(Tree* in)
 	    // found a matching component, now evaluate its attached discriminant
 	    float raw_disc = disc(in);
 
+	    // catch any NaN values here
+	    if(!isfinite(raw_disc))
+	    {
+		return 0.0;
+	    }
+
 	    // for a calibrated discriminant, now evaluate the actual likelihood ratio (or an approximation thereof)
 	    //retval = (H1_caline -> Eval(raw_disc)) / (H0_caline -> Eval(raw_disc));
 	    

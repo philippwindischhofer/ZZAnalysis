@@ -26,6 +26,8 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Classifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18LIClassifier.h>
 
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/cuts.h>
+
 int main(int argc, char *argv[])
 {
     if(argc != 4)
@@ -49,7 +51,8 @@ int main(int argc, char *argv[])
 //    Classifier* refclass = new Mor18Classifier();
 
     Classifier* refclass = new Mor18LIClassifier(calibration_folder);
-    Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet(MCpath);
+//    Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet(MCpath);
+    Mor18Config* conf = new Mor18Config(MCpath);
 
     // these are the optimized working points to give max. Punzi
     // float WP_VBF2j = 0.640951;
@@ -60,14 +63,16 @@ int main(int argc, char *argv[])
     // refclass18 -> SetWPs(WP_VBF2j, WP_VBF1j, WP_WHh, WP_ZHh);
 
     // this jet cut is needed to make sure both classifiers (the standard Mor18 and the MELA-LI improved version) are operated in their allowed region
-    auto jcut = [&](Tree* in) -> bool {
-    	return (((in -> nCleanedJetsPt30 >= 1) ? kTRUE : kFALSE)) ? 
-    	kTRUE : kFALSE;};
+    // auto jcut = [&](Tree* in) -> bool {
+    // 	return (((in -> nCleanedJetsPt30 >= 1) ? kTRUE : kFALSE)) ? 
+    // 	kTRUE : kFALSE;};
 
-    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", jcut, conf, 0.5, 1.0);
-    PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", jcut, conf, 0.5, 1.0);
-    PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", jcut, conf, 0.5, 1.0);
-    PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", jcut, conf, 0.5, 1.0);
+    
+
+    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", mZZ_cut, conf, 0.5, 1.0);
+    PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", mZZ_cut, conf, 0.5, 1.0);
+    PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", mZZ_cut, conf, 0.5, 1.0);
+    PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", mZZ_cut, conf, 0.5, 1.0);
 
     // PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut, conf);
     // PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut, conf);

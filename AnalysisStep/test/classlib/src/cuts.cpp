@@ -57,6 +57,14 @@ bool extraLeptons_2_cut(Tree* in)
 	return kFALSE;
 }
 
+bool extraLeptons_12_cut(Tree* in)
+{
+    if(extraLeptons_1_cut(in) || extraLeptons_2_cut(in))
+	return kTRUE;
+    else
+	return kFALSE;
+}
+
 int countNeutrinos(Tree* in)
 {
    int number_neutrinos = 0;

@@ -63,7 +63,7 @@ public:
     TString MC_filename();
 
 protected:
-    Config(TString MCpath = "/data_CMS/cms/wind/processed/");
+    Config(TString MCpath = "/data_CMS/cms/wind/CJLST_NTuples/");
     std::vector<std::pair<TString, Routing*>> routing;
     TString MCpath;
 };

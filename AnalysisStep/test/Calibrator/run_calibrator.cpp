@@ -27,6 +27,7 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/EventStream.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MEDiscriminantFactory.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactory.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactoryFullCategorySet.h>
 
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
 
@@ -178,7 +179,8 @@ int main(int argc, char *argv[])
     }
     else if(switchval = "ML")
     {
-	coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+	//coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+	coll = MLDiscriminantFactoryFullCategorySet::GenerateDiscriminantCollection(out_folder, conf);
     }
     else
     {

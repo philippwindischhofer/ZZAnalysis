@@ -30,6 +30,7 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MEDiscriminantFactory.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactory.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactoryFullCategorySet.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/VotingMultiClassCombinator.h>
 
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>

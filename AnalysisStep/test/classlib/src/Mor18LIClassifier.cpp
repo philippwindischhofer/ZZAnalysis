@@ -7,7 +7,8 @@ Mor18LIClassifier::Mor18LIClassifier(TString out_folder)
     //TString out_folder = "../../src/ZZAnalysis/CalibratorPlots/";
     Mor18Config conf;
     //coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
-    coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+    //coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+    coll = MLDiscriminantFactoryFullCategorySet::GenerateDiscriminantCollection(out_folder, conf);
     comb = new VotingMultiClassCombinator();
 }
 
@@ -100,13 +101,18 @@ int Mor18LIClassifier::categoryMor18(
 
     //std::cout << "winner = " << winner << " / " << "margin = " << margin << std::endl;
 
-    // VBF splitting
-    int VBF_cat = (nCleanedJetsPt30 == 1) ? VBF1jTaggedMor18 : VBF2jTaggedMor18;
+    // VBF splitting: put all VBF-classified events with 2 or more jets into the VBF2j category, those with 1 or less jets into the VBF1j category (to be investigated: put a separate category for the latter events?)
+    int VBF_cat = (nCleanedJetsPt30 >= 2) ? VBF2jTaggedMor18 : VBF1jTaggedMor18;
 
     std::map<TString, int> conversion = {
 	{"VBFH125", VBF_cat},
 	{"ZHhadr", VHHadrTaggedMor18},
 	{"WHhadr", VHHadrTaggedMor18},
+	{"ZHlept", VHLeptTaggedMor18},
+	{"WHlept", VHLeptTaggedMor18},
+	{"ZHMET", VHMETTaggedMor18},
+	{"ttHlept", ttHLeptTaggedMor18},
+	{"ttHhadr", ttHHadrTaggedMor18},
 	{"ggH125", UntaggedMor18}
     };
 
