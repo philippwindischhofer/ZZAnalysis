@@ -36,25 +36,19 @@ int main(int argc, char *argv[])
 	return(-1);
     }
 
-//TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization/";
-
-//TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsReferenceReducedCategorySet/";
-//TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsLIReducedCategorySet/";
-
     TString calibration_folder = argv[1];
     TString MCpath = argv[2];
     TString out_folder = argv[3];
 
-//    TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsSandbox/";
-//    TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsOptMor18/";
-
+    // switch here between the classifier based on trained discriminants or the one based only on the available MELA values
     //Classifier* refclass = new Mor18Classifier();
     Classifier* refclass = new Mor18LIClassifier(calibration_folder);
 
-    Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet(MCpath);
-    //Mor18Config* conf = new Mor18Config(MCpath);
+    // switch here between all Moriond 2018 categories and a reduced set for development
+    //Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet(MCpath);
+    Mor18Config* conf = new Mor18Config(MCpath);
 
-    // these are the optimized working points to give max. Punzi
+    // these are the optimized working points to give max. Punzi for an integrated luminosity of 35.9fb^-1
     // float WP_VBF2j = 0.640951;
     // float WP_VBF1j = 0.00145712;
     // float WP_WHh = 0.952417;

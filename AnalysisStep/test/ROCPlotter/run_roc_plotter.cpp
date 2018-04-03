@@ -39,8 +39,8 @@ int main( int argc, char *argv[] )
 
     //TString out_path = "../../src/ZZAnalysis/ROCs/";
 
-    DiscriminantCollection* ME_coll = MEDiscriminantFactory::GenerateRawDiscriminantCollection(conf, false);
-    DiscriminantCollection* ME_QG_coll = MEDiscriminantFactory::GenerateRawDiscriminantCollection(conf, true);
+    DiscriminantCollection* ME_coll = MEDiscriminantFactory::GenerateRawDiscriminantCollectionSequentialCut(conf, false);
+    DiscriminantCollection* ME_QG_coll = MEDiscriminantFactory::GenerateRawDiscriminantCollectionSequentialCut(conf, true);
     DiscriminantCollection* ML_coll = MLDiscriminantFactory::GenerateMorCompatibleDiscriminantCollection("no_dir", conf);
 
     // Discriminant* ME_disc = ME_coll -> GetDiscriminant(std::make_pair("VBF2jH125", "ggH125"));
@@ -82,9 +82,9 @@ int main( int argc, char *argv[] )
 	rp.Construct();
 
 	if(combination.first == "VBF1j")
-	    rp.SetLabel("nCleanedJetsPt30 == 1", "");
+	    rp.SetLabel("nCleanedJetsPt30 == 1, ME: not selected upstream", "");
 	else
-	    rp.SetLabel("nCleanedJetsPt30 >= 2", "");
+	    rp.SetLabel("nCleanedJetsPt30 >= 2, ME: not selected upstream", "");
 
 	auto AUCs = rp.GetAUC();
 

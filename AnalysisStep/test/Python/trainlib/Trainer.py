@@ -74,10 +74,22 @@ class Trainer:
             len_setup_data = setup_gen.setup_training_data()
             cur_preprocessor.setup_generator(setup_gen.raw_generator_scrambled(), len_setupdata = len_setup_data)
 
+            # with the preprocessor set up (and thus all cuts determined), can now determine the actual number of training and validation events that are sent to the network (important for handling skewed datasets with unbalanced numbers of events in the two categories)
+            H1_length = len(cur_preprocessor.process(setup_gen.H1_collection.get_data(self.branches, 0.0, 1.0)).values()[0])
+            H0_length = len(cur_preprocessor.process(setup_gen.H0_collection.get_data(self.branches, 0.0, 1.0)).values()[0])
+
+            print "length of H1 training set (after cuts): " + str(H1_length)
+            print "length of H0 training set (after cuts): " + str(H0_length)
+
             # recreate the generators yielding the training and validation data for the actual training procedure
             train_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor.process, chunks = setting.steps_per_epoch)            
+            train_gen.set_H1_weight(H1_length)
+            train_gen.set_H0_weight(H0_length)
             train_gen.setup_training_data()
+            
             val_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor.process, chunks = setting.steps_per_epoch)
+            val_gen.set_H1_weight(H1_length)
+            val_gen.set_H0_weight(H0_length)
             val_gen.setup_validation_data()
 
             # stops the training as soon as the loss starts to saturate
@@ -91,18 +103,9 @@ class Trainer:
             logger = Logger()
             history = History()
 
-            # build the class weights
-            H1_length = train_gen.get_H1_length()
-            H0_length = train_gen.get_H0_length()
-
-            class_weight = {0: float(H1_length) / float(H0_length),
-                            1: 1.0}
-
-            print "using class_weights = " + str(class_weight)
-
             cur_model.get_keras_model().fit_generator(train_gen.preprocessed_generator(), steps_per_epoch = setting.steps_per_epoch, epochs = setting.max_epochs, verbose = 2, 
                                                       validation_data = val_gen.preprocessed_generator(), validation_steps = setting.steps_per_epoch, 
-                                                      callbacks = [early_stop, checkpointer, logger, history], class_weight = class_weight)
+                                                      callbacks = [early_stop, checkpointer, logger, history])
 
             # save the training report as well as the final version of the trained model
             logger.report_batches(model_outfolder)

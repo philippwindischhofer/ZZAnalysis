@@ -16,14 +16,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18ConfigReducedCategorySet.h>
 
-// global definitions
-
-// TString indir_a = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsOptMor18/";
-// TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization/";
-
-// TString name_a = "Mor18_{LI}";
-// TString name_b = "Mor18    (simple voting, likelihood only)";
-
 TString name_a = "Mor18_{LI}";
 TString name_b = "Mor18  (experimental)";
 
@@ -41,14 +33,11 @@ int main( int argc, char *argv[] )
 	return(-1);
     }
 
-    // TString out_folder = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/CompPlots/";
-    // TString indir_a = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsLIReducedCategorySet/";
-    // TString indir_b = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceReducedCategorySet/";
-
     TString indir_a = argv[1];
     TString indir_b = argv[2];
     TString out_folder = argv[3];
-    
+
+    // choose the category set that is used on both sides of the comparison
     //Mor18Config* conf = new Mor18Config();
     Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet();
 

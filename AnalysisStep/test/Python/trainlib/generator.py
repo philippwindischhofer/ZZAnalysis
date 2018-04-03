@@ -18,6 +18,9 @@ class Generator:
         self.H1_collection = None
         self.H0_collection = None
 
+        self.H1_weight = 1.0
+        self.H0_weight = 1.0
+
     def setup_training_data(self):
         self.H1_collection = FileCollection(self.H1_stream, start_fraction = 0.0, end_fraction = self.training_split)
         self.H0_collection = FileCollection(self.H0_stream, start_fraction = 0.0, end_fraction = self.training_split)
@@ -81,16 +84,31 @@ class Generator:
 
             yield scrambled_data
 
+    def set_H1_weight(self, weight):
+        self.H1_weight = weight
+
+    def set_H0_weight(self, weight):
+        self.H0_weight = weight
+
     def preprocessed_generator(self):
+        # build the class weights
+        class_weight = {0: float(self.H1_weight) / float(self.H0_weight),
+                        1: 1.0}
+
+        print "using class_weights = " + str(class_weight)
+
         for H1_data, H0_data in self.raw_generator():
             # run the preprocessing: this will in general change the number of rows (if there are cuts hidden inside the preprocessor) AND the number of columns (if not all loaded columns are meant as input to the classifier)
             H1_processed = self.preprocessor(H1_data)
             H0_processed = self.preprocessor(H0_data)
 
             # len() automatically maps to the first dimension of a numpy array!
-            # implicit assumption: all dictionaries delivered by a preprocessor must have the same length
+            # implicit assumption: all dictionary entries delivered by a preprocessor must have the same length
             H1_samples = len(H1_processed.values()[0])
             H0_samples = len(H0_processed.values()[0])
+
+            # prepare the weights for each sample
+            sample_weights = np.concatenate([np.full(H1_samples, class_weight[1]), np.full(H0_samples, class_weight[0])], axis = 0)
 
             target_data = np.concatenate([np.ones(H1_samples), np.zeros(H0_samples)], axis = 0)
             perm = np.random.permutation(len(target_data))
@@ -102,5 +120,6 @@ class Generator:
                 input_data[key] = temp[perm]
 
             target_data = {"target": target_data[perm]}
+            sample_weights = sample_weights[perm]
 
-            yield input_data, target_data
+            yield input_data, target_data, sample_weights

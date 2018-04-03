@@ -1,4 +1,4 @@
-from utils import get_size
+from utils import get_size, read_data
 import numpy as np
 
 # this simulates a single ROOT file that is actually distributed over multiple "physical" ROOT trees. From each file in the list,
@@ -28,9 +28,19 @@ class FileCollection:
         return self.used_length
     
     # returns some data from this file collection
-    def get_data(self, branches, start_index, end_index):
+    def get_data(self, branches, start, end):
         # now need to translate between a global index, and a filepath and its corresponding local index
-        return 0
+        if isinstance(start, float):
+            start_index = int(start * self.get_length())
+        else:
+            start_index = start
+
+        if isinstance(end, float):
+            end_index = int(end * self.get_length())
+        else:
+            end_index = end
+
+        return read_data(self, start_index, end_index, branches)
         
     def transform_index(self, global_index):
         if global_index > self.get_length():

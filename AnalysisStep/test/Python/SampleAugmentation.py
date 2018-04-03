@@ -78,7 +78,9 @@ def main():
     data_outpath = sys.argv[4]
 
     # files to which this discriminant should be augmented
-    data_files = ["ggH125", "VBFH125", "ZH125", "WplusH125", "WminusH125"]
+    #data_files = ["ggH125", "VBFH125", "ZH125", "WplusH125", "WminusH125"]
+
+    data_files = ["ggH125", "VBFH125", "ZH125", "WplusH125", "WminusH125", "ttH125"]
 
     #data_files = ["ggH125", "VBFH125", "ZH125", "WplusH125", "WminusH125", "ttH125", "ZZTo4l", "ggTo2e2mu_Contin_MCFM701", "ggTo2mu2tau_Contin_MCFM701", "ggTo4mu_Contin_MCFM701", "ggTo2e2tau_Contin_MCFM701", "ggTo4e_Contin_MCFM701", "ggTo4tau_Contin_MCFM701"]
 

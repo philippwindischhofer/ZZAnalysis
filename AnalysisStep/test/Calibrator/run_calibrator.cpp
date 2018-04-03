@@ -164,23 +164,19 @@ int main(int argc, char *argv[])
     TString switchval = argv[2];
     TString out_folder = argv[3];
 
-    //TString out_folder = "../../src/ZZAnalysis/CalibratorPlots/";
-
     Mor18Config conf(MCpath);
 
-    //DiscriminantCollection* coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
-    //DiscriminantCollection* coll = MLDiscriminantFactory::GenerateMorCompatibleDiscriminantCollection(out_folder, conf);
-    //DiscriminantCollection* coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
-
     DiscriminantCollection* coll;
+
+    // switches between the trained discriminants (ML) or MELA values only (ME)
     if(switchval == "ME")
     {
 	coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
     }
     else if(switchval = "ML")
     {
-	coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
-	//coll = MLDiscriminantFactoryFullCategorySet::GenerateDiscriminantCollection(out_folder, conf);
+	//coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+	coll = MLDiscriminantFactoryFullCategorySet::GenerateDiscriminantCollection(out_folder, conf);
     }
     else
     {
@@ -189,21 +185,6 @@ int main(int argc, char *argv[])
     }
 	
     calibrate_discriminant_collection(coll, conf, out_folder);
-
-    // TString H1_file = "VBFH125";
-    // TString H0_file = "ggH125";
-    // TString disc_name = "VBF2j-ggH";
-
-    // calibrate_discriminant(H1_file, H0_file, conf, 2jcut, DVBF2j_ME, disc_name);   
-
-    // // try to read them back and evaluate them
-    // TFile* infile = new TFile(out_folder + disc_name + "_calines.root");
-    // TSpline3* H1_spline = (TSpline3*)(infile -> Get("H1_distrib_smooth") -> Clone());
-    // TSpline3* H0_spline = (TSpline3*)(infile -> Get("H0_distrib_smooth") -> Clone());
-    // infile -> Close();
-    
-    // std::cout << H1_spline -> Eval(0.0) << std::endl;
-    // std::cout << H0_spline -> Eval(0.0) << std::endl;
 
     return(0);
 }

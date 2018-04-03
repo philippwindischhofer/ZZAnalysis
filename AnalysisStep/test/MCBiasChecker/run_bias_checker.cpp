@@ -63,7 +63,7 @@ int main( int argc, char *argv[] )
 
 	float event_weight = (lumi * buffer -> xsec * 1000. * buffer -> overallEventWeight) / gen_sum_weights;
 
-	datahist -> Fill(j_entry, buffer -> LepPt -> at(0));
+	datahist -> Fill(j_entry, event_weight);
 	weight_sum += event_weight;
 	fill_cnt++;
     }

@@ -215,8 +215,8 @@ def main():
     model_type = confhandler.get_field('global', 'model_type') 
 
     if model_type == 'SimpleModel':
-        mcoll = ModelFactory.GenerateSimpleModelCollectionsReducedCategorySet(MC_path)
-        #mcoll = ModelFactoryFullCategorySet.GenerateSimpleModelCollections(MC_path)
+        #mcoll = ModelFactory.GenerateSimpleModelCollectionsReducedCategorySet(MC_path)
+        mcoll = ModelFactoryFullCategorySet.GenerateSimpleModelCollections(MC_path)
     elif model_type == 'CombinedModel':
         mcoll = ModelFactory.GenerateCombinedModelCollectionsReducedCategorySet(MC_path)
         
