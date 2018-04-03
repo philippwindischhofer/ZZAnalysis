@@ -26,7 +26,7 @@ class ModelFactory:
         # this is the model that will take the place of the VBF2jet/ggH discriminant.
         model_name = "D_VBF_ggH_2j_ML"
         scalar_input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", "nExtraLep", "D_VBF2j_ggH_ME"]
-        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"]}
+        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"], "Lep": ["LepPt", "LepEta", "LepPhi"], "ExtraLep": ["ExtraLepPt", "ExtraLepEta", "ExtraLepPhi"]}
 
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2
         
@@ -38,7 +38,7 @@ class ModelFactory:
 
         model_name = "D_VBF_ggH_1j_ML"
         scalar_input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", "nExtraLep", "D_VBF1j_ggH_ME"]
-        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"]}
+        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"], "Lep": ["LepPt", "LepEta", "LepPhi"], "ExtraLep": ["ExtraLepPt", "ExtraLepEta", "ExtraLepPhi"]}
 
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] == 1
         
@@ -63,7 +63,7 @@ class ModelFactory:
 
         model_name = "D_WHh_ggH_2j_ML"
         scalar_input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", "nExtraLep", "D_WHh_ggH_ME"]
-        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"]}
+        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"], "Lep": ["LepPt", "LepEta", "LepPhi"], "ExtraLep": ["ExtraLepPt", "ExtraLepEta", "ExtraLepPhi"]}
 
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2
         
@@ -87,7 +87,7 @@ class ModelFactory:
 
         model_name = "D_ZHh_ggH_2j_ML"
         scalar_input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", "nExtraLep", "D_ZHh_ggH_ME"]
-        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"]}
+        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"], "Lep": ["LepPt", "LepEta", "LepPhi"], "ExtraLep": ["ExtraLepPt", "ExtraLepEta", "ExtraLepPhi"]}
 
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2
         
@@ -112,7 +112,7 @@ class ModelFactory:
 
         model_name = "D_WHh_ZHh_2j_ML"
         scalar_input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", "nExtraLep", "D_WHh_ZHh_ME"]
-        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"]}
+        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"], "Lep": ["LepPt", "LepEta", "LepPhi"], "ExtraLep": ["ExtraLepPt", "ExtraLepEta", "ExtraLepPhi"]}
 
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2
         
@@ -137,7 +137,7 @@ class ModelFactory:
 
         model_name = "D_VBF_WHh_2j_ML"
         scalar_input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", "nExtraLep", "D_VBF2j_WHh_ME"]
-        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"]}
+        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"], "Lep": ["LepPt", "LepEta", "LepPhi"], "ExtraLep": ["ExtraLepPt", "ExtraLepEta", "ExtraLepPhi"]}
 
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2
         
@@ -161,7 +161,7 @@ class ModelFactory:
 
         model_name = "D_VBF_ZHh_2j_ML"
         scalar_input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", "nExtraLep", "D_VBF2j_ZHh_ME"]
-        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"]}
+        list_input_columns = {"Jet": ["JetPt", "JetEta", "JetPhi"], "Lep": ["LepPt", "LepEta", "LepPhi"], "ExtraLep": ["ExtraLepPt", "ExtraLepEta", "ExtraLepPhi"]}
 
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2
         

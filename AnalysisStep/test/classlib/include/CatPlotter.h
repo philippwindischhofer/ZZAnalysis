@@ -33,6 +33,7 @@ public:
     void Construct(std::map<TString, TH1F*> histmap, Config* conf, std::vector<float> yields, TString title);
     void DrawLabel(TString label);
     void AddLine(double coord);
+    void SaveFiles(TString path);
     void SaveAs(TString file);
     THStack* GetStack();
     void Update();

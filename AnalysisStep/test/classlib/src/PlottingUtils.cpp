@@ -68,13 +68,15 @@ void PlottingUtils::make_barchart(std::map<TString, TH1F*> histmap, TString out_
 
     plotter.Construct(histmap, conf, std::vector<float>(), "exp. events");
     plotter.DrawLabel(label);
-    plotter.SaveAs(out_folder + conf -> storage_prefix() + out_file + "_absolute.pdf");
+    //plotter.SaveAs(out_folder + conf -> storage_prefix() + out_file + "_absolute.pdf");
+    plotter.SaveFiles(out_folder + conf -> storage_prefix() + out_file + "_absolute");
 
     std::vector<float> sums_SB = unitize_histmap(histmap);    
     
     plotter.Construct(histmap, conf, sums_SB, "signal fraction");        
     plotter.DrawLabel(label);
-    plotter.SaveAs(out_folder + conf -> storage_prefix() + out_file + ".pdf");
+    //plotter.SaveAs(out_folder + conf -> storage_prefix() + out_file + ".pdf");
+    plotter.SaveFiles(out_folder + conf -> storage_prefix() + out_file);
 }
 
 void PlottingUtils::make_S_barchart(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, TString label, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction)
@@ -248,5 +250,6 @@ void PlottingUtils::make_punzi(int fill_histos, Classifier* classifier, TString 
 
     plotter.Construct(punzi_hist_vec, cat_labels, std::vector<TString>(), std::vector<float>(), "Punzi purity", conf -> lumi());       
     plotter.Update();
-    plotter.SaveAs(out_folder + conf -> storage_prefix() + out_file + ".pdf");    
+    //plotter.SaveAs(out_folder + conf -> storage_prefix() + out_file + ".pdf");    
+    plotter.SaveFiles(out_folder + conf -> storage_prefix() + out_file);    
 }

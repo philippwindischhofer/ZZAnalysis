@@ -14,7 +14,6 @@ class Generator:
 
         self.training_split = training_split
         self.chunks = chunks
-#        self.as_matrix = as_matrix
 
         self.H1_collection = None
         self.H0_collection = None
@@ -28,6 +27,12 @@ class Generator:
         self.H1_collection = FileCollection(self.H1_stream, start_fraction = self.training_split, end_fraction = 1.0)
         self.H0_collection = FileCollection(self.H0_stream, start_fraction = self.training_split, end_fraction = 1.0)
         return self.H1_collection.get_length() + self.H0_collection.get_length()
+
+    def get_H1_length(self):
+        return self.H1_collection.get_length()
+
+    def get_H0_length(self):
+        return self.H0_collection.get_length()
         
     def raw_generator(self):
         H1_curpos = 0

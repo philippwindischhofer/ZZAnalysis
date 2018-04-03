@@ -25,9 +25,9 @@
 // TString name_b = "Mor18    (simple voting, likelihood only)";
 
 TString name_a = "Mor18_{LI}";
-TString name_b = "Mor18  (experimental)  [nCleanedJetsPt30 >= 1]";
+TString name_b = "Mor18  (experimental)";
 
-float zoom_scale = 0.2;
+float zoom_scale = 1.0;
 
 TString punzi_hist_name = "punzi_purity";
 TString punzi_infile = "punzi_plot_hist.root";
@@ -49,8 +49,8 @@ int main( int argc, char *argv[] )
     TString indir_b = argv[2];
     TString out_folder = argv[3];
     
-    Mor18Config* conf = new Mor18Config();
-    //Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet();
+    //Mor18Config* conf = new Mor18Config();
+    Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet();
 
     CompUtils::compare_punzi(indir_a, indir_b, name_a, name_b, conf -> storage_prefix() + punzi_infile, punzi_hist_name, out_folder, conf -> storage_prefix() + punzi_outfile, zoom_scale, conf);
 

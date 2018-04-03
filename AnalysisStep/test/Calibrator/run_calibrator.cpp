@@ -179,8 +179,8 @@ int main(int argc, char *argv[])
     }
     else if(switchval = "ML")
     {
-	//coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
-	coll = MLDiscriminantFactoryFullCategorySet::GenerateDiscriminantCollection(out_folder, conf);
+	coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+	//coll = MLDiscriminantFactoryFullCategorySet::GenerateDiscriminantCollection(out_folder, conf);
     }
     else
     {

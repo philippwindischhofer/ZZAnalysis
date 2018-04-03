@@ -181,6 +181,12 @@ void CatPlotter::Redraw()
     canv -> Update();
 }
 
+void CatPlotter::SaveFiles(TString path)
+{
+    canv -> SaveAs(path + ".svg");
+    canv -> SaveAs(path + ".pdf");
+}
+
 void CatPlotter::SaveAs(TString file)
 {
     canv -> SaveAs(file);

@@ -48,11 +48,11 @@ int main(int argc, char *argv[])
 //    TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsSandbox/";
 //    TString out_folder = "../../src/ZZAnalysis/BenchmarkerPlotsOptMor18/";
 
-//    Classifier* refclass = new Mor18Classifier();
-
+    //Classifier* refclass = new Mor18Classifier();
     Classifier* refclass = new Mor18LIClassifier(calibration_folder);
-//    Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet(MCpath);
-    Mor18Config* conf = new Mor18Config(MCpath);
+
+    Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet(MCpath);
+    //Mor18Config* conf = new Mor18Config(MCpath);
 
     // these are the optimized working points to give max. Punzi
     // float WP_VBF2j = 0.640951;
@@ -66,8 +66,6 @@ int main(int argc, char *argv[])
     // auto jcut = [&](Tree* in) -> bool {
     // 	return (((in -> nCleanedJetsPt30 >= 1) ? kTRUE : kFALSE)) ? 
     // 	kTRUE : kFALSE;};
-
-    
 
     PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", mZZ_cut, conf, 0.5, 1.0);
     PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", mZZ_cut, conf, 0.5, 1.0);
