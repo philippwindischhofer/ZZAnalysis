@@ -95,14 +95,14 @@ class Trainer:
             H1_length = train_gen.get_H1_length()
             H0_length = train_gen.get_H0_length()
 
-            class_weights = {0: H1_length / H0_length,
-                             1: 1.0}
+            class_weight = {0: float(H1_length) / float(H0_length),
+                            1: 1.0}
 
-            print "using class_weights = " + str(class_weights)
+            print "using class_weights = " + str(class_weight)
 
             cur_model.get_keras_model().fit_generator(train_gen.preprocessed_generator(), steps_per_epoch = setting.steps_per_epoch, epochs = setting.max_epochs, verbose = 2, 
                                                       validation_data = val_gen.preprocessed_generator(), validation_steps = setting.steps_per_epoch, 
-                                                      callbacks = [early_stop, checkpointer, logger, history], class_weights = class_weights)
+                                                      callbacks = [early_stop, checkpointer, logger, history], class_weight = class_weight)
 
             # save the training report as well as the final version of the trained model
             logger.report_batches(model_outfolder)
