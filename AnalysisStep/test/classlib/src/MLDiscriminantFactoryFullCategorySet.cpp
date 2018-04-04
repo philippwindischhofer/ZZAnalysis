@@ -13,6 +13,17 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     EventStream* H1Stream;
     EventStream* H0Stream;
 
+    // priors for the categories (can be arbitrarily scaled, only the ratio is going to be needed)
+    float VBF_prior = 1.0;
+    float ggH_prior = 50.0;
+    float WHhadr_prior = 1.0;
+    float ZHhadr_prior = 1.0;
+    float WHlept_prior = 1.0;
+    float ZHlept_prior = 1.0;
+    float ZHMET_prior = 1.0;
+    float ttHhadr_prior = 1.0;
+    float ttHlept_prior = 1.0;
+
     // the cuts that will be needed
     // TODO: get rid of this very weird construction
     auto j2cut = [&](Tree* in) -> bool {
@@ -47,6 +58,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(VBF_prior);
+    disc -> SetH0Weight(ggH_prior);
     
     auto D_VBF_ML_disc = [&](Tree* in) -> float {
 	return in -> D_VBF_ggH_ML;
@@ -76,6 +89,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(WHhadr_prior);
+    disc -> SetH0Weight(ggH_prior);
     
     auto D_WHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_WHh_ggH_ML;
@@ -102,6 +117,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHhadr_prior);
+    disc -> SetH0Weight(ggH_prior);
     
     auto D_ZHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHh_ggH_ML;
@@ -130,6 +147,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(WHhadr_prior);
+    disc -> SetH0Weight(ZHhadr_prior);
     
     auto D_WHh_ZHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_WHh_ZHh_ML;
@@ -158,6 +177,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(VBF_prior);
+    disc -> SetH0Weight(WHhadr_prior);
     
     auto D_VBF_WHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_VBF_WHh_ML;
@@ -184,6 +205,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(VBF_prior);
+    disc -> SetH0Weight(ZHhadr_prior);
     
     auto D_VBF_ZHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_VBF_ZHh_ML;
@@ -212,6 +235,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(WHlept_prior);
+    disc -> SetH0Weight(ggH_prior);
     
     auto D_WHl_ggH_ML_disc = [&](Tree* in) -> float {
 	return in -> D_WHl_ggH_ML;
@@ -239,6 +264,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(WHlept_prior);
+    disc -> SetH0Weight(VBF_prior);
     
     auto D_WHl_VBF_ML_disc = [&](Tree* in) -> float {
 	return in -> D_WHl_VBF_ML;
@@ -268,6 +295,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(WHlept_prior);
+    disc -> SetH0Weight(WHhadr_prior);
     
     auto D_WHl_WHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_WHl_WHh_ML;
@@ -295,6 +324,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(WHlept_prior);
+    disc -> SetH0Weight(ZHhadr_prior);
     
     auto D_WHl_ZHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_WHl_ZHh_ML;
@@ -322,6 +353,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(WHlept_prior);
+    disc -> SetH0Weight(ZHlept_prior);
     
     auto D_WHl_ZHl_ML_disc = [&](Tree* in) -> float {
 	return in -> D_WHl_ZHl_ML;
@@ -349,6 +382,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(WHlept_prior);
+    disc -> SetH0Weight(ZHMET_prior);
     
     auto D_WHl_ZHMET_ML_disc = [&](Tree* in) -> float {
 	return in -> D_WHl_ZHMET_ML;
@@ -376,6 +411,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(WHlept_prior);
+    disc -> SetH0Weight(ttHhadr_prior);
     
     auto D_WHl_ttHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_WHl_ttHh_ML;
@@ -403,6 +440,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(WHlept_prior);
+    disc -> SetH0Weight(ttHlept_prior);
     
     auto D_WHl_ttHl_ML_disc = [&](Tree* in) -> float {
 	return in -> D_WHl_ttHl_ML;
@@ -428,6 +467,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHhadr_prior);
+    disc -> SetH0Weight(ZHlept_prior);
     
     auto D_ZHh_ZHl_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHh_ZHl_ML;
@@ -453,6 +494,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHhadr_prior);
+    disc -> SetH0Weight(ZHMET_prior);
     
     auto D_ZHh_ZHMET_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHh_ZHMET_ML;
@@ -478,6 +521,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHhadr_prior);
+    disc -> SetH0Weight(ttHhadr_prior);
     
     auto D_ZHh_ttHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHh_ttHh_ML;
@@ -503,6 +548,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHhadr_prior);
+    disc -> SetH0Weight(ttHlept_prior);
     
     auto D_ZHh_ttHl_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHh_ttHl_ML;
@@ -529,6 +576,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHlept_prior);
+    disc -> SetH0Weight(ggH_prior);
     
     auto D_ZHl_ggH_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHl_ggH_ML;
@@ -554,6 +603,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHlept_prior);
+    disc -> SetH0Weight(VBF_prior);
     
     auto D_ZHl_VBF_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHl_VBF_ML;
@@ -581,6 +632,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHlept_prior);
+    disc -> SetH0Weight(WHhadr_prior);
     
     auto D_ZHl_WHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHl_WHh_ML;
@@ -606,6 +659,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHlept_prior);
+    disc -> SetH0Weight(ZHMET_prior);
     
     auto D_ZHl_ZHMET_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHl_ZHMET_ML;
@@ -631,6 +686,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHlept_prior);
+    disc -> SetH0Weight(ttHhadr_prior);
     
     auto D_ZHl_ttHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHl_ttHh_ML;
@@ -656,6 +713,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHlept_prior);
+    disc -> SetH0Weight(ttHlept_prior);
     
     auto D_ZHl_ttHl_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHl_ttHl_ML;
@@ -681,6 +740,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHMET_prior);
+    disc -> SetH0Weight(ggH_prior);
     
     auto D_ZHMET_ggH_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHMET_ggH_ML;
@@ -706,6 +767,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHMET_prior);
+    disc -> SetH0Weight(VBF_prior);
     
     auto D_ZHMET_VBF_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHMET_VBF_ML;
@@ -733,6 +796,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHMET_prior);
+    disc -> SetH0Weight(WHhadr_prior);
     
     auto D_ZHMET_WHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHMET_WHh_ML;
@@ -758,6 +823,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHMET_prior);
+    disc -> SetH0Weight(ttHhadr_prior);
     
     auto D_ZHMET_ttHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHMET_ttHh_ML;
@@ -783,6 +850,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ZHMET_prior);
+    disc -> SetH0Weight(ttHlept_prior);
     
     auto D_ZHMET_ttHl_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ZHMET_ttHl_ML;
@@ -808,6 +877,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ttHhadr_prior);
+    disc -> SetH0Weight(ggH_prior);
     
     auto D_ttHh_ggH_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ttHh_ggH_ML;
@@ -833,6 +904,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ttHhadr_prior);
+    disc -> SetH0Weight(VBF_prior);
     
     auto D_ttHh_VBF_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ttHh_VBF_ML;
@@ -860,6 +933,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ttHhadr_prior);
+    disc -> SetH0Weight(WHhadr_prior);
     
     auto D_ttHh_WHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ttHh_WHh_ML;
@@ -885,6 +960,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ttHhadr_prior);
+    disc -> SetH0Weight(ttHlept_prior);
     
     auto D_ttHh_ttHl_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ttHh_ttHl_ML;
@@ -910,6 +987,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ttHlept_prior);
+    disc -> SetH0Weight(ggH_prior);
     
     auto D_ttHl_ggH_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ttHl_ggH_ML;
@@ -935,6 +1014,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ttHlept_prior);
+    disc -> SetH0Weight(VBF_prior);
     
     auto D_ttHl_VBF_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ttHl_VBF_ML;
@@ -962,6 +1043,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     
     disc -> SetH1Source(H1Stream);
     disc -> SetH0Source(H0Stream);
+    disc -> SetH1Weight(ttHlept_prior);
+    disc -> SetH0Weight(WHhadr_prior);
     
     auto D_ttHl_WHh_ML_disc = [&](Tree* in) -> float {
 	return in -> D_ttHl_WHh_ML;

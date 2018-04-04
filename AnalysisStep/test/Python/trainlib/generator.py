@@ -92,15 +92,23 @@ class Generator:
 
     def preprocessed_generator(self):
         # build the class weights
-        class_weight = {0: float(self.H1_weight) / float(self.H0_weight),
-                        1: 1.0}
+        # class_weight = {0: float(self.H1_weight) / float(self.H0_weight),
+        #                 1: 1.0}
 
-        print "using class_weights = " + str(class_weight)
+        # print "using class_weights = " + str(class_weight)
 
         for H1_data, H0_data in self.raw_generator():
             # run the preprocessing: this will in general change the number of rows (if there are cuts hidden inside the preprocessor) AND the number of columns (if not all loaded columns are meant as input to the classifier)
-            H1_processed = self.preprocessor(H1_data)
-            H0_processed = self.preprocessor(H0_data)
+            H1_processed = self.preprocessor.process(H1_data)
+            H1_indices = self.preprocessor.get_last_indices()
+            H0_processed = self.preprocessor.process(H0_data)
+            H0_indices = self.preprocessor.get_last_indices()
+
+            # print "H1_indices"
+            # print H1_indices
+
+            # print "H0_indices"
+            # print H0_indices
 
             # len() automatically maps to the first dimension of a numpy array!
             # implicit assumption: all dictionary entries delivered by a preprocessor must have the same length
@@ -108,10 +116,33 @@ class Generator:
             H0_samples = len(H0_processed.values()[0])
 
             # prepare the weights for each sample
-            sample_weights = np.concatenate([np.full(H1_samples, class_weight[1]), np.full(H0_samples, class_weight[0])], axis = 0)
+            #sample_weights = np.concatenate([np.full(H1_samples, class_weight[1]), np.full(H0_samples, class_weight[0])], axis = 0)
+            H1_sample_weights = np.array(H1_data["training_weight"][H1_indices])
+            H0_sample_weights = np.array(H0_data["training_weight"][H0_indices])
+
+            #print H1_samples
+            #print len(H1_sample_weights)
+
+            #print H0_samples
+            #print len(H0_sample_weights)
+
+            # multiply with the per-class weights
+            H1_sample_weights *= self.H1_weight
+            H0_sample_weights *= self.H0_weight
+
+            sample_weights = np.concatenate([H1_sample_weights, H0_sample_weights], axis = 0)
+
+            # print "sample_weights"
+            # print sample_weights
 
             target_data = np.concatenate([np.ones(H1_samples), np.zeros(H0_samples)], axis = 0)
+            
+            #print len(target_data)
+            #print H1_samples + H0_samples
+
             perm = np.random.permutation(len(target_data))
+
+            #print len(perm)
 
             # now concatenate all input array found in H1_processed & H0_processed
             input_data = {}

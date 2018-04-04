@@ -88,6 +88,9 @@ void Discriminant::AddComponent(TString name, const std::function<bool(Tree*)> c
 	H0_calines.push_back(NULL);
 
 	calibration_status.push_back(false);
+
+	// have no KL corrections without calibration...
+	KL_corrections.push_back(0.0);
     }
     else
     {
@@ -106,9 +109,75 @@ void Discriminant::AddComponent(TString name, const std::function<bool(Tree*)> c
 	H1_calines.push_back(H1_spline);
 	H0_calines.push_back(H0_spline);
 	calibration_status.push_back(true);
+
+	// compute also the KL corrections for each component, to be used later
+	float KL_corr = ComputeKLCorrection(H1_calib_histo, H0_calib_histo);
+	KL_corrections.push_back(KL_corr);
+
+	std::cout << "computed KL correction for component " << name << ": " << KL_corr << std::endl;
     }
 
     calib_file -> Close();
+}
+
+float Discriminant::ComputeKLCorrection(TH1F* H1_calib_histo, TH1F* H0_calib_histo)
+{
+    // compute the (expected) Kullback-Leibler divergences, and take the difference between the two
+
+    float D_10 = 0;
+    float D_01 = 0;
+
+    if(H0_calib_histo -> GetSize() != H1_calib_histo -> GetSize())
+    {
+	std::cout << "Error: both H0 and H1 calibration histograms are supposed to have the same number of bins!";
+	return 0.0;
+    }
+
+    for(int i = 1; i <= H0_calib_histo -> GetSize() - 2; i++)
+    {
+	float p_H1 = std::max(H1_calib_histo -> GetBinContent(i), 0.0);
+	float p_H0 = std::max(H0_calib_histo -> GetBinContent(i), 0.0);
+	float H1_bin_width = std::max(H1_calib_histo -> GetBinWidth(i), 0.0);
+	float H0_bin_width = std::max(H0_calib_histo -> GetBinWidth(i), 0.0);
+
+	std::cout << "bin " << i << ": " << p_H1 << " / " << p_H0 << " / " << H1_bin_width << " / " << H0_bin_width << std::endl;
+	
+	if(p_H1 != 0.0 && p_H0 != 0.0)
+	{
+	    D_10 += p_H1 * TMath::Log(p_H1 / (p_H0 + 0.00001)) * H1_bin_width;
+	    D_01 += p_H0 * TMath::Log(p_H0 / (p_H1 + 0.00001)) * H0_bin_width;
+	}
+    }
+
+    // return the actual correction term, which is the difference between the two KL divergences
+    return 1.0 / 2.0 * (D_01 - D_10);
+}
+
+float Discriminant::EvaluateLog(Tree* in)
+{
+    return TMath::Log(Evaluate(in));
+}
+
+float Discriminant::EvaluateKLCorrection(Tree* in)
+{
+    float retval = 0;
+
+    // iterate through the list of components and check each of them until find a matching one
+    for(auto tup: boost::combine(names, cuts, KL_corrections))
+    {
+	std::function<bool(Tree*)> cut;
+	TString name;
+	float KL_correction;
+	boost::tie(name, cut, KL_correction) = tup;
+
+	if(cut(in))
+	{
+	    retval = KL_correction;
+	    break;
+	}
+    }
+
+    return retval;
 }
 
 float Discriminant::Evaluate(Tree* in)

@@ -38,8 +38,8 @@ int main( int argc, char *argv[] )
     TString out_folder = argv[3];
 
     // choose the category set that is used on both sides of the comparison
-    //Mor18Config* conf = new Mor18Config();
-    Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet();
+    Mor18Config* conf = new Mor18Config();
+    //Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet();
 
     CompUtils::compare_punzi(indir_a, indir_b, name_a, name_b, conf -> storage_prefix() + punzi_infile, punzi_hist_name, out_folder, conf -> storage_prefix() + punzi_outfile, zoom_scale, conf);
 

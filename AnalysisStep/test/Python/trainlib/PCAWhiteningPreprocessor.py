@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.decomposition import PCA
 import pickle
 import re
+import copy
 
 from Preprocessor import Preprocessor
 from ConfigFileUtils import ConfigFileUtils
@@ -74,7 +75,7 @@ class PCAWhiteningPreprocessor(Preprocessor):
         self.pca.fit(data)
 
     def get_last_indices(self):
-        return self.last_indices
+        return copy.deepcopy(self.last_indices)
 
     def process(self, data):
         cut_data = self._rowcol_cut(data)

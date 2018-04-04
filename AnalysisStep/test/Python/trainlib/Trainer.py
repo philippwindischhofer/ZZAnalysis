@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 
 from keras.callbacks import Callback, EarlyStopping, ModelCheckpoint, History
 from keras import losses
+import numpy as np
 import os
 
 from generator import Generator
@@ -75,21 +76,27 @@ class Trainer:
             cur_preprocessor.setup_generator(setup_gen.raw_generator_scrambled(), len_setupdata = len_setup_data)
 
             # with the preprocessor set up (and thus all cuts determined), can now determine the actual number of training and validation events that are sent to the network (important for handling skewed datasets with unbalanced numbers of events in the two categories)
-            H1_length = len(cur_preprocessor.process(setup_gen.H1_collection.get_data(self.branches, 0.0, 1.0)).values()[0])
-            H0_length = len(cur_preprocessor.process(setup_gen.H0_collection.get_data(self.branches, 0.0, 1.0)).values()[0])
+            H1_setup_data = setup_gen.H1_collection.get_data(self.branches, 0.0, 1.0)
+            H0_setup_data = setup_gen.H0_collection.get_data(self.branches, 0.0, 1.0)
+            H1_length = len(cur_preprocessor.process(H1_setup_data).values()[0])
+            H0_length = len(cur_preprocessor.process(H0_setup_data).values()[0])
+
+            # also set the normalization of the per-event weights here
+            H1_weight_sum = np.sum(H1_setup_data["training_weight"])
+            H0_weight_sum = np.sum(H0_setup_data["training_weight"])
 
             print "length of H1 training set (after cuts): " + str(H1_length)
             print "length of H0 training set (after cuts): " + str(H0_length)
 
             # recreate the generators yielding the training and validation data for the actual training procedure
-            train_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor.process, chunks = setting.steps_per_epoch)            
-            train_gen.set_H1_weight(H1_length)
-            train_gen.set_H0_weight(H0_length)
+            train_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor, chunks = setting.steps_per_epoch)            
+            train_gen.set_H1_weight(1.0 / (H1_length * H1_weight_sum))
+            train_gen.set_H0_weight(1.0 / (H0_length * H0_weight_sum))
             train_gen.setup_training_data()
             
-            val_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor.process, chunks = setting.steps_per_epoch)
-            val_gen.set_H1_weight(H1_length)
-            val_gen.set_H0_weight(H0_length)
+            val_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor, chunks = setting.steps_per_epoch)
+            val_gen.set_H1_weight(1.0 / (H1_length * H1_weight_sum))
+            val_gen.set_H0_weight(1.0 / (H0_length * H0_weight_sum))
             val_gen.setup_validation_data()
 
             # stops the training as soon as the loss starts to saturate

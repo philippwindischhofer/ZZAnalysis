@@ -11,7 +11,8 @@ Mor18LIClassifier::Mor18LIClassifier(TString out_folder)
     //coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
     coll = MLDiscriminantFactoryFullCategorySet::GenerateDiscriminantCollection(out_folder, conf);
 
-    comb = new VotingMultiClassCombinator();
+    //comb = new VotingMultiClassCombinator();
+    comb = new RANDKLMultiClassCombinator();
 }
 
 Mor18LIClassifier::~Mor18LIClassifier()

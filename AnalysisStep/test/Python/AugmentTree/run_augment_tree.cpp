@@ -23,6 +23,12 @@
 void augment_tree(TString inpath, TString outpath)
 {
     TFile* input_file = new TFile(inpath, "read");
+
+    // read the metadata
+    TH1F* hCounters = (TH1F*)input_file -> Get("ZZTree/Counters");
+    Long64_t n_gen_events = (Long64_t)hCounters -> GetBinContent(1);
+    Long64_t gen_sum_weights = (Long64_t)hCounters -> GetBinContent(40);
+
     TFile* output_file = new TFile(outpath, "recreate");
     output_file -> mkdir("ZZTree");
 
@@ -38,7 +44,7 @@ void augment_tree(TString inpath, TString outpath)
     TH1F* output_metadata = (TH1F*)(input_metadata -> Clone());
 
     // create the new branches that are needed in the output tree
-    output_tree -> Branch("testval", &(buffer -> testval), "testval/F");
+    output_tree -> Branch("training_weight", &(buffer -> training_weight), "training_weight/F");
 
     output_tree -> Branch("D_VBF2j_ggH_ME", &(buffer -> D_VBF2j_ggH_ME), "D_VBF2j_ggH_ME/F");
     output_tree -> Branch("D_VBF1j_ggH_ME", &(buffer -> D_VBF1j_ggH_ME), "D_VBF1j_ggH_ME/F");
@@ -71,8 +77,10 @@ void augment_tree(TString inpath, TString outpath)
 	// now actually read this entry
 	buffer -> fChain -> GetEntry(j_entry);
 
+	float training_weight = ((buffer -> xsec) * (buffer -> overallEventWeight)) / gen_sum_weights;
+
 	// fill the placeholder variable
-	buffer -> testval = 3.14;
+	buffer -> training_weight = training_weight;
 
 	if(!br_lhe)
 	{
@@ -102,8 +110,8 @@ void augment_tree(TString inpath, TString outpath)
 
 int main( int argc, char *argv[] )
 {
-    Mor18Config* conf = new Mor18Config();
-    TString out_dir = "/data_CMS/cms/wind/CJLST_NTuples/";
+    Mor18Config* conf = new Mor18Config("/data_CMS/cms/tsculac/CJLST_NTuples/");
+    TString out_dir = "/data_CMS/cms/wind/CJLST_NTuples_training_weights/";
     
     // first, make a list of all files, independent of the cut with which they appear in the signal routing table
     std::vector<std::pair<TString, Routing*>> routing_table = conf -> get_routing();

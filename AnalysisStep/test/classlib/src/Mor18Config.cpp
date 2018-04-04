@@ -19,14 +19,14 @@ Mor18Config::Mor18Config(TString MCpath) : Config(MCpath)
     routing.push_back(std::make_pair("ttH125", new Routing(extraLeptons_1_cut, "ttH1lhist")));
     routing.push_back(std::make_pair("ttH125", new Routing(extraLeptons_2_cut, "ttH2lhist")));
 
-    // routing.push_back(std::make_pair("ZZTo4l", new Routing(no_cut, "qq4lhist")));
+    routing.push_back(std::make_pair("ZZTo4l", new Routing(no_cut, "qq4lhist")));
 
-    // routing.push_back(std::make_pair("ggTo2e2mu_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
-    // routing.push_back(std::make_pair("ggTo2e2tau_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
-    // routing.push_back(std::make_pair("ggTo2mu2tau_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
-    // routing.push_back(std::make_pair("ggTo4e_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
-    // routing.push_back(std::make_pair("ggTo4mu_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
-    // routing.push_back(std::make_pair("ggTo4tau_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
+    routing.push_back(std::make_pair("ggTo2e2mu_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
+    routing.push_back(std::make_pair("ggTo2e2tau_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
+    routing.push_back(std::make_pair("ggTo2mu2tau_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
+    routing.push_back(std::make_pair("ggTo4e_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
+    routing.push_back(std::make_pair("ggTo4mu_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
+    routing.push_back(std::make_pair("ggTo4tau_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
 }
 
 std::vector<int> Mor18Config::categories()

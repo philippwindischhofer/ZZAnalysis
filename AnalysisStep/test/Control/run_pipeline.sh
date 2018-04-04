@@ -65,10 +65,10 @@ $BIN_DIR$COMPARER $BENCHMARK_DIR $COMP_REF_DIR $COMP_DIR
 $BIN_DIR$ROC_PLOTTER $AUGMENTATION_DIR $ROC_DIR
 
 # run the plot postprocessing
-cd $CALIBRATION_DIR
-sh $PLOT_POSTPROCESSOR
-cd $ROC_DIR
-sh $PLOT_POSTPROCESSOR
+#cd $CALIBRATION_DIR
+#sh $PLOT_POSTPROCESSOR
+#cd $ROC_DIR
+#sh $PLOT_POSTPROCESSOR
 
 # delete again the large augmented ROOT files (can always be regenerated, if necessary)
 #echo "removing "$AUGMENTATION_DIR

@@ -22,6 +22,7 @@
 #include "TKDE.h"
 #include "TSpline.h"
 #include "TH1F.h"
+#include "TMath.h"
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/EventStream.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
@@ -33,6 +34,9 @@ public:
     ~Discriminant();
 
     float Evaluate(Tree* in);
+    float EvaluateLog(Tree* in);
+
+    float EvaluateKLCorrection(Tree* in);
 
     void AddComponent(TString name, const std::function<bool(Tree*)> cut, const std::function<float(Tree*)> disc);
 
@@ -53,6 +57,8 @@ public:
     TString GetDiscriminantName();
     
 private:
+    float ComputeKLCorrection(TH1F* H1_calib_histo, TH1F* H0_calib_histo);
+
     TString calib_dir;
 
     // the two streams of data this discriminant is supposed to separate. this is needed in order to compute the distributions of its pieces on the H1- and H0 files
@@ -76,6 +82,9 @@ private:
     
     std::vector<TH1F*> H1_calib_histos;
     std::vector<TH1F*> H0_calib_histos;
+
+    // the Kullback-Leibler correction values for each component
+    std::vector<float> KL_corrections;
 
     // ... and their calibration status
     std::vector<bool> calibration_status;

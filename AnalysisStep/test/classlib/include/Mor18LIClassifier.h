@@ -32,6 +32,7 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactory.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactoryFullCategorySet.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/VotingMultiClassCombinator.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/RANDKLMultiClassCombinator.h>
 
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>

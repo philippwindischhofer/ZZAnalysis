@@ -26,8 +26,8 @@ public :
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
 
-   // placeholder for output from Python-based classifier or discriminant
-   float testval;
+   // weight with which each event is going to be used for the training etc.
+   float training_weight;
 
    // values of the MELA-discriminants for this event (as computed by the functions in me_discriminants.cpp)
    float D_VBF2j_ggH_ME;
@@ -525,7 +525,7 @@ public :
    vector<float>   *LHEAssociatedParticleMass;
 
    // List of branches
-   TBranch* b_testval;
+   TBranch* b_training_weight;
 
    TBranch* b_D_VBF2j_ggH_ME;
    TBranch* b_D_VBF1j_ggH_ME;
@@ -1073,7 +1073,7 @@ void Tree::Init(TTree *tree, TString input_file_name)
    // (once per file to be processed).
 
    // Set object pointer
-   testval = 0;
+   training_weight = 0;
 
    D_VBF2j_ggH_ME = 0;
    D_VBF1j_ggH_ME = 0;
@@ -1164,7 +1164,7 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fCurrent = -1;
    fChain->SetMakeClass(1);
 
-   fChain->SetBranchAddress("testval", &testval, &b_testval);
+   fChain->SetBranchAddress("training_weight", &training_weight, &b_training_weight);
 
    fChain->SetBranchAddress("D_VBF2j_ggH_ME", &D_VBF2j_ggH_ME, &b_D_VBF2j_ggH_ME);
    fChain->SetBranchAddress("D_VBF1j_ggH_ME", &D_VBF1j_ggH_ME, &b_D_VBF1j_ggH_ME);
