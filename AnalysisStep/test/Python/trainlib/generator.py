@@ -5,7 +5,7 @@ import numpy as np
 
 class Generator:
     
-    def __init__(self, H1_stream, H0_stream, branches, preprocessor, training_split = 0.5, chunks = 1000):
+    def __init__(self, H1_stream, H0_stream, branches, preprocessor, training_split = 0.5, chunks = 1000, MC_weighting = False):
         self.H1_stream = H1_stream
         self.H0_stream = H0_stream
 
@@ -17,7 +17,10 @@ class Generator:
 
         self.H1_collection = None
         self.H0_collection = None
-
+        
+        # whether the MC weights in the ROOT trees should be used during training as well. If activated, this per-sample MC weight will multiply the external weight set via H0_weight and H1_weight
+        self.MC_weighting = MC_weighting
+        
         self.H1_weight = 1.0
         self.H0_weight = 1.0
 
@@ -90,67 +93,88 @@ class Generator:
     def set_H0_weight(self, weight):
         self.H0_weight = weight
 
+    def set_number_chunks(self, chunks):
+        self.chunks = chunks
+
+    def set_minimum_length(self, minlen):
+        self.minlen = minlen
+
     def preprocessed_generator(self):
-        # build the class weights
-        # class_weight = {0: float(self.H1_weight) / float(self.H0_weight),
-        #                 1: 1.0}
 
-        # print "using class_weights = " + str(class_weight)
+        np.random.seed(42)
 
-        for H1_data, H0_data in self.raw_generator():
-            # run the preprocessing: this will in general change the number of rows (if there are cuts hidden inside the preprocessor) AND the number of columns (if not all loaded columns are meant as input to the classifier)
-            H1_processed = self.preprocessor.process(H1_data)
-            H1_indices = self.preprocessor.get_last_indices()
-            H0_processed = self.preprocessor.process(H0_data)
-            H0_indices = self.preprocessor.get_last_indices()
+        if self.MC_weighting:
+            print "using MC weights in generator"
 
-            # print "H1_indices"
-            # print H1_indices
+        raw_gen = self.raw_generator()
 
-            # print "H0_indices"
-            # print H0_indices
+        #for H1_data, H0_data in self.raw_generator():
+        while True:
 
-            # len() automatically maps to the first dimension of a numpy array!
-            # implicit assumption: all dictionary entries delivered by a preprocessor must have the same length
-            H1_samples = len(H1_processed.values()[0])
-            H0_samples = len(H0_processed.values()[0])
+            # fetch a new chunk from the preprocessed generator
+            H1_data = pd.DataFrame(columns = self.branches)
+            H0_data = pd.DataFrame(columns = self.branches)
 
-            # prepare the weights for each sample
-            #sample_weights = np.concatenate([np.full(H1_samples, class_weight[1]), np.full(H0_samples, class_weight[0])], axis = 0)
-            H1_sample_weights = np.array(H1_data["training_weight"][H1_indices])
-            H0_sample_weights = np.array(H0_data["training_weight"][H0_indices])
+            while True:
+                H1_data_new, H0_data_new = raw_gen.next()
 
-            #print H1_samples
-            #print len(H1_sample_weights)
+                # add the newly read chunk to the already existing one
+                H1_data = pd.concat([H1_data, H1_data_new])
+                H0_data = pd.concat([H0_data, H0_data_new])
 
-            #print H0_samples
-            #print len(H0_sample_weights)
-
-            # multiply with the per-class weights
-            H1_sample_weights *= self.H1_weight
-            H0_sample_weights *= self.H0_weight
-
-            sample_weights = np.concatenate([H1_sample_weights, H0_sample_weights], axis = 0)
-
-            # print "sample_weights"
-            # print sample_weights
-
-            target_data = np.concatenate([np.ones(H1_samples), np.zeros(H0_samples)], axis = 0)
+                # and fix its indexing
+                H1_data = H1_data.reset_index(drop = True)
+                H0_data = H0_data.reset_index(drop = True)
             
-            #print len(target_data)
-            #print H1_samples + H0_samples
+                # run the preprocessing: this will in general change the number of rows (if there are cuts hidden inside the preprocessor) AND the number of columns (if not all loaded columns are meant as input to the classifier)
+                H1_processed = self.preprocessor.process(H1_data)
+                H1_indices = self.preprocessor.get_last_indices()
+                H0_processed = self.preprocessor.process(H0_data)
+                H0_indices = self.preprocessor.get_last_indices()
 
-            perm = np.random.permutation(len(target_data))
+                # len() automatically maps to the first dimension of a numpy array!
+                # implicit assumption: all dictionary entries delivered by a preprocessor must have the same length
+                H1_samples = len(H1_processed.values()[0])
+                H0_samples = len(H0_processed.values()[0])
 
-            #print len(perm)
+                # prepare the weights for each sample
+                #sample_weights = np.concatenate([np.full(H1_samples, class_weight[1]), np.full(H0_samples, class_weight[0])], axis = 0)
+                if self.MC_weighting:
+                    H1_sample_weights = np.array(H1_data["training_weight"][H1_indices])
+                    H0_sample_weights = np.array(H0_data["training_weight"][H0_indices])
+                else:
+                    H1_sample_weights = np.full(H1_samples, 1.0)
+                    H0_sample_weights = np.full(H0_samples, 1.0)
 
-            # now concatenate all input array found in H1_processed & H0_processed
-            input_data = {}
-            for key in H1_processed:
-                temp = np.concatenate([H1_processed[key], H0_processed[key]], axis = 0)
-                input_data[key] = temp[perm]
+                # multiply with the per-class weights
+                H1_sample_weights *= self.H1_weight
+                H0_sample_weights *= self.H0_weight
 
-            target_data = {"target": target_data[perm]}
-            sample_weights = sample_weights[perm]
+                # put them together and clip them to positive values
+                sample_weights = np.concatenate([H1_sample_weights, H0_sample_weights], axis = 0)
+                sample_weights = np.maximum(sample_weights, 0.0)
+
+                target_data = np.concatenate([np.ones(H1_samples), np.zeros(H0_samples)], axis = 0)
+
+                perm = np.random.permutation(len(target_data))
+
+                # now concatenate all input array found in H1_processed & H0_processed
+                input_data = {}
+                for key in H1_processed:
+                    temp = np.concatenate([H1_processed[key], H0_processed[key]], axis = 0)
+                    input_data[key] = temp[perm]
+
+                target_data = {"target": target_data[perm]}
+                sample_weights = sample_weights[perm]
+
+                if len(sample_weights) > self.minlen:
+                    break
+                else:
+                    print "too short, requesting more data"
+                
+            #print sample_weights
+            #print target_data
+
+            #print "this chunk size = " + str(len(sample_weights))
 
             yield input_data, target_data, sample_weights

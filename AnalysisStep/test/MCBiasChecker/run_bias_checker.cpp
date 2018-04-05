@@ -25,7 +25,7 @@ int main( int argc, char *argv[] )
 
     float lumi = 35.9;
     
-    TString input_file_name = "/data_CMS/cms/wind/CJLST_NTuples/ggH125/ZZ4lAnalysis.root";
+    TString input_file_name = "/data_CMS/cms/wind/CJLST_NTuples/VBFH125/ZZ4lAnalysis.root";
     TFile* input_file = new TFile(input_file_name);
     
     std::cout << "reading from " << input_file_name << std::endl;
@@ -49,7 +49,7 @@ int main( int argc, char *argv[] )
     float weight_sum = 0;
     int fill_cnt = 0;
 
-    TH2F* datahist = new TH2F("", "", 500, 0, n_entries, 100, 0, 200);
+    TH2F* datahist = new TH2F("", "", 500, 0, n_entries, 100, 0, 1e-2);
 
     // loop over the entries in chain
     for(Long64_t j_entry = 0; j_entry < n_entries; j_entry++)
@@ -75,6 +75,6 @@ int main( int argc, char *argv[] )
     datahist -> GetYaxis() -> SetTitle("LepPt[0]");
     canv -> SetRightMargin(0.16);
     canv -> Draw("same colz");
-    canv -> SaveAs("LepPt.pdf");
+    canv -> SaveAs("event_weight.pdf");
     return(0);
 }

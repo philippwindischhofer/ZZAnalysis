@@ -40,7 +40,9 @@ class FileCollection:
         else:
             end_index = end
 
-        return read_data(self, start_index, end_index, branches)
+        raw_data = read_data(self, start_index, end_index, branches)
+
+        return raw_data.reset_index(drop = True)
         
     def transform_index(self, global_index):
         if global_index > self.get_length():

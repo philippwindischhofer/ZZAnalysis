@@ -75,7 +75,8 @@ class PCAWhiteningPreprocessor(Preprocessor):
         self.pca.fit(data)
 
     def get_last_indices(self):
-        return copy.deepcopy(self.last_indices)
+        #return copy.deepcopy(self.last_indices)
+        return self.last_indices
 
     def process(self, data):
         cut_data = self._rowcol_cut(data)

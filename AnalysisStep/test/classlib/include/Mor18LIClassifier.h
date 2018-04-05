@@ -44,12 +44,15 @@ public:
     Mor18LIClassifier(TString out_folder = "../../src/ZZAnalysis/CalibratorPlots/");
     ~Mor18LIClassifier();
 
-//    int ClassifyEvent();
     int ClassifyThisEvent(Tree* in);
 
     void SetWPs(float WP_VBF2j, float WP_VBF1j, float WP_WHh, float WP_ZHh);
 
+    void SetPriors(float VBF_prior, float ggH_prior, float WHhadr_prior, float ZHhadr_prior, float WHlept_prior, float ZHlept_prior, float ZHMET_prior, float ttHhadr_prior, float ttHlept_prior);
+
 private:
+    TString calibration_folder;
+
     DiscriminantCollection* coll;
     MultiClassCombinator* comb;
 

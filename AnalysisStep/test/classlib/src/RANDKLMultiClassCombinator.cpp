@@ -23,11 +23,13 @@ std::map<TString, float> RANDKLMultiClassCombinator::Evaluate(Tree* in, Discrimi
 	// start with a random category order
 	std::random_shuffle(categories.begin(), categories.end());
 
-	//std::cout << "playing with category order" << std::endl;
+	// std::cout << "playing with category order ";
 	// for(auto cat: categories)
 	// {
-	//     std::cout << cat << std::endl;
+	//     std::cout << cat << " ";
 	// }
+
+	// std::cout << std::endl;
 
 	// now have pairs of categories play against each other, in the random order decided upon above
 	TString cur_winner = categories.at(0);
@@ -48,17 +50,26 @@ std::map<TString, float> RANDKLMultiClassCombinator::Evaluate(Tree* in, Discrimi
 	    {
 		cur_winner = player;
 	    }
-
-	    //std::cout << cur_winner << " won in this game" << std::endl;
+	    
+	    //std::cout << cur_winner << " won in this game (" << game_result << ")" << std::endl;
 	}
 
-	//std::cout << cur_winner << " won in this round" << std::endl;
+	//std::cout << cur_winner << " is the tournament winner" << std::endl;
 
 	// 'cur_winner' now holds the tournament winner for this round
 	retval[cur_winner]++;
     }
     
     last_result = retval;
+
+    // std::cout << " --------------------------------" << std::endl;
+
+    // for(auto res: last_result)
+    // {
+    // 	std::cout << res.first << ": " << res.second << std::endl;;
+    // }
+
+    // std::cout << " --------------------------------" << std::endl;
 
     return retval;
 }

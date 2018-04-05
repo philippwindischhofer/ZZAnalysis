@@ -16,6 +16,7 @@ class MLDiscriminantFactoryFullCategorySet
 {
 public:
     static DiscriminantCollection* GenerateDiscriminantCollection(TString outdir, Config& conf);
+    static DiscriminantCollection* GenerateDiscriminantCollection(TString outdir, Config& conf, float VBF_prior, float ggH_prior, float WHhadr_prior, float ZHhadr_prior, float WHlept_prior, float ZHlept_prior, float ZHMET_prior, float ttHhadr_prior, float ttHlept_prior);
 };
 
 #endif

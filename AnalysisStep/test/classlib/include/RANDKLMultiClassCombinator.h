@@ -37,7 +37,7 @@ public:
     virtual std::map<TString, float> Evaluate(Tree* in, DiscriminantCollection* coll);
 
 private:
-    int iterations = 100;
+    int iterations = 20;
 };
 
 #endif

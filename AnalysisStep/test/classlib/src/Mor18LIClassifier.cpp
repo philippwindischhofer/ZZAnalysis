@@ -6,9 +6,13 @@ Mor18LIClassifier::Mor18LIClassifier(TString out_folder)
 
     Mor18Config conf;
 
+    calibration_folder = out_folder;
+
     // select the discriminants that are to be used for the classification
     //coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
     //coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
+
+    // prepare the discriminant collection without any priors
     coll = MLDiscriminantFactoryFullCategorySet::GenerateDiscriminantCollection(out_folder, conf);
 
     //comb = new VotingMultiClassCombinator();
@@ -64,6 +68,14 @@ void Mor18LIClassifier::SetWPs(float WP_VBF2j, float WP_VBF1j, float WP_WHh, flo
     WP_ZHh_man = WP_ZHh;
 }
 
+void Mor18LIClassifier::SetPriors(float VBF_prior, float ggH_prior, float WHhadr_prior, float ZHhadr_prior, float WHlept_prior, float ZHlept_prior, float ZHMET_prior, float ttHhadr_prior, float ttHlept_prior)
+{
+    Mor18Config conf;
+
+    // update the discriminant collection with the new prior weights
+    coll = MLDiscriminantFactoryFullCategorySet::GenerateDiscriminantCollection(calibration_folder, conf, VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior);
+}
+
 float Mor18LIClassifier::disc(float H1_ME, float H0_ME)
 {
     return 1.0 / (1.0 + H0_ME / H1_ME);
@@ -95,7 +107,7 @@ int Mor18LIClassifier::categoryMor18(
 			     )
 {
 
-    std::cout << "-------------------------------------------------" << std::endl;
+    //std::cout << "-------------------------------------------------" << std::endl;
 
     // try first the likelihood approach
     comb -> Evaluate(in, coll);
@@ -121,9 +133,9 @@ int Mor18LIClassifier::categoryMor18(
 
     //if(margin > 0.0)
     {
-	std::cout << "no draw, returning result" << std::endl;
+	//std::cout << "no draw, returning result" << std::endl;
 	
-	std::cout << "-------------------------------------------------" << std::endl;
+	//std::cout << "-------------------------------------------------" << std::endl;
 
 	return conversion[winner];
     }

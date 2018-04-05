@@ -8,6 +8,7 @@ from keras.callbacks import Callback, EarlyStopping, ModelCheckpoint, History
 from keras import losses
 import numpy as np
 import os
+import copy
 
 from generator import Generator
 
@@ -51,7 +52,44 @@ class Trainer:
         # branches of the ROOT trees that are going to be loaded, and on which the preprocessor is going to operate
         self.branches = Config.branches
 
-    def train(self, collection, optimizer, steps_per_epoch = 128, max_epochs = 5):
+    def _compute_class_weights(self, gen, preprocessor, MC_weighting = False):
+        # determine the actual size of the available dataset and adjust the sample weights correspondingly
+        H1_data = gen.H1_collection.get_data(self.branches, 0.0, 1.0)
+        H0_data = gen.H0_collection.get_data(self.branches, 0.0, 1.0)
+        H1_length = len(preprocessor.process(H1_data).values()[0])
+        H1_indices = preprocessor.get_last_indices()
+        H0_length = len(preprocessor.process(H0_data).values()[0])
+        H0_indices = preprocessor.get_last_indices()
+
+        print "H1_length = " + str(H1_length)
+        print "H0_length = " + str(H0_length)
+
+        # if per-sample weighting is enabled, also set up the normalization of the event weights
+        if MC_weighting:
+            H1_weight_sum = np.sum(np.maximum(np.array(H1_data["training_weight"][H1_indices]), 0.0))
+            H0_weight_sum = np.sum(np.maximum(np.array(H0_data["training_weight"][H0_indices]), 0.0))
+        
+            H1_class_weight = float(H0_length) / H1_weight_sum
+            H0_class_weight = float(H1_length) / H0_weight_sum
+        else:
+            H1_class_weight = 1.0
+            H0_class_weight = float(H1_length) / float(H0_length)
+
+        return H1_class_weight, H0_class_weight
+
+    def _dataset_lengths(self, gen, preprocessor):
+        H1_data = gen.H1_collection.get_data(self.branches, 0.0, 1.0)
+        H0_data = gen.H0_collection.get_data(self.branches, 0.0, 1.0)
+
+        H1_length = len(preprocessor.process(H1_data).values()[0])
+        H0_length = len(preprocessor.process(H0_data).values()[0])
+
+        return H1_length, H0_length        
+
+    def train(self, collection, optimizer, steps_per_epoch = 128, max_epochs = 5, MC_weighting = False):
+        if MC_weighting:
+            print "using MC weights in training"
+        
         models = collection.get_models()
         preprocessors = collection.get_preprocessors()
         settings = collection.get_settings()
@@ -64,7 +102,7 @@ class Trainer:
 
         for (cur_model, cur_preprocessor, setting) in zip(models, preprocessors, settings):
             print "now training model '" + cur_model.name + "'"
-            cur_model.get_keras_model().compile(loss = "mean_squared_error", optimizer = optimizer, metrics = ["accuracy"])
+            cur_model.get_keras_model().compile(loss = "mean_squared_error", optimizer = optimizer, metrics = ["binary_accuracy"])
 
             model_outfolder = collection_outfolder + cur_model.name + "/"
             if not os.path.exists(model_outfolder):
@@ -75,33 +113,39 @@ class Trainer:
             len_setup_data = setup_gen.setup_training_data()
             cur_preprocessor.setup_generator(setup_gen.raw_generator_scrambled(), len_setupdata = len_setup_data)
 
-            # with the preprocessor set up (and thus all cuts determined), can now determine the actual number of training and validation events that are sent to the network (important for handling skewed datasets with unbalanced numbers of events in the two categories)
-            H1_setup_data = setup_gen.H1_collection.get_data(self.branches, 0.0, 1.0)
-            H0_setup_data = setup_gen.H0_collection.get_data(self.branches, 0.0, 1.0)
-            H1_length = len(cur_preprocessor.process(H1_setup_data).values()[0])
-            H0_length = len(cur_preprocessor.process(H0_setup_data).values()[0])
-
-            # also set the normalization of the per-event weights here
-            H1_weight_sum = np.sum(H1_setup_data["training_weight"])
-            H0_weight_sum = np.sum(H0_setup_data["training_weight"])
-
-            print "length of H1 training set (after cuts): " + str(H1_length)
-            print "length of H0 training set (after cuts): " + str(H0_length)
-
+            # now have a fully set up preprocessor
             # recreate the generators yielding the training and validation data for the actual training procedure
-            train_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor, chunks = setting.steps_per_epoch)            
-            train_gen.set_H1_weight(1.0 / (H1_length * H1_weight_sum))
-            train_gen.set_H0_weight(1.0 / (H0_length * H0_weight_sum))
+            train_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor, chunks = setting.steps_per_epoch, MC_weighting = MC_weighting)            
             train_gen.setup_training_data()
-            
-            val_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = cur_preprocessor, chunks = setting.steps_per_epoch)
-            val_gen.set_H1_weight(1.0 / (H1_length * H1_weight_sum))
-            val_gen.set_H0_weight(1.0 / (H0_length * H0_weight_sum))
+
+            train_H1_classweight, train_H0_classweight = self._compute_class_weights(train_gen, cur_preprocessor, MC_weighting)
+            train_H1_length, train_H0_length = self._dataset_lengths(train_gen, cur_preprocessor)
+            train_chunks_per_epoch = float(train_H1_length + train_H0_length) / setting.batch_size
+            print "using " + str(train_chunks_per_epoch) + " chunks for training"
+
+            train_gen.set_number_chunks(train_chunks_per_epoch)
+            train_gen.set_minimum_length(setting.batch_size)
+            train_gen.set_H1_weight(train_H1_classweight)
+            train_gen.set_H0_weight(train_H0_classweight)
+
+            # make a copy of the preprocessor for the validation data generator (important, as these will be running concurrently)
+            val_preprocess = copy.deepcopy(cur_preprocessor)
+            val_gen = Generator(collection.H1_stream, collection.H0_stream, self.branches, preprocessor = val_preprocess, chunks = setting.steps_per_epoch, MC_weighting = MC_weighting)
             val_gen.setup_validation_data()
+
+            val_H1_classweight, val_H0_classweight = self._compute_class_weights(val_gen, val_preprocess, MC_weighting)
+            val_H1_length, val_H0_length = self._dataset_lengths(val_gen, val_preprocess)
+            val_chunks_per_epoch = float(val_H1_length + val_H0_length) / setting.batch_size
+            print "using " + str(val_chunks_per_epoch) + " chunks for validation"
+
+            val_gen.set_number_chunks(val_chunks_per_epoch)
+            val_gen.set_minimum_length(setting.batch_size)
+            val_gen.set_H1_weight(val_H1_classweight)
+            val_gen.set_H0_weight(val_H0_classweight)
 
             # stops the training as soon as the loss starts to saturate
             early_stop = EarlyStopping(monitor = 'val_loss',
-                                       patience = 15,
+                                       patience = 10,
                                        verbose = 1,
                                        mode = 'auto')
 
@@ -110,8 +154,8 @@ class Trainer:
             logger = Logger()
             history = History()
 
-            cur_model.get_keras_model().fit_generator(train_gen.preprocessed_generator(), steps_per_epoch = setting.steps_per_epoch, epochs = setting.max_epochs, verbose = 2, 
-                                                      validation_data = val_gen.preprocessed_generator(), validation_steps = setting.steps_per_epoch, 
+            cur_model.get_keras_model().fit_generator(train_gen.preprocessed_generator(), steps_per_epoch = train_chunks_per_epoch, epochs = setting.max_epochs, verbose = 2, 
+                                                      validation_data = val_gen.preprocessed_generator(), validation_steps = val_chunks_per_epoch, 
                                                       callbacks = [early_stop, checkpointer, logger, history])
 
             # save the training report as well as the final version of the trained model

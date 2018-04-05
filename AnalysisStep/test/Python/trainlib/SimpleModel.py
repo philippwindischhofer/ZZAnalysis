@@ -1,4 +1,4 @@
-from keras.layers import Dense, Activation
+from keras.layers import Dense, Activation, BatchNormalization, Dropout
 from keras.engine.topology import Input
 import keras.engine.training
 import os
@@ -38,6 +38,9 @@ class SimpleModel(Model):
 
     # actually constructs the model
     def build(self):
+        self.default_neurons = 128
+        self.default_dropout_rate = 0.2
+
         if self.hyperparameters is not None:
             print "got the following list of hyperparams: " + str(self.hyperparameters)
 
@@ -45,11 +48,17 @@ class SimpleModel(Model):
         number_inputs = len(self.input_columns)
 
         in_layer = Input(shape = (number_inputs,), name = self.name + '_input')
-        x = Dense(128, activation = "tanh")(in_layer)
+        x = Dense(self.default_neurons)(in_layer)
+        x = BatchNormalization()(x)
+        x = Activation('relu')(x)
+        x = Dropout(self.default_dropout_rate)(x)
 
         if self.hyperparameters is not None:
             for layer in range(int(self.hyperparameters.get('number_layers', 0))):
-                x = Dense(int(self.hyperparameters.get('number_neurons', 128)), activation = "relu")(x)
+                x = Dense(int(self.hyperparameters.get('number_neurons', self.default_neurons)))(x)
+                x = BatchNormalization()(x)
+                x = Activation('relu')(x)
+                x = Dropout(self.default_dropout_rate)(x)
 
         out_layer = Dense(1, activation = "sigmoid", name = "target")(x)
         self.model = keras.engine.training.Model(in_layer, out_layer, name = "simple_model")

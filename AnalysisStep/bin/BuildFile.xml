@@ -30,6 +30,10 @@
   <lib name="class_lib"/>  
 </bin>
 
+<bin name="run_prior_optimizer" file="../test/PriorOptimizer/run_prior_optimizer.cpp">
+  <lib name="class_lib"/>  
+</bin>
+
 <bin name="run_calibrator" file="../test/Calibrator/run_calibrator.cpp">
   <lib name="class_lib"/>
 </bin>

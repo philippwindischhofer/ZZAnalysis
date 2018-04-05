@@ -140,7 +140,7 @@ float Discriminant::ComputeKLCorrection(TH1F* H1_calib_histo, TH1F* H0_calib_his
 	float H1_bin_width = std::max(H1_calib_histo -> GetBinWidth(i), 0.0);
 	float H0_bin_width = std::max(H0_calib_histo -> GetBinWidth(i), 0.0);
 
-	std::cout << "bin " << i << ": " << p_H1 << " / " << p_H0 << " / " << H1_bin_width << " / " << H0_bin_width << std::endl;
+	//std::cout << "bin " << i << ": " << p_H1 << " / " << p_H0 << " / " << H1_bin_width << " / " << H0_bin_width << std::endl;
 	
 	if(p_H1 != 0.0 && p_H0 != 0.0)
 	{

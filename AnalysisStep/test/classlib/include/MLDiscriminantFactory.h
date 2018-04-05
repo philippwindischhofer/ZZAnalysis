@@ -15,8 +15,8 @@
 class MLDiscriminantFactory
 {
 public:
-    static DiscriminantCollection* GenerateMorCompatibleDiscriminantCollection(TString outdir, Config& conf);
     static DiscriminantCollection* GenerateDiscriminantCollection(TString outdir, Config& conf);
+    static DiscriminantCollection* GenerateMorCompatibleDiscriminantCollection(TString outdir, Config& conf);
 };
 
 #endif
