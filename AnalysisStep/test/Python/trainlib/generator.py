@@ -137,6 +137,13 @@ class Generator:
                 H1_samples = len(H1_processed.values()[0])
                 H0_samples = len(H0_processed.values()[0])
 
+                # print H1_samples
+                # print H0_samples
+
+                # make sure that there is more than one sample from each category in the returned batch
+                if H1_samples < 2 or H0_samples < 2:
+                    continue
+
                 # prepare the weights for each sample
                 #sample_weights = np.concatenate([np.full(H1_samples, class_weight[1]), np.full(H0_samples, class_weight[0])], axis = 0)
                 if self.MC_weighting:
@@ -161,20 +168,31 @@ class Generator:
                 # now concatenate all input array found in H1_processed & H0_processed
                 input_data = {}
                 for key in H1_processed:
+                    # print H1_processed[key]
+                    # print H0_processed[key]
+
+                    # print len(H1_processed[key])
+                    # print len(H0_processed[key])
+
+                    # print np.shape(H1_processed[key])
+                    # print np.shape(H0_processed[key])
+
                     temp = np.concatenate([H1_processed[key], H0_processed[key]], axis = 0)
+
                     input_data[key] = temp[perm]
 
                 target_data = {"target": target_data[perm]}
                 sample_weights = sample_weights[perm]
 
+                # make sure that have enough data and also make sure that it consists of signal AND background samples
                 if len(sample_weights) > self.minlen:
                     break
-                else:
-                    print "too short, requesting more data"
+                # else:
+                #     print "too short, requesting more data"
                 
-            #print sample_weights
-            #print target_data
+            # print sample_weights
+            # print target_data
 
-            #print "this chunk size = " + str(len(sample_weights))
+            # print "this chunk size = " + str(len(sample_weights))
 
-            yield input_data, target_data, sample_weights
+            yield input_data, target_data#, sample_weights
