@@ -11,13 +11,14 @@ from ConfigFileUtils import ConfigFileUtils
 class PCAWhiteningPreprocessor(Preprocessor):
     
     # requires the name of the data columns that should be whitened in the end
-    def __init__(self, name, processed_columns, cuts):
+    def __init__(self, name, processed_columns, cuts, cuts_s = None):
         self.name = name
         self.processed_columns = processed_columns
 
         print "PCA setup for '" + self.name + "': " + str(self.processed_columns)
         self.outcol_names = ["PCA_w_" + str(i) for i in range(len(self.processed_columns))]
         self.cuts = cuts
+        self.cuts_s = cuts_s
         n_inputs = len(processed_columns)
         self.pca = PCA(n_components = n_inputs, svd_solver = 'auto', whiten = True)
 
@@ -29,9 +30,9 @@ class PCAWhiteningPreprocessor(Preprocessor):
     def from_config(cls, config_section):
         preprocessor_name = re.sub('[<>]', '', config_section.name)
         processed_columns = ConfigFileUtils.parse_list(config_section['processed_columns'], lambda x: x)
-        preprocessor_cuts = ConfigFileUtils.parse_lambda(config_section['preprocessor_cuts'])
+        preprocessor_cuts, cuts_s = ConfigFileUtils.parse_lambda_s(config_section['preprocessor_cuts'])
 
-        obj = cls(name = preprocessor_name, processed_columns = processed_columns, cuts = preprocessor_cuts)
+        obj = cls(name = preprocessor_name, processed_columns = processed_columns, cuts = preprocessor_cuts, cuts_s = cuts_s)
 
         return obj
 
@@ -41,7 +42,7 @@ class PCAWhiteningPreprocessor(Preprocessor):
 
         confhandler.set_field(section_name, 'preprocessor_type', 'PCAWhiteningPreprocessor')
         confhandler.set_field(section_name, 'processed_columns', ConfigFileUtils.serialize_list(self.processed_columns, lambda x: x))
-        confhandler.set_field(section_name, 'preprocessor_cuts', ConfigFileUtils.serialize_lambda(self.cuts))
+        confhandler.set_field(section_name, 'preprocessor_cuts', ConfigFileUtils.serialize_lambda_s(self.cuts, self.cuts_s))
 
     def setup_generator(self, datagen, len_setupdata):
         self.len_setupdata = len_setupdata
@@ -106,6 +107,11 @@ class PCAWhiteningPreprocessor(Preprocessor):
 
     def _rowcol_cut(self, data):
         # apply the row selection
+        # print "obtained data to cut: "
+        # print data
+        # print "cut mask: "
+        # print data.apply(self.cuts, axis = 1)
+
         data = data.loc[data.apply(self.cuts, axis = 1)]
 
         # apply the column selection

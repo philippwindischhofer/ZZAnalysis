@@ -36,17 +36,19 @@ TString punzi_infile = "punzi_plot_hist.root";
 TString punzi_outfile = "punzi_comp";
 
 // where all the files from the reference classifier are stored
-//TString refdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization150fb/";
-TString refdir = "/data_CMS/cms/wind/180404_input_parameter_sweep_full_category_set_KL_test/input_columns_5/benchmark/";
-TString outdir = "/data_CMS/cms/wind/180405_prior_optimizer/";
+// TString refdir = "/data_CMS/cms/wind/180404_input_parameter_sweep_full_category_set_KL_test/input_columns_5/benchmark/";
+// TString outdir = "/data_CMS/cms/wind/180405_prior_optimizer/";
+
+TString refdir;
+TString outdir;
 
 int evalcnt = 0;
 
 // build the classifier whose parameters are going to be optimized
-Classifier* varclass = new Mor18LIClassifier("/data_CMS/cms/wind/180404_input_parameter_sweep_full_category_set_KL_test/input_columns_5/calibration/");
+Classifier* varclass;
 
-Mor18LIClassifier* varclass18 = static_cast<Mor18LIClassifier*>(varclass);
-Mor18Config* conf = new Mor18Config("/data_CMS/cms/wind/180404_input_parameter_sweep_full_category_set_KL_test/input_columns_5/augmentation/");
+Mor18LIClassifier* varclass18;
+Mor18Config* conf;
 
 // evaluates the cost when using certain values for the working points
 double costfunc(const double* params)
@@ -55,12 +57,12 @@ double costfunc(const double* params)
     float VBF_prior = (float)params[0];
     float ggH_prior = (float)params[1];
     float WHhadr_prior = (float)params[2];
-    float ZHhadr_prior = (float)params[2];
-    float WHlept_prior = (float)params[3];
-    float ZHlept_prior = (float)params[3];
-    float ZHMET_prior = (float)params[4];
-    float ttHhadr_prior = (float)params[5];
-    float ttHlept_prior = (float)params[5];
+    float ZHhadr_prior = (float)params[3];
+    float WHlept_prior = (float)params[4];
+    float ZHlept_prior = (float)params[5];
+    float ZHMET_prior = (float)params[6];
+    float ttHhadr_prior = (float)params[7];
+    float ttHlept_prior = (float)params[8];
 
     varclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior);
 
@@ -94,16 +96,37 @@ double costfunc(const double* params)
 
 int main( int argc, char *argv[] )
 {
+    if(argc != 3)
+    {
+	std::cerr << "Error: exactly 2 arguments are required" << std::endl;
+    }
+
+    TString run_dir = argv[1];
+    outdir = argv[2];
+
+    std::cout << outdir << std::endl;
+    
+    refdir = run_dir + "benchmark/";
+
+    varclass = new Mor18LIClassifier(run_dir + "calibration/");
+
+    varclass18 = static_cast<Mor18LIClassifier*>(varclass);
+
+    conf = new Mor18Config(run_dir + "augmentation/", 35.9, false);
+
     // start the optimization with the currently used values
     float VBF_prior_init = 1.0;
-    float ggH_prior_init = 1.0;
-    float VHhadr_prior_init = 1.0;
-    float VHlept_prior_init = 1.0;
-    float ZHMET_prior_init = 1.0;
-    float ttH_prior_init = 1.0;
+    float ggH_prior_init = 1.772352900118657;
+    float WHhadr_prior_init = 0.5508480491379912;
+    float ZHhadr_prior_init = 0.21093041111188665;
+    float WHlept_prior_init = 0.2727716898164305;
+    float ZHlept_prior_init = 0.063341941788232;
+    float ZHMET_prior_init = 0.06669225937041949;
+    float ttHhadr_prior_init = 0.14521532770293852;
+    float ttHlept_prior_init = 0.19540029315278845;
 
-    float var[6] = {VBF_prior_init, ggH_prior_init, VHhadr_prior_init, VHlept_prior_init, ZHMET_prior_init, ttH_prior_init};
-    float step[6] = {0.01, 0.01, 0.01, 0.01, 0.01, 0.01};
+    float var[9] = {VBF_prior_init, ggH_prior_init, WHhadr_prior_init, ZHhadr_prior_init, WHlept_prior_init, ZHlept_prior_init, ZHMET_prior_init, ttHhadr_prior_init, ttHlept_prior_init};
+    float step[9] = {0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01};
 
     //ROOT::Math::Minimizer* min = ROOT::Math::Factory::CreateMinimizer("Minuit2", "");
     ROOT::Math::Minimizer* min = new ROOT::Math::GSLSimAnMinimizer();
@@ -117,11 +140,16 @@ int main( int argc, char *argv[] )
 
     //min -> SetLimitedVariable(0, "VBF_prior", var[0], step[0], 0.0, 1.0);
     min -> SetFixedVariable(0, "VBF_prior", VBF_prior_init);
-    min -> SetLimitedVariable(1, "ggH_prior", var[1], step[1], 1.0, 70.0);
-    min -> SetLimitedVariable(2, "VHhadr_prior", var[2], step[2], 0.0, 10.0);
-    min -> SetLimitedVariable(3, "VHlept_prior", var[3], step[3], 0.0, 10.0);
-    min -> SetLimitedVariable(4, "ZHMET_prior", var[4], step[4], 0.0, 10.0);
-    min -> SetLimitedVariable(5, "ttH_prior", var[5], step[5], 0.0, 10.0);
+    min -> SetLimitedVariable(1, "ggH_prior", var[1], step[1], 1.0, 4.0);
+    min -> SetLimitedVariable(2, "WHhadr_prior", var[2], step[2], 0.0, 1.0);
+    min -> SetLimitedVariable(3, "ZHhadr_prior", var[3], step[3], 0.0, 1.0);
+    min -> SetLimitedVariable(4, "WHlept_prior", var[4], step[4], 0.0, 1.0);
+    min -> SetLimitedVariable(5, "ZHlept_prior", var[5], step[5], 0.0, 1.0);
+    min -> SetLimitedVariable(6, "ZHMET_prior", var[6], step[6], 0.0, 1.0);
+    min -> SetLimitedVariable(7, "ttHhadr_prior", var[7], step[7], 0.0, 1.0);
+    min -> SetLimitedVariable(8, "ttHlept_prior", var[8], step[8], 0.0, 1.0);
+
+    std::cout << "starting minimization" << std::endl;
 
     min -> Minimize();
 
@@ -135,10 +163,13 @@ int main( int argc, char *argv[] )
 
     std::cout << "VBF_prior = " << res[0] << std::endl;
     std::cout << "ggH_prior = " << res[1] << std::endl;
-    std::cout << "VHhadr_prior = " << res[2] << std::endl;
-    std::cout << "VHlept_prior = " << res[3] << std::endl;
-    std::cout << "ZHMET_prior = " << res[4] << std::endl;
-    std::cout << "ttH_prior = " << res[5] << std::endl;
+    std::cout << "WHhadr_prior = " << res[2] << std::endl;
+    std::cout << "ZHhadr_prior = " << res[3] << std::endl;
+    std::cout << "WHlept_prior = " << res[4] << std::endl;
+    std::cout << "ZHlept_prior = " << res[5] << std::endl;
+    std::cout << "ZHMET_prior = " << res[6] << std::endl;
+    std::cout << "ttHhadr_prior = " << res[7] << std::endl;
+    std::cout << "ttHlept_prior = " << res[8] << std::endl;
 
     std::cout << "-------------------------------------------------------" << std::endl;        
 

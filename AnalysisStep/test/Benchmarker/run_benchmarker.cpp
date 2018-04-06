@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 
     // switch here between all Moriond 2018 categories and a reduced set for development
     //Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet(MCpath);
-    Mor18Config* conf = new Mor18Config(MCpath);
+    Mor18Config* conf = new Mor18Config(MCpath, 35.9, false);
 
     // these are the optimized working points to give max. Punzi for an integrated luminosity of 35.9fb^-1
     // float WP_VBF2j = 0.640951;

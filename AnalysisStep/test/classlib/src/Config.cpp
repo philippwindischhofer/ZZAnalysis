@@ -1,6 +1,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Config.h>
 
-Config::Config(TString MCpath) : MCpath(MCpath)
+Config::Config(TString MCpath, float integrated_lumi, bool use_background) : MCpath(MCpath), integrated_lumi(integrated_lumi), use_background(use_background)
 { }
 
 std::vector<TString> Config::hist_names()
@@ -212,8 +212,8 @@ std::vector<std::pair<TString, TString>> Config::histogram_assignment()
 float Config::lumi()
 {
     //float lumi = 150.0;
-    float lumi = 35.9;
-    return lumi;
+    //float lumi = 35.9;
+    return integrated_lumi;
 }
 
 TString Config::MC_path()

@@ -125,7 +125,11 @@ class Generator:
                 # and fix its indexing
                 H1_data = H1_data.reset_index(drop = True)
                 H0_data = H0_data.reset_index(drop = True)
-            
+                
+                # make sure to have some data to process from both categories
+                if len(H1_data) == 0 or len(H0_data) == 0:
+                    continue
+                
                 # run the preprocessing: this will in general change the number of rows (if there are cuts hidden inside the preprocessor) AND the number of columns (if not all loaded columns are meant as input to the classifier)
                 H1_processed = self.preprocessor.process(H1_data)
                 H1_indices = self.preprocessor.get_last_indices()
@@ -195,4 +199,4 @@ class Generator:
 
             # print "this chunk size = " + str(len(sample_weights))
 
-            yield input_data, target_data#, sample_weights
+            yield input_data, target_data, sample_weights

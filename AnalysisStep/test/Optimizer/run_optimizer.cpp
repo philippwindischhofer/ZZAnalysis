@@ -35,19 +35,19 @@ TString punzi_hist_name = "punzi_purity";
 TString punzi_infile = "punzi_plot_hist.root";
 TString punzi_outfile = "punzi_comp";
 
-// where all the files from the reference classifier are stored
-// TString refdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization/";
-// TString outdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/OptimizerPlotsAllVariables2/";
-TString refdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization150fb/";
-TString outdir = "/data_CMS/cms/wind/180403_optimizer_150fb/";
-
 int evalcnt = 0;
+
+//TString refdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization150fb/";
+//TString outdir = "/data_CMS/cms/wind/180403_optimizer_150fb/";
+
+TString refdir;
+TString outdir;
 
 // build the classifier whose parameters are going to be optimized
 Classifier* varclass = new Mor18Classifier();
 
 Mor18Classifier* varclass18 = static_cast<Mor18Classifier*>(varclass);
-Mor18Config* conf = new Mor18Config("/data_CMS/cms/wind/CJLST_NTuples/");
+Mor18Config* conf;
 
 // evaluates the cost when using certain values for the working points
 double costfunc(const double* params)
@@ -84,6 +84,17 @@ double costfunc(const double* params)
 
 int main( int argc, char *argv[] )
 {
+    if(argc != 4)
+    {
+	std::cerr << "Error: exactly 3 arguments are required" << std::endl;
+    }
+
+    refdir = argv[1];
+    float lumi = std::stof(argv[2]);
+    outdir = argv[3];
+
+    conf = new Mor18Config("/data_CMS/cms/wind/CJLST_NTuples/", lumi, true);
+
     // start the optimization with the currently used values
     float WP_VBF2j_init = 0.46386;
     float WP_VBF1j_init = 0.37605;

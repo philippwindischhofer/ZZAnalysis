@@ -63,9 +63,11 @@ public:
     TString MC_filename();
 
 protected:
-    Config(TString MCpath = "/data_CMS/cms/wind/CJLST_NTuples/");
+    Config(TString MCpath = "/data_CMS/cms/wind/CJLST_NTuples/", float integrated_lumi = 35.9, bool use_background = false);
     std::vector<std::pair<TString, Routing*>> routing;
     TString MCpath;
+    float integrated_lumi;
+    bool use_background;
 };
 
 #endif

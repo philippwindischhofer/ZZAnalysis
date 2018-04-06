@@ -31,6 +31,11 @@ class ConfigFileUtils:
     def parse_lambda(rawstring):
         return eval(rawstring)
 
+    # the _s methods also return / take a second representation of the lambda argument, namely a string
+    @staticmethod
+    def parse_lambda_s(rawstring):
+        return ConfigFileUtils.parse_lambda(rawstring), rawstring
+
     @staticmethod
     def serialize_list(in_list, processor):
         out_string = ""
@@ -57,6 +62,15 @@ class ConfigFileUtils:
         func_string = func_string.strip("['\\n']").split(" = ")[1]
 
         return func_string
+
+    @staticmethod
+    def serialize_lambda_s(func, funcstring):
+        try:
+            retval = ConfigFileUtils.serialize_lambda(func)
+        except IOError:
+            retval = funcstring
+
+        return retval
 
     @staticmethod
     def inverse_dict_processor(inval, translation_dict):

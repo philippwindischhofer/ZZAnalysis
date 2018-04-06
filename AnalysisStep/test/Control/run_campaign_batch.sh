@@ -64,7 +64,7 @@ do
     echo "#!/bin/bash" > $JOB_SCRIPT
     echo $BIN_DIR$RUN_PIPELINE $NEXT_LAUNCH "&>>" $LOGFILE >> $JOB_SCRIPT
 
-    $JOB_SUBMITTER $JOB_SCRIPT
+    #$JOB_SUBMITTER $JOB_SCRIPT
 done
 
 # wait for all jobs to complete
