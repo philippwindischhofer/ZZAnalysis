@@ -10,13 +10,15 @@
 class ConfigFileHandler
 {
 public:
-    ConfigFileHandler(TString filepath);
+    ConfigFileHandler(TString filepath, TString mode = "write");
     void AddSection(TString section);
     void AddField(TString section, float value);
     void SaveConfiguration();
+    float GetField(TString field);
 
 private:
     std::ofstream outfile;
+    std::ifstream infile;
 };
 
 #endif

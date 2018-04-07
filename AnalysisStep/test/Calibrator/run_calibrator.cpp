@@ -58,7 +58,7 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 		    disc_cut(in)) ? 
 	    kTRUE : kFALSE;};
 	
-	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false);
+	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, 0.0, 0.5);
     }
 
     for(auto tup: boost::combine(H0_paths, H0_cuts))
@@ -72,7 +72,7 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 		    disc_cut(in)) ? 
 	    kTRUE : kFALSE;};
 	
-	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false);
+	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, 0.0, 0.5);
     }
 
     // only now do the normalization of both distributions

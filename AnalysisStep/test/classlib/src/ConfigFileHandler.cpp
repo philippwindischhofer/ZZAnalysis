@@ -1,8 +1,15 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/ConfigFileHandler.h>
 
-ConfigFileHandler::ConfigFileHandler(TString filepath)
+ConfigFileHandler::ConfigFileHandler(TString filepath, TString mode)
 {
-    outfile.open(filepath);
+    if(mode == "write")
+    {
+	outfile.open(filepath);
+    }
+    else if(mode == "read")
+    {
+	infile.open(filepath);
+    }
 }
 
 void ConfigFileHandler::AddSection(TString section)
@@ -18,4 +25,27 @@ void ConfigFileHandler::AddField(TString section, float value)
 void ConfigFileHandler::SaveConfiguration()
 {
     outfile.close();
+}
+
+float ConfigFileHandler::GetField(TString field)
+{
+    float retval = 0.0;
+
+    std::string line;
+    std::string identifier = field.Data();
+    identifier += " = ";
+
+    infile.clear();
+    infile.seekg(0);
+
+    while(std::getline(infile, line))
+    {
+	if(!line.compare(0, identifier.size(), identifier))
+	{
+	    retval = atof(line.substr(identifier.size()).c_str());
+	    break;
+	}
+    }
+
+    return retval;
 }

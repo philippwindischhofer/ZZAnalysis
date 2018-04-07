@@ -19,20 +19,18 @@
 #include "TMath.h"
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/PlottingUtils.h>
-
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18ConfigReducedCategorySet.h>
-
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Classifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18LIClassifier.h>
-
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/ConfigFileHandler.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/cuts.h>
 
 int main(int argc, char *argv[])
 {
-    if(argc != 4)
+    if(argc < 4)
     {
-	std::cerr << "Error: exactly 3 arguments are required" << std::endl;
+	std::cerr << "Error: at least 3 arguments are required" << std::endl;
 	return(-1);
     }
 
@@ -46,16 +44,58 @@ int main(int argc, char *argv[])
 
     Mor18LIClassifier* refclass18 = static_cast<Mor18LIClassifier*>(refclass);
 
-    //priors based on event numbers determined from the training data
+    // optimized priors (used as default)
     float VBF_prior = 1.0;
-    float ggH_prior = 1.76;
-    float WHhadr_prior = 0.55;
-    float ZHhadr_prior = 0.21;
-    float WHlept_prior = 0.27;
-    float ZHlept_prior = 0.06;
-    float ZHMET_prior = 0.066;
-    float ttHhadr_prior = 0.15;
-    float ttHlept_prior = 0.19;
+    float ggH_prior = 1.46657;
+    float WHhadr_prior = 0.582676;
+    float ZHhadr_prior = 0.707539;
+    float WHlept_prior = 0.272772;
+    float ZHlept_prior = 0.0633419;
+    float ZHMET_prior = 0.0666923;
+    float ttHhadr_prior = 0.145215;
+    float ttHlept_prior = 0.1954;
+
+    if(argc == 5)
+    {
+	// the path to the prior file was given -> read the priors that were optimized on the training dataset, and evaluate the classification performance on the validation dataset
+	TString prior_path = argv[4];
+	ConfigFileHandler* handler = new ConfigFileHandler(prior_path + "priors.txt", "read");
+	VBF_prior = handler -> GetField("VBF_prior");
+	ggH_prior = handler -> GetField("ggH_prior");
+	WHhadr_prior = handler -> GetField("WHhadr_prior");
+	ZHhadr_prior = handler -> GetField("ZHhadr_prior");
+	WHlept_prior = handler -> GetField("WHlept_prior");
+	ZHlept_prior = handler -> GetField("ZHlept_prior");
+	ZHMET_prior = handler -> GetField("ZHMET_prior");
+	ttHhadr_prior = handler -> GetField("ttHhadr_prior");
+	ttHlept_prior = handler -> GetField("ttHlept_prior");
+    }
+
+    std::cout << "-------------------------------------------------------" << std::endl;
+    std::cout << "using the following priors:" << std::endl;
+
+    std::cout << "VBF_prior = " << VBF_prior << std::endl;
+    std::cout << "ggH_prior = " << ggH_prior << std::endl;
+    std::cout << "WHhadr_prior = " << WHhadr_prior << std::endl;
+    std::cout << "ZHhadr_prior = " << ZHhadr_prior << std::endl;
+    std::cout << "WHlept_prior = " << WHlept_prior << std::endl;
+    std::cout << "ZHlept_prior = " << ZHlept_prior << std::endl;
+    std::cout << "ZHMET_prior = " << ZHMET_prior << std::endl;
+    std::cout << "ttHhadr_prior = " << ttHhadr_prior << std::endl;
+    std::cout << "ttHlept_prior = " << ttHlept_prior << std::endl;
+
+    std::cout << "-------------------------------------------------------" << std::endl;
+
+    //priors based on event numbers determined from the training data
+    // float VBF_prior = 1.0;
+    // float ggH_prior = 1.76;
+    // float WHhadr_prior = 0.55;
+    // float ZHhadr_prior = 0.21;
+    // float WHlept_prior = 0.27;
+    // float ZHlept_prior = 0.06;
+    // float ZHMET_prior = 0.066;
+    // float ttHhadr_prior = 0.15;
+    // float ttHlept_prior = 0.19;
 
     // // priors based on event weights
     // float VBF_prior = 1.0;
@@ -72,7 +112,7 @@ int main(int argc, char *argv[])
 
     // switch here between all Moriond 2018 categories and a reduced set for development
     //Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet(MCpath);
-    Mor18Config* conf = new Mor18Config(MCpath, 35.9, false);
+    Mor18Config* conf = new Mor18Config(MCpath, 35.9, true);
 
     // these are the optimized working points to give max. Punzi for an integrated luminosity of 35.9fb^-1
     // float WP_VBF2j = 0.640951;

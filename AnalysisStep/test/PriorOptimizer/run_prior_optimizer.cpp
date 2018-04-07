@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <limits>
 
 // ROOT
 #include "TApplication.h"
@@ -28,6 +29,7 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/CompUtils.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/ConfigFileHandler.h>
 
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 
@@ -49,6 +51,34 @@ Classifier* varclass;
 
 Mor18LIClassifier* varclass18;
 Mor18Config* conf;
+
+float best_cost = std::numeric_limits<float>::max();
+float VBF_prior_best = 1.0;
+float ggH_prior_best = 1.0;
+float WHhadr_prior_best = 1.0;
+float ZHhadr_prior_best = 1.0;
+float WHlept_prior_best = 1.0;
+float ZHlept_prior_best = 1.0;
+float ZHMET_prior_best = 1.0;
+float ttHhadr_prior_best = 1.0;
+float ttHlept_prior_best = 1.0;
+
+void dump_current_priors()
+{
+    ConfigFileHandler* handler = new ConfigFileHandler(outdir + "priors.txt");
+    handler -> AddSection("Priors");
+    handler -> AddField("cost", best_cost);
+    handler -> AddField("VBF_prior", VBF_prior_best);
+    handler -> AddField("ggH_prior", ggH_prior_best);
+    handler -> AddField("WHhadr_prior", WHhadr_prior_best);
+    handler -> AddField("ZHhadr_prior", ZHhadr_prior_best);
+    handler -> AddField("WHlept_prior", WHlept_prior_best);
+    handler -> AddField("ZHlept_prior", ZHlept_prior_best);
+    handler -> AddField("ZHMET_prior", ZHMET_prior_best);
+    handler -> AddField("ttHhadr_prior", ttHhadr_prior_best);
+    handler -> AddField("ttHlept_prior", ttHlept_prior_best);
+    handler -> SaveConfiguration();
+}
 
 // evaluates the cost when using certain values for the working points
 double costfunc(const double* params)
@@ -80,7 +110,7 @@ double costfunc(const double* params)
     std::cout << "ttHlept_prior = " << ttHlept_prior << std::endl;
 
     // evaluate the Punzi value with this (modified) Classifier now
-    PlottingUtils::make_punzi(kTRUE, varclass, outdir, "punzi", "no_cut_data", no_cut, conf);
+    PlottingUtils::make_punzi(kTRUE, varclass, outdir, "punzi", "no_cut_data", no_cut, conf, 0.0, 0.5);
     
     // load low the Punzi histogram of the optimized classifier and compare the two. From this point onwards, is exactly the same as in "Comp"
     float zoom_scale = 1.0;
@@ -88,6 +118,23 @@ double costfunc(const double* params)
 
     std::cout << "cost = " << cost << std::endl;
     std::cout << "-------------------------------------------------------" << std::endl;
+
+    if(cost < best_cost)
+    {
+	best_cost = cost;
+
+	VBF_prior_best = VBF_prior;
+	ggH_prior_best = ggH_prior;
+	WHhadr_prior_best = WHhadr_prior;
+	ZHhadr_prior_best = ZHhadr_prior;
+	WHlept_prior_best = WHlept_prior;
+	ZHlept_prior_best = ZHlept_prior;
+	ZHMET_prior_best = ZHMET_prior;
+	ttHhadr_prior_best = ttHhadr_prior;
+	ttHlept_prior_best = ttHlept_prior;
+
+	dump_current_priors();
+    }
 
     evalcnt++;
 
@@ -112,18 +159,18 @@ int main( int argc, char *argv[] )
 
     varclass18 = static_cast<Mor18LIClassifier*>(varclass);
 
-    conf = new Mor18Config(run_dir + "augmentation/", 35.9, false);
+    conf = new Mor18Config(run_dir + "augmentation/", 35.9, true);
 
     // start the optimization with the currently used values
     float VBF_prior_init = 1.0;
-    float ggH_prior_init = 1.772352900118657;
-    float WHhadr_prior_init = 0.5508480491379912;
-    float ZHhadr_prior_init = 0.21093041111188665;
-    float WHlept_prior_init = 0.2727716898164305;
-    float ZHlept_prior_init = 0.063341941788232;
-    float ZHMET_prior_init = 0.06669225937041949;
-    float ttHhadr_prior_init = 0.14521532770293852;
-    float ttHlept_prior_init = 0.19540029315278845;
+    float ggH_prior_init = 1.46657;
+    float WHhadr_prior_init = 0.582676;
+    float ZHhadr_prior_init = 0.707539;
+    float WHlept_prior_init = 0.272772;
+    float ZHlept_prior_init = 0.0633419;
+    float ZHMET_prior_init = 0.0666923;
+    float ttHhadr_prior_init = 0.145215;
+    float ttHlept_prior_init = 0.1954;
 
     float var[9] = {VBF_prior_init, ggH_prior_init, WHhadr_prior_init, ZHhadr_prior_init, WHlept_prior_init, ZHlept_prior_init, ZHMET_prior_init, ttHhadr_prior_init, ttHlept_prior_init};
     float step[9] = {0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01};
