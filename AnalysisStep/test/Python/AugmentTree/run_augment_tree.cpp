@@ -46,6 +46,10 @@ void augment_tree(TString inpath, TString outpath)
     // create the new branches that are needed in the output tree
     output_tree -> Branch("training_weight", &(buffer -> training_weight), "training_weight/F");
 
+    output_tree -> Branch("leading_jet_pt", &(buffer -> leading_jet_pt), "leading_jet_pt/F");
+    output_tree -> Branch("leading_jet_eta", &(buffer -> leading_jet_eta), "leading_jet_eta/F");
+    output_tree -> Branch("leading_jet_phi", &(buffer -> leading_jet_phi), "leading_jet_phi/F");
+
     output_tree -> Branch("D_VBF2j_ggH_ME", &(buffer -> D_VBF2j_ggH_ME), "D_VBF2j_ggH_ME/F");
     output_tree -> Branch("D_VBF1j_ggH_ME", &(buffer -> D_VBF1j_ggH_ME), "D_VBF1j_ggH_ME/F");
     output_tree -> Branch("D_WHh_ggH_ME", &(buffer -> D_WHh_ggH_ME), "D_WHh_ggH_ME/F");
@@ -96,6 +100,32 @@ void augment_tree(TString inpath, TString outpath)
 	buffer -> D_VBF2j_WHh_ME = DVBFWH_ME_disc(buffer);
 	buffer -> D_VBF2j_ZHh_ME = DVBFZH_ME_disc(buffer);
 
+	// look for the leading jets and store its variables separately
+	float leading_pt = std::numeric_limits<float>::min();
+	unsigned int leading_jet = 0;
+	unsigned int number_jets = buffer -> JetPt -> size();
+	for(unsigned int i = 0; i < number_jets; i++)
+	{
+	    if(buffer -> JetPt -> at(i) > leading_pt)
+	    {
+		leading_jet = i;
+		leading_pt = buffer -> JetPt -> at(i);
+	    }
+	}
+
+	if(number_jets > 0)
+	{
+	    buffer -> leading_jet_pt = leading_pt;
+	    buffer -> leading_jet_eta = buffer -> JetEta -> at(leading_jet);
+	    buffer -> leading_jet_phi = buffer -> JetPhi -> at(leading_jet);
+	}
+	else
+	{
+	    buffer -> leading_jet_pt = 0.0;
+	    buffer -> leading_jet_eta = 0.0;
+	    buffer -> leading_jet_phi = 0.0;
+	}
+
 	output_tree -> Fill();
     }
 
@@ -110,8 +140,8 @@ void augment_tree(TString inpath, TString outpath)
 
 int main( int argc, char *argv[] )
 {
-    Mor18Config* conf = new Mor18Config("/data_CMS/cms/tsculac/CJLST_NTuples/");
-    TString out_dir = "/data_CMS/cms/wind/CJLST_NTuples_training_weights/";
+    Mor18Config* conf = new Mor18Config("/data_CMS/cms/tsculac/CJLST_NTuples/", 35.9, true);
+    TString out_dir = "/data_CMS/cms/wind/CJLST_NTuples_leadingjet/";
     
     // first, make a list of all files, independent of the cut with which they appear in the signal routing table
     std::vector<std::pair<TString, Routing*>> routing_table = conf -> get_routing();

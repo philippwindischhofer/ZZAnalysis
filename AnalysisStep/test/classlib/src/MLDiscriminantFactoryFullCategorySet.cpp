@@ -191,6 +191,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> AddComponent("D_VBF_WHh_2j_ML", j2cut, D_VBF_WHh_ML_disc);
     disc -> AddComponent("D_VBF_WHh_01j_ML", lj2cut, D_VBF_WHh_ML_disc);
+    // disc -> AddComponent("D_VBF_WHh_1j_ML", j1cut, D_VBF_WHh_ML_disc);
+    // disc -> AddComponent("D_VBF_WHh_0j_ML", j0cut, D_VBF_WHh_ML_disc);
     
     coll -> AddDiscriminant(std::make_pair(H1_name, H0_name), disc);
 
@@ -219,6 +221,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc -> AddComponent("D_VBF_ZHh_2j_ML", j2cut, D_VBF_ZHh_ML_disc);
     disc -> AddComponent("D_VBF_ZHh_01j_ML", lj2cut, D_VBF_ZHh_ML_disc);
+    // disc -> AddComponent("D_VBF_ZHh_1j_ML", j1cut, D_VBF_ZHh_ML_disc);
+    // disc -> AddComponent("D_VBF_ZHh_0j_ML", j0cut, D_VBF_ZHh_ML_disc);
     
     coll -> AddDiscriminant(std::make_pair(H1_name, H0_name), disc);
 

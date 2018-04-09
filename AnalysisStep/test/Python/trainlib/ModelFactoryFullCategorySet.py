@@ -35,7 +35,7 @@ class ModelFactoryFullCategorySet:
 
         model_name = "D_VBF_ggH_1j_ML"
         input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
-                         "nExtraLep", "D_VBF1j_ggH_ME"]
+                         "nExtraLep", "D_VBF1j_ggH_ME", "leading_jet_eta"]
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] == 1 and row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = PCAWhiteningPreprocessor(name = model_name + "_input", processed_columns = input_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, input_columns, global_hyperparams)
@@ -165,10 +165,19 @@ class ModelFactoryFullCategorySet:
         sett = TrainingConfig(max_epochs = global_max_epochs)
         mcoll.add_model(pre, mod, sett)
 
-        model_name = "D_VBF_WHh_01j_ML"
+        model_name = "D_VBF_WHh_1j_ML"
+        input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
+                         "nExtraLep", "leading_jet_eta"]
+        preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] == 1 and row["ZZMass"] > 118. and row["ZZMass"] < 130.
+        pre = PCAWhiteningPreprocessor(name = model_name + "_input", processed_columns = input_columns, cuts = preprocessor_cuts)
+        mod = SimpleModel(model_name, input_columns, global_hyperparams)
+        sett = TrainingConfig(max_epochs = global_max_epochs)
+        mcoll.add_model(pre, mod, sett)
+
+        model_name = "D_VBF_WHh_0j_ML"
         input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                          "nExtraLep"]
-        preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] < 2 and row["ZZMass"] > 118. and row["ZZMass"] < 130.
+        preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] == 0 and row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = PCAWhiteningPreprocessor(name = model_name + "_input", processed_columns = input_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, input_columns, global_hyperparams)
         sett = TrainingConfig(max_epochs = global_max_epochs)
@@ -195,10 +204,19 @@ class ModelFactoryFullCategorySet:
         sett = TrainingConfig(max_epochs = global_max_epochs)
         mcoll.add_model(pre, mod, sett)
 
-        model_name = "D_VBF_ZHh_01j_ML"
+        model_name = "D_VBF_ZHh_1j_ML"
+        input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
+                         "nExtraLep", "leading_jet_eta"]
+        preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] == 1 and row["ZZMass"] > 118. and row["ZZMass"] < 130.
+        pre = PCAWhiteningPreprocessor(model_name + "_input", processed_columns = input_columns, cuts = preprocessor_cuts)
+        mod = SimpleModel(model_name, input_columns, global_hyperparams)
+        sett = TrainingConfig(max_epochs = global_max_epochs)
+        mcoll.add_model(pre, mod, sett)
+
+        model_name = "D_VBF_ZHh_0j_ML"
         input_columns = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                          "nExtraLep"]
-        preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] < 2 and row["ZZMass"] > 118. and row["ZZMass"] < 130.
+        preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] == 0 and row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = PCAWhiteningPreprocessor(model_name + "_input", processed_columns = input_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, input_columns, global_hyperparams)
         sett = TrainingConfig(max_epochs = global_max_epochs)

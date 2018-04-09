@@ -143,19 +143,25 @@ double costfunc(const double* params)
 
 int main( int argc, char *argv[] )
 {
-    if(argc != 3)
+    if(argc < 4)
     {
-	std::cerr << "Error: exactly 2 arguments are required" << std::endl;
+	std::cerr << "Error: at least 3 arguments are required" << std::endl;
     }
 
     TString run_dir = argv[1];
     outdir = argv[2];
+    TString engine = "rand_KL";
+    
+    if(argc == 4)
+    {
+	engine = argv[3];
+    }
 
     std::cout << outdir << std::endl;
     
-    refdir = run_dir + "benchmark/";
+    refdir = run_dir + "benchmark_" + engine + "/";
 
-    varclass = new Mor18LIClassifier(run_dir + "calibration/");
+    varclass = new Mor18LIClassifier(run_dir + "calibration/", engine);
 
     varclass18 = static_cast<Mor18LIClassifier*>(varclass);
 

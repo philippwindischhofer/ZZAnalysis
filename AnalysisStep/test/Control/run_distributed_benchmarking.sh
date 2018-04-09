@@ -13,6 +13,13 @@ COMP_REF_DIR="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlo
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
+ENGINE=$2
+
+if [ -z $ENGINE ]
+then
+    echo "no engine name provided, using default: rand_KL"
+    ENGINE="rand_KL"
+fi
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
@@ -51,11 +58,11 @@ for RUN in $RUN_DIRLIST
 do
     # make all the necessary directories now
     CALIBRATION_DIR=$CAMPAIGN_DIR$RUN"calibration/"
-    BENCHMARK_DIR=$CAMPAIGN_DIR$RUN"benchmark/"
-    COMP_DIR=$CAMPAIGN_DIR$RUN"comp/"
+    BENCHMARK_DIR=$CAMPAIGN_DIR$RUN"benchmark_"$ENGINE"/"
+    COMP_DIR=$CAMPAIGN_DIR$RUN"comp_"$ENGINE"/"
     ROC_DIR=$CAMPAIGN_DIR$RUN"ROCs/"
     AUGMENTATION_DIR=$CAMPAIGN_DIR$RUN"augmentation/"
-    BENCHMARK_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"settings_benchmark/"
+    BENCHMARK_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"settings_benchmark_"$ENGINE"/"
 
     mkdir -p $BENCHMARK_SETTINGS_DIR
     mkdir -p $CALIBRATION_DIR
@@ -63,25 +70,39 @@ do
     mkdir -p $COMP_DIR
     mkdir -p $ROC_DIR
 
-    cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $CALIBRATION_DIR
-    cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $ROC_DIR
-
-    BENCHMARK_SCRIPT=$BENCHMARK_SETTINGS_DIR"run_benchmark.sh"
-    BENCHMARK_LOGFILE=$BENCHMARK_SETTINGS_DIR"log_benchmark.txt"
+    BENCHMARK_SCRIPT=$BENCHMARK_SETTINGS_DIR"run_benchmark_"$ENGINE".sh"
+    BENCHMARK_LOGFILE=$BENCHMARK_SETTINGS_DIR"log_benchmark_"$ENGINE".txt"
 
     echo "#!/bin/bash" > $BENCHMARK_SCRIPT
 
     # launch the calibration
-    echo $BIN_DIR$CALIBRATOR $AUGMENTATION_DIR "ML" $CALIBRATION_DIR "&>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
+
+    if [ "$(ls -A $CALIBRATION_DIR)" ]
+    then
+	echo "calibration files already computed, skipping this step now"
+    else
+	echo $BIN_DIR$CALIBRATOR $AUGMENTATION_DIR "ML" $CALIBRATION_DIR "&>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
+	echo "sleep 5" >> $BENCHMARK_SCRIPT
+    fi
 
     # launch the benchmarking
-    echo $BIN_DIR$BENCHMARKER $CALIBRATION_DIR $AUGMENTATION_DIR $BENCHMARK_DIR "&>>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
-
+    echo $BIN_DIR$BENCHMARKER $CALIBRATION_DIR $AUGMENTATION_DIR $BENCHMARK_DIR $ENGINE "&>>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
+    echo "sleep 5" >> $BENCHMARK_SCRIPT
     # launch the comparison to the reference
     echo $BIN_DIR$COMPARER $BENCHMARK_DIR $COMP_REF_DIR $COMP_DIR "&>>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
+    echo "sleep 5" >> $BENCHMARK_SCRIPT
 
-    # launch the plotting of ROCs
-    echo $BIN_DIR$ROC_PLOTTER $AUGMENTATION_DIR $ROC_DIR "&>>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
+    if [ "$(ls -A $ROC_DIR)" ]
+    then
+	echo "ROCs already computed, skipping this step now"
+    else
+        # launch the plotting of ROCs
+	echo $BIN_DIR$ROC_PLOTTER $AUGMENTATION_DIR $ROC_DIR "&>>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
+
+	cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $CALIBRATION_DIR
+	cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $ROC_DIR
+    fi
+
 done
 
 sleep 1
@@ -89,7 +110,7 @@ sleep 1
 # now go back and launch all the jobs that have been prepared
 cd $CAMPAIGN_DIR
 
-JOBS=`find * | grep run_benchmark.sh$`
+JOBS=`find * | grep run_benchmark_$ENGINE.sh$`
 
 for JOB in $JOBS
 do

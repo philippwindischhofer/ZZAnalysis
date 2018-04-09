@@ -62,6 +62,8 @@ do
     done
 done
 
+sleep 1
+
 # now go back and launch all the jobs that have been prepared
 cd $CAMPAIGN_DIR
 

@@ -29,6 +29,12 @@ public :
    // weight with which each event is going to be used for the training etc.
    float training_weight;
 
+   // easy-access variables that concern the leading (i.e. hardest) Jet in the event
+   // in fact, the case of just 1 jet is special: don't have any MELA discriminants available anymore in this case, and these easy-access variables therefore allow to access the jet variables with less preprocessing
+   float leading_jet_eta;
+   float leading_jet_phi;
+   float leading_jet_pt;
+
    // values of the MELA-discriminants for this event (as computed by the functions in me_discriminants.cpp)
    float D_VBF2j_ggH_ME;
    float D_VBF1j_ggH_ME;
@@ -526,6 +532,10 @@ public :
 
    // List of branches
    TBranch* b_training_weight;
+
+   TBranch* b_leading_jet_eta;
+   TBranch* b_leading_jet_phi;
+   TBranch* b_leading_jet_pt;
 
    TBranch* b_D_VBF2j_ggH_ME;
    TBranch* b_D_VBF1j_ggH_ME;
@@ -1165,6 +1175,10 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetMakeClass(1);
 
    fChain->SetBranchAddress("training_weight", &training_weight, &b_training_weight);
+
+   fChain->SetBranchAddress("leading_jet_eta", &leading_jet_eta, &b_leading_jet_eta);
+   fChain->SetBranchAddress("leading_jet_phi", &leading_jet_phi, &b_leading_jet_phi);
+   fChain->SetBranchAddress("leading_jet_pt", &leading_jet_pt, &b_leading_jet_pt);
 
    fChain->SetBranchAddress("D_VBF2j_ggH_ME", &D_VBF2j_ggH_ME, &b_D_VBF2j_ggH_ME);
    fChain->SetBranchAddress("D_VBF1j_ggH_ME", &D_VBF1j_ggH_ME, &b_D_VBF1j_ggH_ME);

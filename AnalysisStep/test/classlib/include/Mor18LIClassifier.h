@@ -33,6 +33,7 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactoryFullCategorySet.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/VotingMultiClassCombinator.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/RANDKLMultiClassCombinator.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/TreeKLMultiClassCombinator.h>
 
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
@@ -41,7 +42,7 @@
 class Mor18LIClassifier: public Classifier
 {
 public:
-    Mor18LIClassifier(TString out_folder = "../../src/ZZAnalysis/CalibratorPlots/");
+    Mor18LIClassifier(TString out_folder = "../../src/ZZAnalysis/CalibratorPlots/", TString engine = "voting");
     ~Mor18LIClassifier();
 
     int ClassifyThisEvent(Tree* in);

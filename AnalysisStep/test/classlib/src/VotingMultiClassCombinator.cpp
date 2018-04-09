@@ -23,7 +23,7 @@ std::map<TString, float> VotingMultiClassCombinator::Evaluate(Tree* in, Discrimi
 	// evaluate the current pair and get its likelihood ratio
 	float LR = coll -> Evaluate(category_pair, in);
 
-	std::cout << category_pair.first << " / " << category_pair.second << " : " << LR << std::endl;
+	//std::cout << category_pair.first << " / " << category_pair.second << " : " << LR << std::endl;
 	
 	if(LR > 0.0)
 	{

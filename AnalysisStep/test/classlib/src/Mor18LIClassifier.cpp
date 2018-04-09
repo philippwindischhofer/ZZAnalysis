@@ -1,6 +1,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18LIClassifier.h>
 
-Mor18LIClassifier::Mor18LIClassifier(TString out_folder)
+Mor18LIClassifier::Mor18LIClassifier(TString out_folder, TString engine)
 {
     manual_WPs = false;
 
@@ -15,8 +15,21 @@ Mor18LIClassifier::Mor18LIClassifier(TString out_folder)
     // prepare the discriminant collection without any priors
     coll = MLDiscriminantFactoryFullCategorySet::GenerateDiscriminantCollection(out_folder, conf);
 
-    //comb = new VotingMultiClassCombinator();
-    comb = new RANDKLMultiClassCombinator();
+    if(engine == "voting")
+    {
+	std::cout << "using simple voting" << std::endl;
+	comb = new VotingMultiClassCombinator();
+    }
+    else if(engine == "rand_KL")
+    {
+	std::cout << "using RAND with KL corrections" << std::endl;
+	comb = new RANDKLMultiClassCombinator();
+    }
+    else if(engine == "tree_KL")
+    {
+	std::cout << "using TREE with KL corrections" << std::endl;
+	comb = new TreeKLMultiClassCombinator();
+    }
 }
 
 Mor18LIClassifier::~Mor18LIClassifier()

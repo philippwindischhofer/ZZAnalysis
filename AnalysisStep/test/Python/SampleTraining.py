@@ -30,7 +30,7 @@ def main():
     mcolls = confhandler.GetModelCollection()
 
     train = Trainer(training_dir)
-    #opt = optimizers.SGD(lr = 0.01, momentum = 0.9, decay = 1e-6)
+    #opt = optimizers.SGD(lr = 0.01, momentum = 0.95, decay = 1e-6)
     opt = optimizers.Adam(lr = 0.001, beta_1 = 0.9, beta_2 = 0.999, epsilon = K.epsilon(), decay = 0.0)
 
     for mcoll in mcolls:

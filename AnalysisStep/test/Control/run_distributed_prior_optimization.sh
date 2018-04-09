@@ -5,6 +5,13 @@
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
+ENGINE=$2
+
+if [ -z $ENGINE ]
+then
+    echo "no engine name provided, using default: rand_KL"
+    ENGINE="rand_KL"
+fi
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
@@ -33,25 +40,25 @@ RUN_DIRLIST=`ls -d */ | egrep -v 'bin|statistics'`
 for RUN in $RUN_DIRLIST
 do
     # make all the necessary directories now
-    PRIOR_DIR=$CAMPAIGN_DIR$RUN"priors/"
-    PRIOR_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"settings_priors/"
+    PRIOR_DIR=$CAMPAIGN_DIR$RUN"priors_"$ENGINE"/"
+    PRIOR_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"settings_priors_"$ENGINE"/"
 
     mkdir -p $PRIOR_DIR
     mkdir -p $PRIOR_SETTINGS_DIR
 
-    PRIOR_SCRIPT=$PRIOR_SETTINGS_DIR"run_prior_optimizer.sh"
-    PRIOR_LOGFILE=$PRIOR_SETTINGS_DIR"log_prior_optimizer.txt"
+    PRIOR_SCRIPT=$PRIOR_SETTINGS_DIR"run_prior_optimizer_"$ENGINE".sh"
+    PRIOR_LOGFILE=$PRIOR_SETTINGS_DIR"log_prior_optimizer_"$ENGINE".txt"
 
     echo "#!/bin/bash" > $PRIOR_SCRIPT
 
-    # launch the calibration
-    echo $BIN_DIR$PRIOR_OPTIMIZER $CAMPAIGN_DIR$RUN $PRIOR_DIR "&>" $PRIOR_LOGFILE >> $PRIOR_SCRIPT
+    # launch the optimization
+    echo $BIN_DIR$PRIOR_OPTIMIZER $CAMPAIGN_DIR$RUN $PRIOR_DIR $ENGINE "&>" $PRIOR_LOGFILE >> $PRIOR_SCRIPT
 done
 
 # now go back and launch all the jobs that have been prepared
 cd $CAMPAIGN_DIR
 
-JOBS=`find * | grep run_prior_optimizer.sh$`
+JOBS=`find * | grep run_prior_optimizer_$ENGINE.sh$`
 
 for JOB in $JOBS
 do

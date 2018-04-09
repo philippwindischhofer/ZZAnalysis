@@ -38,9 +38,15 @@ int main(int argc, char *argv[])
     TString MCpath = argv[2];
     TString out_folder = argv[3];
 
+    TString engine = "rand_KL";
+    if(argc >= 5)
+    {
+	engine = argv[4];
+    }
+
     // switch here between the classifier based on trained discriminants or the one based only on the available MELA values
     //Classifier* refclass = new Mor18Classifier();
-    Classifier* refclass = new Mor18LIClassifier(calibration_folder);
+    Classifier* refclass = new Mor18LIClassifier(calibration_folder, engine);
 
     Mor18LIClassifier* refclass18 = static_cast<Mor18LIClassifier*>(refclass);
 
@@ -55,10 +61,10 @@ int main(int argc, char *argv[])
     float ttHhadr_prior = 0.145215;
     float ttHlept_prior = 0.1954;
 
-    if(argc == 5)
+    if(argc == 6)
     {
 	// the path to the prior file was given -> read the priors that were optimized on the training dataset, and evaluate the classification performance on the validation dataset
-	TString prior_path = argv[4];
+	TString prior_path = argv[5];
 	ConfigFileHandler* handler = new ConfigFileHandler(prior_path + "priors.txt", "read");
 	VBF_prior = handler -> GetField("VBF_prior");
 	ggH_prior = handler -> GetField("ggH_prior");
@@ -113,6 +119,7 @@ int main(int argc, char *argv[])
     // switch here between all Moriond 2018 categories and a reduced set for development
     //Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet(MCpath);
     Mor18Config* conf = new Mor18Config(MCpath, 35.9, true);
+    //Mor18Config* conf = new Mor18Config(MCpath, 150.0, true);
 
     // these are the optimized working points to give max. Punzi for an integrated luminosity of 35.9fb^-1
     // float WP_VBF2j = 0.640951;
@@ -123,10 +130,10 @@ int main(int argc, char *argv[])
     // refclass18 -> SetWPs(WP_VBF2j, WP_VBF1j, WP_WHh, WP_ZHh);
 
     // these are the optimized working points to give max. Punzi for an integrated luminosity of 150fb^-1
-    // float WP_VBF2j = 0.665929;
-    // float WP_VBF1j = 0.000793098;
-    // float WP_WHh = 0.969807;
-    // float WP_ZHh = 0.924298;
+    // float WP_VBF2j = 0.667281;
+    // float WP_VBF1j = 0.000111881;
+    // float WP_WHh = 0.970386;
+    // float WP_ZHh = 0.932839;
 
     // Mor18Classifier* refclass18 = static_cast<Mor18Classifier*>(refclass);
     // refclass18 -> SetWPs(WP_VBF2j, WP_VBF1j, WP_WHh, WP_ZHh);
