@@ -57,7 +57,7 @@ public:
     TString GetDiscriminantName();
     
 private:
-    float ComputeKLCorrection(TH1F* H1_calib_histo, TH1F* H0_calib_histo);
+    std::pair<float, float> ComputeKLCorrection(TH1F* H1_calib_histo, TH1F* H0_calib_histo);
 
     TString calib_dir;
 
@@ -84,7 +84,8 @@ private:
     std::vector<TH1F*> H0_calib_histos;
 
     // the Kullback-Leibler correction values for each component
-    std::vector<float> KL_corrections;
+    std::vector<float> D_01_KL;
+    std::vector<float> D_10_KL;
 
     // ... and their calibration status
     std::vector<bool> calibration_status;

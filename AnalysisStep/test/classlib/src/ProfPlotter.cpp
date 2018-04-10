@@ -56,7 +56,12 @@ void ProfPlotter::Construct(std::vector<TH1F*> hist_vec, std::vector<TString> so
     for(unsigned int i = 0; i < source_labels.size(); i++)
     {
 	if(source_labels[i] != NULL)
-	    leg -> AddEntry(hist_vec[i], source_labels[i], "f");
+	{
+	    if(hist_vec[i] -> GetMarkerStyle() > 8)
+		leg -> AddEntry(hist_vec[i], source_labels[i], "p");
+	    else
+		leg -> AddEntry(hist_vec[i], source_labels[i], "f");
+	}
     }
     
     for(auto& hist : hist_vec)

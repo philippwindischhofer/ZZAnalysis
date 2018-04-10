@@ -1,6 +1,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/RANDKLMultiClassCombinator.h>
 
-RANDKLMultiClassCombinator::RANDKLMultiClassCombinator()
+RANDKLMultiClassCombinator::RANDKLMultiClassCombinator(bool use_KL): use_KL(use_KL)
 {
     std::srand ( unsigned ( std::time(0) ) );
 }
@@ -40,7 +40,7 @@ std::map<TString, float> RANDKLMultiClassCombinator::Evaluate(Tree* in, Discrimi
 	    
 	    std::pair<TString, TString> combination = std::make_pair(cur_winner, player);
 	    float log_LR = coll -> EvaluateLog(combination, in);
-	    float KL_corr = coll -> EvaluateKLCorrection(combination, in);
+	    float KL_corr = use_KL ? coll -> EvaluateKLCorrection(combination, in) : 0.0;
 	    float game_result = log_LR + KL_corr;
 
 	    //std::cout << combination.first << " vs. " << combination.second << ": log(LR) = " << log_LR << ", KL_corr = " << KL_corr << std::endl;

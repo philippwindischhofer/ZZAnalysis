@@ -31,12 +31,13 @@
 class RANDKLMultiClassCombinator: public MultiClassCombinator
 {
 public:
-    RANDKLMultiClassCombinator();
+    RANDKLMultiClassCombinator(bool use_KL);
     ~RANDKLMultiClassCombinator();
 
     virtual std::map<TString, float> Evaluate(Tree* in, DiscriminantCollection* coll);
 
 private:
+    bool use_KL = false;
     int iterations = 10;
 };
 

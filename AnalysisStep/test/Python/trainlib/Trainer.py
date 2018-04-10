@@ -72,8 +72,10 @@ class Trainer:
             H1_class_weight = float(H0_length) / H1_weight_sum
             H0_class_weight = float(H1_length) / H0_weight_sum
         else:
-            H1_class_weight = 1.0
-            H0_class_weight = float(H1_length) / float(H0_length)
+            # H1_class_weight = 1.0
+            # H0_class_weight = float(H1_length) / float(H0_length)
+            H1_class_weight = 1.0 + float(H0_length) / float(H1_length)
+            H0_class_weight = 1.0 + float(H1_length) / float(H0_length)
 
         return H1_class_weight, H0_class_weight
 

@@ -31,7 +31,7 @@
 
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
 
-void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::function<bool(Tree*)>> H1_cuts, std::vector<TString> H0_paths, std::vector<std::function<bool(Tree*)>> H0_cuts, const std::function<bool(Tree*)>& disc_cut, const std::function<float(Tree*)>& disc, TString disc_name, Config& conf, TString out_folder)
+void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::function<bool(Tree*)>> H1_cuts, std::vector<TString> H0_paths, std::vector<std::function<bool(Tree*)>> H0_cuts, const std::function<bool(Tree*)>& disc_cut, const std::function<float(Tree*)>& disc, TString disc_name, Config& conf, TString out_folder, TString H1_name = "H_{1}", TString H0_name = "H_{0}")
 {
     Profiler* prof = new Profiler();
     ProfPlotter* plotter = new ProfPlotter();
@@ -40,11 +40,25 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
     // from those, build the likelihood ratio of the MELA-discriminant
     TH1F* H1_distrib = new TH1F("H1_distrib", "H1_distrib", 50, -0.02, 1.02);
     H1_distrib -> SetLineColor(kBlue - 9);
+    H1_distrib -> SetMarkerColor(kBlue - 9);
     H1_distrib -> SetFillColor(kWhite);
 
     TH1F* H0_distrib = new TH1F("H0_distrib", "H0_distrib", 50, -0.02, 1.02);
     H0_distrib -> SetLineColor(kRed - 7);
+    H0_distrib -> SetMarkerColor(kRed - 7);
     H0_distrib -> SetFillColor(kWhite);
+
+    TH1F* H1_distrib_validation = new TH1F("H1_distrib_validation", "H1_distrib_validation", 50, -0.02, 1.02);
+    H1_distrib_validation -> SetLineColor(kWhite);
+    H1_distrib_validation -> SetFillColor(kWhite);
+    H1_distrib_validation -> SetMarkerStyle(21);
+    H1_distrib_validation -> SetMarkerColor(kBlue - 9);
+
+    TH1F* H0_distrib_validation = new TH1F("H0_distrib_validation", "H0_distrib_validation", 50, -0.02, 1.02);
+    H0_distrib_validation -> SetLineColor(kWhite);
+    H0_distrib_validation -> SetFillColor(kWhite);
+    H0_distrib_validation -> SetMarkerStyle(21);
+    H0_distrib_validation -> SetMarkerColor(kRed - 7);
 
     // make the signal distribution
     for(auto tup: boost::combine(H1_paths, H1_cuts))
@@ -59,6 +73,7 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 	    kTRUE : kFALSE;};
 	
 	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, 0.0, 0.5);
+	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib_validation, total_cut, disc, false, 0.5, 1.0);
     }
 
     for(auto tup: boost::combine(H0_paths, H0_cuts))
@@ -73,6 +88,7 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 	    kTRUE : kFALSE;};
 	
 	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, 0.0, 0.5);
+	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib_validation, total_cut, disc, false, 0.5, 1.0);
     }
 
     // only now do the normalization of both distributions
@@ -81,12 +97,17 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
     H1_distrib -> Scale(sig_norm);
     H0_distrib -> Scale(bkg_norm);
 
+    double sig_norm_validation = 1.0 / H1_distrib_validation -> Integral("width");
+    double bkg_norm_validation = 1.0 / H0_distrib_validation -> Integral("width");
+    H1_distrib_validation -> Scale(sig_norm_validation);
+    H0_distrib_validation -> Scale(bkg_norm_validation);
+
     TH1F* H1_distrib_smooth = (TH1F*)(H1_distrib -> Clone("H1_distrib_smooth"));
     TH1F* H0_distrib_smooth = (TH1F*)(H0_distrib -> Clone("H0_distrib_smooth"));
 
     // smoothen the histograms
-    H1_distrib_smooth -> Smooth(0);
-    H0_distrib_smooth -> Smooth(0);
+    H1_distrib_smooth -> Smooth(1);
+    H0_distrib_smooth -> Smooth(1);
 
     // now make a fit to the binned, normalized histograms
     TSpline3* H1_spline = new TSpline3(H1_distrib_smooth);
@@ -97,14 +118,14 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
     H0_spline -> SetLineWidth(3);
 
     // Plot the two distributions, for visualization (and cross-checking) purposes
-    std::vector<TH1F*> hist_vec = {H1_distrib, H0_distrib};
-    std::vector<TString> source_labels = {"H_{1}", "H_{0}"};
+    std::vector<TH1F*> hist_vec = {H1_distrib_validation, H0_distrib_validation, H1_distrib, H0_distrib};
+    std::vector<TString> source_labels = {H1_name + " (validation)", H0_name + " (validation)", H1_name + " (training)", H0_name + " (training)"};
 
-    plotter -> Construct(hist_vec, source_labels, disc_name, "normalized to 1", "", "", "nostack");
+    plotter -> Construct(hist_vec, source_labels, disc_name, "normalized to 1", "", "", "P H nostack");
     
     plotter -> GetCanvas() -> cd();
-    H1_spline -> Draw("same");
-    H0_spline -> Draw("same");
+    // H1_spline -> Draw("same");
+    // H0_spline -> Draw("same");
 
     // Save the calibration splines to a file
     TFile* outfile = new TFile(out_folder + disc_name + "_calines.root", "recreate");

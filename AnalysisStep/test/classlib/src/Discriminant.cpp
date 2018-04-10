@@ -90,7 +90,9 @@ void Discriminant::AddComponent(TString name, const std::function<bool(Tree*)> c
 	calibration_status.push_back(false);
 
 	// have no KL corrections without calibration...
-	KL_corrections.push_back(0.0);
+	//KL_corrections.push_back(0.0);
+	D_01_KL.push_back(0.0);
+	D_10_KL.push_back(0.0);
     }
     else
     {
@@ -111,16 +113,18 @@ void Discriminant::AddComponent(TString name, const std::function<bool(Tree*)> c
 	calibration_status.push_back(true);
 
 	// compute also the KL corrections for each component, to be used later
-	float KL_corr = ComputeKLCorrection(H1_calib_histo, H0_calib_histo);
-	KL_corrections.push_back(KL_corr);
+	std::pair<float, float> KL_corr = ComputeKLCorrection(H1_calib_histo, H0_calib_histo);
+	//KL_corrections.push_back(KL_corr);
+	D_01_KL.push_back(KL_corr.first);
+	D_10_KL.push_back(KL_corr.second);
 
-	std::cout << "computed KL correction for component " << name << ": " << KL_corr << std::endl;
+	//std::cout << "computed KL correction for component " << name << ": " << KL_corr << std::endl;
     }
 
     calib_file -> Close();
 }
 
-float Discriminant::ComputeKLCorrection(TH1F* H1_calib_histo, TH1F* H0_calib_histo)
+std::pair<float, float> Discriminant::ComputeKLCorrection(TH1F* H1_calib_histo, TH1F* H0_calib_histo)
 {
     // compute the (expected) Kullback-Leibler divergences, and take the difference between the two
 
@@ -130,7 +134,7 @@ float Discriminant::ComputeKLCorrection(TH1F* H1_calib_histo, TH1F* H0_calib_his
     if(H0_calib_histo -> GetSize() != H1_calib_histo -> GetSize())
     {
 	std::cout << "Error: both H0 and H1 calibration histograms are supposed to have the same number of bins!";
-	return 0.0;
+	return std::make_pair(0.0, 0.0);
     }
 
     for(int i = 1; i <= H0_calib_histo -> GetSize() - 2; i++)
@@ -150,7 +154,8 @@ float Discriminant::ComputeKLCorrection(TH1F* H1_calib_histo, TH1F* H0_calib_his
     }
 
     // return the actual correction term, which is the difference between the two KL divergences
-    return 1.0 / 2.0 * (D_01 - D_10);
+    //return 1.0 / 2.0 * (D_01 - D_10);
+    return std::make_pair(D_01, D_10);
 }
 
 float Discriminant::EvaluateLog(Tree* in)
@@ -163,20 +168,27 @@ float Discriminant::EvaluateKLCorrection(Tree* in)
     float retval = 0;
 
     // iterate through the list of components and check each of them until find a matching one
-    for(auto tup: boost::combine(names, cuts, KL_corrections))
+    for(auto tup: boost::combine(names, cuts, D_01_KL, D_10_KL))
     {
 	std::function<bool(Tree*)> cut;
 	TString name;
-	float KL_correction;
-	boost::tie(name, cut, KL_correction) = tup;
+	float D_01;
+	float D_10;
+	boost::tie(name, cut, D_01, D_10) = tup;
 
 	if(cut(in))
 	{
-	    retval = KL_correction;
+	    //retval = KL_correction;
+
+	    // this is for unequal *true* priors
+	    //retval = H0_weight / (H0_weight + H1_weight) * D_01 - H1_weight / (H0_weight + H1_weight) * D_10;
+
+	    // this is for equal *true* priors
+	    retval = 1.0 / 2.0 * (D_01 - D_10);
 	    break;
 	}
     }
-
+    
     return retval;
 }
 
@@ -210,15 +222,22 @@ float Discriminant::Evaluate(Tree* in)
 	    }
 
 	    // for a calibrated discriminant, now evaluate the actual likelihood ratio (or an approximation thereof)
-	    //retval = (H1_caline -> Eval(raw_disc)) / (H0_caline -> Eval(raw_disc));
+
 	    
 	    //std::cout << "raw_disc = " << raw_disc << std::endl;
 
 	    if((H1_calib_histo != NULL) && (H0_calib_histo != NULL))
 	    {
-		// don't use interpolation at the moment
-		retval = (H1_calib_histo -> GetBinContent(H1_calib_histo -> FindBin(raw_disc))) / (0.00001 + H0_calib_histo -> GetBinContent(H0_calib_histo -> FindBin(raw_disc)));
-		retval = retval * H1_weight / H0_weight; // apply the weights
+		// don't use interpolation and smoothing at the moment
+		//float calibrated_disc = (H1_calib_histo -> GetBinContent(H1_calib_histo -> FindBin(raw_disc))) / (0.00001 + H0_calib_histo -> GetBinContent(H0_calib_histo -> FindBin(raw_disc)));
+		
+		// this uses linear interpolation between two neighbouring bins
+		float calibrated_disc = (H1_calib_histo -> Interpolate(raw_disc)) / (std::max(0.00001, H0_calib_histo -> Interpolate(raw_disc)));
+		//float calibrated_interpolated_disc = (H1_caline -> Eval(raw_disc)) / (H0_caline -> Eval(raw_disc));
+
+		//std::cout << calibrated_disc << " vs. " << calibrated_interpolated_disc << std::endl;
+
+		retval = calibrated_disc * H1_weight / H0_weight; // apply the weights
 
 		//std::cout << "LR = " << retval << std::endl;
 	    }

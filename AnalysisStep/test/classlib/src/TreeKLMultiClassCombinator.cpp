@@ -1,6 +1,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/TreeKLMultiClassCombinator.h>
 
-TreeKLMultiClassCombinator::TreeKLMultiClassCombinator()
+TreeKLMultiClassCombinator::TreeKLMultiClassCombinator(bool use_KL): use_KL(use_KL)
 {
     std::srand ( unsigned ( std::time(0) ) );
 }
@@ -28,10 +28,14 @@ std::map<TString, float> TreeKLMultiClassCombinator::Evaluate(Tree* in, Discrimi
 	retval[winner]++;
     }
 
+    // std::cout << " --------------------------------" << std::endl;
+
     // for(auto cur: retval)
     // {
     // 	std::cout << cur.first << ": " << cur.second << std::endl;
     // }
+
+    // std::cout << " --------------------------------" << std::endl;
     
     last_result = retval;
     return retval;
@@ -75,7 +79,7 @@ std::vector<TString> TreeKLMultiClassCombinator::TreeTournament(std::vector<TStr
 
 		std::pair<TString, TString> combination = std::make_pair(player_a, player_b);
 		float log_LR = coll -> EvaluateLog(combination, in);
-		float KL_corr = coll -> EvaluateKLCorrection(combination, in);
+		float KL_corr = use_KL ? coll -> EvaluateKLCorrection(combination, in) : 0.0;
 		float game_result = log_LR + KL_corr;
 
 		if(game_result > 0.0)

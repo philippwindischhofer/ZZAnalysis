@@ -31,7 +31,7 @@
 class TreeKLMultiClassCombinator: public MultiClassCombinator
 {
 public:
-    TreeKLMultiClassCombinator();
+    TreeKLMultiClassCombinator(bool use_KL);
     ~TreeKLMultiClassCombinator();
 
     virtual std::map<TString, float> Evaluate(Tree* in, DiscriminantCollection* coll);
@@ -39,6 +39,7 @@ public:
 private:
     std::vector<TString> TreeTournament(std::vector<TString> players, Tree* in, DiscriminantCollection* coll);
     int iterations = 10;
+    bool use_KL = false;
 };
 
 #endif

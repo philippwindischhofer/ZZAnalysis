@@ -20,15 +20,25 @@ Mor18LIClassifier::Mor18LIClassifier(TString out_folder, TString engine)
 	std::cout << "using simple voting" << std::endl;
 	comb = new VotingMultiClassCombinator();
     }
+    else if(engine == "rand")
+    {
+	std::cout << "using RAND without KL corrections" << std::endl;
+	comb = new RANDKLMultiClassCombinator(false);
+    }
     else if(engine == "rand_KL")
     {
 	std::cout << "using RAND with KL corrections" << std::endl;
-	comb = new RANDKLMultiClassCombinator();
+	comb = new RANDKLMultiClassCombinator(true);
+    }
+    else if(engine == "tree")
+    {
+	std::cout << "using TREE without KL corrections" << std::endl;
+	comb = new TreeKLMultiClassCombinator(false);
     }
     else if(engine == "tree_KL")
     {
 	std::cout << "using TREE with KL corrections" << std::endl;
-	comb = new TreeKLMultiClassCombinator();
+	comb = new TreeKLMultiClassCombinator(true);
     }
 }
 
