@@ -34,12 +34,19 @@ public:
     TreeKLMultiClassCombinator(bool use_KL);
     ~TreeKLMultiClassCombinator();
 
+    virtual std::map<TString, float> Evaluate(Tree* in, DiscriminantCollection* coll, int iterations);
     virtual std::map<TString, float> Evaluate(Tree* in, DiscriminantCollection* coll);
+
+    void UseFlatPriorsInKL(bool use_flat_priors);
 
 private:
     std::vector<TString> TreeTournament(std::vector<TString> players, Tree* in, DiscriminantCollection* coll);
-    int iterations = 10;
+
+    /* int min_iterations = 10; */
+    /* int max_iterations = 5000; */
+
     bool use_KL = false;
+    bool use_flat_priors = true;
 };
 
 #endif

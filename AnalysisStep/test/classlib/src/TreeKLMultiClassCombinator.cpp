@@ -3,6 +3,10 @@
 TreeKLMultiClassCombinator::TreeKLMultiClassCombinator(bool use_KL): use_KL(use_KL)
 {
     std::srand ( unsigned ( std::time(0) ) );
+
+    // set the default parameters
+    engine_parameters["min_iterations"] = 10;
+    engine_parameters["max_iterations"] = 5000;
 }
 
 TreeKLMultiClassCombinator::~TreeKLMultiClassCombinator()
@@ -10,7 +14,32 @@ TreeKLMultiClassCombinator::~TreeKLMultiClassCombinator()
 
 }
 
+void TreeKLMultiClassCombinator::UseFlatPriorsInKL(bool use_priors)
+{
+    this -> use_flat_priors = use_flat_priors;
+}
+
 std::map<TString, float> TreeKLMultiClassCombinator::Evaluate(Tree* in, DiscriminantCollection* coll)
+{
+    int min_iterations = engine_parameters["min_iterations"];
+    int max_iterations = engine_parameters["max_iterations"];
+
+    // try the low-resolution mode first
+    std::map<TString, float> retval = Evaluate(in, coll, min_iterations);
+    float margin = GetWinningMargin();
+
+    //std::cout << "margin = " << margin << std::endl;
+
+    if(margin < min_iterations / 2)
+    {
+	// win was not very pronounced, switch to high-resolution mode
+	retval = Evaluate(in, coll, max_iterations);
+    }
+
+    return retval;
+}
+
+std::map<TString, float> TreeKLMultiClassCombinator::Evaluate(Tree* in, DiscriminantCollection* coll, int iterations)
 {
     std::map<TString, float> retval;
 
@@ -79,7 +108,7 @@ std::vector<TString> TreeKLMultiClassCombinator::TreeTournament(std::vector<TStr
 
 		std::pair<TString, TString> combination = std::make_pair(player_a, player_b);
 		float log_LR = coll -> EvaluateLog(combination, in);
-		float KL_corr = use_KL ? coll -> EvaluateKLCorrection(combination, in) : 0.0;
+		float KL_corr = use_KL ? coll -> EvaluateKLCorrection(combination, in, use_flat_priors) : 0.0;
 		float game_result = log_LR + KL_corr;
 
 		if(game_result > 0.0)

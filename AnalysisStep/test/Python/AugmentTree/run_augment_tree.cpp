@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
+#include <algorithm>
 #include <boost/range/combine.hpp>
 
 // ROOT
@@ -48,7 +50,18 @@ void augment_tree(TString inpath, TString outpath)
 
     output_tree -> Branch("leading_jet_pt", &(buffer -> leading_jet_pt), "leading_jet_pt/F");
     output_tree -> Branch("leading_jet_eta", &(buffer -> leading_jet_eta), "leading_jet_eta/F");
-    output_tree -> Branch("leading_jet_phi", &(buffer -> leading_jet_phi), "leading_jet_phi/F");
+    output_tree -> Branch("leading_jet_sin_phi", &(buffer -> leading_jet_sin_phi), "leading_jet_sin_phi/F");
+    output_tree -> Branch("leading_jet_cos_phi", &(buffer -> leading_jet_cos_phi), "leading_jet_cos_phi/F");
+
+    output_tree -> Branch("leading_lep_pt", &(buffer -> leading_lep_pt), "leading_lep_pt/F");
+    output_tree -> Branch("leading_lep_eta", &(buffer -> leading_lep_eta), "leading_lep_eta/F");
+    output_tree -> Branch("leading_lep_sin_phi", &(buffer -> leading_lep_sin_phi), "leading_lep_sin_phi/F");
+    output_tree -> Branch("leading_lep_cos_phi", &(buffer -> leading_lep_cos_phi), "leading_lep_cos_phi/F");
+    
+    output_tree -> Branch("leading_extra_lep_pt", &(buffer -> leading_extra_lep_pt), "leading_extra_lep_pt/F");
+    output_tree -> Branch("leading_extra_lep_eta", &(buffer -> leading_extra_lep_eta), "leading_extra_lep_eta/F");
+    output_tree -> Branch("leading_extra_lep_sin_phi", &(buffer -> leading_extra_lep_sin_phi), "leading_extra_lep_sin_phi/F");
+    output_tree -> Branch("leading_extra_lep_cos_phi", &(buffer -> leading_extra_lep_cos_phi), "leading_extra_lep_cos_phi/F");
 
     output_tree -> Branch("D_VBF2j_ggH_ME", &(buffer -> D_VBF2j_ggH_ME), "D_VBF2j_ggH_ME/F");
     output_tree -> Branch("D_VBF1j_ggH_ME", &(buffer -> D_VBF1j_ggH_ME), "D_VBF1j_ggH_ME/F");
@@ -70,16 +83,32 @@ void augment_tree(TString inpath, TString outpath)
 	std::cout << "adding LHEAssociatedParticleId in file " << inpath << std::endl;
 	output_tree -> Branch("LHEAssociatedParticleId", &(buffer -> LHEAssociatedParticleId));
     }
+
+    std::cout << "generating random numbers" << std::endl;
+
+    // generate the randomization of the data:
+    std::vector<Long64_t> indices;
+    for(Long64_t j_entry = 0; j_entry < n_entries; j_entry++)
+    {
+	indices.push_back(j_entry);
+    }
+
+    //std::random_shuffle(indices.begin(), indices.end());
+
+    std::cout << "done. starting augmentation" << std::endl;
     
     // loop over the entries in chain
     for(Long64_t j_entry = 0; j_entry < n_entries; j_entry++)
     {
+	// draw a random index from the array:
+	Long64_t rand_index = indices.at(j_entry);
+
 	// get the correct tree in the chain that contains this event
-	Long64_t i_entry = buffer -> LoadTree(j_entry);
+	Long64_t i_entry = buffer -> LoadTree(rand_index);
 	if(i_entry < 0) break;
 
 	// now actually read this entry
-	buffer -> fChain -> GetEntry(j_entry);
+	buffer -> fChain -> GetEntry(rand_index);
 
 	float training_weight = ((buffer -> xsec) * (buffer -> overallEventWeight)) / gen_sum_weights;
 
@@ -101,29 +130,87 @@ void augment_tree(TString inpath, TString outpath)
 	buffer -> D_VBF2j_ZHh_ME = DVBFZH_ME_disc(buffer);
 
 	// look for the leading jets and store its variables separately
-	float leading_pt = std::numeric_limits<float>::min();
+	float leading_jet_pt = std::numeric_limits<float>::min();
 	unsigned int leading_jet = 0;
 	unsigned int number_jets = buffer -> JetPt -> size();
 	for(unsigned int i = 0; i < number_jets; i++)
 	{
-	    if(buffer -> JetPt -> at(i) > leading_pt)
+	    if(buffer -> JetPt -> at(i) > leading_jet_pt)
 	    {
 		leading_jet = i;
-		leading_pt = buffer -> JetPt -> at(i);
+		leading_jet_pt = buffer -> JetPt -> at(i);
 	    }
 	}
 
-	if(number_jets > 0)
+	if((number_jets > 0) && (leading_jet_pt > 30.0))
 	{
-	    buffer -> leading_jet_pt = leading_pt;
+	    buffer -> leading_jet_pt = leading_jet_pt;
 	    buffer -> leading_jet_eta = buffer -> JetEta -> at(leading_jet);
-	    buffer -> leading_jet_phi = buffer -> JetPhi -> at(leading_jet);
+	    buffer -> leading_jet_sin_phi = TMath::Sin(buffer -> JetPhi -> at(leading_jet));
+	    buffer -> leading_jet_cos_phi = TMath::Cos(buffer -> JetPhi -> at(leading_jet));
 	}
 	else
 	{
 	    buffer -> leading_jet_pt = 0.0;
 	    buffer -> leading_jet_eta = 0.0;
-	    buffer -> leading_jet_phi = 0.0;
+	    buffer -> leading_jet_sin_phi = 0.0;
+	    buffer -> leading_jet_cos_phi = 0.0;
+	}
+
+	// look for the leading leptons and store its variables separately
+	float leading_lep_pt = std::numeric_limits<float>::min();
+	unsigned int leading_lep = 0;
+	unsigned int number_leps = buffer -> LepPt -> size();
+	for(unsigned int i = 0; i < number_leps; i++)
+	{
+	    if(buffer -> LepPt -> at(i) > leading_lep_pt)
+	    {
+		leading_lep = i;
+		leading_lep_pt = buffer -> LepPt -> at(i);
+	    }
+	}
+
+	if((number_leps > 0) && (leading_lep_pt > 30.0))
+	{
+	    buffer -> leading_lep_pt = leading_lep_pt;
+	    buffer -> leading_lep_eta = buffer -> LepEta -> at(leading_lep);
+	    buffer -> leading_lep_sin_phi = TMath::Sin(buffer -> LepPhi -> at(leading_lep));
+	    buffer -> leading_lep_cos_phi = TMath::Cos(buffer -> LepPhi -> at(leading_lep));
+	}
+	else
+	{
+	    buffer -> leading_lep_pt = 0.0;
+	    buffer -> leading_lep_eta = 0.0;
+	    buffer -> leading_lep_sin_phi = 0.0;
+	    buffer -> leading_lep_cos_phi = 0.0;
+	}
+
+	// look for the leading extra leptons and store its variables separately
+	float leading_extra_lep_pt = std::numeric_limits<float>::min();
+	unsigned int leading_extra_lep = 0;
+	unsigned int number_extra_leps = buffer -> ExtraLepPt -> size();
+	for(unsigned int i = 0; i < number_extra_leps; i++)
+	{
+	    if(buffer -> ExtraLepPt -> at(i) > leading_extra_lep_pt)
+	    {
+		leading_extra_lep = i;
+		leading_extra_lep_pt = buffer -> ExtraLepPt -> at(i);
+	    }
+	}
+
+	if((number_extra_leps > 0) && (leading_extra_lep_pt > 30.0))
+	{
+	    buffer -> leading_extra_lep_pt = leading_extra_lep_pt;
+	    buffer -> leading_extra_lep_eta = buffer -> ExtraLepEta -> at(leading_extra_lep);
+	    buffer -> leading_extra_lep_sin_phi = TMath::Sin(buffer -> ExtraLepPhi -> at(leading_extra_lep));
+	    buffer -> leading_extra_lep_cos_phi = TMath::Cos(buffer -> ExtraLepPhi -> at(leading_extra_lep));
+	}
+	else
+	{
+	    buffer -> leading_extra_lep_pt = 0.0;
+	    buffer -> leading_extra_lep_eta = 0.0;
+	    buffer -> leading_extra_lep_sin_phi = 0.0;
+	    buffer -> leading_extra_lep_cos_phi = 0.0;
 	}
 
 	output_tree -> Fill();
@@ -141,7 +228,7 @@ void augment_tree(TString inpath, TString outpath)
 int main( int argc, char *argv[] )
 {
     Mor18Config* conf = new Mor18Config("/data_CMS/cms/tsculac/CJLST_NTuples/", 35.9, true);
-    TString out_dir = "/data_CMS/cms/wind/CJLST_NTuples_leadingjet/";
+    TString out_dir = "/data_CMS/cms/wind/CJLST_NTuples_randomized/";
     
     // first, make a list of all files, independent of the cut with which they appear in the signal routing table
     std::vector<std::pair<TString, Routing*>> routing_table = conf -> get_routing();

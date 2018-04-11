@@ -31,21 +31,26 @@ float DiscriminantCollection::EvaluateLog(std::pair<TString, TString> combinatio
     return TMath::Log(Evaluate(combination, in));
 }
 
-float DiscriminantCollection::EvaluateKLCorrection(std::pair<TString, TString> combination, Tree* in)
+float DiscriminantCollection::EvaluateKLCorrection(std::pair<TString, TString> combination, Tree* in, bool use_flat_priors)
 {
     float retval = 0.0;
 
     // try if there exists a discriminant that can compare these two cases
     try
     {
-	retval = discs.at(combination) -> EvaluateKLCorrection(in);
+	float H1_prior = use_flat_priors ? 0.5 : discs.at(combination) -> GetH1Weight();
+	float H0_prior = use_flat_priors ? 0.5 : discs.at(combination) -> GetH0Weight();
+	retval = discs.at(combination) -> EvaluateKLCorrection(in, H1_prior, H0_prior);
     }
     catch(const std::out_of_range& e)
     {
 	try
 	{
 	    // in this case, perhaps the opposite direction exists
-	    retval = -discs.at(std::make_pair(combination.second, combination.first)) -> EvaluateKLCorrection(in);
+	    std::pair<TString, TString> inverse_combination = std::make_pair(combination.second, combination.first);
+	    float H1_prior = use_flat_priors ? 0.5 : discs.at(inverse_combination) -> GetH1Weight();
+	    float H0_prior = use_flat_priors ? 0.5 : discs.at(inverse_combination) -> GetH0Weight();
+	    retval = -discs.at(inverse_combination) -> EvaluateKLCorrection(in, H1_prior, H0_prior);
 	}
 	catch(const std::out_of_range& e)
 	{

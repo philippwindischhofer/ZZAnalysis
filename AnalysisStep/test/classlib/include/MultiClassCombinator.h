@@ -33,8 +33,11 @@ public:
     virtual TString GetWinningCategory();
     virtual float GetWinningMargin();
 
+    virtual void SetParameter(TString parameter_name, float parameter_value){engine_parameters[parameter_name] = parameter_value;};
+
 protected:
     std::map<TString, float> last_result;
+    std::map<TString, float> engine_parameters;
 
 private:
     TString find_max(std::map<TString, float> map);

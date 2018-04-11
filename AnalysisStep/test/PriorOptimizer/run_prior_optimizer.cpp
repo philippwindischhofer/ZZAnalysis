@@ -110,7 +110,7 @@ double costfunc(const double* params)
     std::cout << "ttHlept_prior = " << ttHlept_prior << std::endl;
 
     // evaluate the Punzi value with this (modified) Classifier now
-    PlottingUtils::make_punzi(kTRUE, varclass, outdir, "punzi", "no_cut_data", no_cut, conf, 0.0, 0.5);
+    PlottingUtils::make_punzi(kTRUE, varclass, outdir, "punzi", "no_cut_data", no_cut, conf, 0.0, 0.25);
     
     // load low the Punzi histogram of the optimized classifier and compare the two. From this point onwards, is exactly the same as in "Comp"
     float zoom_scale = 1.0;
@@ -165,18 +165,31 @@ int main( int argc, char *argv[] )
 
     varclass18 = static_cast<Mor18LIClassifier*>(varclass);
 
+    // set lower-resolution engine parameters to speed up the optimization
+    varclass18 -> SetEngineParameter("max_iterations", 100);
+
     conf = new Mor18Config(run_dir + "augmentation/", 35.9, true);
 
-    // start the optimization with the currently used values
+    // start the optimization with the values currently used in the benchmarker
     float VBF_prior_init = 1.0;
-    float ggH_prior_init = 1.46657;
-    float WHhadr_prior_init = 0.582676;
-    float ZHhadr_prior_init = 0.707539;
-    float WHlept_prior_init = 0.272772;
-    float ZHlept_prior_init = 0.0633419;
-    float ZHMET_prior_init = 0.0666923;
-    float ttHhadr_prior_init = 0.145215;
-    float ttHlept_prior_init = 0.1954;
+    float ggH_prior_init = 1.76;
+    float WHhadr_prior_init = 0.55;
+    float ZHhadr_prior_init = 0.21;
+    float WHlept_prior_init = 0.27;
+    float ZHlept_prior_init = 0.06;
+    float ZHMET_prior_init = 0.066;
+    float ttHhadr_prior_init = 0.15;
+    float ttHlept_prior_init = 0.19;
+    
+    // float VBF_prior_init = 1.0;
+    // float ggH_prior_init = 1.46657;
+    // float WHhadr_prior_init = 0.582676;
+    // float ZHhadr_prior_init = 0.707539;
+    // float WHlept_prior_init = 0.272772;
+    // float ZHlept_prior_init = 0.0633419;
+    // float ZHMET_prior_init = 0.0666923;
+    // float ttHhadr_prior_init = 0.145215;
+    // float ttHlept_prior_init = 0.1954;
 
     float var[9] = {VBF_prior_init, ggH_prior_init, WHhadr_prior_init, ZHhadr_prior_init, WHlept_prior_init, ZHlept_prior_init, ZHMET_prior_init, ttHhadr_prior_init, ttHlept_prior_init};
     float step[9] = {0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01};

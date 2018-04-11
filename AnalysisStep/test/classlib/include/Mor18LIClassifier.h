@@ -51,6 +51,8 @@ public:
 
     void SetPriors(float VBF_prior, float ggH_prior, float WHhadr_prior, float ZHhadr_prior, float WHlept_prior, float ZHlept_prior, float ZHMET_prior, float ttHhadr_prior, float ttHlept_prior);
 
+    void SetEngineParameter(TString parameter_name, float parameter_value);
+
 private:
     TString calibration_folder;
 

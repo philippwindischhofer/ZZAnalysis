@@ -57,6 +57,16 @@ void Discriminant::SetH0Weight(float weight)
     H0_weight = weight;
 }
 
+float Discriminant::GetH1Weight()
+{
+    return H1_weight;
+}
+
+float Discriminant::GetH0Weight()
+{
+    return H0_weight;
+}
+
 EventStream* Discriminant::GetH1Source()
 {
     return H1_source;
@@ -131,27 +141,46 @@ std::pair<float, float> Discriminant::ComputeKLCorrection(TH1F* H1_calib_histo, 
     float D_10 = 0;
     float D_01 = 0;
 
-    if(H0_calib_histo -> GetSize() != H1_calib_histo -> GetSize())
-    {
-	std::cout << "Error: both H0 and H1 calibration histograms are supposed to have the same number of bins!";
-	return std::make_pair(0.0, 0.0);
-    }
+    // if(H0_calib_histo -> GetSize() != H1_calib_histo -> GetSize())
+    // {
+    // 	std::cout << "Error: both H0 and H1 calibration histograms are supposed to have the same number of bins!";
+    // 	return std::make_pair(0.0, 0.0);
+    // }
 
-    for(int i = 1; i <= H0_calib_histo -> GetSize() - 2; i++)
+    // important: both histograms can have different numbers of bins! (depends on the number of entries, i.e. the size of the training dataset)
+    int number_samples = 1000;
+    float step_size = 1.0 / number_samples;
+    for(float x = 0; x < 1.0; x += step_size)
     {
-	float p_H1 = std::max(H1_calib_histo -> GetBinContent(i), 0.0);
-	float p_H0 = std::max(H0_calib_histo -> GetBinContent(i), 0.0);
-	float H1_bin_width = std::max(H1_calib_histo -> GetBinWidth(i), 0.0);
-	float H0_bin_width = std::max(H0_calib_histo -> GetBinWidth(i), 0.0);
+	float p_H1 = std::max(H1_calib_histo -> Interpolate(x), 0.0);
+	float p_H0 = std::max(H0_calib_histo -> Interpolate(x), 0.0);
 
-	//std::cout << "bin " << i << ": " << p_H1 << " / " << p_H0 << " / " << H1_bin_width << " / " << H0_bin_width << std::endl;
+    	//std::cout << "bin " << i << ": " << p_H1 << " / " << p_H0 << " / " << H1_bin_width << " / " << H0_bin_width << std::endl;
 	
-	if(p_H1 != 0.0 && p_H0 != 0.0)
-	{
-	    D_10 += p_H1 * TMath::Log(p_H1 / (p_H0 + 0.00001)) * H1_bin_width;
-	    D_01 += p_H0 * TMath::Log(p_H0 / (p_H1 + 0.00001)) * H0_bin_width;
-	}
+    	if(p_H1 != 0.0 && p_H0 != 0.0)
+    	{
+    	    D_10 += p_H1 * TMath::Log(p_H1 / (std::max(p_H0, 0.00001f))) * step_size;
+    	    D_01 += p_H0 * TMath::Log(p_H0 / (std::max(p_H1, 0.00001f))) * step_size;
+    	}
     }
+
+    std::cout << "computed raw KL correction values: D_10 = " << D_10 << ", D_01 = " << D_01 << std::endl;
+
+    // for(int i = 1; i <= H0_calib_histo -> GetSize() - 2; i++)
+    // {
+    // 	float p_H1 = std::max(H1_calib_histo -> GetBinContent(i), 0.0);
+    // 	float p_H0 = std::max(H0_calib_histo -> GetBinContent(i), 0.0);
+    // 	float H1_bin_width = std::max(H1_calib_histo -> GetBinWidth(i), 0.0);
+    // 	float H0_bin_width = std::max(H0_calib_histo -> GetBinWidth(i), 0.0);
+
+    // 	//std::cout << "bin " << i << ": " << p_H1 << " / " << p_H0 << " / " << H1_bin_width << " / " << H0_bin_width << std::endl;
+	
+    // 	if(p_H1 != 0.0 && p_H0 != 0.0)
+    // 	{
+    // 	    D_10 += p_H1 * TMath::Log(p_H1 / (std::max(p_H0, 0.00001))) * H1_bin_width;
+    // 	    D_01 += p_H0 * TMath::Log(p_H0 / (std::max(p_H1, 0.00001))) * H0_bin_width;
+    // 	}
+    // }
 
     // return the actual correction term, which is the difference between the two KL divergences
     //return 1.0 / 2.0 * (D_01 - D_10);
@@ -163,7 +192,7 @@ float Discriminant::EvaluateLog(Tree* in)
     return TMath::Log(Evaluate(in));
 }
 
-float Discriminant::EvaluateKLCorrection(Tree* in)
+float Discriminant::EvaluateKLCorrection(Tree* in, float H1_prior, float H0_prior)
 {
     float retval = 0;
 
@@ -182,9 +211,13 @@ float Discriminant::EvaluateKLCorrection(Tree* in)
 
 	    // this is for unequal *true* priors
 	    //retval = H0_weight / (H0_weight + H1_weight) * D_01 - H1_weight / (H0_weight + H1_weight) * D_10;
-
+	
 	    // this is for equal *true* priors
-	    retval = 1.0 / 2.0 * (D_01 - D_10);
+	    //retval = 1.0 / 2.0 * (D_01 - D_10);
+	
+	    // in general
+	    retval = H0_prior / (H0_prior + H1_prior) * D_01 - H1_prior / (H0_prior + H1_prior) * D_10;
+
 	    break;
 	}
     }

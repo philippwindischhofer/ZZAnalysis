@@ -31,6 +31,52 @@
 
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
 
+float number_bins_freedman_diaconis(TH1F* hist)
+{
+    float number_entries = hist -> GetEntries();
+
+    // now need to compute the inter-quartil-range (IQR):
+    double quantile_values[2];
+    double quantiles[2] = {0.25, 0.75}; // need the first and the third quartile
+
+    hist -> GetQuantiles(2, quantile_values, quantiles);
+
+    float IQR = quantile_values[1] - quantile_values[0];
+
+    // the optimum bin width according to Freedman and Diaconis
+    float bin_width = 2.0 * IQR * TMath::Power(number_entries, -1.0 / 3.0);
+
+    float number_bins = 1.0 / bin_width;
+
+    std::cout << "number_entries = " << number_entries << std::endl;
+    std::cout << "1st quartile = " << quantile_values[0] << std::endl;
+    std::cout << "3rd quartile = " << quantile_values[1] << std::endl;
+    std::cout << "IQR = " << IQR << std::endl;
+    std::cout << "number of bins = " << number_bins << std::endl;
+
+    return number_bins;
+}
+
+int closest_integer_divisor(int candidate_divisor, int dividend)
+{
+    if(candidate_divisor == 0)
+	return 0;
+
+    int upper_candidate = candidate_divisor;
+    int lower_candidate = candidate_divisor;
+
+    while((dividend%upper_candidate) != 0 && upper_candidate < dividend)
+	upper_candidate++;
+
+    while((dividend%lower_candidate) != 0 && lower_candidate > 0)
+	lower_candidate--;
+
+    if((upper_candidate - candidate_divisor) < (candidate_divisor - lower_candidate))
+	return upper_candidate;
+    else
+	return lower_candidate;
+}
+
 void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::function<bool(Tree*)>> H1_cuts, std::vector<TString> H0_paths, std::vector<std::function<bool(Tree*)>> H0_cuts, const std::function<bool(Tree*)>& disc_cut, const std::function<float(Tree*)>& disc, TString disc_name, Config& conf, TString out_folder, TString H1_name = "H_{1}", TString H0_name = "H_{0}")
 {
     Profiler* prof = new Profiler();
@@ -38,23 +84,26 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 
     // histograms that are going to hold the distributions of the raw MELA discriminant under the signal- and background hypothesis
     // from those, build the likelihood ratio of the MELA-discriminant
-    TH1F* H1_distrib = new TH1F("H1_distrib", "H1_distrib", 50, -0.02, 1.02);
+
+    // 720 is a highly composite number!
+    int original_number_bins = 720;
+    TH1F* H1_distrib = new TH1F("H1_distrib", "H1_distrib", original_number_bins, -0.02, 1.02);
     H1_distrib -> SetLineColor(kBlue - 9);
     H1_distrib -> SetMarkerColor(kBlue - 9);
     H1_distrib -> SetFillColor(kWhite);
 
-    TH1F* H0_distrib = new TH1F("H0_distrib", "H0_distrib", 50, -0.02, 1.02);
+    TH1F* H0_distrib = new TH1F("H0_distrib", "H0_distrib", original_number_bins, -0.02, 1.02);
     H0_distrib -> SetLineColor(kRed - 7);
     H0_distrib -> SetMarkerColor(kRed - 7);
     H0_distrib -> SetFillColor(kWhite);
 
-    TH1F* H1_distrib_validation = new TH1F("H1_distrib_validation", "H1_distrib_validation", 50, -0.02, 1.02);
+    TH1F* H1_distrib_validation = new TH1F("H1_distrib_validation", "H1_distrib_validation", original_number_bins, -0.02, 1.02);
     H1_distrib_validation -> SetLineColor(kWhite);
     H1_distrib_validation -> SetFillColor(kWhite);
     H1_distrib_validation -> SetMarkerStyle(21);
     H1_distrib_validation -> SetMarkerColor(kBlue - 9);
 
-    TH1F* H0_distrib_validation = new TH1F("H0_distrib_validation", "H0_distrib_validation", 50, -0.02, 1.02);
+    TH1F* H0_distrib_validation = new TH1F("H0_distrib_validation", "H0_distrib_validation", original_number_bins, -0.02, 1.02);
     H0_distrib_validation -> SetLineColor(kWhite);
     H0_distrib_validation -> SetFillColor(kWhite);
     H0_distrib_validation -> SetMarkerStyle(21);
@@ -90,6 +139,30 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, 0.0, 0.5);
 	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib_validation, total_cut, disc, false, 0.5, 1.0);
     }
+
+    // now rebin each histogram separately to have a well-behaved density-estimator at the end
+    float number_bins_H0 = number_bins_freedman_diaconis(H0_distrib);
+    float number_bins_H1 = number_bins_freedman_diaconis(H1_distrib);
+
+    // now find the optimum number of bins to merge to get as close as possible to the optimum bin number computed above
+    int divider_H0 = (H0_distrib -> GetSize() - 2) / number_bins_H0;
+    int divider_H1 = (H1_distrib -> GetSize() - 2) / number_bins_H1;
+
+    // now find the closest number that exactly divides the original number of bins
+    std::cout << "divider_H0 = " << divider_H0 << std::endl;
+    std::cout << "divider_H1 = " << divider_H1 << std::endl;
+
+    int rebin_factor_H0 = closest_integer_divisor(divider_H0, H0_distrib -> GetSize() - 2);
+    int rebin_factor_H1 = closest_integer_divisor(divider_H1, H1_distrib -> GetSize() - 2);
+
+    std::cout << "rebin_factor_H0 = " << rebin_factor_H0 << std::endl;
+    std::cout << "rebin_factor_H1 = " << rebin_factor_H1 << std::endl;    
+
+    // rebin all the distributions
+    H0_distrib -> Rebin(std::max(1, rebin_factor_H0));
+    H0_distrib_validation -> Rebin(std::max(1, rebin_factor_H0));
+    H1_distrib -> Rebin(std::max(1, rebin_factor_H1));
+    H1_distrib_validation -> Rebin(std::max(1, rebin_factor_H1));
 
     // only now do the normalization of both distributions
     double sig_norm = 1.0 / H1_distrib -> Integral("width");

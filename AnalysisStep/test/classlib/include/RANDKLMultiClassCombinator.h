@@ -34,11 +34,17 @@ public:
     RANDKLMultiClassCombinator(bool use_KL);
     ~RANDKLMultiClassCombinator();
 
+    virtual std::map<TString, float> Evaluate(Tree* in, DiscriminantCollection* coll, int iterations);
     virtual std::map<TString, float> Evaluate(Tree* in, DiscriminantCollection* coll);
+
+    void UseFlatPriorsInKL(bool use_flat_priors);
 
 private:
     bool use_KL = false;
-    int iterations = 10;
+    bool use_flat_priors = true;
+
+    /* int min_iterations = 10; */
+    /* int max_iterations = 5000; */
 };
 
 #endif

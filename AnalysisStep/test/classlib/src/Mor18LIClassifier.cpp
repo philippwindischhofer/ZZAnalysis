@@ -29,6 +29,13 @@ Mor18LIClassifier::Mor18LIClassifier(TString out_folder, TString engine)
     {
 	std::cout << "using RAND with KL corrections" << std::endl;
 	comb = new RANDKLMultiClassCombinator(true);
+	static_cast<RANDKLMultiClassCombinator*>(comb) -> UseFlatPriorsInKL(false);
+    }
+    else if(engine == "rand_KL_flat")
+    {
+	std::cout << "using RAND with KL corrections and FLAT priors" << std::endl;
+	comb = new RANDKLMultiClassCombinator(true);
+	static_cast<RANDKLMultiClassCombinator*>(comb) -> UseFlatPriorsInKL(true);
     }
     else if(engine == "tree")
     {
@@ -39,11 +46,23 @@ Mor18LIClassifier::Mor18LIClassifier(TString out_folder, TString engine)
     {
 	std::cout << "using TREE with KL corrections" << std::endl;
 	comb = new TreeKLMultiClassCombinator(true);
+	static_cast<TreeKLMultiClassCombinator*>(comb) -> UseFlatPriorsInKL(false);
+    }
+    else if(engine == "tree_KL_flat")
+    {
+	std::cout << "using TREE with KL corrections and FLAT priors" << std::endl;
+	comb = new TreeKLMultiClassCombinator(true);
+	static_cast<TreeKLMultiClassCombinator*>(comb) -> UseFlatPriorsInKL(true);
     }
 }
 
 Mor18LIClassifier::~Mor18LIClassifier()
 {  }
+
+void Mor18LIClassifier::SetEngineParameter(TString parameter_name, float parameter_value)
+{
+    comb -> SetParameter(parameter_name, parameter_value);
+}
 
 // after the restructoring, only this method will remain, and it will overload the corresponding virtual method from the base class
 int Mor18LIClassifier::ClassifyThisEvent(Tree* in)

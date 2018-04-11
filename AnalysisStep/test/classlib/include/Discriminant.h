@@ -36,7 +36,7 @@ public:
     float Evaluate(Tree* in);
     float EvaluateLog(Tree* in);
 
-    float EvaluateKLCorrection(Tree* in);
+    float EvaluateKLCorrection(Tree* in, float H1_prior, float H0_prior);
 
     void AddComponent(TString name, const std::function<bool(Tree*)> cut, const std::function<float(Tree*)> disc);
 
@@ -45,6 +45,9 @@ public:
 
     void SetH1Weight(float weight);
     void SetH0Weight(float weight);
+
+    float GetH1Weight();
+    float GetH0Weight();
 
     std::vector<TString> GetNames();
     std::vector<std::function<bool(Tree*)>> GetCuts();
