@@ -17,12 +17,14 @@ JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 # the directories where the original sources are located
 BIN_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
+PYTHON_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/"
 
 # the (common) source directory for this campaign
 BIN_DIR=$CAMPAIGN_DIR"bin/"
 
 # the needed part from the C++ sources
-PRIOR_OPTIMIZER="run_prior_optimizer"
+PRIOR_OPTIMIZER="BayesianPriorOptimizer.py"
+PRIOR_EVALUATOR="run_prior_evaluator"
 
 # ---------------------------------------------
 #  first, copy all the executables to the campaign folder
@@ -30,7 +32,8 @@ PRIOR_OPTIMIZER="run_prior_optimizer"
 echo "preparing filesystem for training campaign"
 
 mkdir -p $BIN_DIR
-cp $BIN_DIR_ORIGINAL$PRIOR_OPTIMIZER $BIN_DIR
+cp $PYTHON_DIR_ORIGINAL$PRIOR_OPTIMIZER $BIN_DIR
+cp $BIN_DIR_ORIGINAL$PRIOR_EVALUATOR $BIN_DIR
 
 cd $CAMPAIGN_DIR
 
@@ -52,7 +55,7 @@ do
     echo "#!/bin/bash" > $PRIOR_SCRIPT
 
     # launch the optimization
-    echo $BIN_DIR$PRIOR_OPTIMIZER $CAMPAIGN_DIR$RUN $PRIOR_DIR $ENGINE "&>" $PRIOR_LOGFILE >> $PRIOR_SCRIPT
+    echo "python" $BIN_DIR$PRIOR_OPTIMIZER $CAMPAIGN_DIR$RUN $PRIOR_DIR $ENGINE "&>" $PRIOR_LOGFILE >> $PRIOR_SCRIPT
 done
 
 # now go back and launch all the jobs that have been prepared

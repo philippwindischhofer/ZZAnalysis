@@ -21,6 +21,10 @@
   <lib name="class_lib"/>
 </bin>
 
+<bin name="run_roc_plotter_me_optimization" file="../test/ROCPlotterMEOptimization/run_roc_plotter_me_optimization.cpp">
+  <lib name="class_lib"/>
+</bin>
+
 <!-- generic tool for plotting profiles (= histograms) -->
 <bin name="run_profiler" file="../test/Profiler/run_profiler.cpp">
   <lib name="class_lib"/>
@@ -31,6 +35,10 @@
 </bin>
 
 <bin name="run_prior_optimizer" file="../test/PriorOptimizer/run_prior_optimizer.cpp">
+  <lib name="class_lib"/>  
+</bin>
+
+<bin name="run_prior_evaluator" file="../test/PriorEvaluator/run_prior_evaluator.cpp">
   <lib name="class_lib"/>  
 </bin>
 

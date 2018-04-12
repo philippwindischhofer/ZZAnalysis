@@ -6,6 +6,54 @@ ROCGenerator::ROCGenerator()
 ROCGenerator::~ROCGenerator()
 { }
 
+std::pair<float, float> ROCGenerator::GenerateROCPoint(std::vector<float> disc_values, std::vector<bool> true_values, std::vector<float> weight_values, float threshold)
+{
+    float H1_eff = 0.0;
+    float H0_eff = 0.0;
+
+    float H1_sum = 0.0;
+    float H0_sum = 0.0;
+
+    for(unsigned int i = 0; i < disc_values.size(); i++)
+    {
+	if(true_values.at(i))
+	{
+	    H1_sum += weight_values.at(i);
+	}
+	else
+	{
+	    H0_sum += weight_values.at(i);
+	}
+    }
+
+    // find the range of the discriminating variable
+    auto min_el = std::min_element(std::begin(disc_values), std::end(disc_values));
+    auto max_el = std::max_element(std::begin(disc_values), std::end(disc_values));
+
+    std::cout << "min. value of the discriminating variable = " << *min_el << std::endl;
+    std::cout << "max. value of the discriminating variable = " << *max_el << std::endl;
+
+    for(unsigned int i = 0; i < disc_values.size(); i++)
+    {
+	if(disc_values.at(i) > threshold)
+	{
+	    if(true_values.at(i))
+	    {
+		H1_eff += weight_values.at(i);
+	    }
+	    else
+	    {
+		H0_eff += weight_values.at(i);
+	    }
+	}
+    }
+    
+    H1_eff /= H1_sum;
+    H0_eff /= H0_sum;
+
+    return std::make_pair(H1_eff, H0_eff);
+}
+
 void ROCGenerator::GenerateROC(std::vector<float> disc_values, std::vector<bool> true_values, std::vector<float> weight_values, int num_pts)
 {
     // clear the old ones

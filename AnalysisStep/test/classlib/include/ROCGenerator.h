@@ -16,6 +16,7 @@ public:
     ROCGenerator();
     ~ROCGenerator();
     void GenerateROC(std::vector<float> disc_values, std::vector<bool> true_values, std::vector<float> weight_values, int num_pts);
+    std::pair<float, float> GenerateROCPoint(std::vector<float> disc_values, std::vector<bool> true_values, std::vector<float> weight_values, float threshold);
     float* GetH0Efficiency();
     float* GetH1Efficiency();
     float GetAUC();

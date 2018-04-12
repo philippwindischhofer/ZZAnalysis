@@ -51,29 +51,29 @@ int main(int argc, char *argv[])
     Mor18LIClassifier* refclass18 = static_cast<Mor18LIClassifier*>(refclass);
 
     // put intermediate-quality engine settings
-    refclass18 -> SetEngineParameter("max_iterations", 500);
+    refclass18 -> SetEngineParameter("max_iterations", 20);
 
     //priors based on event numbers determined from the training data
-    float VBF_prior = 1.0;
-    float ggH_prior = 1.76;
-    float WHhadr_prior = 0.55;
-    float ZHhadr_prior = 0.21;
-    float WHlept_prior = 0.27;
-    float ZHlept_prior = 0.06;
-    float ZHMET_prior = 0.066;
-    float ttHhadr_prior = 0.15;
-    float ttHlept_prior = 0.19;
+    // float VBF_prior = 1.0;
+    // float ggH_prior = 1.76;
+    // float WHhadr_prior = 0.55;
+    // float ZHhadr_prior = 0.21;
+    // float WHlept_prior = 0.27;
+    // float ZHlept_prior = 0.06;
+    // float ZHMET_prior = 0.066;
+    // float ttHhadr_prior = 0.15;
+    // float ttHlept_prior = 0.19;
 
     // optimized priors (used as default)
-    // float VBF_prior = 1.0;
-    // float ggH_prior = 1.46657;
-    // float WHhadr_prior = 0.582676;
-    // float ZHhadr_prior = 0.707539;
-    // float WHlept_prior = 0.272772;
-    // float ZHlept_prior = 0.0633419;
-    // float ZHMET_prior = 0.0666923;
-    // float ttHhadr_prior = 0.145215;
-    // float ttHlept_prior = 0.1954;
+    float VBF_prior = 1.0;
+    float ggH_prior = 1.46657;
+    float WHhadr_prior = 0.582676;
+    float ZHhadr_prior = 0.707539;
+    float WHlept_prior = 0.272772;
+    float ZHlept_prior = 0.0633419;
+    float ZHMET_prior = 0.0666923;
+    float ttHhadr_prior = 0.145215;
+    float ttHlept_prior = 0.1954;
 
     if(argc == 6)
     {
@@ -147,10 +147,10 @@ int main(int argc, char *argv[])
     // 	kTRUE : kFALSE;};
 
     // generate all plots on the validation dataset only! (i.e. the second half of each datafile)
-    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", mZZ_cut, conf, 0.5, 1.0);
-    PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", mZZ_cut, conf, 0.5, 1.0);
-    PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", mZZ_cut, conf, 0.5, 1.0);
-    PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", mZZ_cut, conf, 0.5, 1.0);
+    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", mZZ_cut, conf, 0.5, 0.6);
+    PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", mZZ_cut, conf, 0.5, 0.6);
+    PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", mZZ_cut, conf, 0.5, 0.6);
+    PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", mZZ_cut, conf, 0.5, 0.6);
 
     // PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut, conf);
     // PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut, conf);

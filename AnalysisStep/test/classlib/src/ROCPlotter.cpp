@@ -15,6 +15,11 @@ ROCPlotter::~ROCPlotter()
 
 void ROCPlotter::AddROCCurve(Discriminant* disc, TString H0_desc, TString H1_desc, TString disc_name)
 {
+    AddROCCurve(disc, H0_desc, H1_desc, disc_name, std::vector<float>());
+}
+
+void ROCPlotter::AddROCCurve(Discriminant* disc, TString H0_desc, TString H1_desc, TString disc_name, std::vector<float> marker_thresholds)
+{
     EventStream* H0_stream = disc -> GetH0Source();
     EventStream* H1_stream = disc -> GetH1Source();
 
@@ -22,10 +27,10 @@ void ROCPlotter::AddROCCurve(Discriminant* disc, TString H0_desc, TString H1_des
 	return disc -> Evaluate(in);
     };
 
-    AddROCCurve(H0_stream, H1_stream, disc_wrapper, H0_desc, H1_desc, disc_name);
+    AddROCCurve(H0_stream, H1_stream, disc_wrapper, H0_desc, H1_desc, disc_name, marker_thresholds);
 }
 
-void ROCPlotter::AddROCCurve(std::vector<TString> H0_files, std::vector<TString> H1_files, const std::function<float(Tree*)>& disc, const std::function<bool(Tree*)>& cut, TString H0_desc, TString H1_desc, TString disc_name)
+void ROCPlotter::AddROCCurve(std::vector<TString> H0_files, std::vector<TString> H1_files, const std::function<float(Tree*)>& disc, const std::function<bool(Tree*)>& cut, TString H0_desc, TString H1_desc, TString disc_name, std::vector<float> marker_thresholds)
 {
     // build the intermediate-level objects and call the other signature
     EventStream* H0_stream = new EventStream();
@@ -41,10 +46,10 @@ void ROCPlotter::AddROCCurve(std::vector<TString> H0_files, std::vector<TString>
 	H1_stream -> AddEventSource(H1_file, cut);
     }
 
-    AddROCCurve(H0_stream, H1_stream, disc, H0_desc, H1_desc, disc_name);
+    AddROCCurve(H0_stream, H1_stream, disc, H0_desc, H1_desc, disc_name, marker_thresholds);
 }
 
-void ROCPlotter::AddROCCurve(EventStream* H0_stream, EventStream* H1_stream, const std::function<float(Tree*)>& disc, TString H0_desc, TString H1_desc, TString disc_name)
+void ROCPlotter::AddROCCurve(EventStream* H0_stream, EventStream* H1_stream, const std::function<float(Tree*)>& disc, TString H0_desc, TString H1_desc, TString disc_name, std::vector<float> marker_thresholds)
 {
     disc_values.clear();
     weight_values.clear();
@@ -75,6 +80,17 @@ void ROCPlotter::AddROCCurve(EventStream* H0_stream, EventStream* H1_stream, con
         
     ROCGenerator rg;
     rg.GenerateROC(disc_values, true_values, weight_values, 100);
+
+    // add the marker_thresholds:
+    for(float cur: marker_thresholds)
+    {
+	std::pair<float, float> marker_coords = rg.GenerateROCPoint(disc_values, true_values, weight_values, cur);
+	TMarker* tm = new TMarker(marker_coords.second, marker_coords.first, marker_styles[markers.size()]);
+	std::cout << marker_coords.first << " / " << marker_coords.second << std::endl;
+	tm -> SetMarkerColor(ROC_colors[graphs.size()]);
+	tm -> SetMarkerSize(3);
+	markers.push_back(tm);
+    }
 
     float* H0_eff = rg.GetH0Efficiency();
     float* H1_eff = rg.GetH1Efficiency();
@@ -215,6 +231,14 @@ void ROCPlotter::Redraw()
     pad -> SetGrid();
     
     tmg -> Draw("AC");
+
+    // draw markers
+    for(auto marker: markers)
+    {
+	std::cout << "drawing marker" << std::endl;
+	marker -> Draw("same");
+    }
+
     leg -> Draw();
 
     TLatex* Tl = new TLatex();

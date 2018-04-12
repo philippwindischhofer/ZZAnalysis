@@ -93,7 +93,7 @@ void augment_tree(TString inpath, TString outpath)
 	indices.push_back(j_entry);
     }
 
-    //std::random_shuffle(indices.begin(), indices.end());
+    std::random_shuffle(indices.begin(), indices.end());
 
     std::cout << "done. starting augmentation" << std::endl;
     

@@ -23,6 +23,7 @@
 #include "TGraph.h"
 #include "TGaxis.h"
 #include "TMultiGraph.h"
+#include "TMarker.h"
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Config.h>
@@ -38,11 +39,13 @@ public:
 
     void AddROCCurve(Discriminant* disc, TString H0_desc, TString H1_desc, TString disc_name);
 
+    void AddROCCurve(Discriminant* disc, TString H0_desc, TString H1_desc, TString disc_name, std::vector<float> marker_thresholds);
+
     // this is the intermediate-level signature
-    void AddROCCurve(EventStream* H0_stream, EventStream* H1_stream, const std::function<float(Tree*)>& disc, TString H0_desc, TString H1_desc, TString disc_name);
+    void AddROCCurve(EventStream* H0_stream, EventStream* H1_stream, const std::function<float(Tree*)>& disc, TString H0_desc, TString H1_desc, TString disc_name, std::vector<float> marker_thresholds);
 
     // this is the low-level signature
-    void AddROCCurve(std::vector<TString> H0_files, std::vector<TString> H1_files, const std::function<float(Tree*)>& disc, const std::function<bool(Tree*)>& cut, TString H0_desc, TString H1_desc, TString disc_name);
+    void AddROCCurve(std::vector<TString> H0_files, std::vector<TString> H1_files, const std::function<float(Tree*)>& disc, const std::function<bool(Tree*)>& cut, TString H0_desc, TString H1_desc, TString disc_name, std::vector<float> marker_thresholds);
 
     std::vector<float> GetAUC();
 
@@ -70,6 +73,7 @@ private:
     std::vector<TGraph*> graphs;
     std::vector<float> auc;
     std::vector<TString> names;
+    std::vector<TMarker*> markers;
 
     std::vector<int> ROC_colors = {
 	    kBlue - 9,
@@ -77,6 +81,10 @@ private:
 	    kRed - 7,
 	    kYellow - 7,
 	    kCyan - 6
+    };
+
+    std::vector<int> marker_styles = {
+	20, 26, 22, 21
     };
 
     TCanvas* canv;
