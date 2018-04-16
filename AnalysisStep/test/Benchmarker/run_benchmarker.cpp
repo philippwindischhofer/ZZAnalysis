@@ -28,9 +28,9 @@
 
 int main(int argc, char *argv[])
 {
-    if(argc < 4)
+    if(argc < 6)
     {
-	std::cerr << "Error: at least 3 arguments are required" << std::endl;
+	std::cerr << "Error: at least 5 arguments are required" << std::endl;
 	return(-1);
     }
 
@@ -38,10 +38,13 @@ int main(int argc, char *argv[])
     TString MCpath = argv[2];
     TString out_folder = argv[3];
 
+    float start_fraction = std::atof(argv[4]);
+    float end_fraction = std::atof(argv[5]);
+
     TString engine = "rand_KL";
-    if(argc >= 5)
+    if(argc >= 7)
     {
-	engine = argv[4];
+	engine = argv[6];
     }
 
     // switch here between the classifier based on trained discriminants or the one based only on the available MELA values
@@ -75,10 +78,10 @@ int main(int argc, char *argv[])
     float ttHhadr_prior = 0.145215;
     float ttHlept_prior = 0.1954;
 
-    if(argc == 6)
+    if(argc == 8)
     {
-	// the path to the prior file was given -> read the priors that were optimized on the training dataset, and evaluate the classification performance on the validation dataset
-	TString prior_path = argv[5];
+	// // the path to the prior file was given -> read the priors that were optimized on the training dataset, and evaluate the classification performance on the validation dataset
+	TString prior_path = argv[7];
 	ConfigFileHandler* handler = new ConfigFileHandler(prior_path + "priors.txt", "read");
 	VBF_prior = handler -> GetField("VBF_prior");
 	ggH_prior = handler -> GetField("ggH_prior");
@@ -92,6 +95,9 @@ int main(int argc, char *argv[])
     }
 
     std::cout << "-------------------------------------------------------" << std::endl;
+    std::cout << "start_fraction = " << start_fraction << std::endl;
+    std::cout << "end_fraction = " << end_fraction << std::endl;
+
     std::cout << "using the following priors:" << std::endl;
 
     std::cout << "VBF_prior = " << VBF_prior << std::endl;
@@ -147,10 +153,10 @@ int main(int argc, char *argv[])
     // 	kTRUE : kFALSE;};
 
     // generate all plots on the validation dataset only! (i.e. the second half of each datafile)
-    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", mZZ_cut, conf, 0.5, 0.6);
-    PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", mZZ_cut, conf, 0.5, 0.6);
-    PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", mZZ_cut, conf, 0.5, 0.6);
-    PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", mZZ_cut, conf, 0.5, 0.6);
+    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", mZZ_cut, conf, start_fraction, end_fraction, false);
+    PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", mZZ_cut, conf, start_fraction, end_fraction, false);
+    PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", mZZ_cut, conf, start_fraction, end_fraction, false);
+    PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", mZZ_cut, conf, start_fraction, end_fraction, false);
 
     // PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut, conf);
     // PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut, conf);

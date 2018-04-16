@@ -11,6 +11,7 @@ from CombinedModel import CombinedModel
 from ModelFactory import ModelFactory
 from ModelCollection import ModelCollection
 from PCAWhiteningPreprocessor import PCAWhiteningPreprocessor
+from FlexiblePCAWhiteningPreprocessor import FlexiblePCAWhiteningPreprocessor
 from CombinedPreprocessor import CombinedPreprocessor
 from ConfigFileUtils import ConfigFileUtils
 from config import TrainingConfig

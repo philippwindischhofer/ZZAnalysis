@@ -138,8 +138,8 @@ std::pair<float, float> Discriminant::ComputeKLCorrection(TH1F* H1_calib_histo, 
 {
     // compute the (expected) Kullback-Leibler divergences, and take the difference between the two
 
-    float D_10 = 0;
-    float D_01 = 0;
+    double D_10 = 0.0;
+    double D_01 = 0.0;
 
     // if(H0_calib_histo -> GetSize() != H1_calib_histo -> GetSize())
     // {
@@ -148,23 +148,27 @@ std::pair<float, float> Discriminant::ComputeKLCorrection(TH1F* H1_calib_histo, 
     // }
 
     // important: both histograms can have different numbers of bins! (depends on the number of entries, i.e. the size of the training dataset)
-    int number_samples = 1000;
+    int number_samples = 5 * std::max(H1_calib_histo -> GetSize(), H0_calib_histo -> GetSize());
+    
+    std::cout << "using " << number_samples << " points for integration" << std::endl;
+
     float step_size = 1.0 / number_samples;
-    for(float x = 0; x < 1.0; x += step_size)
+    for(float x = 0.0; x < 1.0; x += step_size)
     {
-	float p_H1 = std::max(H1_calib_histo -> Interpolate(x), 0.0);
-	float p_H0 = std::max(H0_calib_histo -> Interpolate(x), 0.0);
+    	float p_H1 = std::max(H1_calib_histo -> Interpolate(x), 0.0);
+    	float p_H0 = std::max(H0_calib_histo -> Interpolate(x), 0.0);
+
+    	// float p_H1 = std::max(H1_calib_histo -> GetBinContent(H1_calib_histo -> FindBin(x)), 0.0);
+    	// float p_H0 = std::max(H0_calib_histo -> GetBinContent(H0_calib_histo -> FindBin(x)), 0.0);
 
     	//std::cout << "bin " << i << ": " << p_H1 << " / " << p_H0 << " / " << H1_bin_width << " / " << H0_bin_width << std::endl;
 	
     	if(p_H1 != 0.0 && p_H0 != 0.0)
     	{
-    	    D_10 += p_H1 * TMath::Log(p_H1 / (std::max(p_H0, 0.00001f))) * step_size;
-    	    D_01 += p_H0 * TMath::Log(p_H0 / (std::max(p_H1, 0.00001f))) * step_size;
+    	    D_10 += p_H1 * TMath::Log(p_H1 / p_H0) * step_size;
+    	    D_01 += p_H0 * TMath::Log(p_H0 / p_H1) * step_size;
     	}
     }
-
-    std::cout << "computed raw KL correction values: D_10 = " << D_10 << ", D_01 = " << D_01 << std::endl;
 
     // for(int i = 1; i <= H0_calib_histo -> GetSize() - 2; i++)
     // {
@@ -177,14 +181,16 @@ std::pair<float, float> Discriminant::ComputeKLCorrection(TH1F* H1_calib_histo, 
 	
     // 	if(p_H1 != 0.0 && p_H0 != 0.0)
     // 	{
-    // 	    D_10 += p_H1 * TMath::Log(p_H1 / (std::max(p_H0, 0.00001))) * H1_bin_width;
-    // 	    D_01 += p_H0 * TMath::Log(p_H0 / (std::max(p_H1, 0.00001))) * H0_bin_width;
+    // 	    D_10 += p_H1 * TMath::Log(p_H1 / (std::max(p_H0, 0.00001f))) * H1_bin_width;
+    // 	    D_01 += p_H0 * TMath::Log(p_H0 / (std::max(p_H1, 0.00001f))) * H0_bin_width;
     // 	}
     // }
 
+    std::cout << "computed raw KL correction values: D_10 = " << D_10 << ", D_01 = " << D_01 << std::endl;
+
     // return the actual correction term, which is the difference between the two KL divergences
     //return 1.0 / 2.0 * (D_01 - D_10);
-    return std::make_pair(D_01, D_10);
+    return std::make_pair((float)D_01, (float)D_10);
 }
 
 float Discriminant::EvaluateLog(Tree* in)

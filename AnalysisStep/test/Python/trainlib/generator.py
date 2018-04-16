@@ -30,8 +30,8 @@ class Generator:
         return self.H1_collection.get_length() + self.H0_collection.get_length()
         
     def setup_validation_data(self):
-        self.H1_collection = FileCollection(self.H1_stream, start_fraction = self.training_split, end_fraction = 1.0)
-        self.H0_collection = FileCollection(self.H0_stream, start_fraction = self.training_split, end_fraction = 1.0)
+        self.H1_collection = FileCollection(self.H1_stream, start_fraction = self.training_split, end_fraction = 0.75)
+        self.H0_collection = FileCollection(self.H0_stream, start_fraction = self.training_split, end_fraction = 0.75)
         return self.H1_collection.get_length() + self.H0_collection.get_length()
 
     def get_H1_length(self):

@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib import gridspec
 from subprocess import check_output
 from trainlib.ConfigFileHandler import ConfigFileHandler
-
+import re
 import os
 import math
 
@@ -72,10 +72,10 @@ def main():
         return costval
     
     eps = 1e-3
-    bo = BayesianOptimization(punzi_target, {'ggH_prior': (1.0 + eps, 4.0), 'WHhadr_prior': (eps, 1.0 - eps), 
-                                   'ZHhadr_prior': (eps, 1.0 - eps), 'WHlept_prior': (eps, 1.0 - eps),
-                                   'ZHlept_prior': (eps, 1.0 - eps), 'ZHMET_prior': (eps, 1.0 - eps),
-                                   'ttHhadr_prior': (eps, 1.0 - eps), 'ttHlept_prior': (eps, 1.0 - eps)})
+    bo = BayesianOptimization(punzi_target, {'ggH_prior': (1.1, 1.8), 'WHhadr_prior': (0.2, 0.8), 
+                                   'ZHhadr_prior': (0.2, 0.8), 'WHlept_prior': (0.2, 0.8),
+                                   'ZHlept_prior': (eps, 0.3), 'ZHMET_prior': (eps, 0.3),
+                                   'ttHhadr_prior': (0.05, 0.25), 'ttHlept_prior': (0.05, 0.25)})
          
     # check if a file with previously evaluated points exists, if so, use them for initialization
     confhandler = ConfigFileHandler()
@@ -110,6 +110,10 @@ def main():
         init_dict = {'target': targets_init, 'ggH_prior': ggH_priors_init, 'WHhadr_prior': WHhadr_priors_init,
             'ZHhadr_prior': ZHhadr_priors_init, 'WHlept_prior': WHlept_priors_init, 'ZHlept_prior': ZHlept_priors_init,
             'ZHMET_prior': ZHMET_priors_init, 'ttHhadr_prior': ttHhadr_priors_init, 'ttHlept_prior': ttHlept_priors_init}
+        
+        evalcnt = int(re.sub('evaluation_', '', confhandler.get_sections()[-1])) + 1
+
+        print "resuming at evaluation " + str(evalcnt)
         
         bo.initialize(init_dict)
 

@@ -9,9 +9,9 @@ from ConfigFileUtils import ConfigFileUtils
 
 class SimpleModel(Model):
 
-    def __init__(self, name, input_columns, hyperparameters = None):
+    def __init__(self, name, number_input_columns, hyperparameters = None):
         self.model = None
-        self.input_columns = input_columns
+        self.number_input_columns = number_input_columns
         self.name = name
         self.hyperparameters = hyperparameters
 
@@ -20,9 +20,9 @@ class SimpleModel(Model):
     @classmethod
     def from_config(cls, config_section):
         model_name = re.sub('[\[\]]', '', config_section.name) # remove any stray brackets from the model's name
-        input_columns = ConfigFileUtils.parse_list(config_section['input_columns'], lambda x: x)
+        number_input_columns = int(config_section['number_input_columns'])
         hyperparameters = ConfigFileUtils.parse_dict(config_section['hyperparameters'], lambda x: float(x))
-        obj = cls(name = model_name, input_columns = input_columns, hyperparameters = hyperparameters)
+        obj = cls(name = model_name, number_input_columns = number_input_columns, hyperparameters = hyperparameters)
         
         return obj
 
@@ -31,7 +31,7 @@ class SimpleModel(Model):
         confhandler.new_section(section_name)
 
         confhandler.set_field(section_name, 'model_type', 'SimpleModel')
-        confhandler.set_field(section_name, 'input_columns', ConfigFileUtils.serialize_list(self.input_columns, lambda x: x))
+        confhandler.set_field(section_name, 'number_input_columns', str(self.number_input_columns))
         confhandler.set_field(section_name, 'hyperparameters', ConfigFileUtils.serialize_dict(self.hyperparameters, lambda x: str(x)))
 
         return section_name # return handler to the newly added section
@@ -44,10 +44,9 @@ class SimpleModel(Model):
         if self.hyperparameters is not None:
             print "got the following list of hyperparams: " + str(self.hyperparameters)
 
-        print "building network with inputs: " + str(self.input_columns)
-        number_inputs = len(self.input_columns)
+        print "building network with " + str(self.number_input_columns) + " inputs"
 
-        in_layer = Input(shape = (number_inputs,), name = self.name + '_input')
+        in_layer = Input(shape = (self.number_input_columns,), name = self.name + '_input')
         x = Dense(self.default_neurons)(in_layer)
         x = BatchNormalization()(x)
         x = Activation('relu')(x)

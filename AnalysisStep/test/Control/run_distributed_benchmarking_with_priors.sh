@@ -50,15 +50,20 @@ for RUN in $RUN_DIRLIST
 do
     # make all the necessary directories now
     CALIBRATION_DIR=$CAMPAIGN_DIR$RUN"calibration/"
+    CALIBRATION_TRAINING_DIR=$CAMPAIGN_DIR$RUN"calibration_training/"
     AUGMENTATION_DIR=$CAMPAIGN_DIR$RUN"augmentation/"
     BENCHMARK_DIR=$CAMPAIGN_DIR$RUN"benchmark_priors_"$ENGINE"/"
+    BENCHMARK_TRAINING_DIR=$CAMPAIGN_DIR$RUN"benchmark_priors_"$ENGINE"_training/"
     COMP_DIR=$CAMPAIGN_DIR$RUN"comp_priors_"$ENGINE"/"
+    COMP_TRAINING_DIR=$CAMPAIGN_DIR$RUN"comp_priors_"$ENGINE"_training/"
     BENCHMARK_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"settings_benchmark_priors_"$ENGINE"/"
     PRIOR_DIR=$CAMPAIGN_DIR$RUN"priors_"$ENGINE"/"
 
     mkdir -p $BENCHMARK_SETTINGS_DIR
     mkdir -p $BENCHMARK_DIR
     mkdir -p $COMP_DIR
+    mkdir -p $BENCHMARK_TRAINING_DIR
+    mkdir -p $COMP_TRAINING_DIR
 
     BENCHMARK_SCRIPT=$BENCHMARK_SETTINGS_DIR"run_benchmark_priors_"$ENGINE".sh"
     BENCHMARK_LOGFILE=$BENCHMARK_SETTINGS_DIR"log_benchmark_priors_"$ENGINE".txt"
@@ -66,11 +71,18 @@ do
     echo "#!/bin/bash" > $BENCHMARK_SCRIPT
 
     # launch the benchmarking
-    echo $BIN_DIR$BENCHMARKER $CALIBRATION_DIR $AUGMENTATION_DIR $BENCHMARK_DIR $ENGINE $PRIOR_DIR "&>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
+    echo $BIN_DIR$BENCHMARKER $CALIBRATION_DIR $AUGMENTATION_DIR $BENCHMARK_DIR "0.75 1.0" $ENGINE $PRIOR_DIR "&>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
     echo "sleep 5" >> $BENCHMARK_SCRIPT
 
     # launch the comparison to the reference
     echo $BIN_DIR$COMPARER $BENCHMARK_DIR $COMP_REF_DIR $COMP_DIR "&>>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
+
+    # for evaluation on the training dataset
+    echo $BIN_DIR$BENCHMARKER $CALIBRATION_TRAINING_DIR $AUGMENTATION_DIR $BENCHMARK_TRAINING_DIR "0.0 0.5" $ENGINE $PRIOR_DIR "&>>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
+    echo "sleep 5" >> $BENCHMARK_SCRIPT
+
+    # launch the comparison to the reference
+    echo $BIN_DIR$COMPARER $BENCHMARK_TRAINING_DIR $COMP_REF_DIR $COMP_TRAINING_DIR "&>>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
 done
 
 sleep 1
@@ -83,7 +95,7 @@ JOBS=`find * | grep run_benchmark_priors_$ENGINE.sh$`
 for JOB in $JOBS
 do
     echo "lauching benchmarking for " $CAMPAIGN_DIR$JOB
-    $JOB_SUBMITTER $CAMPAIGN_DIR$JOB
+    $JOB_SUBMITTER "-short" $CAMPAIGN_DIR$JOB
 done
 
 cd $CURRENT_DIR

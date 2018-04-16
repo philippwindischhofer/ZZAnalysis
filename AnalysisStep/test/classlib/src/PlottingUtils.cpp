@@ -1,6 +1,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/PlottingUtils.h>
 
-std::map<TString, TH1F*> PlottingUtils::generate_classifier_histmap(int fill_histos, Classifier* classifier, Config* conf, const std::function<bool(Tree*)>& ext_cut, TString data_id, TString out_path, float start_fraction, float end_fraction)
+std::map<TString, TH1F*> PlottingUtils::generate_classifier_histmap(int fill_histos, Classifier* classifier, Config* conf, const std::function<bool(Tree*)>& ext_cut, TString data_id, TString out_path, float start_fraction, float end_fraction, bool fast_reweighting)
 {
     TString hist_storage = data_id + "_signal.root";
     
@@ -35,7 +35,7 @@ std::map<TString, TH1F*> PlottingUtils::generate_classifier_histmap(int fill_his
 		return classifier -> ClassifyThisEvent(in);
 	    };
 	    
-	    prof -> FillProfile(file_path, conf -> lumi(), histmap[routing -> hist_name], cut, var, false, start_fraction, end_fraction);
+	    prof -> FillProfile(file_path, conf -> lumi(), histmap[routing -> hist_name], cut, var, false, start_fraction, end_fraction, fast_reweighting);
 	}
 
 	std::cout << "end filling histograms" << std::endl;
@@ -48,9 +48,9 @@ std::map<TString, TH1F*> PlottingUtils::generate_classifier_histmap(int fill_his
     return histmap;
 }
 
-std::vector<TH1F*> PlottingUtils::generate_classifier_histvec(int fill_histos, Classifier* classifier, Config* conf, const std::function<bool(Tree*)>& ext_cut, TString data_id, TString out_path)
+std::vector<TH1F*> PlottingUtils::generate_classifier_histvec(int fill_histos, Classifier* classifier, Config* conf, const std::function<bool(Tree*)>& ext_cut, TString data_id, TString out_path, bool fast_reweighting)
 {
-    std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, ext_cut, data_id, out_path);
+    std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, ext_cut, data_id, out_path, fast_reweighting);
 
     std::vector<TH1F*> histvec;
 
@@ -79,10 +79,10 @@ void PlottingUtils::make_barchart(std::map<TString, TH1F*> histmap, TString out_
     plotter.SaveFiles(out_folder + conf -> storage_prefix() + out_file);
 }
 
-void PlottingUtils::make_S_barchart(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, TString label, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction)
+void PlottingUtils::make_S_barchart(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, TString label, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction, bool fast_reweighting)
 {
     // get first the total histmap (holding signal and background)
-    std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder);
+    std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder, start_fraction, end_fraction, fast_reweighting);
     
     // but then, only forward the part that actually corresponds to the signal
     std::map<TString, TH1F*> sig_histmap;
@@ -100,16 +100,16 @@ void PlottingUtils::make_S_barchart(int fill_histos, Classifier* classifier, TSt
     make_barchart(sig_histmap, out_folder, out_file, label, conf);
 }
 
-void PlottingUtils::make_SB_barchart(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, TString label, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction)
+void PlottingUtils::make_SB_barchart(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, TString label, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction, bool fast_reweighting)
 {
-    std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder);
+    std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder, start_fraction, end_fraction, fast_reweighting);
 
     make_barchart(histmap, out_folder, out_file, label, conf);
 }
 
-std::map<TString, float> PlottingUtils::make_correct_events(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction)
+std::map<TString, float> PlottingUtils::make_correct_events(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction, bool fast_reweighting)
 {
-    std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder);
+    std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder, start_fraction, end_fraction, fast_reweighting);
     std::vector<SignalAssignment*> assignments = conf -> signal_assignment();
     
     // compute the number of correctly classified events, for each (abstract) category
@@ -125,9 +125,9 @@ std::map<TString, float> PlottingUtils::make_correct_events(int fill_histos, Cla
     return correct_events;
 }
 
-std::map<TString, float> PlottingUtils::make_total_events(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction)
+std::map<TString, float> PlottingUtils::make_total_events(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction, bool fast_reweighting)
 {
-    std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder);
+    std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder, start_fraction, end_fraction, fast_reweighting);
     
     // compute the total number of events in each (abstract) category [that need not necessarily coincide with the categorization output of the classifier!]
     std::map<TString, float> total_events;
@@ -143,9 +143,9 @@ std::map<TString, float> PlottingUtils::make_total_events(int fill_histos, Class
     return total_events;
 }
 
-std::map<TString, float> PlottingUtils::make_desired_events(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction)
+std::map<TString, float> PlottingUtils::make_desired_events(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction, bool fast_reweighting)
 {
-    std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder);
+    std::map<TString, TH1F*> histmap = generate_classifier_histmap(fill_histos, classifier, conf, cut, data_id, out_folder, start_fraction, end_fraction, fast_reweighting);
     
     // compute the total number of events that, in the ideal case, should have ended up in each abstract category
     std::map<TString, float> desired_events;
@@ -161,10 +161,10 @@ std::map<TString, float> PlottingUtils::make_desired_events(int fill_histos, Cla
 }
 
 // is more refined and really takes ONLY those events as signals, whose production mode also agrees with the category
-void PlottingUtils::make_SBfine_ratio(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction)
+void PlottingUtils::make_SBfine_ratio(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction, bool fast_reweighting)
 {
-    auto correct_events = make_correct_events(fill_histos, classifier, out_folder, out_file, data_id, cut, conf);
-    auto total_events = make_total_events(kFALSE, classifier, out_folder, out_file, data_id, cut, conf);
+    auto correct_events = make_correct_events(fill_histos, classifier, out_folder, out_file, data_id, cut, conf, fast_reweighting);
+    auto total_events = make_total_events(kFALSE, classifier, out_folder, out_file, data_id, cut, conf, fast_reweighting);
     
     // now compute S / (S + B) for each abstract category
     std::vector<std::pair<TString, float>> SB;
@@ -202,11 +202,11 @@ void PlottingUtils::make_SBfine_ratio(int fill_histos, Classifier* classifier, T
     plotter.SaveAs(out_folder + conf -> storage_prefix() + out_file + ".pdf");
 }
 
-void PlottingUtils::make_punzi(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction)
+void PlottingUtils::make_punzi(int fill_histos, Classifier* classifier, TString out_folder, TString out_file, TString data_id, const std::function<bool(Tree*)>& cut, Config* conf, float start_fraction, float end_fraction, bool fast_reweighting)
 {
-    auto correct_events = make_correct_events(fill_histos, classifier, out_folder, out_file, data_id, cut, conf);
-    auto total_events = make_total_events(kFALSE, classifier, out_folder, out_file, data_id, cut, conf);
-    auto desired_events = make_desired_events(kFALSE, classifier, out_folder, out_file, data_id, cut, conf);
+    auto correct_events = make_correct_events(fill_histos, classifier, out_folder, out_file, data_id, cut, conf, start_fraction, end_fraction, fast_reweighting);
+    auto total_events = make_total_events(kFALSE, classifier, out_folder, out_file, data_id, cut, conf, start_fraction, end_fraction, fast_reweighting);
+    auto desired_events = make_desired_events(kFALSE, classifier, out_folder, out_file, data_id, cut, conf, start_fraction, end_fraction, fast_reweighting);
 
     // now compute punzi for each abstract category
     std::vector<std::pair<TString, float>> punzi;

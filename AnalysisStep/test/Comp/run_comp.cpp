@@ -30,15 +30,20 @@ TString punzi_outfile = "punzi_comp";
 
 int main( int argc, char *argv[] )
 {
-    if(argc != 4)
+    if(argc < 4)
     {
-	std::cerr << "Error: exactly 3 arguments are required" << std::endl;
+	std::cerr << "Error: at least 3 arguments are required" << std::endl;
 	return(-1);
     }
 
     TString indir_a = argv[1];
     TString indir_b = argv[2];
     TString out_folder = argv[3];
+
+    if(argc == 5)
+    {
+	zoom_scale = std::stof(argv[4]);
+    }
 
     // choose the category set that is used on both sides of the comparison
     Mor18Config* conf = new Mor18Config();

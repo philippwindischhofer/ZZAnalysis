@@ -33,14 +33,14 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TH2F* hist, cons
 }
 
 // for TH1F
-void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, bool normalize, float start_fraction, float end_fraction)
+void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, bool normalize, float start_fraction, float end_fraction, bool fast_reweighting)
 {
     auto TH1F_callback = [&](TObject* hist, Tree* in, float weight) -> void {
 	TH1F* local_hist = static_cast<TH1F*>(hist);
 	local_hist -> Fill(var(in), weight);
     };
     
-    FillProfile(input_file_name, lumi, hist, cut, TH1F_callback, start_fraction, end_fraction);
+    FillProfile(input_file_name, lumi, hist, cut, TH1F_callback, start_fraction, end_fraction, fast_reweighting);
     
     if(normalize)
 	hist -> Scale(1.0 / hist -> Integral("width"));
@@ -90,7 +90,7 @@ void Profiler::FillDataWeights(TString input_file_name, float lumi, const std::f
     delete input_file;
 }
 
-void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, const std::function<bool(Tree*)>& cut, const std::function<void(TObject*, Tree*, float)>& fill_callback, float start_fraction, float end_fraction)
+void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, const std::function<bool(Tree*)>& cut, const std::function<void(TObject*, Tree*, float)>& fill_callback, float start_fraction, float end_fraction, bool fast_reweighting)
 {
     input_file = new TFile(input_file_name);
     
@@ -114,6 +114,51 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, c
     float weight_sum = 0;
     int fill_cnt = 0;
 
+    std::cout << "start = " << (Long64_t)(n_entries * start_fraction) << std::endl;
+    std::cout << "end = " << (Long64_t)(n_entries * end_fraction) << std::endl;
+
+    float reweighting_factor = 0.0;
+
+    if(fast_reweighting)
+    {
+	reweighting_factor = end_fraction - start_fraction;
+    }
+    else
+    {
+	// determine the weights for the reduced part w.r.t. the full dataset *exactly*
+	float full_gen_sum_weights = 0.0;
+	float reduced_gen_sum_weights = 0.0;
+
+	for(Long64_t j_entry = (Long64_t)(n_entries * start_fraction); j_entry < (Long64_t)(n_entries * end_fraction); j_entry++)
+	{
+	    LoadTree(j_entry);
+	    fChain -> GetEntry(j_entry);
+	    reduced_gen_sum_weights += overallEventWeight;	
+	}
+
+	full_gen_sum_weights = reduced_gen_sum_weights;
+
+	// for the full weight sum, need to add the part in the beginning
+	for(Long64_t j_entry = 0; j_entry < (Long64_t)(n_entries * start_fraction); j_entry++)
+	{
+	    LoadTree(j_entry);
+	    fChain -> GetEntry(j_entry);
+	    full_gen_sum_weights += overallEventWeight;
+	}
+
+	// and in the end
+	for(Long64_t j_entry = (Long64_t)(n_entries * end_fraction); j_entry < n_entries; j_entry++)
+	{
+	    LoadTree(j_entry);
+	    fChain -> GetEntry(j_entry);
+	    full_gen_sum_weights += overallEventWeight;
+	}
+
+	reweighting_factor = reduced_gen_sum_weights / full_gen_sum_weights;
+    }
+
+    std::cout << "reweighting_factor = " << reweighting_factor << std::endl;
+
     // loop over the entries in chain
     for(Long64_t j_entry = (Long64_t)(n_entries * start_fraction); j_entry < (Long64_t)(n_entries * end_fraction); j_entry++)
     {
@@ -124,7 +169,7 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, c
 	// now actually read this entry
 	fChain -> GetEntry(j_entry);
 
-	float event_weight = (lumi * xsec * 1000. * overallEventWeight) / (gen_sum_weights * (end_fraction - start_fraction));
+	float event_weight = (lumi * xsec * 1000. * overallEventWeight) / (gen_sum_weights * reweighting_factor);
 
 	if(cut(this))
 	{

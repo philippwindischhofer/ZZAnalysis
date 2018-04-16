@@ -77,7 +77,7 @@ int closest_integer_divisor(int candidate_divisor, int dividend)
 	return lower_candidate;
 }
 
-void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::function<bool(Tree*)>> H1_cuts, std::vector<TString> H0_paths, std::vector<std::function<bool(Tree*)>> H0_cuts, const std::function<bool(Tree*)>& disc_cut, const std::function<float(Tree*)>& disc, TString disc_name, Config& conf, TString out_folder, TString H1_name = "H_{1}", TString H0_name = "H_{0}")
+void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::function<bool(Tree*)>> H1_cuts, std::vector<TString> H0_paths, std::vector<std::function<bool(Tree*)>> H0_cuts, const std::function<bool(Tree*)>& disc_cut, const std::function<float(Tree*)>& disc, TString disc_name, Config& conf, TString out_folder, float start_fraction = 0.0, float end_fraction = 0.5, TString H1_name = "H_{1}", TString H0_name = "H_{0}")
 {
     Profiler* prof = new Profiler();
     ProfPlotter* plotter = new ProfPlotter();
@@ -85,8 +85,9 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
     // histograms that are going to hold the distributions of the raw MELA discriminant under the signal- and background hypothesis
     // from those, build the likelihood ratio of the MELA-discriminant
 
-    // 720 is a highly composite number!
-    int original_number_bins = 720;
+    // 55440 is a highly composite number!
+    // First, bin all the data with an absurdely high number of bins to determine the optimal number of bins, then re-bin them with the correct settings
+    int original_number_bins = 55440;
     TH1F* H1_distrib = new TH1F("H1_distrib", "H1_distrib", original_number_bins, -0.02, 1.02);
     H1_distrib -> SetLineColor(kBlue - 9);
     H1_distrib -> SetMarkerColor(kBlue - 9);
@@ -97,13 +98,61 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
     H0_distrib -> SetMarkerColor(kRed - 7);
     H0_distrib -> SetFillColor(kWhite);
 
-    TH1F* H1_distrib_validation = new TH1F("H1_distrib_validation", "H1_distrib_validation", original_number_bins, -0.02, 1.02);
+    // make the signal distribution
+    for(auto tup: boost::combine(H1_paths, H1_cuts))
+    {
+	std::function<bool(Tree*)> H1_cut;
+	TString H1_path;
+	boost::tie(H1_path, H1_cut) = tup;
+
+	auto total_cut = [&](Tree* in) -> bool {
+	    return (H1_cut(in) &&
+		    disc_cut(in)) ? 
+	    kTRUE : kFALSE;};
+	
+	//prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, 0.0, 0.5);
+	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, 0.5, 1.0);
+    }
+
+    for(auto tup: boost::combine(H0_paths, H0_cuts))
+    {
+	std::function<bool(Tree*)> H0_cut;
+	TString H0_path;
+	boost::tie(H0_path, H0_cut) = tup;
+
+	auto total_cut = [&](Tree* in) -> bool {
+	    return (H0_cut(in) &&
+		    disc_cut(in)) ? 
+	    kTRUE : kFALSE;};
+	
+	//prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, 0.0, 0.5);
+	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, 0.5, 1.0);
+    }
+
+    // now rebin each histogram separately to have a well-behaved density-estimator at the end
+    int number_bins_H0 = round(number_bins_freedman_diaconis(H0_distrib));
+    int number_bins_H1 = round(number_bins_freedman_diaconis(H1_distrib));
+
+    std::cout << "rebinning with: number_bins_H0 = " << number_bins_H0 << std::endl;
+    std::cout << "rebinning with: number_bins_H1 = " << number_bins_H1 << std::endl;
+
+    H1_distrib = new TH1F("H1_distrib", "H1_distrib", number_bins_H1, -0.02, 1.02);
+    H1_distrib -> SetLineColor(kBlue - 9);
+    H1_distrib -> SetMarkerColor(kBlue - 9);
+    H1_distrib -> SetFillColor(kWhite);
+
+    H0_distrib = new TH1F("H0_distrib", "H0_distrib", number_bins_H0, -0.02, 1.02);
+    H0_distrib -> SetLineColor(kRed - 7);
+    H0_distrib -> SetMarkerColor(kRed - 7);
+    H0_distrib -> SetFillColor(kWhite);
+
+    TH1F* H1_distrib_validation = new TH1F("H1_distrib_validation", "H1_distrib_validation", number_bins_H1, -0.02, 1.02);
     H1_distrib_validation -> SetLineColor(kWhite);
     H1_distrib_validation -> SetFillColor(kWhite);
     H1_distrib_validation -> SetMarkerStyle(21);
     H1_distrib_validation -> SetMarkerColor(kBlue - 9);
 
-    TH1F* H0_distrib_validation = new TH1F("H0_distrib_validation", "H0_distrib_validation", original_number_bins, -0.02, 1.02);
+    TH1F* H0_distrib_validation = new TH1F("H0_distrib_validation", "H0_distrib_validation", number_bins_H0, -0.02, 1.02);
     H0_distrib_validation -> SetLineColor(kWhite);
     H0_distrib_validation -> SetFillColor(kWhite);
     H0_distrib_validation -> SetMarkerStyle(21);
@@ -121,8 +170,9 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 		    disc_cut(in)) ? 
 	    kTRUE : kFALSE;};
 	
-	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, 0.0, 0.5);
-	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib_validation, total_cut, disc, false, 0.5, 1.0);
+	//prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, 0.0, 0.5);
+	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, start_fraction, end_fraction);
+	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib_validation, total_cut, disc, false, 0.6, 1.0);
     }
 
     for(auto tup: boost::combine(H0_paths, H0_cuts))
@@ -136,33 +186,35 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 		    disc_cut(in)) ? 
 	    kTRUE : kFALSE;};
 	
-	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, 0.0, 0.5);
-	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib_validation, total_cut, disc, false, 0.5, 1.0);
+	//prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, 0.0, 0.5);
+	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, start_fraction, end_fraction);
+	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib_validation, total_cut, disc, false, 0.6, 1.0);
     }
 
-    // now rebin each histogram separately to have a well-behaved density-estimator at the end
-    float number_bins_H0 = number_bins_freedman_diaconis(H0_distrib);
-    float number_bins_H1 = number_bins_freedman_diaconis(H1_distrib);
+    // // now find the optimum number of bins to merge to get as close as possible to the optimum bin number computed above
+    // int divider_H0 = (H0_distrib -> GetSize() - 2) / number_bins_H0;
+    // int divider_H1 = (H1_distrib -> GetSize() - 2) / number_bins_H1;
 
-    // now find the optimum number of bins to merge to get as close as possible to the optimum bin number computed above
-    int divider_H0 = (H0_distrib -> GetSize() - 2) / number_bins_H0;
-    int divider_H1 = (H1_distrib -> GetSize() - 2) / number_bins_H1;
+    // // now find the closest number that exactly divides the original number of bins
+    // std::cout << "divider_H0 = " << divider_H0 << std::endl;
+    // std::cout << "divider_H1 = " << divider_H1 << std::endl;
 
-    // now find the closest number that exactly divides the original number of bins
-    std::cout << "divider_H0 = " << divider_H0 << std::endl;
-    std::cout << "divider_H1 = " << divider_H1 << std::endl;
+    // int rebin_factor_H0 = closest_integer_divisor(divider_H0, H0_distrib -> GetSize() - 2);
+    // int rebin_factor_H1 = closest_integer_divisor(divider_H1, H1_distrib -> GetSize() - 2);
 
-    int rebin_factor_H0 = closest_integer_divisor(divider_H0, H0_distrib -> GetSize() - 2);
-    int rebin_factor_H1 = closest_integer_divisor(divider_H1, H1_distrib -> GetSize() - 2);
+    // std::cout << "rebin_factor_H0 = " << rebin_factor_H0 << std::endl;
+    // std::cout << "rebin_factor_H1 = " << rebin_factor_H1 << std::endl;    
 
-    std::cout << "rebin_factor_H0 = " << rebin_factor_H0 << std::endl;
-    std::cout << "rebin_factor_H1 = " << rebin_factor_H1 << std::endl;    
-
-    // rebin all the distributions
-    H0_distrib -> Rebin(std::max(1, rebin_factor_H0));
-    H0_distrib_validation -> Rebin(std::max(1, rebin_factor_H0));
-    H1_distrib -> Rebin(std::max(1, rebin_factor_H1));
-    H1_distrib_validation -> Rebin(std::max(1, rebin_factor_H1));
+    // if(rebin_factor_H0 == 1 || rebin_factor_H1 == 1)
+    // {
+    // 	std::cerr << "likelihood-ratio results may be garbage: check your initial assumption for the number of bins!" << std::endl;
+    // }
+    
+    // // rebin all the distributions
+    // H0_distrib -> Rebin(std::max(1, rebin_factor_H0));
+    // H0_distrib_validation -> Rebin(std::max(1, rebin_factor_H0));
+    // H1_distrib -> Rebin(std::max(1, rebin_factor_H1));
+    // H1_distrib_validation -> Rebin(std::max(1, rebin_factor_H1));
 
     // only now do the normalization of both distributions
     double sig_norm = 1.0 / H1_distrib -> Integral("width");
@@ -192,7 +244,7 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 
     // Plot the two distributions, for visualization (and cross-checking) purposes
     std::vector<TH1F*> hist_vec = {H1_distrib_validation, H0_distrib_validation, H1_distrib, H0_distrib};
-    std::vector<TString> source_labels = {H1_name + " (validation)", H0_name + " (validation)", H1_name + " (training)", H0_name + " (training)"};
+    std::vector<TString> source_labels = {H1_name + " (test)", H0_name + " (test)", H1_name + " (training)", H0_name + " (training)"};
 
     plotter -> Construct(hist_vec, source_labels, disc_name, "normalized to 1", "", "", "P H nostack");
     
@@ -213,7 +265,7 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
     plotter -> SaveAs(out_folder + disc_name + ".pdf");
 }
 
-void calibrate_discriminant(Discriminant* disc, Config& conf, TString out_folder)
+void calibrate_discriminant(Discriminant* disc, Config& conf, TString out_folder, float start_fraction, float end_fraction)
 {
     std::vector<TString> H1_paths = disc -> GetH1Source() -> GetPaths();
     std::vector<std::function<bool(Tree*)>> H1_cuts = disc -> GetH1Source() -> GetCuts();
@@ -232,25 +284,25 @@ void calibrate_discriminant(Discriminant* disc, Config& conf, TString out_folder
 	TString name;
 	boost::tie(name, cut, disc) = tup;
 
-	calibrate_discriminant(H1_paths, H1_cuts, H0_paths, H0_cuts, cut, disc, name, conf, out_folder);
+	calibrate_discriminant(H1_paths, H1_cuts, H0_paths, H0_cuts, cut, disc, name, conf, out_folder, start_fraction, end_fraction);
     }
 }
 
-void calibrate_discriminant_collection(DiscriminantCollection* coll, Config& conf, TString out_folder)
+void calibrate_discriminant_collection(DiscriminantCollection* coll, Config& conf, TString out_folder, float start_fraction, float end_fraction)
 {
     std::map<std::pair<TString, TString>, Discriminant*> discs = coll -> GetDiscs();
 
     for(auto cur: discs)
     {
-	calibrate_discriminant(cur.second, conf, out_folder);
+	calibrate_discriminant(cur.second, conf, out_folder, start_fraction, end_fraction);
     }
 }
 
 int main(int argc, char *argv[])
 {    
-    if(argc != 4)
+    if(argc != 6)
     {
-	std::cerr << "Error: exactly 3 arguments are required" << std::endl;
+	std::cerr << "Error: exactly 5 arguments are required" << std::endl;
 	return(-1);
     }
 
@@ -258,9 +310,15 @@ int main(int argc, char *argv[])
     TString switchval = argv[2];
     TString out_folder = argv[3];
 
+    float start_fraction = std::atof(argv[4]);
+    float end_fraction = std::atof(argv[5]);
+
     Mor18Config conf(MCpath);
 
     DiscriminantCollection* coll;
+
+    std::cout << "start_fraction = " << start_fraction << std::endl;
+    std::cout << "end_fraction = " << end_fraction << std::endl;
 
     // switches between the trained discriminants (ML) or MELA values only (ME)
     if(switchval == "ME")
@@ -278,7 +336,7 @@ int main(int argc, char *argv[])
 	return(-1);
     }
 	
-    calibrate_discriminant_collection(coll, conf, out_folder);
+    calibrate_discriminant_collection(coll, conf, out_folder, start_fraction, end_fraction);
 
     return(0);
 }
