@@ -93,14 +93,30 @@ class FlexiblePCAWhiteningPreprocessor(Preprocessor):
         return self.base_preprocessor.process(prepared_data)
     
     def save(self, folder, filename):
+        path = folder + "processed_columns_" + filename
+        outfile = open(path, "wb")
+        pickle.dump(self.processed_columns, outfile)
+        outfile.close()
+
         self.base_preprocessor.save(folder, filename)
         
     def load(self, folder, filename):
+        path = folder + "processed_columns_" + filename
+        print "now attempting to load column settings from file " + path
+
+        infile = open(path, "rb")
+        self.processed_columns = pickle.load(infile)
+        infile.close()
+
+        self.base_preprocessor = PCAWhiteningPreprocessor(self.name, self.processed_columns, cuts.no_cut, None)
         self.base_preprocessor.load(folder, filename)
     
     # puts the data in a format such that PCAWhiteningPreprocessor can act on them
     def prepare_data(self, data):
         prepared_data = pd.DataFrame()
+        
+        #print "data = "
+        #print data.columns
 
         for column in self.nonperiodic_columns:
             #print "nonperiodic column: " + column
@@ -113,6 +129,9 @@ class FlexiblePCAWhiteningPreprocessor(Preprocessor):
             cf = self.encode_periodic_column(cf)
             prepared_data = pd.concat([prepared_data, cf], axis = 1)
 
+        #print "prepared data = "
+        #print prepared_data.columns
+
         return prepared_data
 
     def extract_order(self, df, sorted_column, columns, order):
@@ -124,14 +143,15 @@ class FlexiblePCAWhiteningPreprocessor(Preprocessor):
                 return np.flipud(np.argsort(sorted_column))[order]
 
         index_column = pd.DataFrame(df.transform(lambda row: get_index(row, order, sorted_column), axis = 1, raw = True))
-        index_column.columns = ["index"]
+
+        index_column.columns = ["list_index"]
         df_temp = pd.concat([index_column, df], axis = 1)
 
         def get_element(row, column_name):
-            if row["index"] == -1:
+            if row["list_index"] == -1:
                 return 0
             else:
-                return row[column_name][row["index"]]
+                return row[column_name][row["list_index"]]
 
         extracted_cols = pd.DataFrame()
         for column in columns:
@@ -142,15 +162,18 @@ class FlexiblePCAWhiteningPreprocessor(Preprocessor):
         return extracted_cols
     
     def extract_order_filtered(self, df, sorted_column, columns, order):
-        extracted_raw = self.extract_order(df, sorted_column, columns, order)
+        if len(df) > 0:
+            extracted_raw = self.extract_order(df, sorted_column, columns, order)
 
-        if any("Jet" in col for col in extracted_raw.columns):
-            # apply the jet-pt cut
-            mask_column = self.extract_order(df, "JetPt", ["JetPt"], order)
-            mask = mask_column < 30.0
-            extracted_raw[mask.as_matrix()] = 0.0
+            if any("Jet" in col for col in extracted_raw.columns):
+                # apply the jet-pt cut
+                mask_column = self.extract_order(df, "JetPt", ["JetPt"], order)
+                mask = mask_column < 30.0
+                extracted_raw[mask.as_matrix()] = 0.0
 
-        return extracted_raw
+            return extracted_raw
+        else:
+            return pd.DataFrame(columns = [column + "_" + str(order) for column in columns])
     
     def extract_column(self, df, colstring):
         if '[' in colstring and ']' in colstring:

@@ -22,7 +22,7 @@ TString name_b = "Mor18  (experimental)";
 // TString name_a = "Mor18_{OPT}";
 // TString name_b = "Mor18";
 
-float zoom_scale = 1.0;
+float zoom_scale = 0.2;
 
 TString punzi_hist_name = "punzi_purity";
 TString punzi_infile = "punzi_plot_hist.root";

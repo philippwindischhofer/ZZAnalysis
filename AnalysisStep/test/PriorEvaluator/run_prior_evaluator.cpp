@@ -73,7 +73,7 @@ double costfunc(const double* params)
     std::cout << "ttHlept_prior = " << ttHlept_prior << std::endl;
 
     // evaluate the Punzi value with this (modified) Classifier now
-    PlottingUtils::make_punzi(kTRUE, varclass, outdir, "punzi", "no_cut_data", no_cut, conf, 0.0, 0.5, false);
+    PlottingUtils::make_punzi(kTRUE, varclass, outdir, "punzi", "no_cut_data", no_cut, conf, 0.5, 0.75, false);
     
     // load low the Punzi histogram of the optimized classifier and compare the two. From this point onwards, is exactly the same as in "Comp"
     float zoom_scale = 1.0;
@@ -119,9 +119,10 @@ int main( int argc, char *argv[] )
     std::cout << "engine = " << engine << std::endl;
     std::cout << "out_dir = " << outdir << std::endl;
 
-    refdir = run_dir + "benchmark_" + engine + "_training/";
+    // use the corresponding benchmark scenario without optimized priors as reference
+    refdir = run_dir + "benchmark_" + engine + "_validation/";
 
-    varclass = new Mor18LIClassifier(run_dir + "calibration/", engine);
+    varclass = new Mor18LIClassifier(run_dir + "calibration_validation/", engine);
 
     varclass18 = static_cast<Mor18LIClassifier*>(varclass);
 
@@ -132,8 +133,6 @@ int main( int argc, char *argv[] )
     double params[] = {VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior};
 
     costfunc(params);
-
-    //std::cout << "cost = 12345" << std::endl;
    
     return(0);
 }

@@ -5,13 +5,6 @@
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
-ENGINE=$2
-
-if [ -z $ENGINE ]
-then
-    echo "no engine name provided, using default: rand_KL"
-    ENGINE="rand_KL"
-fi
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
@@ -25,10 +18,8 @@ BIN_DIR=$CAMPAIGN_DIR"bin/"
 CALIBRATOR="run_calibrator"
 
 # ---------------------------------------------
-#  first, copy all the executables to the campaign folder
+#  first, copy all the needed executables to the campaign folder
 # ---------------------------------------------
-echo "preparing filesystem for training campaign"
-
 mkdir -p $BIN_DIR
 cp $BIN_DIR_ORIGINAL$CALIBRATOR $BIN_DIR
 
@@ -68,5 +59,19 @@ do
     echo "#!/bin/bash" > $CALIBRATION_TEST_SCRIPT
     echo $BIN_DIR$CALIBRATOR $AUGMENTATION_DIR "ML" $CALIBRATION_TEST_DIR "0.75 1.0" "&>" $CALIBRATION_TEST_LOGFILE >> $CALIBRATION_TEST_SCRIPT
 
-
 done
+
+sleep 1
+
+# all scripts prepared, going forward to launch them
+cd $CAMPAIGN_DIR
+
+JOBS=`find * | grep run_calibration_.*.sh$`
+
+for JOB in $JOBS
+do
+    echo "launching calibration for " $CAMPAIGN_DIR$JOB
+    $JOB_SUBMITTER "-short" $CAMPAIGN_DIR$JOB
+done
+
+cd $CURRENT_DIR

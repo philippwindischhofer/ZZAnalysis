@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     float ggH_prior = 1.46657;
     float WHhadr_prior = 0.582676;
     float ZHhadr_prior = 0.707539;
-    float WHlept_prior = 0.272772;
+    float WHlept_prior = 0.172772;
     float ZHlept_prior = 0.0633419;
     float ZHMET_prior = 0.0666923;
     float ttHhadr_prior = 0.145215;

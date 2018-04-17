@@ -14,6 +14,17 @@ import math
 
 evalcnt = 0
 
+# default values
+VBF_prior_default = 1.0
+ggH_prior_default = 1.4665
+WHhadr_prior_default = 0.582676
+ZHhadr_prior_default = 0.707539
+WHlept_prior_default = 0.172772
+ZHlept_prior_default = 0.0633419
+ZHMET_prior_default = 0.0666923
+ttHhadr_prior_default = 0.145215
+ttHlept_prior_default = 0.1954
+
 def main():
 
     if len(sys.argv) != 4:
@@ -26,6 +37,10 @@ def main():
     print run_dir
     print out_dir
     print engine
+
+    # punzi_target_2d = lambda WHlept_prior, ZHlept_prior: punzi_target(ggH_prior_default, WHhadr_prior_default, ZHhadr_prior_default,
+    #                                                                       WHlept_prior, ZHlept_prior, ZHMET_prior_default, 
+    #                                                                       ttHhadr_prior_default, ttHlept_prior_default)
 
     def punzi_target(ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior):
         global evalcnt
@@ -44,7 +59,7 @@ def main():
                 break
             
         if math.isnan(costval):
-            costval = -10.0
+            costval = -7.0
 
         # save the sampled point such that later they can be used as exploration points (if the need occurs)
         confhandler = ConfigFileHandler()
@@ -72,10 +87,14 @@ def main():
         return costval
     
     eps = 1e-3
+    delta = 0.2
     bo = BayesianOptimization(punzi_target, {'ggH_prior': (1.1, 1.8), 'WHhadr_prior': (0.2, 0.8), 
                                    'ZHhadr_prior': (0.2, 0.8), 'WHlept_prior': (0.2, 0.8),
                                    'ZHlept_prior': (eps, 0.3), 'ZHMET_prior': (eps, 0.3),
                                    'ttHhadr_prior': (0.05, 0.25), 'ttHlept_prior': (0.05, 0.25)})
+
+    # bo = BayesianOptimization(punzi_target_2d, {'WHlept_prior': (eps, WHlept_prior_default + delta),
+    #                                                  'ZHlept_prior': (eps, ZHlept_prior_default + delta)})
          
     # check if a file with previously evaluated points exists, if so, use them for initialization
     confhandler = ConfigFileHandler()
@@ -120,7 +139,7 @@ def main():
     # perform the standard initialization and setup
     bo.maximize(init_points = 6, n_iter = 0, acq = 'ucb', kappa = 3)
 
-    for it in range(500):
+    for it in range(1000):
         bo.maximize(init_points = 6, n_iter = 1, acq = 'ucb', kappa = 3)
     
         # evaluate the current maximum

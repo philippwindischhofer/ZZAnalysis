@@ -136,6 +136,37 @@ void ROCPlotter::IterateThroughFile(TString input_file_name, bool truth, const s
     Long64_t n_entries = fChain -> GetEntriesFast();
     std::cout << "total number of entries = " << n_entries << std::endl;
 
+    // determine the weights for the reduced part w.r.t. the full dataset *exactly*
+    float full_gen_sum_weights = 0.0;
+    float reduced_gen_sum_weights = 0.0;
+
+    for(Long64_t j_entry = (Long64_t)(n_entries * start_fraction); j_entry < (Long64_t)(n_entries * end_fraction); j_entry++)
+    {
+	LoadTree(j_entry);
+	fChain -> GetEntry(j_entry);
+	reduced_gen_sum_weights += overallEventWeight;	
+    }
+
+    full_gen_sum_weights = reduced_gen_sum_weights;
+
+    // for the full weight sum, need to add the part in the beginning
+    for(Long64_t j_entry = 0; j_entry < (Long64_t)(n_entries * start_fraction); j_entry++)
+    {
+	LoadTree(j_entry);
+	fChain -> GetEntry(j_entry);
+	full_gen_sum_weights += overallEventWeight;
+    }
+
+    // and in the end
+    for(Long64_t j_entry = (Long64_t)(n_entries * end_fraction); j_entry < n_entries; j_entry++)
+    {
+	LoadTree(j_entry);
+	fChain -> GetEntry(j_entry);
+	full_gen_sum_weights += overallEventWeight;
+    }
+
+    float reweighting_factor = reduced_gen_sum_weights / full_gen_sum_weights;
+
     // loop over the entries in chain
     for(Long64_t j_entry = (Long64_t)(n_entries * start_fraction); j_entry < (Long64_t)(n_entries * end_fraction); j_entry++)
     {
@@ -146,7 +177,7 @@ void ROCPlotter::IterateThroughFile(TString input_file_name, bool truth, const s
     	// now actually read this entry
     	fChain -> GetEntry(j_entry);
 
-    	float event_weight = (lumi * xsec * 1000. * overallEventWeight) / gen_sum_weights;
+    	float event_weight = (lumi * xsec * 1000. * overallEventWeight) / (gen_sum_weights * reweighting_factor);
 	
     	if(cut(this))
     	{

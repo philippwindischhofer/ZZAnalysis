@@ -110,8 +110,7 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 		    disc_cut(in)) ? 
 	    kTRUE : kFALSE;};
 	
-	//prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, 0.0, 0.5);
-	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, 0.5, 1.0);
+	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, start_fraction, end_fraction);
     }
 
     for(auto tup: boost::combine(H0_paths, H0_cuts))
@@ -125,8 +124,7 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 		    disc_cut(in)) ? 
 	    kTRUE : kFALSE;};
 	
-	//prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, 0.0, 0.5);
-	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, 0.5, 1.0);
+	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, start_fraction, end_fraction);
     }
 
     // now rebin each histogram separately to have a well-behaved density-estimator at the end
@@ -170,9 +168,8 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 		    disc_cut(in)) ? 
 	    kTRUE : kFALSE;};
 	
-	//prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, 0.0, 0.5);
 	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, start_fraction, end_fraction);
-	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib_validation, total_cut, disc, false, 0.6, 1.0);
+	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib_validation, total_cut, disc, false, 0.5, 0.75);
     }
 
     for(auto tup: boost::combine(H0_paths, H0_cuts))
@@ -186,35 +183,9 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 		    disc_cut(in)) ? 
 	    kTRUE : kFALSE;};
 	
-	//prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, 0.0, 0.5);
 	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, start_fraction, end_fraction);
-	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib_validation, total_cut, disc, false, 0.6, 1.0);
+	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib_validation, total_cut, disc, false, 0.5, 0.75);
     }
-
-    // // now find the optimum number of bins to merge to get as close as possible to the optimum bin number computed above
-    // int divider_H0 = (H0_distrib -> GetSize() - 2) / number_bins_H0;
-    // int divider_H1 = (H1_distrib -> GetSize() - 2) / number_bins_H1;
-
-    // // now find the closest number that exactly divides the original number of bins
-    // std::cout << "divider_H0 = " << divider_H0 << std::endl;
-    // std::cout << "divider_H1 = " << divider_H1 << std::endl;
-
-    // int rebin_factor_H0 = closest_integer_divisor(divider_H0, H0_distrib -> GetSize() - 2);
-    // int rebin_factor_H1 = closest_integer_divisor(divider_H1, H1_distrib -> GetSize() - 2);
-
-    // std::cout << "rebin_factor_H0 = " << rebin_factor_H0 << std::endl;
-    // std::cout << "rebin_factor_H1 = " << rebin_factor_H1 << std::endl;    
-
-    // if(rebin_factor_H0 == 1 || rebin_factor_H1 == 1)
-    // {
-    // 	std::cerr << "likelihood-ratio results may be garbage: check your initial assumption for the number of bins!" << std::endl;
-    // }
-    
-    // // rebin all the distributions
-    // H0_distrib -> Rebin(std::max(1, rebin_factor_H0));
-    // H0_distrib_validation -> Rebin(std::max(1, rebin_factor_H0));
-    // H1_distrib -> Rebin(std::max(1, rebin_factor_H1));
-    // H1_distrib_validation -> Rebin(std::max(1, rebin_factor_H1));
 
     // only now do the normalization of both distributions
     double sig_norm = 1.0 / H1_distrib -> Integral("width");
@@ -244,7 +215,10 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 
     // Plot the two distributions, for visualization (and cross-checking) purposes
     std::vector<TH1F*> hist_vec = {H1_distrib_validation, H0_distrib_validation, H1_distrib, H0_distrib};
-    std::vector<TString> source_labels = {H1_name + " (test)", H0_name + " (test)", H1_name + " (training)", H0_name + " (training)"};
+    std::vector<TString> source_labels = {H1_name + " (validation: 0.5 - 0.75)", 
+					  H0_name + " (validation: 0.5 - 0.75)", 
+					  H1_name + Form(" (%.2f - %.2f)", start_fraction, end_fraction),
+					  H0_name + Form(" (%.2f - %.2f)", start_fraction, end_fraction)};
 
     plotter -> Construct(hist_vec, source_labels, disc_name, "normalized to 1", "", "", "P H nostack");
     

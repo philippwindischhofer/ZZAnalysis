@@ -42,7 +42,7 @@ for RUN in $RUN_DIRLIST
 do
     # create the directory that will hold the training output
     TRAINING_DIR=$CAMPAIGN_DIR$RUN"training/"
-    mkdir $TRAINING_DIR
+    mkdir -p $TRAINING_DIR
 
     # for each run, first make all the config files for the individual trainings
     python $BIN_DIR$TRAINING_CONFIG_FILE_GEN $CAMPAIGN_DIR$RUN
@@ -67,7 +67,7 @@ sleep 1
 # now go back and launch all the jobs that have been prepared
 cd $CAMPAIGN_DIR
 
-JOBS=`find * | grep run_training.sh`
+JOBS=`find * | grep run_training.sh$`
 
 for JOB in $JOBS
 do

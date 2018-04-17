@@ -61,12 +61,12 @@ done
 # now go back and launch all the jobs that have been prepared
 cd $CAMPAIGN_DIR
 
-JOBS=`find * | grep run_augmentation.sh`
+JOBS=`find * | grep run_augmentation.sh$`
 
 for JOB in $JOBS
 do
     echo "launching augmentation for " $CAMPAIGN_DIR$JOB
-    $JOB_SUBMITTER $CAMPAIGN_DIR$JOB
+    $JOB_SUBMITTER "-short" $CAMPAIGN_DIR$JOB
 done
 
 cd $CURRENT_DIR

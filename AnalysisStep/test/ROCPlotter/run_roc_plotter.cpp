@@ -56,8 +56,8 @@ int main( int argc, char *argv[] )
 	Discriminant* cur_ME_QG_disc = ME_QG_coll -> GetDiscriminant(combination);
 	Discriminant* cur_ML_disc = ML_coll -> GetDiscriminant(combination);
 
-	// make sure to only use the second half of each file, i.e. the portion reserved for the validation data!
-	float start_fraction = 0.0;
+	// make sure to only use the test region of each file, i.e. the portion reserved for the validation data!
+	float start_fraction = 0.75;
 	float end_fraction = 1.0;
 	ROCPlotter rp(conf, start_fraction, end_fraction); 
 
