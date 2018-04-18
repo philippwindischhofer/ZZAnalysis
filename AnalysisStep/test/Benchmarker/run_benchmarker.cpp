@@ -128,6 +128,7 @@ int main(int argc, char *argv[])
     // switch here between all Moriond 2018 categories and a reduced set for development
     //Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet(MCpath);
     Mor18Config* conf = new Mor18Config(MCpath, 35.9, true);
+    Mor18Config* conf_S = new Mor18Config(MCpath, 35.9, false);
     //Mor18Config* conf = new Mor18Config(MCpath, 150.0, true);
 
     // these are the optimized working points to give max. Punzi for an integrated luminosity of 35.9fb^-1
@@ -157,6 +158,8 @@ int main(int argc, char *argv[])
     PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", mZZ_cut, conf, start_fraction, end_fraction, false);
     PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", mZZ_cut, conf, start_fraction, end_fraction, false);
     PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", mZZ_cut, conf, start_fraction, end_fraction, false);
+
+    PlottingUtils::make_punzi(kTRUE, refclass, out_folder, "punzi_S", "no_cut_data_S", mZZ_cut, conf_S, start_fraction, end_fraction, false);
 
     // PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_4mu", "4mu_data", "ZZ #rightarrow 4#mu", final_state_4mu_cut, conf);
     // PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_2mu2e", "2e2mu_data", "ZZ #rightarrow 2#mu2e", final_state_2e2mu_cut, conf);

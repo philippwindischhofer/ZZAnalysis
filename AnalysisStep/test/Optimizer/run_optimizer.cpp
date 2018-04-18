@@ -32,8 +32,8 @@
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 
 TString punzi_hist_name = "punzi_purity";
-TString punzi_infile = "punzi_plot_hist.root";
-TString punzi_outfile = "punzi_comp";
+TString punzi_infile = "punzi_S_plot_hist.root";
+TString punzi_outfile = "punzi_S_comp";
 
 int evalcnt = 0;
 
@@ -67,8 +67,8 @@ double costfunc(const double* params)
     std::cout << "WP_WHh = " << WP_WHh << std::endl;
     std::cout << "WP_ZHh = " << WP_ZHh << std::endl;
 
-    // evaluate the Punzi value with this (modified) Classifier now
-    PlottingUtils::make_punzi(kTRUE, varclass, outdir, "punzi", "no_cut_data", no_cut, conf);
+    // evaluate the Punzi value with this (modified) Classifier now; compute it using the first half of the available data only
+    PlottingUtils::make_punzi(kTRUE, varclass, outdir, "punzi_S", "no_cut_data", no_cut, conf, 0.0, 0.5, false);
     
     // load low the Punzi histogram of the optimized classifier and compare the two. From this point onwards, is exactly the same as in "Comp"
     float zoom_scale = 1.0;
@@ -93,7 +93,8 @@ int main( int argc, char *argv[] )
     float lumi = std::stof(argv[2]);
     outdir = argv[3];
 
-    conf = new Mor18Config("/data_CMS/cms/wind/CJLST_NTuples/", lumi, true);
+    // also here, even though have half of the dataset available for validation, optimize (and evaluate on) the signal Punzis only - no background due to limited statistics
+    conf = new Mor18Config("/data_CMS/cms/wind/CJLST_NTuples/", lumi, false);
 
     // start the optimization with the currently used values
     float WP_VBF2j_init = 0.46386;

@@ -35,7 +35,18 @@ std::map<TString, TH1F*> PlottingUtils::generate_classifier_histmap(int fill_his
 		return classifier -> ClassifyThisEvent(in);
 	    };
 	    
-	    prof -> FillProfile(file_path, conf -> lumi(), histmap[routing -> hist_name], cut, var, false, start_fraction, end_fraction, fast_reweighting);
+	    TH1F* fill_counts = prof -> FillProfile(file_path, conf -> lumi(), histmap[routing -> hist_name], cut, var, false, start_fraction, end_fraction, fast_reweighting);
+
+	    // give some statistics output
+	    std::cout << "-----------------------------------------" << std::endl;
+	    std::cout << "statistics output for: " << routing -> hist_name << std::endl;
+
+	    for(auto& assignment: conf -> bin_assignment())
+	    {
+		std::cout << "bin : " << assignment.first << " (" << assignment.second << "): " << fill_counts -> GetBinContent(assignment.second + 1) << " fills" << std::endl;
+	    }
+
+	    std::cout << "-----------------------------------------" << std::endl;
 	}
 
 	std::cout << "end filling histograms" << std::endl;
@@ -244,7 +255,7 @@ void PlottingUtils::make_punzi(int fill_histos, Classifier* classifier, TString 
 	abstract_bin++;
     }
 
-    save_histos(out_folder + conf -> storage_prefix() + "punzi_plot_hist" + ".root", punzi_hist_vec);
+    save_histos(out_folder + conf -> storage_prefix() + out_file + "_plot_hist" + ".root", punzi_hist_vec);
 
     CatPlotter plotter;
 

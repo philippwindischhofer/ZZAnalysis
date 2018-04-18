@@ -33,9 +33,22 @@
 
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 
-TString punzi_hist_name = "punzi_purity";
+// compare (and optimize) the Punzi values evaluated on the signal sources (no background taken into account because of insufficient statistics in some categories)
+#define OPTIMIZE_PUNZI_S
+
+#ifdef OPTIMIZE_PUNZI_S
+TString punzi_infile = "punzi_S_plot_hist.root";
+TString punzi_histname = "punzi_S";
+TString punzi_outfile = "punzi_S_comp";
+#endif
+
+#ifdef OPTIMIZE_PUNZI_SB
 TString punzi_infile = "punzi_plot_hist.root";
+TString punzi_histname = "punzi";
 TString punzi_outfile = "punzi_comp";
+#endif
+
+TString punzi_hist_name = "punzi_purity";
 
 TString refdir;
 TString outdir;
@@ -73,7 +86,7 @@ double costfunc(const double* params)
     std::cout << "ttHlept_prior = " << ttHlept_prior << std::endl;
 
     // evaluate the Punzi value with this (modified) Classifier now
-    PlottingUtils::make_punzi(kTRUE, varclass, outdir, "punzi", "no_cut_data", no_cut, conf, 0.5, 0.75, false);
+    PlottingUtils::make_punzi(kTRUE, varclass, outdir, punzi_histname, "no_cut_data", no_cut, conf, 0.5, 0.75, false);
     
     // load low the Punzi histogram of the optimized classifier and compare the two. From this point onwards, is exactly the same as in "Comp"
     float zoom_scale = 1.0;
@@ -128,7 +141,14 @@ int main( int argc, char *argv[] )
 
     // set lower-resolution engine parameters to speed up the optimization
     varclass18 -> SetEngineParameter("max_iterations", 20);
+
+#ifdef OPTIMIZE_PUNZI_SB
     conf = new Mor18Config(run_dir + "augmentation/", 35.9, true);
+#endif
+
+#ifdef OPTIMIZE_PUNZI_S
+    conf = new Mor18Config(run_dir + "augmentation/", 35.9, false);
+#endif
 
     double params[] = {VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior};
 

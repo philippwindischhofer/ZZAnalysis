@@ -26,7 +26,9 @@ float zoom_scale = 0.2;
 
 TString punzi_hist_name = "punzi_purity";
 TString punzi_infile = "punzi_plot_hist.root";
+TString punzi_S_infile = "punzi_S_plot_hist.root";
 TString punzi_outfile = "punzi_comp";
+TString punzi_S_outfile = "punzi_S_comp";
 
 int main( int argc, char *argv[] )
 {
@@ -49,7 +51,11 @@ int main( int argc, char *argv[] )
     Mor18Config* conf = new Mor18Config();
     //Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet();
 
+    // compare the punzi values computed on signal + background ...
     CompUtils::compare_punzi(indir_a, indir_b, name_a, name_b, conf -> storage_prefix() + punzi_infile, punzi_hist_name, out_folder, conf -> storage_prefix() + punzi_outfile, zoom_scale, conf);
+
+    // ... and also separately on signal only
+    CompUtils::compare_punzi(indir_a, indir_b, name_a, name_b, conf -> storage_prefix() + punzi_S_infile, punzi_hist_name, out_folder, conf -> storage_prefix() + punzi_S_outfile, zoom_scale, conf);
 
     std::cout << "done" << std::endl;
 

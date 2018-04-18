@@ -33,17 +33,24 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TH2F* hist, cons
 }
 
 // for TH1F
-void Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, bool normalize, float start_fraction, float end_fraction, bool fast_reweighting)
+TH1F* Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, bool normalize, float start_fraction, float end_fraction, bool fast_reweighting)
 {
+    TH1F* hist_fillcounts = (TH1F*)(hist -> Clone("hist_fillcounts"));
+    hist_fillcounts -> Reset();
+
     auto TH1F_callback = [&](TObject* hist, Tree* in, float weight) -> void {
 	TH1F* local_hist = static_cast<TH1F*>(hist);
-	local_hist -> Fill(var(in), weight);
+	float fill_var = var(in);
+	local_hist -> Fill(fill_var, weight);
+	hist_fillcounts -> Fill(fill_var); // keep the copied histogram in sync, but without any weights attached to it
     };
     
     FillProfile(input_file_name, lumi, hist, cut, TH1F_callback, start_fraction, end_fraction, fast_reweighting);
     
     if(normalize)
 	hist -> Scale(1.0 / hist -> Integral("width"));
+
+    return hist_fillcounts;
 }
 
 void Profiler::FillDataWeights(TString input_file_name, float lumi, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, std::vector<double>* data_vec, std::vector<double>* weight_vec, float start_fraction, float end_fraction)

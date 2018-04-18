@@ -1,0 +1,15 @@
+[D_VBF_ggH_2j_ML]
+h0_val_length = 2717
+h1_val_length = 6473
+val_loss = 0.322735399008
+
+[D_VBF_ggH_0j_ML]
+h0_val_length = 15999
+h1_val_length = 1853
+val_loss = 0.364158451557
+
+[D_VBF_ggH_1j_ML]
+h0_val_length = 6643
+h1_val_length = 6001
+val_loss = 0.401423215866
+

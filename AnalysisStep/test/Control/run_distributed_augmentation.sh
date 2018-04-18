@@ -66,7 +66,7 @@ JOBS=`find * | grep run_augmentation.sh$`
 for JOB in $JOBS
 do
     echo "launching augmentation for " $CAMPAIGN_DIR$JOB
-    $JOB_SUBMITTER "-short" $CAMPAIGN_DIR$JOB
+    $JOB_SUBMITTER $CAMPAIGN_DIR$JOB
 done
 
 cd $CURRENT_DIR
