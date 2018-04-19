@@ -47,8 +47,6 @@ public:
 
     int ClassifyThisEvent(Tree* in);
 
-    void SetWPs(float WP_VBF2j, float WP_VBF1j, float WP_WHh, float WP_ZHh);
-
     void SetPriors(float VBF_prior, float ggH_prior, float WHhadr_prior, float ZHhadr_prior, float WHlept_prior, float ZHlept_prior, float ZHMET_prior, float ttHhadr_prior, float ttHlept_prior);
 
     void SetEngineParameter(TString parameter_name, float parameter_value);
@@ -59,38 +57,6 @@ private:
     DiscriminantCollection* coll;
     MultiClassCombinator* comb;
 
-    bool manual_WPs;
-    float WP_VBF2j_man;
-    float WP_VBF1j_man;
-    float WP_WHh_man;
-    float WP_ZHh_man;
-
-    float disc(float H1_ME, float H0_ME);
-
-    int categoryMor18(
-	Tree* in,
-	int nExtraLep,
-	int nExtraZ,
-	int nCleanedJetsPt30,
-	int nCleanedJetsPt30BTagged_bTagSF,
-	float* jetQGLikelihood,
-	float p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal,
-	float p_JQCD_SIG_ghg2_1_JHUGen_JECNominal,
-	float p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal,
-	float p_JVBF_SIG_ghv1_1_JHUGen_JECNominal,
-	float pAux_JVBF_SIG_ghv1_1_JHUGen_JECNominal,
-	float p_HadWH_SIG_ghw1_1_JHUGen_JECNominal,
-	float p_HadZH_SIG_ghz1_1_JHUGen_JECNominal,
-	float p_HadWH_mavjj_JECNominal,
-	float p_HadWH_mavjj_true_JECNominal,
-	float p_HadZH_mavjj_JECNominal,
-	float p_HadZH_mavjj_true_JECNominal,
-	float* jetPhi,
-	float ZZMass,
-	float PFMET,
-	bool useVHMETTagged,
-	bool useQGTagging
-	);	
 };
 
 #endif

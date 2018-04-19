@@ -3,7 +3,8 @@ class Config:
     branches = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", "nExtraLep", "ZZMass", "LHEAssociatedParticleId", "GenAssocLep1Id", "GenAssocLep2Id", 
                 "D_VBF2j_ggH_ME", "D_VBF1j_ggH_ME", "D_WHh_ggH_ME", "D_ZHh_ggH_ME", "D_WHh_ZHh_ME", "D_VBF2j_WHh_ME", "D_VBF2j_ZHh_ME", 
                 "JetPt", "JetEta", "JetPhi", "LepPt", "LepEta", "LepPhi", "ExtraLepPt", "ExtraLepEta", "ExtraLepPhi", 
-                "nExtraZ", "Z1Mass", "Z2Mass", "Z1Pt", "Z2Pt", "training_weight", "ZZEta", "ZZPt", "ZZMassErr", "ZZPhi"]
+                "nExtraZ", "Z1Mass", "Z2Mass", "Z1Pt", "Z2Pt", "training_weight", "ZZEta", "ZZPt", "ZZMassErr", "ZZPhi", 
+                "costhetastar", "helcosthetaZ1", "helcosthetaZ2", "helphi", "phistarZ1", "xi", "xistar"]
     MC_filename = "/ZZ4lAnalysis.root"
 
 class TrainingConfig:

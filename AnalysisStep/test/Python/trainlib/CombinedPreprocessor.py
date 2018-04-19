@@ -9,11 +9,12 @@ from ConfigFileUtils import ConfigFileUtils
 import cuts
 
 class CombinedPreprocessor(Preprocessor):
-    def __init__(self, name, scalar_inputs, scalar_preprocessor_basetype, list_inputs, list_preprocessor_basetype, input_cuts):
+    def __init__(self, name, scalar_inputs, scalar_preprocessor_basetype, list_inputs, list_preprocessor_basetype, input_cuts, input_cuts_s = None):
         self.name = name
         self.scalar_inputs = scalar_inputs
         self.list_inputs = list_inputs # note: list inputs is of the form {input_group_name: ["input_1", ...], ...}
         self.cuts = input_cuts
+        self.cuts_s = input_cuts_s
         self.last_indices = None
         
         self.list_preprocessors = {}
@@ -58,9 +59,9 @@ class CombinedPreprocessor(Preprocessor):
         list_preprocessor_type = eval(config_section['list_preprocessor_type'])
         list_inputs = ConfigFileUtils.parse_dict(config_section['processed_list_columns'], 
                                                  lambda x: ConfigFileUtils.parse_list(x, lambda y: y.encode("ascii")))
-        cuts = ConfigFileUtils.parse_lambda(config_section['preprocessor_cuts'])
+        cuts, cuts_s = ConfigFileUtils.parse_lambda_s(config_section['preprocessor_cuts'])
 
-        obj = cls(name = preprocessor_name, scalar_inputs = scalar_inputs, scalar_preprocessor_basetype = scalar_preprocessor_type, list_inputs = list_inputs, list_preprocessor_basetype = list_preprocessor_type, input_cuts = cuts)
+        obj = cls(name = preprocessor_name, scalar_inputs = scalar_inputs, scalar_preprocessor_basetype = scalar_preprocessor_type, list_inputs = list_inputs, list_preprocessor_basetype = list_preprocessor_type, input_cuts = cuts, input_cuts_s = cuts_s)
 
         return obj
 
@@ -73,7 +74,7 @@ class CombinedPreprocessor(Preprocessor):
         confhandler.set_field(section_name, 'scalar_preprocessor_type', self.scalar_preprocessor.__class__.__name__)
         confhandler.set_field(section_name, 'list_preprocessor_type', self.list_preprocessors.values()[0].__class__.__name__)
         confhandler.set_field(section_name, 'processed_list_columns', ConfigFileUtils.serialize_dict(self.list_inputs, lambda x: ConfigFileUtils.serialize_list(x, lambda y: y)))
-        confhandler.set_field(section_name, 'preprocessor_cuts', ConfigFileUtils.serialize_lambda(self.cuts))                              
+        confhandler.set_field(section_name, 'preprocessor_cuts', ConfigFileUtils.serialize_lambda_s(self.cuts, self.cuts_s))                              
 
     def setup_generator(self, datagen, len_setupdata):
         self.len_setupdata = len_setupdata

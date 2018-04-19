@@ -135,5 +135,21 @@ class ListPreprocessor(Preprocessor):
             return np.concatenate(test)
 
         df_dict = {col: flatten_column(df[col]) for col in df.columns}
+        df_out = pd.DataFrame(df_dict, columns = df.columns)
+
+        #print "df_out before pt-cut: "
+        #print df_out
+
+        if any("Jet" in col for col in df_out.columns):
+            # apply the jet-pt cut
+            mask_column = df_out["JetPt"]
+            mask = mask_column < 30.0
+            df_out[mask.as_matrix()] = 0.0
+            
+            # now drop the lines in the dataframe that are all zero
+            df_out = df_out.loc[~(df_out == 0).all(axis = 1)]
+
+        #print "df_out after pt-cut: "
+        #print df_out
         
-        return pd.DataFrame(df_dict, columns = df.columns)
+        return df_out

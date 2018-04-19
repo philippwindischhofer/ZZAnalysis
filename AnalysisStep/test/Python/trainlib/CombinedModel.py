@@ -1,4 +1,4 @@
-from keras.layers import Dense, Activation, LSTM
+from keras.layers import Dense, Activation, LSTM, BatchNormalization, Dropout
 from keras.engine.topology import Input
 import keras.engine.training
 import os
@@ -44,6 +44,9 @@ class CombinedModel(Model):
         return section_name
 
     def build(self):
+        self.default_neurons = 128
+        self.default_dropout_rate = 0.2
+
         # build a separate LSTM for every list input that got passed
         input_layers_lstm = []
         output_layers_lstm = []
@@ -56,7 +59,10 @@ class CombinedModel(Model):
 
             # number units = dimensionality of the output space
             lstm = LSTM(units = int(self.hyperparameters.get('LSTM_units', 16)), return_sequences = False)(input_layer)
-            output_layer = Dense(int(self.hyperparameters.get('LSTM_output_size', 4)), activation = 'relu')(lstm)
+            x = Dense(int(self.hyperparameters.get('LSTM_output_size', 4)))(lstm)
+            x = BatchNormalization()(x)
+            x = Activation('relu')(x)
+            output_layer = Dropout(self.default_dropout_rate)(x)
 
             input_layers_lstm.append(input_layer)
             output_layers_lstm.append(output_layer)
@@ -66,10 +72,12 @@ class CombinedModel(Model):
         x = keras.layers.concatenate(output_layers_lstm + [input_layer_scalar])
 
         number_dense_layers = int(self.hyperparameters.get('number_dense_layers', 2))
-        number_dense_neurons = int(self.hyperparameters.get('number_dense_neurons', 128))
+        number_dense_neurons = int(self.hyperparameters.get('number_dense_neurons', self.default_neurons))
         for layer in range(number_dense_layers):
-            x = Dense(number_dense_neurons, activation = 'relu')(x)
-            x = Dense(number_dense_neurons, activation = 'relu')(x)
+            x = Dense(number_dense_neurons)(x)
+            x = BatchNormalization()(x)
+            x = Activation('relu')(x)
+            x = Dropout(self.default_dropout_rate)(x)
 
         output_layer = Dense(1, activation = 'sigmoid', name = 'target')(x)
         

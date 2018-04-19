@@ -2,6 +2,7 @@ import sys
 sys.path.insert(0, '/home/llr/cms/wind/.local/lib/python2.7/site-packages/')
 
 from bayes_opt import BayesianOptimization
+from sklearn.gaussian_process.kernels import Matern
 import numpy as np
 
 import matplotlib.pyplot as plt
@@ -25,7 +26,11 @@ ZHMET_prior_default = 0.0666923
 ttHhadr_prior_default = 0.145215
 ttHlept_prior_default = 0.1954
 
+def xi_scheduler(iteration):
+    return 0.01 + 0.19 * np.exp(-0.02 * iteration)
+
 def main():
+    global evalcnt
 
     if len(sys.argv) != 4:
         print "Error: exactly 3 arguments are required"
@@ -68,6 +73,8 @@ def main():
         if os.path.exists(evaluations_path):
             confhandler.load_configuration(evaluations_path)
 
+        print "saving evaluation for iteration " + str(evalcnt)
+        
         section_name = 'evaluation_' + str(evalcnt)
         confhandler.new_section(section_name)
         confhandler.set_field(section_name, 'cost', str(costval))
@@ -135,12 +142,29 @@ def main():
         print "resuming at evaluation " + str(evalcnt)
         
         bo.initialize(init_dict)
+        initialized = True
+    else:
+        initialized = False
+            
+        
+    # change the kernel to have a length scale more appropriate to this function
+    gp_params = {'kernel': 1.0 * Matern(length_scale = 0.05, length_scale_bounds = (1e-5, 1e5), nu = 1.5),
+                 'alpha': 1e-5}
 
     # perform the standard initialization and setup
-    bo.maximize(init_points = 6, n_iter = 0, acq = 'ucb', kappa = 3)
+    if initialized:
+        bo.maximize(init_points = 0, n_iter = 0, acq = 'poi', kappa = 3, xi = xi_scheduler(0.0), **gp_params)
+    else:
+        bo.maximize(init_points = 6, n_iter = 0, acq = 'poi', kappa = 3, xi = xi_scheduler(0.0), **gp_params)
 
+    cur_iteration = 1
     for it in range(1000):
-        bo.maximize(init_points = 6, n_iter = 1, acq = 'ucb', kappa = 3)
+        cur_iteration += 1
+        
+        cur_xi = xi_scheduler(cur_iteration)
+        print "using xi = " + str(cur_xi)
+        
+        bo.maximize(init_points = 6, n_iter = 1, acq = 'poi', kappa = 3, xi = cur_xi, **gp_params)
     
         # evaluate the current maximum
         curval = bo.res['max']

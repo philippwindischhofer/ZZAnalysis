@@ -7,10 +7,10 @@ import sys
 
 from trainlib.config import Config
 from trainlib.SimpleModel import SimpleModel
+from trainlib.CombinedModel import CombinedModel
 
 # fix the naming!
 from trainlib.ModelFactory import ModelFactory
-#from trainlib.ModelFactoryFullCategorySet import ModelFactoryFullCategorySet
 from trainlib.ModelFactoryFullCategorySetOptimizedInputs import ModelFactoryFullCategorySetOptimizedInputs
 
 from trainlib.ConfigFileHandler import ConfigFileHandler
@@ -221,7 +221,8 @@ def main():
         #mcoll = ModelFactoryFullCategorySet.GenerateSimpleModelCollections(MC_path)
         mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateSimpleModelCollections(MC_path)
     elif model_type == 'CombinedModel':
-        mcoll = ModelFactory.GenerateCombinedModelCollectionsReducedCategorySet(MC_path)
+        mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateCombinedModelCollections(MC_path)
+        #mcoll = ModelFactory.GenerateCombinedModelCollectionsReducedCategorySet(MC_path)
         
     iterate(iterables, {}, lambda it: augment_config(mcoll, campaign_dir, it))
 
