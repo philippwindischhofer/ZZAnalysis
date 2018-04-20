@@ -11,22 +11,18 @@ float CompUtils::compare_punzi(TString indir_a, TString indir_b, TString name_a,
 
     // evaluate the metric to quantify the Punzi quality difference between the two
     unsigned int number_bins = punzi_a[0] -> GetSize() - 2;
-    float metric = 0;//std::numeric_limits<float>::max();
+
+    std::vector<float> delta_pi;
 
     // take all but the "untagged" bin into account for the metric!
     for(unsigned int bin = 1; bin < number_bins; bin++)
     {
-	float punzi_diff = 1.0 - (punzi_a[0] -> GetBinContent(bin + 1)) / (punzi_b[0] -> GetBinContent(bin + 1));
-
-	metric += punzi_diff;
-
-	// take the minimum Punzi difference as the metric to improve
-	// if(punzi_diff < metric)
-	// {
-	//     metric = punzi_diff;
-	//     //metric += TMath::Power(punzi_diff, 1.0) * TMath::Sign(1, punzi_diff);
-	// }
+	float punzi_diff = (punzi_a[0] -> GetBinContent(bin + 1)) / (punzi_b[0] -> GetBinContent(bin + 1)) - 1.0;
+	delta_pi.push_back(punzi_diff);
     }
+
+    // take the vector of Punzi improvements and feed them into the utility function to judge the power of this WP:
+    float metric = cost_func(delta_pi, 8.0, 2);
     
     std::vector<TH1F*> comp_vec;
     comp_vec.push_back(punzi_a[0]);

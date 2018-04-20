@@ -27,6 +27,30 @@ void ConfigFileHandler::SaveConfiguration()
     outfile.close();
 }
 
+std::vector<TString> ConfigFileHandler::GetSections()
+{
+    std::vector<TString> retval;
+    std::string line;
+    
+    infile.clear();
+    infile.seekg(0);
+
+    while(std::getline(infile, line))
+    {
+	// check if this line is a section header
+	if((line.front() == '[') && (line.back() == ']'))
+	{
+	    // add it to the list of sections and strip away the section identifier brackets  
+	    line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+	    std::string section_name = line.substr(1, line.length() - 2);
+
+	    retval.push_back(section_name.c_str());
+	}
+    }    
+
+    return retval;
+}
+
 float ConfigFileHandler::GetField(TString field)
 {
     float retval = 0.0;

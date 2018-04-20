@@ -42,6 +42,10 @@
   <lib name="class_lib"/>  
 </bin>
 
+<bin name="run_WP_evaluator" file="../test/WPEvaluator/run_WP_evaluator.cpp">
+  <lib name="class_lib"/>  
+</bin>
+
 <bin name="run_calibrator" file="../test/Calibrator/run_calibrator.cpp">
   <lib name="class_lib"/>
 </bin>

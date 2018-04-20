@@ -12,6 +12,7 @@ from trainlib.CombinedModel import CombinedModel
 # fix the naming!
 from trainlib.ModelFactory import ModelFactory
 from trainlib.ModelFactoryFullCategorySetOptimizedInputs import ModelFactoryFullCategorySetOptimizedInputs
+from trainlib.ModelFactoryFullCategorySetDynamic import ModelFactoryFullCategorySetDynamic
 
 from trainlib.ConfigFileHandler import ConfigFileHandler
 from trainlib.ModelCollectionConfigFileHandler import ModelCollectionConfigFileHandler
@@ -219,7 +220,8 @@ def main():
     if model_type == 'SimpleModel':
         #mcoll = ModelFactory.GenerateSimpleModelCollectionsReducedCategorySet(MC_path)
         #mcoll = ModelFactoryFullCategorySet.GenerateSimpleModelCollections(MC_path)
-        mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateSimpleModelCollections(MC_path)
+        #mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateSimpleModelCollections(MC_path)
+        mcoll = ModelFactoryFullCategorySetDynamic.GenerateSimpleModelCollections(MC_path)
     elif model_type == 'CombinedModel':
         mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateCombinedModelCollections(MC_path)
         #mcoll = ModelFactory.GenerateCombinedModelCollectionsReducedCategorySet(MC_path)

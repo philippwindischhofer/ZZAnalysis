@@ -1,3 +1,4 @@
+from config import TrainingConfig
 import pandas as pd
 import os
 
@@ -14,6 +15,41 @@ class ModelCollection:
         self.H0_stream = H0_stream
 
         self.default_value = default_value
+
+    @classmethod
+    def from_discriminant_endpieces(cls, cat_a, ep_a, cat_b, ep_b):
+        mcoll_name = "D_" + cat_a.name + "_" + cat_b.name + "_ML"
+        H1_stream = cat_a.datastream
+        H0_stream = cat_b.datastream
+        
+        obj = cls(name = mcoll_name, H1_stream = H1_stream, H0_stream = H0_stream)
+
+        # now construct and add the models specified by the two matching endpieces
+        for cur_comp in ep_a.endpiece_components.keys():
+            
+            # as soon as two endpieces have the same name, they will have compatible cuts and compatible model and preprocessor basetypes <-> otherwise they cannot be matched!
+            if ep_a[cur_comp].public_name:
+                model_name = "D_" + cat_a.name + "_" + cat_b.name + "_" + ep_a[cur_comp].public_name + "_ML"
+            else:
+                model_name = mcoll_name
+
+            cuts = ep_a[cur_comp].component_cut
+            model_basetype = ep_a[cur_comp].model_basetype
+            hyperparams = ep_a[cur_comp].model_hyperparams
+            preprocessor_basetype = ep_a[cur_comp].preprocessor_basetype
+            
+            # only need to join the lists of inputs, such that every endpiece has the ones it needs
+            periodic_columns = list(set(ep_a[cur_comp].periodic_columns + ep_b[cur_comp].periodic_columns))
+            nonperiodic_columns = list(set(ep_a[cur_comp].nonperiodic_columns + ep_b[cur_comp].nonperiodic_columns))
+            
+            # now can construct all model components and add them to the collection
+            pre = preprocessor_basetype(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = cuts)
+            mod = model_basetype(model_name, pre.number_processed_columns(), hyperparams)
+            sett = TrainingConfig()
+
+            obj.add_model(pre, mod, sett)
+        
+        return obj
 
     def get_models(self):
         return self.model_dict.values()

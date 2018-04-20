@@ -59,7 +59,7 @@ class ConfigFileUtils:
     @staticmethod
     def serialize_lambda(func):
         func_string = str(inspect.getsourcelines(func)[0])
-        func_string = func_string.strip("['\\n']").split(" = ")[1]
+        func_string = func_string.strip("[,'\\n']").split(" = ")[1]
 
         return func_string
 

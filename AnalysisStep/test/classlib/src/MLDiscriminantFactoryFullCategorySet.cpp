@@ -43,9 +43,9 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     	return (((in -> nCleanedJetsPt30 == 0) ? kTRUE : kFALSE)) ? 
     	kTRUE : kFALSE;};
 
-    auto lj2cut = [&](Tree* in) -> bool {
-    	return (((in -> nCleanedJetsPt30 < 2) ? kTRUE : kFALSE)) ? 
-    	kTRUE : kFALSE;};
+    // auto lj2cut = [&](Tree* in) -> bool {
+    // 	return (((in -> nCleanedJetsPt30 < 2) ? kTRUE : kFALSE)) ? 
+    // 	kTRUE : kFALSE;};
 
     // ---------------------------    
 
@@ -164,7 +164,9 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     };
 
     disc -> AddComponent("D_WHh_ZHh_2j_ML", j2cut, D_WHh_ZHh_ML_disc);
-    disc -> AddComponent("D_WHh_ZHh_01j_ML", lj2cut, D_WHh_ZHh_ML_disc);
+    disc -> AddComponent("D_WHh_ZHh_1j_ML", j1cut, D_WHh_ZHh_ML_disc);
+    disc -> AddComponent("D_WHh_ZHh_0j_ML", j0cut, D_WHh_ZHh_ML_disc);
+    //disc -> AddComponent("D_WHh_ZHh_01j_ML", lj2cut, D_WHh_ZHh_ML_disc);
     
     coll -> AddDiscriminant(std::make_pair(H1_name, H0_name), disc);
 

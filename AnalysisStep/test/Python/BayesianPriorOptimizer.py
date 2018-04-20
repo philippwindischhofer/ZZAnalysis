@@ -27,7 +27,7 @@ ttHhadr_prior_default = 0.145215
 ttHlept_prior_default = 0.1954
 
 def xi_scheduler(iteration):
-    return 0.01 + 0.19 * np.exp(-0.02 * iteration)
+    return 0.01 + 0.19 * np.exp(-0.01 * iteration)
 
 def main():
     global evalcnt
@@ -60,11 +60,11 @@ def main():
 
         for line in output.split('\n'):
             if "cost = " in line:
-                costval = -float(line.replace("cost = ", ""))
+                costval = float(line.replace("cost = ", ""))
                 break
             
         if math.isnan(costval):
-            costval = -7.0
+            costval = -8.75
 
         # save the sampled point such that later they can be used as exploration points (if the need occurs)
         confhandler = ConfigFileHandler()
