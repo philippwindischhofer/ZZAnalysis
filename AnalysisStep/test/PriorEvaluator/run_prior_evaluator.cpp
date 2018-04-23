@@ -140,7 +140,8 @@ int main( int argc, char *argv[] )
     varclass18 = static_cast<Mor18LIClassifier*>(varclass);
 
     // set lower-resolution engine parameters to speed up the optimization
-    varclass18 -> SetEngineParameter("max_iterations", 20);
+    varclass18 -> SetEngineParameter("min_iterations", 20);
+    varclass18 -> SetEngineParameter("max_iterations", 100);
 
 #ifdef OPTIMIZE_PUNZI_SB
     conf = new Mor18Config(run_dir + "augmentation/", 35.9, true);

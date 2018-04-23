@@ -17,8 +17,9 @@ class ModelFactoryFullCategorySetDynamic:
         global_hyperparams = {'number_layers': 2, 'number_neurons': 128}
 
         # some shortcuts
-        nonperiodic_variables_default = ["Z1Pt", "Z2Pt", "Z1Mass", "Z2Mass", "ZZPt", "ZZEta", "ZZMass", "ZZMassErr",
-                                         "PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
+        nonperiodic_variables_default_0j = ["PFMET", "Z1Pt", "Z2Pt", "Z1Mass", "Z2Mass", "ZZPt", "ZZEta", "ZZMass", "ZZMassErr"]
+        nonperiodic_variables_default_1j = nonperiodic_variables_default_0j + ["nCleanedJetsPt30BTagged_bTagSF"]
+        nonperiodic_variables_default = nonperiodic_variables_default_0j + ["nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
         periodic_variables_default = ["ZZPhi"]
 
         def nonperiodic_variables_jet(num):
@@ -75,7 +76,7 @@ class ModelFactoryFullCategorySetDynamic:
         ep.add_component(ep_comp)        
         ep_comp = DiscriminantEndpieceComponent(name = "0j", public_name = "0j",
                                                 component_cut = lambda row: row["nCleanedJetsPt30"] == 0 and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
-                                                nonperiodic_columns = nonperiodic_variables_default,
+                                                nonperiodic_columns = nonperiodic_variables_default_0j,
                                                 periodic_columns = [],
                                                 model_basetype = SimpleModel,
                                                 model_hyperparams = global_hyperparams,
@@ -112,7 +113,7 @@ class ModelFactoryFullCategorySetDynamic:
         ep.add_component(ep_comp)        
         ep_comp = DiscriminantEndpieceComponent(name = "1j", public_name = "1j",
                                                 component_cut = lambda row: row["nCleanedJetsPt30"] == 1 and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
-                                                nonperiodic_columns = nonperiodic_variables_default + MELA_1j_variables + nonperiodic_variables_jet(1),
+                                                nonperiodic_columns = nonperiodic_variables_default_1j + MELA_1j_variables + nonperiodic_variables_jet(1),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(1),
                                                 model_basetype = SimpleModel,
                                                 model_hyperparams = global_hyperparams,
@@ -120,7 +121,7 @@ class ModelFactoryFullCategorySetDynamic:
         ep.add_component(ep_comp)        
         ep_comp = DiscriminantEndpieceComponent(name = "0j", public_name = "0j",
                                                 component_cut = lambda row: row["nCleanedJetsPt30"] == 0 and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
-                                                nonperiodic_columns = nonperiodic_variables_default,
+                                                nonperiodic_columns = nonperiodic_variables_default_0j,
                                                 periodic_columns = [],
                                                 model_basetype = SimpleModel,
                                                 model_hyperparams = global_hyperparams,
@@ -158,7 +159,7 @@ class ModelFactoryFullCategorySetDynamic:
         ep.add_component(ep_comp)        
         ep_comp = DiscriminantEndpieceComponent(name = "1j", public_name = "1j",
                                                 component_cut = lambda row: row["nCleanedJetsPt30"] == 1 and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
-                                                nonperiodic_columns = nonperiodic_variables_default + MELA_1j_variables + nonperiodic_variables_jet(1),
+                                                nonperiodic_columns = nonperiodic_variables_default_1j + MELA_1j_variables + nonperiodic_variables_jet(1),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(1),
                                                 model_basetype = SimpleModel,
                                                 model_hyperparams = global_hyperparams,
@@ -166,7 +167,7 @@ class ModelFactoryFullCategorySetDynamic:
         ep.add_component(ep_comp)        
         ep_comp = DiscriminantEndpieceComponent(name = "0j", public_name = "0j",
                                                 component_cut = lambda row: row["nCleanedJetsPt30"] == 0 and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
-                                                nonperiodic_columns = nonperiodic_variables_default,
+                                                nonperiodic_columns = nonperiodic_variables_default_0j,
                                                 periodic_columns = [],
                                                 model_basetype = SimpleModel,
                                                 model_hyperparams = global_hyperparams,
@@ -186,7 +187,7 @@ class ModelFactoryFullCategorySetDynamic:
         ep.add_component(ep_comp)        
         ep_comp = DiscriminantEndpieceComponent(name = "01j", public_name = "01j",
                                                 component_cut = lambda row: row["nCleanedJetsPt30"] < 2 and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
-                                                nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_jet(1),
+                                                nonperiodic_columns = nonperiodic_variables_default_1j + nonperiodic_variables_jet(1),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(1),
                                                 model_basetype = SimpleModel,
                                                 model_hyperparams = global_hyperparams,
@@ -223,7 +224,7 @@ class ModelFactoryFullCategorySetDynamic:
         ep.add_component(ep_comp)        
         ep_comp = DiscriminantEndpieceComponent(name = "1j", public_name = "1j",
                                                 component_cut = lambda row: row["nCleanedJetsPt30"] == 1 and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
-                                                nonperiodic_columns = nonperiodic_variables_default + MELA_1j_variables + nonperiodic_variables_jet(1),
+                                                nonperiodic_columns = nonperiodic_variables_default_1j + MELA_1j_variables + nonperiodic_variables_jet(1),
                                                 periodic_columns = periodic_variables_jet(1),
                                                 model_basetype = SimpleModel,
                                                 model_hyperparams = global_hyperparams,
@@ -231,7 +232,7 @@ class ModelFactoryFullCategorySetDynamic:
         ep.add_component(ep_comp)        
         ep_comp = DiscriminantEndpieceComponent(name = "0j", public_name = "0j",
                                                 component_cut = lambda row: row["nCleanedJetsPt30"] == 0 and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
-                                                nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_extra_lep(1),
+                                                nonperiodic_columns = nonperiodic_variables_default_0j + nonperiodic_variables_extra_lep(1),
                                                 periodic_columns = periodic_variables_default + periodic_variables_extra_lep(1),
                                                 model_basetype = SimpleModel,
                                                 model_hyperparams = global_hyperparams,
@@ -251,7 +252,7 @@ class ModelFactoryFullCategorySetDynamic:
         ep.add_component(ep_comp)        
         ep_comp = DiscriminantEndpieceComponent(name = "01j", public_name = "01j",
                                                 component_cut = lambda row: row["nCleanedJetsPt30"] < 2 and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
-                                                nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_jet(1),
+                                                nonperiodic_columns = nonperiodic_variables_default_1j + nonperiodic_variables_jet(1),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(1),
                                                 model_basetype = SimpleModel,
                                                 model_hyperparams = global_hyperparams,
@@ -280,8 +281,8 @@ class ModelFactoryFullCategorySetDynamic:
         ep = DiscriminantEndpiece("210j")        
         ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
                                                 component_cut = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.,
-                                                nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_extra_lep(2),
-                                                periodic_columns = periodic_variables_default + periodic_variables_extra_lep(2),
+                                                nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_extra_lep(2) + nonperiodic_variables_jet(2),
+                                                periodic_columns = periodic_variables_default + periodic_variables_extra_lep(2) + periodic_variables_jet(2),
                                                 model_basetype = SimpleModel,
                                                 model_hyperparams = global_hyperparams,
                                                 preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
@@ -298,8 +299,8 @@ class ModelFactoryFullCategorySetDynamic:
         ep = DiscriminantEndpiece("210j")        
         ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
                                                 component_cut = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.,
-                                                nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_extra_lep(2),
-                                                periodic_columns = periodic_variables_default + periodic_variables_extra_lep(2),
+                                                nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_extra_lep(2) + nonperiodic_variables_jet(2),
+                                                periodic_columns = periodic_variables_default + periodic_variables_extra_lep(2) + periodic_variables_jet(2),
                                                 model_basetype = SimpleModel,
                                                 model_hyperparams = global_hyperparams,
                                                 preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
@@ -332,8 +333,8 @@ class ModelFactoryFullCategorySetDynamic:
         ep = DiscriminantEndpiece("210j")        
         ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
                                                 component_cut = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.,
-                                                nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_jet(2),
-                                                periodic_columns = periodic_variables_default + periodic_variables_jet(2),
+                                                nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_jet(2) + nonperiodic_variables_extra_lep(2),
+                                                periodic_columns = periodic_variables_default + periodic_variables_jet(2) + periodic_variables_extra_lep(2),
                                                 model_basetype = SimpleModel,
                                                 model_hyperparams = global_hyperparams,
                                                 preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
@@ -349,8 +350,8 @@ class ModelFactoryFullCategorySetDynamic:
         ep = DiscriminantEndpiece("210j")        
         ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
                                                 component_cut = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.,
-                                                nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_extra_lep(2),
-                                                periodic_columns = periodic_variables_default + periodic_variables_extra_lep(2),
+                                                nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_extra_lep(2) + nonperiodic_variables_jet(2),
+                                                periodic_columns = periodic_variables_default + periodic_variables_extra_lep(2) + periodic_variables_jet(2),
                                                 model_basetype = SimpleModel,
                                                 model_hyperparams = global_hyperparams,
                                                 preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)

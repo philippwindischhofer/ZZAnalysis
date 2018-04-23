@@ -49,12 +49,14 @@ int main(int argc, char *argv[])
 
     // switch here between the classifier based on trained discriminants or the one based only on the available MELA values
     //Classifier* refclass = new Mor18Classifier();
-    Classifier* refclass = new Mor18LIClassifier(calibration_folder, engine);
 
+    TString config_path = calibration_folder + "../settings.conf";
+    Classifier* refclass = new Mor18LIClassifier(calibration_folder, config_path, engine);
     Mor18LIClassifier* refclass18 = static_cast<Mor18LIClassifier*>(refclass);
 
     // put intermediate-quality engine settings
-    refclass18 -> SetEngineParameter("max_iterations", 20);
+    refclass18 -> SetEngineParameter("min_iterations", 20);
+    refclass18 -> SetEngineParameter("max_iterations", 100);
 
     //priors based on event numbers determined from the training data
     // float VBF_prior = 1.0;
@@ -131,6 +133,14 @@ int main(int argc, char *argv[])
     Mor18Config* conf_S = new Mor18Config(MCpath, 35.9, false);
     //Mor18Config* conf = new Mor18Config(MCpath, 150.0, true);
 
+    // these are the optimized working points to give max. Punzi for an integrated luminosity of 150fb^-1
+    // float WP_VBF2j = 0.667281;
+    // float WP_VBF1j = 0.000111881;
+    // float WP_WHh = 0.970386;
+    // float WP_ZHh = 0.932839;
+    // Mor18Classifier* refclass18 = static_cast<Mor18Classifier*>(refclass);
+    // refclass18 -> SetWPs(WP_VBF2j, WP_VBF1j, WP_WHh, WP_ZHh);
+
     // these are the optimized working points to give max. Punzi for an integrated luminosity of 35.9fb^-1
     // float WP_VBF2j = 0.640951;
     // float WP_VBF1j = 0.00145712;
@@ -139,14 +149,23 @@ int main(int argc, char *argv[])
     // Mor18Classifier* refclass18 = static_cast<Mor18Classifier*>(refclass);
     // refclass18 -> SetWPs(WP_VBF2j, WP_VBF1j, WP_WHh, WP_ZHh);
 
-    // these are the optimized working points to give max. Punzi for an integrated luminosity of 150fb^-1
-    // float WP_VBF2j = 0.667281;
-    // float WP_VBF1j = 0.000111881;
-    // float WP_WHh = 0.970386;
-    // float WP_ZHh = 0.932839;
+    // these are the optimized working points to give max. Punzi for an integrated luminosity of 150fb^-1, done with global bayesian optimization
+    // float WP_WHh = 0.843692261093;
+    // float WP_VBF2j = 0.633562388718;
+    // float WP_VBF1j = 0.0272457386188;
+    // float WP_ZHh = 0.874365002746;
 
     // Mor18Classifier* refclass18 = static_cast<Mor18Classifier*>(refclass);
     // refclass18 -> SetWPs(WP_VBF2j, WP_VBF1j, WP_WHh, WP_ZHh);
+
+    // these are the optimized working points to give max. Punzi for an integrated luminosity of 35.9fb^-1, done with global bayesian optimization
+    // float WP_WHh = 0.849018646276;
+    // float WP_VBF2j = 0.623974230702;
+    // float WP_VBF1j = 0.0446782463634;
+    // float WP_ZHh = 0.709247908423;
+
+    //Mor18Classifier* refclass18 = static_cast<Mor18Classifier*>(refclass);
+    //refclass18 -> SetWPs(WP_VBF2j, WP_VBF1j, WP_WHh, WP_ZHh);
 
     // this jet cut is needed to make sure both classifiers (the standard Mor18 and the MELA-LI improved version) are operated in their allowed region
     // auto jcut = [&](Tree* in) -> bool {

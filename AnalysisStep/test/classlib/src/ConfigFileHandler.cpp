@@ -12,6 +12,11 @@ ConfigFileHandler::ConfigFileHandler(TString filepath, TString mode)
     }
 }
 
+ConfigFileHandler::~ConfigFileHandler()
+{
+    infile.close();
+}
+
 void ConfigFileHandler::AddSection(TString section)
 {
     outfile << "[" << section << "]" << "\n";
@@ -71,5 +76,49 @@ float ConfigFileHandler::GetField(TString field)
 	}
     }
 
+    return retval;
+}
+
+TString ConfigFileHandler::GetField(TString section, TString field)
+{
+    TString retval;
+
+    std::string line;
+    
+    std::string section_identifier = section.Data();
+    section_identifier = '[' + section_identifier + ']';
+
+    std::string field_identifier = field.Data();
+    field_identifier += " = ";
+
+    infile.clear();
+    infile.seekg(0);
+
+    while(std::getline(infile, line))
+    {
+	// section names are case-sensitive
+	if(!line.compare(0, section_identifier.size(), section_identifier))
+	{
+	    // found the section in which the chosen field is contained
+	    while(std::getline(infile, line))
+	    {
+		std::string field_prefix = line.substr(0, field_identifier.size());
+		if(field_prefix.front() == '[')
+		{
+		    // the next section has already started without the chosen field having been extracted already -> return an empty string as the field's value
+		    goto done;
+		}
+		// but field names are not!
+		else if(boost::iequals(field_prefix, field_identifier))
+		{
+		    // return everything that comes on this line, after the field prefix
+		    retval = line.substr(field_identifier.size()).c_str();
+		    goto done;
+		}
+	    }
+	}
+    }    
+
+done:
     return retval;
 }

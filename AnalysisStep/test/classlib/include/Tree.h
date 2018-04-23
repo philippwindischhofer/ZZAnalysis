@@ -94,6 +94,27 @@ public :
    float D_ttHl_VBF_ML;
    float D_ttHl_WHh_ML;
 
+   std::map<TString, float*> ML_discriminants = {
+       {"D_VBF_ggH_ML", &D_VBF_ggH_ML}, {"D_WHh_ggH_ML", &D_WHh_ggH_ML},
+       {"D_ZHh_ggH_ML", &D_ZHh_ggH_ML}, {"D_WHh_ZHh_ML", &D_WHh_ZHh_ML},
+       {"D_VBF_WHh_ML", &D_VBF_WHh_ML}, {"D_VBF_ZHh_ML", &D_VBF_ZHh_ML},
+       {"D_WHl_ggH_ML", &D_WHl_ggH_ML}, {"D_WHl_VBF_ML", &D_WHl_VBF_ML},
+       {"D_WHl_WHh_ML", &D_WHl_WHh_ML}, {"D_WHl_ZHh_ML", &D_WHl_ZHh_ML},
+       {"D_WHl_ZHl_ML", &D_WHl_ZHl_ML}, {"D_WHl_ZHMET_ML", &D_WHl_ZHMET_ML},
+       {"D_WHl_ttHh_ML", &D_WHl_ttHh_ML}, {"D_WHl_ttHl_ML", &D_WHl_ttHl_ML},
+       {"D_ZHh_ZHl_ML", &D_ZHh_ZHl_ML}, {"D_ZHh_ZHMET_ML", &D_ZHh_ZHMET_ML},
+       {"D_ZHh_ttHh_ML", &D_ZHh_ttHh_ML}, {"D_ZHh_ttHl_ML", &D_ZHh_ttHl_ML},
+       {"D_ZHl_ggH_ML", &D_ZHl_ggH_ML}, {"D_ZHl_VBF_ML", &D_ZHl_VBF_ML},
+       {"D_ZHl_WHh_ML", &D_ZHl_WHh_ML}, {"D_ZHl_ZHMET_ML", &D_ZHl_ZHMET_ML},
+       {"D_ZHl_ttHh_ML", &D_ZHl_ttHh_ML}, {"D_ZHl_ttHl_ML", &D_ZHl_ttHl_ML},
+       {"D_ZHMET_ggH_ML", &D_ZHMET_ggH_ML}, {"D_ZHMET_VBF_ML", &D_ZHMET_VBF_ML},
+       {"D_ZHMET_WHh_ML", &D_ZHMET_WHh_ML}, {"D_ZHMET_ttHh_ML", &D_ZHMET_ttHh_ML},
+       {"D_ZHMET_ttHl_ML", &D_ZHMET_ttHl_ML}, {"D_ttHh_ggH_ML", &D_ttHh_ggH_ML},
+       {"D_ttHh_VBF_ML", &D_ttHh_VBF_ML}, {"D_ttHh_WHh_ML", &D_ttHh_WHh_ML},
+       {"D_ttHh_ttHl_ML", &D_ttHh_ttHl_ML}, {"D_ttHl_ggH_ML", &D_ttHl_ggH_ML},
+       {"D_ttHl_VBF_ML", &D_ttHl_VBF_ML}, {"D_ttHl_WHh_ML", &D_ttHl_WHh_ML}
+   };
+
    // Declaration of leaf types
    Int_t           RunNumber;
    Long64_t        EventNumber;

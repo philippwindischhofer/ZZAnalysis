@@ -30,7 +30,7 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MEDiscriminantFactory.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactory.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactoryFullCategorySet.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactoryFullCategorySetDynamic.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/VotingMultiClassCombinator.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/RANDKLMultiClassCombinator.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/TreeKLMultiClassCombinator.h>
@@ -42,7 +42,7 @@
 class Mor18LIClassifier: public Classifier
 {
 public:
-    Mor18LIClassifier(TString out_folder = "../../src/ZZAnalysis/CalibratorPlots/", TString engine = "voting");
+    Mor18LIClassifier(TString calibration_folder, TString config_path, TString engine = "voting");
     ~Mor18LIClassifier();
 
     int ClassifyThisEvent(Tree* in);
@@ -53,6 +53,7 @@ public:
 
 private:
     TString calibration_folder;
+    TString config_path;
 
     DiscriminantCollection* coll;
     MultiClassCombinator* comb;

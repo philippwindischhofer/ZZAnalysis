@@ -26,6 +26,9 @@ ZHMET_prior_default = 0.0666923
 ttHhadr_prior_default = 0.145215
 ttHlept_prior_default = 0.1954
 
+# make the maximum regularization contribution equal to 10% of the maximum costfunction value
+lambda_reg = 0.012
+
 def xi_scheduler(iteration):
     return 0.01 + 0.19 * np.exp(-0.01 * iteration)
 
@@ -66,6 +69,10 @@ def main():
         if math.isnan(costval):
             costval = -8.75
 
+        # add a regularization term that prefers default priors (i.e. close to 1.0)
+        reg_term = 1.0 / 8.0 * ((ggH_prior - 1.0)**2.0 + (WHhadr_prior - 1.0)**2.0 + (ZHhadr_prior - 1.0)**2.0 + (WHlept_prior - 1.0)**2.0 + (ZHlept_prior - 1.0)**2.0 + (ZHMET_prior - 1.0)**2.0 + (ttHhadr_prior - 1.0)**2.0 + (ttHlept_prior - 1.0)**2.0)
+        costval -= reg_term * lambda_reg
+
         # save the sampled point such that later they can be used as exploration points (if the need occurs)
         confhandler = ConfigFileHandler()
         evaluations_path = out_dir + 'evaluations.txt'
@@ -93,12 +100,12 @@ def main():
 
         return costval
     
-    eps = 1e-3
+    eps = 1e-1
     delta = 0.2
-    bo = BayesianOptimization(punzi_target, {'ggH_prior': (1.1, 1.8), 'WHhadr_prior': (0.2, 0.8), 
-                                   'ZHhadr_prior': (0.2, 0.8), 'WHlept_prior': (0.2, 0.8),
-                                   'ZHlept_prior': (eps, 0.3), 'ZHMET_prior': (eps, 0.3),
-                                   'ttHhadr_prior': (0.05, 0.25), 'ttHlept_prior': (0.05, 0.25)})
+    bo = BayesianOptimization(punzi_target, {'ggH_prior': (1.0 - delta, 1.0 + delta), 'WHhadr_prior': (eps, 1.0), 
+                                   'ZHhadr_prior': (eps, 1.0), 'WHlept_prior': (eps, 1.0),
+                                   'ZHlept_prior': (eps, 1.0), 'ZHMET_prior': (eps, 1.0),
+                                   'ttHhadr_prior': (eps, 1.0), 'ttHlept_prior': (eps, 1.0)})
 
     # bo = BayesianOptimization(punzi_target_2d, {'WHlept_prior': (eps, WHlept_prior_default + delta),
     #                                                  'ZHlept_prior': (eps, ZHlept_prior_default + delta)})
@@ -148,8 +155,9 @@ def main():
             
         
     # change the kernel to have a length scale more appropriate to this function
+    # alpha ... corresponds to the value added to the diagonal elements of the covariance matrix <-> the approximate noise level in the observations
     gp_params = {'kernel': 1.0 * Matern(length_scale = 0.05, length_scale_bounds = (1e-5, 1e5), nu = 1.5),
-                 'alpha': 1e-5}
+                 'alpha':1e-1}
 
     # perform the standard initialization and setup
     if initialized:

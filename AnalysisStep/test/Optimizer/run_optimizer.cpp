@@ -36,6 +36,7 @@ TString punzi_infile = "punzi_S_plot_hist.root";
 TString punzi_outfile = "punzi_S_comp";
 
 int evalcnt = 0;
+float best_cost = std::numeric_limits<float>::max();
 
 //TString refdir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/BenchmarkerPlotsReferenceForOptimization150fb/";
 //TString outdir = "/data_CMS/cms/wind/180403_optimizer_150fb/";
@@ -74,10 +75,27 @@ double costfunc(const double* params)
     float zoom_scale = 1.0;
 
     // need to take the _negative_ of the utility function here, since simulated annealing always tends to minimize things
-    float cost = -CompUtils::compare_punzi(outdir, refdir, "Mor18_{opt}", "Mor18", conf -> storage_prefix() + punzi_infile, punzi_hist_name, outdir, conf -> storage_prefix() + punzi_outfile + Form("%i", evalcnt), zoom_scale, conf);
+    float cost = -CompUtils::compare_punzi(outdir, refdir, "Mor18_{opt}", "Mor18", conf -> storage_prefix() + punzi_infile, punzi_hist_name, outdir, conf -> storage_prefix() + punzi_outfile, zoom_scale, conf);
+
+    // save the current WP values to a configuration file if have a new best combination
 
     std::cout << "cost = " << cost << std::endl;
     std::cout << "-------------------------------------------------------" << std::endl;
+
+    if(cost < best_cost)
+    {
+	best_cost = cost;
+
+	// save the current best working point to a file
+	ConfigFileHandler* handler = new ConfigFileHandler(outdir + "WP.conf");
+	handler -> AddSection("working points");
+	handler -> AddField("cost", cost);
+	handler -> AddField("WP_VBF2j", WP_VBF2j);
+	handler -> AddField("WP_VBF1j", WP_VBF1j);
+	handler -> AddField("WP_WHh", WP_WHh);
+	handler -> AddField("WP_ZHh", WP_ZHh);
+	handler -> SaveConfiguration();
+    }
 
     evalcnt++;
 

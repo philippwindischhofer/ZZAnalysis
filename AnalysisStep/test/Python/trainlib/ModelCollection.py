@@ -5,7 +5,7 @@ import os
 # describes an ensemble of classifiers for a specific pair of categories. Each model in the collection targets a different region in the event space (as filtered out by the corresponding preprocessors)
 class ModelCollection:
 
-    def __init__(self, name = "noname", H1_stream = None, H0_stream = None, default_value = 0.0):
+    def __init__(self, name = "noname", H1_stream = None, H0_stream = None, default_value = 0.0, H1_name = None, H0_name = None):
         self.model_dict = {}
         self.preprocessor_dict = {}
         self.settings_dict = {}
@@ -14,6 +14,10 @@ class ModelCollection:
         self.H1_stream = H1_stream
         self.H0_stream = H0_stream
 
+        # names of the two categories this discriminant seeks to separate
+        self.H1_name = H1_name
+        self.H0_name = H0_name
+
         self.default_value = default_value
 
     @classmethod
@@ -21,8 +25,11 @@ class ModelCollection:
         mcoll_name = "D_" + cat_a.name + "_" + cat_b.name + "_ML"
         H1_stream = cat_a.datastream
         H0_stream = cat_b.datastream
+
+        H1_name = cat_a.name
+        H0_name = cat_b.name
         
-        obj = cls(name = mcoll_name, H1_stream = H1_stream, H0_stream = H0_stream)
+        obj = cls(name = mcoll_name, H1_stream = H1_stream, H0_stream = H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         # now construct and add the models specified by the two matching endpieces
         for cur_comp in ep_a.endpiece_components.keys():

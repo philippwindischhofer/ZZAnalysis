@@ -1,15 +1,14 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18LIClassifier.h>
 
-Mor18LIClassifier::Mor18LIClassifier(TString out_folder, TString engine)
+Mor18LIClassifier::Mor18LIClassifier(TString calibration_folder, TString config_path, TString engine)
 {
-    //manual_WPs = false;
-
     Mor18Config conf;
 
-    calibration_folder = out_folder;
+    this -> calibration_folder = calibration_folder;
+    this -> config_path = config_path;
 
     // prepare the discriminant collection without any priors
-    coll = MLDiscriminantFactoryFullCategorySet::GenerateDiscriminantCollection(out_folder, conf);
+    coll = MLDiscriminantFactoryFullCategorySetDynamic::GenerateDiscriminantCollection(calibration_folder, config_path, conf);
 
     if(engine == "voting")
     {
@@ -65,7 +64,7 @@ void Mor18LIClassifier::SetPriors(float VBF_prior, float ggH_prior, float WHhadr
     Mor18Config conf;
 
     // update the discriminant collection with the new prior weights
-    coll = MLDiscriminantFactoryFullCategorySet::GenerateDiscriminantCollection(calibration_folder, conf, VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior);
+    coll = MLDiscriminantFactoryFullCategorySetDynamic::GenerateDiscriminantCollection(calibration_folder, config_path, conf, VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior);
 }
 
 // after the restructoring, only this method will remain, and it will overload the corresponding virtual method from the base class
@@ -79,15 +78,15 @@ int Mor18LIClassifier::ClassifyThisEvent(Tree* in)
     int VBF_cat = (in -> nCleanedJetsPt30 >= 2) ? VBF2jTaggedMor18 : VBF1jTaggedMor18;
 
     std::map<TString, int> conversion = {
-	{"VBFH125", VBF_cat},
-	{"ZHhadr", VHHadrTaggedMor18},
-	{"WHhadr", VHHadrTaggedMor18},
-	{"ZHlept", VHLeptTaggedMor18},
-	{"WHlept", VHLeptTaggedMor18},
+	{"VBF", VBF_cat},
+	{"ZHh", VHHadrTaggedMor18},
+	{"WHh", VHHadrTaggedMor18},
+	{"ZHl", VHLeptTaggedMor18},
+	{"WHl", VHLeptTaggedMor18},
 	{"ZHMET", VHMETTaggedMor18},
-	{"ttHlept", ttHLeptTaggedMor18},
-	{"ttHhadr", ttHHadrTaggedMor18},
-	{"ggH125", UntaggedMor18}
+	{"ttHl", ttHLeptTaggedMor18},
+	{"ttHh", ttHHadrTaggedMor18},
+	{"ggH", UntaggedMor18}
     };
 
     return conversion[winner];

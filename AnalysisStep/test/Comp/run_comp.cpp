@@ -16,11 +16,11 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18ConfigReducedCategorySet.h>
 
-TString name_a = "Mor18_{LI}";
-TString name_b = "Mor18  (experimental)";
+// TString name_a = "Mor18_{LI}";
+// TString name_b = "Mor18  (experimental)";
 
-// TString name_a = "Mor18_{OPT}";
-// TString name_b = "Mor18";
+TString name_a = "Mor18_{OPT}";
+TString name_b = "Mor18";
 
 float zoom_scale = 0.2;
 
@@ -48,7 +48,7 @@ int main( int argc, char *argv[] )
     }
 
     // choose the category set that is used on both sides of the comparison
-    Mor18Config* conf = new Mor18Config();
+    Mor18Config* conf = new Mor18Config("", 35.9, true);
     //Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet();
 
     // compare the punzi values computed on signal + background ...

@@ -50,8 +50,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "VBFH125";
-    H0_name = "ggH125";
+    H1_name = "VBF";
+    H0_name = "ggH";
     
     H1Stream = new EventStream();
     H1_file_name = "VBFH125";
@@ -79,8 +79,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "WHhadr";
-    H0_name = "ggH125";
+    H1_name = "WHh";
+    H0_name = "ggH";
     
     H1Stream = new EventStream();
     H1_file_name = "WplusH125";
@@ -111,8 +111,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ZHhadr";
-    H0_name = "ggH125";
+    H1_name = "ZHh";
+    H0_name = "ggH";
     
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -141,8 +141,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "WHhadr";
-    H0_name = "ZHhadr";
+    H1_name = "WHh";
+    H0_name = "ZHh";
     
     H1Stream = new EventStream();
     H1_file_name = "WplusH125";
@@ -173,8 +173,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "VBFH125";
-    H0_name = "WHhadr";
+    H1_name = "VBF";
+    H0_name = "WHh";
     
     H1Stream = new EventStream();
     H1_file_name = "VBFH125";
@@ -205,8 +205,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "VBFH125";
-    H0_name = "ZHhadr";
+    H1_name = "VBF";
+    H0_name = "ZHh";
     
     H1Stream = new EventStream();
     H1_file_name = "VBFH125";
@@ -235,8 +235,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "WHlept";
-    H0_name = "ggH125";
+    H1_name = "WHl";
+    H0_name = "ggH";
     
     H1Stream = new EventStream();
     H1_file_name = "WplusH125";
@@ -264,8 +264,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "WHlept";
-    H0_name = "VBFH125";
+    H1_name = "WHl";
+    H0_name = "VBF";
     
     H1Stream = new EventStream();
     H1_file_name = "WplusH125";
@@ -293,8 +293,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "WHlept";
-    H0_name = "WHhadr";
+    H1_name = "WHl";
+    H0_name = "WHh";
     
     H1Stream = new EventStream();
     H1_file_name = "WplusH125";
@@ -324,8 +324,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "WHlept";
-    H0_name = "ZHhadr";
+    H1_name = "WHl";
+    H0_name = "ZHh";
     
     H1Stream = new EventStream();
     H1_file_name = "WplusH125";
@@ -353,8 +353,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "WHlept";
-    H0_name = "ZHlept";
+    H1_name = "WHl";
+    H0_name = "ZHl";
     
     H1Stream = new EventStream();
     H1_file_name = "WplusH125";
@@ -382,7 +382,7 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "WHlept";
+    H1_name = "WHl";
     H0_name = "ZHMET";
     
     H1Stream = new EventStream();
@@ -411,8 +411,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "WHlept";
-    H0_name = "ttHhadr";
+    H1_name = "WHl";
+    H0_name = "ttHh";
     
     H1Stream = new EventStream();
     H1_file_name = "WplusH125";
@@ -440,8 +440,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "WHlept";
-    H0_name = "ttHlept";
+    H1_name = "WHl";
+    H0_name = "ttHl";
     
     H1Stream = new EventStream();
     H1_file_name = "WplusH125";
@@ -469,8 +469,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ZHhadr";
-    H0_name = "ZHlept";
+    H1_name = "ZHh";
+    H0_name = "ZHl";
     
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -496,7 +496,7 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ZHhadr";
+    H1_name = "ZHh";
     H0_name = "ZHMET";
     
     H1Stream = new EventStream();
@@ -523,8 +523,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ZHhadr";
-    H0_name = "ttHhadr";
+    H1_name = "ZHh";
+    H0_name = "ttHh";
     
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -550,8 +550,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ZHhadr";
-    H0_name = "ttHlept";
+    H1_name = "ZHh";
+    H0_name = "ttHl";
     
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -578,8 +578,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ZHlept";
-    H0_name = "ggH125";
+    H1_name = "ZHl";
+    H0_name = "ggH";
 
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -605,8 +605,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ZHlept";
-    H0_name = "VBFH125";
+    H1_name = "ZHl";
+    H0_name = "VBF";
 
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -632,8 +632,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ZHlept";
-    H0_name = "WHhadr";
+    H1_name = "ZHl";
+    H0_name = "WHh";
 
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -661,7 +661,7 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ZHlept";
+    H1_name = "ZHl";
     H0_name = "ZHMET";
 
     H1Stream = new EventStream();
@@ -688,8 +688,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ZHlept";
-    H0_name = "ttHhadr";
+    H1_name = "ZHl";
+    H0_name = "ttHh";
 
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -715,8 +715,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ZHlept";
-    H0_name = "ttHlept";
+    H1_name = "ZHl";
+    H0_name = "ttHl";
 
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -743,7 +743,7 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc = new Discriminant(outdir);
     H1_name = "ZHMET";
-    H0_name = "ggH125";
+    H0_name = "ggH";
 
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -770,7 +770,7 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc = new Discriminant(outdir);
     H1_name = "ZHMET";
-    H0_name = "VBFH125";
+    H0_name = "VBF";
 
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -797,7 +797,7 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc = new Discriminant(outdir);
     H1_name = "ZHMET";
-    H0_name = "WHhadr";
+    H0_name = "WHh";
 
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -826,7 +826,7 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc = new Discriminant(outdir);
     H1_name = "ZHMET";
-    H0_name = "ttHhadr";
+    H0_name = "ttHh";
 
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -853,7 +853,7 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
 
     disc = new Discriminant(outdir);
     H1_name = "ZHMET";
-    H0_name = "ttHlept";
+    H0_name = "ttHl";
 
     H1Stream = new EventStream();
     H1_file_name = "ZH125";
@@ -879,8 +879,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ttHhadr";
-    H0_name = "ggH125";
+    H1_name = "ttHh";
+    H0_name = "ggH";
 
     H1Stream = new EventStream();
     H1_file_name = "ttH125";
@@ -906,8 +906,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ttHhadr";
-    H0_name = "VBFH125";
+    H1_name = "ttHh";
+    H0_name = "VBF";
 
     H1Stream = new EventStream();
     H1_file_name = "ttH125";
@@ -933,8 +933,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ttHhadr";
-    H0_name = "WHhadr";
+    H1_name = "ttHh";
+    H0_name = "WHh";
 
     H1Stream = new EventStream();
     H1_file_name = "ttH125";
@@ -962,8 +962,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ttHhadr";
-    H0_name = "ttHlept";
+    H1_name = "ttHh";
+    H0_name = "ttHl";
 
     H1Stream = new EventStream();
     H1_file_name = "ttH125";
@@ -989,8 +989,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ttHlept";
-    H0_name = "ggH125";
+    H1_name = "ttHl";
+    H0_name = "ggH";
 
     H1Stream = new EventStream();
     H1_file_name = "ttH125";
@@ -1016,8 +1016,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ttHlept";
-    H0_name = "VBFH125";
+    H1_name = "ttHl";
+    H0_name = "VBF";
 
     H1Stream = new EventStream();
     H1_file_name = "ttH125";
@@ -1043,8 +1043,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySet::GenerateDiscrimina
     // ---------------------------    
 
     disc = new Discriminant(outdir);
-    H1_name = "ttHlept";
-    H0_name = "WHhadr";
+    H1_name = "ttHl";
+    H0_name = "WHh";
 
     H1Stream = new EventStream();
     H1_file_name = "ttH125";
