@@ -33,7 +33,7 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TH2F* hist, cons
 }
 
 // for TH1F
-TH1F* Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, bool normalize, float start_fraction, float end_fraction, bool fast_reweighting)
+TH1F* Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, const std::function<bool(Tree*)>& cut, const std::function<float(Tree*)>& var, bool normalize, float start_fraction, float end_fraction, bool fast_reweighting, bool MC_weighting)
 {
     TH1F* hist_fillcounts = (TH1F*)(hist -> Clone("hist_fillcounts"));
     hist_fillcounts -> Reset();
@@ -41,7 +41,16 @@ TH1F* Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, con
     auto TH1F_callback = [&](TObject* hist, Tree* in, float weight) -> void {
 	TH1F* local_hist = static_cast<TH1F*>(hist);
 	float fill_var = var(in);
-	local_hist -> Fill(fill_var, weight);
+
+	if(MC_weighting)
+	{
+	    local_hist -> Fill(fill_var, weight);
+	}
+	else
+	{
+	    local_hist -> Fill(fill_var);
+	}
+
 	hist_fillcounts -> Fill(fill_var); // keep the copied histogram in sync, but without any weights attached to it
     };
     

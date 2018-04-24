@@ -23,7 +23,8 @@ PYTHON_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/Analysi
 BIN_DIR=$CAMPAIGN_DIR"bin/"
 
 # the needed part from the C++ sources
-PRIOR_OPTIMIZER="BayesianPriorOptimizer.py"
+#PRIOR_OPTIMIZER="BayesianPriorOptimizer.py"
+PRIOR_OPTIMIZER="SequentialBayesianPriorOptimizer.py"
 PYTHON_LIB="trainlib"
 PRIOR_EVALUATOR="run_prior_evaluator"
 

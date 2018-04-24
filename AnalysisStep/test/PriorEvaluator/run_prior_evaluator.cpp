@@ -135,12 +135,12 @@ int main( int argc, char *argv[] )
     // use the corresponding benchmark scenario without optimized priors as reference
     refdir = run_dir + "benchmark_" + engine + "_validation/";
 
-    varclass = new Mor18LIClassifier(run_dir + "calibration_validation/", engine);
+    varclass = new Mor18LIClassifier(run_dir + "calibration_validation/", run_dir + "settings.conf", engine);
 
     varclass18 = static_cast<Mor18LIClassifier*>(varclass);
 
     // set lower-resolution engine parameters to speed up the optimization
-    varclass18 -> SetEngineParameter("min_iterations", 20);
+    varclass18 -> SetEngineParameter("min_iterations", 25);
     varclass18 -> SetEngineParameter("max_iterations", 100);
 
 #ifdef OPTIMIZE_PUNZI_SB

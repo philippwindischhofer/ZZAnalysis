@@ -24,6 +24,9 @@ std::map<TString, float> TreeKLMultiClassCombinator::Evaluate(Tree* in, Discrimi
     int min_iterations = engine_parameters["min_iterations"];
     int max_iterations = engine_parameters["max_iterations"];
 
+    // std::cout << "min_iterations = " << min_iterations << std::endl;
+    // std::cout << "max_iterations = " << max_iterations << std::endl;
+
     // try the low-resolution mode first
     std::map<TString, float> retval = Evaluate(in, coll, min_iterations);
     float margin = GetWinningMargin();

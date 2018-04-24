@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     TString config_path = calibration_folder + "../settings.conf";
     Classifier* refclass = new Mor18LIClassifier(calibration_folder, config_path, engine);
     Mor18LIClassifier* refclass18 = static_cast<Mor18LIClassifier*>(refclass);
-
+	
     // put intermediate-quality engine settings
     refclass18 -> SetEngineParameter("min_iterations", 20);
     refclass18 -> SetEngineParameter("max_iterations", 100);
@@ -70,15 +70,26 @@ int main(int argc, char *argv[])
     // float ttHlept_prior = 0.19;
 
     // optimized priors (used as default)
+    // float VBF_prior = 1.0;
+    // float ggH_prior = 1.46657;
+    // float WHhadr_prior = 0.582676;
+    // float ZHhadr_prior = 0.707539;
+    // float WHlept_prior = 0.172772;
+    // float ZHlept_prior = 0.0633419;
+    // float ZHMET_prior = 0.0666923;
+    // float ttHhadr_prior = 0.145215;
+    // float ttHlept_prior = 0.1954;
+
+    // flat priors (used at the beginning of the optimization)
     float VBF_prior = 1.0;
-    float ggH_prior = 1.46657;
-    float WHhadr_prior = 0.582676;
-    float ZHhadr_prior = 0.707539;
-    float WHlept_prior = 0.172772;
-    float ZHlept_prior = 0.0633419;
-    float ZHMET_prior = 0.0666923;
-    float ttHhadr_prior = 0.145215;
-    float ttHlept_prior = 0.1954;
+    float ggH_prior = 1.0;
+    float WHhadr_prior = 1.0;
+    float ZHhadr_prior = 1.0;
+    float WHlept_prior = 1.0;
+    float ZHlept_prior = 1.0;
+    float ZHMET_prior = 1.0;
+    float ttHhadr_prior = 1.0;
+    float ttHlept_prior = 1.0;
 
     if(argc == 8)
     {
@@ -166,6 +177,22 @@ int main(int argc, char *argv[])
 
     //Mor18Classifier* refclass18 = static_cast<Mor18Classifier*>(refclass);
     //refclass18 -> SetWPs(WP_VBF2j, WP_VBF1j, WP_WHh, WP_ZHh);
+
+    // these are the optimized working points to give max. Punzi for an integrated luminosity of 150fb^-1, done with simulated annealing and the saturating cost function
+    // float WP_VBF2j = 0.637169;
+    // float WP_VBF1j = 0.000042;
+    // float WP_WHh = 0.955341;
+    // float WP_ZHh = 0.931576;
+    // Mor18Classifier* refclass18 = static_cast<Mor18Classifier*>(refclass);
+    // refclass18 -> SetWPs(WP_VBF2j, WP_VBF1j, WP_WHh, WP_ZHh);
+
+    // these are the optimized working points to give max. Punzi for an integrated luminosity of 35.9fb^-1, done with simulated annealing and the saturating cost function
+    // float WP_VBF2j = 0.627177;
+    // float WP_VBF1j = 0.046854;
+    // float WP_WHh = 0.948885;
+    // float WP_ZHh = 0.896969;
+    // Mor18Classifier* refclass18 = static_cast<Mor18Classifier*>(refclass);
+    // refclass18 -> SetWPs(WP_VBF2j, WP_VBF1j, WP_WHh, WP_ZHh);
 
     // this jet cut is needed to make sure both classifiers (the standard Mor18 and the MELA-LI improved version) are operated in their allowed region
     // auto jcut = [&](Tree* in) -> bool {
