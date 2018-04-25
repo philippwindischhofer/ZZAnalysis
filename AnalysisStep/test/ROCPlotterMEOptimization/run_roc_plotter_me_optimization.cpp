@@ -37,16 +37,16 @@ int main( int argc, char *argv[] )
 
     std::map<std::pair<TString, TString>, std::vector<float>> markers;
 
-    std::vector<float> VBF2j_ggH_WPs = {0.46386, 0.640951, 0.667281};
+    std::vector<float> VBF2j_ggH_WPs = {0.46386, 0.627177, 0.637169};
     markers.insert(std::make_pair(std::make_pair("VBF2j", "ggH"), VBF2j_ggH_WPs));
 
-    std::vector<float> VBF1j_ggH_WPs = {0.37605, 0.00145712, 0.000111881};
+    std::vector<float> VBF1j_ggH_WPs = {0.37605, 0.046854, 0.000042};
     markers.insert(std::make_pair(std::make_pair("VBF1j", "ggH"), VBF1j_ggH_WPs));
 
-    std::vector<float> WHhadr_ggH_WPs = {0.88384, 0.952417, 0.970386};
+    std::vector<float> WHhadr_ggH_WPs = {0.88384, 0.948885, 0.955341};
     markers.insert(std::make_pair(std::make_pair("WH-hadr", "ggH"), WHhadr_ggH_WPs));
 
-    std::vector<float> ZHhadr_ggH_WPs = {0.91315, 0.931741, 0.932839};
+    std::vector<float> ZHhadr_ggH_WPs = {0.91315, 0.896969, 0.931576};
     markers.insert(std::make_pair(std::make_pair("ZH-hadr", "ggH"), ZHhadr_ggH_WPs));
 
     for(auto& ME_disc: ME_discs)

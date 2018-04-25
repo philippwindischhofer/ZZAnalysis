@@ -99,9 +99,9 @@ double costfunc(const double* params)
 
 int main( int argc, char *argv[] )
 {
-    if(argc != 12)
+    if(argc != 14)
     {
-    	std::cerr << "Error: exactly 11 arguments are required" << std::endl;
+    	std::cerr << "Error: exactly 13 arguments are required" << std::endl;
     }
 
     // set default values
@@ -118,19 +118,24 @@ int main( int argc, char *argv[] )
     TString run_dir = argv[1];
     outdir = argv[2];
     TString engine = argv[3];
+    
+    int min_iterations = std::atoi(argv[4]);
+    int max_iterations = std::atoi(argv[5]);
 
-    ggH_prior = std::stof(argv[4]);
-    WHhadr_prior = std::stof(argv[5]);
-    ZHhadr_prior = std::stof(argv[6]);
-    WHlept_prior = std::stof(argv[7]);
-    ZHlept_prior = std::stof(argv[8]);
-    ZHMET_prior = std::stof(argv[9]);
-    ttHhadr_prior = std::stof(argv[10]);
-    ttHlept_prior = std::stof(argv[11]);
+    ggH_prior = std::stof(argv[6]);
+    WHhadr_prior = std::stof(argv[7]);
+    ZHhadr_prior = std::stof(argv[8]);
+    WHlept_prior = std::stof(argv[9]);
+    ZHlept_prior = std::stof(argv[10]);
+    ZHMET_prior = std::stof(argv[11]);
+    ttHhadr_prior = std::stof(argv[12]);
+    ttHlept_prior = std::stof(argv[13]);
 
     std::cout << "run_dir = " << run_dir << std::endl;
     std::cout << "engine = " << engine << std::endl;
     std::cout << "out_dir = " << outdir << std::endl;
+    std::cout << "min_iterations = " << min_iterations << std::endl;
+    std::cout << "max_iteratins = " << max_iterations << std::endl;
 
     // use the corresponding benchmark scenario without optimized priors as reference
     refdir = run_dir + "benchmark_" + engine + "_validation/";
@@ -139,9 +144,9 @@ int main( int argc, char *argv[] )
 
     varclass18 = static_cast<Mor18LIClassifier*>(varclass);
 
-    // set lower-resolution engine parameters to speed up the optimization
-    varclass18 -> SetEngineParameter("min_iterations", 25);
-    varclass18 -> SetEngineParameter("max_iterations", 100);
+    // this sets the quality of the evaluation, i.e. its noise level
+    varclass18 -> SetEngineParameter("min_iterations", min_iterations); // 25 is default
+    varclass18 -> SetEngineParameter("max_iterations", max_iterations); // 100 is default
 
 #ifdef OPTIMIZE_PUNZI_SB
     conf = new Mor18Config(run_dir + "augmentation/", 35.9, true);

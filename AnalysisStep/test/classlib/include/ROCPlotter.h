@@ -76,7 +76,7 @@ private:
     std::vector<TMarker*> markers;
 
     std::vector<int> ROC_colors = {
-	//kBlack,
+	kBlack,
 	kBlue - 9,
 	kGreen - 6,
 	kRed - 7,

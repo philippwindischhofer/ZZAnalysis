@@ -120,14 +120,14 @@ void augment_tree(TString inpath, TString outpath)
 	    buffer -> LHEAssociatedParticleId = new std::vector<short>();
 	}
 
-	// fill the variables holding the ME discriminants (don't care about their validity here, just compute everything. later on, when reading them, will need to check the number of jets etc. to make sure the MELA discriminants actually make sense)
-	buffer -> D_VBF2j_ggH_ME = DVBF2j_ME_disc(buffer);
-	buffer -> D_VBF1j_ggH_ME = DVBF1j_ME_disc(buffer);
-	buffer -> D_WHh_ggH_ME = DWHh_ME_disc(buffer);
-	buffer -> D_ZHh_ggH_ME = DZHh_ME_disc(buffer);
-	buffer -> D_WHh_ZHh_ME = DWHZH_ME_disc(buffer);
-	buffer -> D_VBF2j_WHh_ME = DVBFWH_ME_disc(buffer);
-	buffer -> D_VBF2j_ZHh_ME = DVBFZH_ME_disc(buffer);
+	// fill the variables holding the ME discriminants (for the classes of events for which they actually make sense)
+	buffer -> D_VBF2j_ggH_ME = buffer -> nCleanedJetsPt30 >= 2 ? DVBF2j_ME_disc(buffer) : 0.0;
+	buffer -> D_VBF1j_ggH_ME = buffer -> nCleanedJetsPt30 == 1 ? DVBF1j_ME_disc(buffer) : 0.0;
+	buffer -> D_WHh_ggH_ME = buffer -> nCleanedJetsPt30 >= 2 ? DWHh_ME_disc(buffer) : 0.0;
+	buffer -> D_ZHh_ggH_ME = buffer -> nCleanedJetsPt30 >= 2 ? DZHh_ME_disc(buffer) : 0.0;
+	buffer -> D_WHh_ZHh_ME = buffer -> nCleanedJetsPt30 >= 2 ? DWHZH_ME_disc(buffer) : 0.0;
+	buffer -> D_VBF2j_WHh_ME = buffer -> nCleanedJetsPt30 >= 2 ? DVBFWH_ME_disc(buffer) : 0.0;
+	buffer -> D_VBF2j_ZHh_ME = buffer -> nCleanedJetsPt30 >= 2 ? DVBFZH_ME_disc(buffer) : 0.0;
 
 	// look for the leading jets and store its variables separately
 	float leading_jet_pt = std::numeric_limits<float>::min();

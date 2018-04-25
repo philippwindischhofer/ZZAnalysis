@@ -28,7 +28,7 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_VBF_ggH_2j_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|0]", "JetEta[JetPt|1]", 
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetPt[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|0]", "JetEta[JetPt|1]", 
                                "PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                                "D_VBF2j_ggH_ME", "D_ZHh_ggH_ME", "D_WHh_ZHh_ME", "D_WHh_ggH_ME", "D_VBF2j_WHh_ME", "D_VBF2j_ZHh_ME",
                                "ZZPt", "Z2Pt", "Z1Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZMassErr", "ZZMass"]
@@ -76,11 +76,11 @@ class ModelFactoryFullCategorySetOptimizedInputs:
 
         model_name = "D_WHh_ggH_2j_ML"
 
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|0]", "JetEta[JetPt|1]", 
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetPt[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|0]", "JetEta[JetPt|1]", "JetEta[JetPt|2]",  
                                "D_VBF2j_ggH_ME", "D_ZHh_ggH_ME", "D_WHh_ZHh_ME", "D_WHh_ggH_ME", "D_VBF2j_ZHh_ME", "D_VBF2j_WHh_ME",
                                "PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                                "ZZPt", "Z2Pt", "Z1Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZMass", "ZZMassErr"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2 and row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -125,11 +125,11 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ZHh_ggH_2j_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|0]", "JetEta[JetPt|1]", 
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetPt[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|0]", "JetEta[JetPt|1]", "JetEta[JetPt|2]", 
                                "D_VBF2j_ggH_ME", "D_ZHh_ggH_ME", "D_WHh_ZHh_ME", "D_WHh_ggH_ME", "D_VBF2j_WHh_ME", "D_VBF2j_ZHh_ME",
                                "PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                                "ZZPt", "Z2Pt", "Z1Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZMassErr", "ZZMass"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2 and row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -174,11 +174,11 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_WHh_ZHh_2j_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|0]", "JetEta[JetPt|1]", 
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetPt[JetPt|1]", "JetPt[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|0]", "JetEta[JetPt|1]", "JetEta[JetPt|2]", "JetEta[JetPt|3]", 
                                "D_VBF2j_ggH_ME", "D_VBF2j_ZHh_ME", "D_VBF2j_WHh_ME", "D_ZHh_ggH_ME", "D_WHh_ZHh_ME", "D_WHh_ggH_ME",
                                "PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                                "ZZPt", "Z2Pt", "Z1Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZMass", "ZZMassErr"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "JetPhi[JetPt|3]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2 and row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -224,7 +224,7 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_VBF_WHh_2j_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|0]", "JetEta[JetPt|1]", 
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetPt[JetPt|1]", "JetPt[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|0]", "JetEta[JetPt|1]", "JetEta[JetPt|2]", "JetEta[JetPt|3]", 
                                "D_VBF2j_ggH_ME", "D_ZHh_ggH_ME", "D_WHh_ZHh_ME", "D_WHh_ggH_ME", "D_VBF2j_ZHh_ME", "D_VBF2j_WHh_ME",
                                "PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                                "ZZPt", "Z2Pt", "Z1Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZMassErr", "ZZMass"]
@@ -271,11 +271,11 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_VBF_ZHh_2j_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|0]", "JetEta[JetPt|1]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetPt[JetPt|1]", "JetPt[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|0]", "JetEta[JetPt|1]", "JetEta[JetPt|2]", "JetEta[JetPt|3]",
                                "D_VBF2j_ggH_ME", "D_ZHh_ggH_ME", "D_WHh_ggH_ME", "D_WHh_ZHh_ME", "D_VBF2j_ZHh_ME", "D_VBF2j_WHh_ME",
                                "PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", 
                                "ZZPt", "Z2Pt", "Z1Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZMassErr", "ZZMass"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "JetPhi[JetPt|3]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] >= 2 and row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -348,7 +348,7 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_WHl_VBF_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetEta[JetPt|2]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
         periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ExtraLepPhi[ExtraLepPt|0]", "ZZPhi"]
@@ -479,10 +479,10 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_WHl_ttHh_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|3]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ExtraLepPhi[ExtraLepPt|0]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "JetPhi[JetPt|3]", "ExtraLepPhi[ExtraLepPt|0]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -505,7 +505,7 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_WHl_ttHl_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|3]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
         periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ExtraLepPhi[ExtraLepPt|0]", "ZZPhi"]
@@ -555,7 +555,7 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ZHh_ZHMET_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "ExtraLepPt[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
         periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
@@ -580,7 +580,7 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ZHh_ttHh_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|3]", "ExtraLepPt[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
         periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
@@ -605,10 +605,10 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ZHh_ttHl_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|3]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ExtraLepPhi[ExtraLepPt|0]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "JetPhi[JetPt|3]", "ExtraLepPhi[ExtraLepPt|0]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -655,7 +655,7 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ZHl_VBF_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
         periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
@@ -681,7 +681,7 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ZHl_WHh_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
         periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
@@ -731,7 +731,7 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ZHl_ttHh_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|3]", "ExtraLepPt[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
         periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
@@ -756,10 +756,10 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ZHl_ttHl_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepPt[ExtraLepPt|1]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepPt[ExtraLepPt|1]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -857,7 +857,7 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ZHMET_ttHh_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|3]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
         periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
@@ -882,10 +882,10 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ZHMET_ttHl_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|3]", "ExtraLepPt[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -907,10 +907,10 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ttHh_ggH_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|3]", "ExtraLepPt[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "JetPhi[JetPt|3]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -932,10 +932,10 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ttHh_VBF_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|3]", "ExtraLepPt[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "JetPhi[JetPt|3]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -958,10 +958,10 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ttHh_WHh_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|3]", "ExtraLepPt[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "JetPhi[JetPt|3]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -983,10 +983,10 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ttHh_ttHl_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|3]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ExtraLepPhi[ExtraLepPt|0]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "JetPhi[JetPt|3]", "ExtraLepPhi[ExtraLepPt|0]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -1008,7 +1008,7 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ttHl_ggH_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|3]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
         periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
@@ -1033,10 +1033,10 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ttHl_VBF_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "JetPt[JetPt|3]", "JetEta[JetPt|3]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -1059,10 +1059,10 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
 
         model_name = "D_ttHl_WHh_ML"
-        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
+        nonperiodic_columns = ["JetPt[JetPt|0]", "JetEta[JetPt|0]", "JetPt[JetPt|1]", "JetEta[JetPt|1]", "JetPt[JetPt|2]", "JetEta[JetPt|2]", "ExtraLepPt[ExtraLepPt|0]", "ExtraLepEta[ExtraLepPt|0]",
                                "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZPt", "ZZMassErr", "ZZMass", "nExtraLep",
                                "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
-        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "ExtraLepPhi[ExtraLepPt|0]", "ZZPhi"]
+        periodic_columns = ["JetPhi[JetPt|0]", "JetPhi[JetPt|1]", "JetPhi[JetPt|2]", "ExtraLepPhi[ExtraLepPt|0]", "ZZPhi"]
         preprocessor_cuts = lambda row: row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)

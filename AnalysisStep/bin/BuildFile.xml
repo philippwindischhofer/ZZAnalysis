@@ -59,6 +59,10 @@
   <lib name="class_lib"/>
 </bin>
 
+<bin name="run_mask_tree" file="../test/Python/MaskTree/run_mask_tree.cpp">
+  <lib name="class_lib"/>
+</bin>
+
 <bin name="run_bias_checker" file="../test/MCBiasChecker/run_bias_checker.cpp">
   <lib name="class_lib"/>  
 </bin>

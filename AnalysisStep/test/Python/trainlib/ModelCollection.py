@@ -99,11 +99,11 @@ class ModelCollection:
             model_path = path + "/" + model_dir + "/"
             # in loading back the model, prefer to use the checkpoint file. Only if this is not available, go for the final training output (which might be overfitted)
             try:
-                self.model_dict[model_dir].load(model_path, "checkpoint.hdf5")
-                print "read weights from " + model_path + "checkpoint.hdf5"
-            except IOError:
                 self.model_dict[model_dir].load(model_path, "final.hdf5")
                 print "read weights from " + model_path + "final.hdf5"
+            except IOError:
+                self.model_dict[model_dir].load(model_path, "checkpoint.hdf5")
+                print "read weights from " + model_path + "checkpoint.hdf5"
 
             # also read back the preprocessor information here from its own file!
             self.preprocessor_dict[model_dir].load(model_path, "preprocessor.pkl")

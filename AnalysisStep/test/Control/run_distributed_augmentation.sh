@@ -19,7 +19,8 @@ BIN_DIR=$CAMPAIGN_DIR"bin/"
 AUGMENTER="SingleAugmentation.py"
 PYTHON_LIB="trainlib"
 
-MC_DIR="/data_CMS/cms/wind/CJLST_NTuples/"
+#MC_DIR="/data_CMS/cms/wind/CJLST_NTuples/"
+MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_masked/"
 datafiles="ggH125 VBFH125 ZH125 WplusH125 WminusH125 ttH125 ZZTo4l ggTo2e2mu_Contin_MCFM701 ggTo2mu2tau_Contin_MCFM701 ggTo4mu_Contin_MCFM701 ggTo2e2tau_Contin_MCFM701 ggTo4e_Contin_MCFM701 ggTo4tau_Contin_MCFM701"
 
 # ---------------------------------------------
