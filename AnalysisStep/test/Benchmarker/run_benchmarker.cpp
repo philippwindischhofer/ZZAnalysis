@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 	
     // put intermediate-quality engine settings
     refclass18 -> SetEngineParameter("min_iterations", 50);
-    refclass18 -> SetEngineParameter("max_iterations", 200);
+    refclass18 -> SetEngineParameter("max_iterations", 150);
 
     //priors based on event numbers determined from the training data
     // float VBF_prior = 1.0;

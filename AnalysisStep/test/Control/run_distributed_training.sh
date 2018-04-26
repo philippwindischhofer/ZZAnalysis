@@ -5,6 +5,7 @@
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
+INPUT_CONFIG_FILE=$2
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
@@ -30,7 +31,7 @@ cp -r $PYTHON_DIR_ORIGINAL$PYTHON_LIB $BIN_DIR
 cp $PYTHON_DIR_ORIGINAL$TRAINER $PYTHON_DIR_ORIGINAL$CONFIG_FILE_GEN $PYTHON_DIR_ORIGINAL$TRAINING_CONFIG_FILE_GEN $BIN_DIR
 
 # then, run the generation of the sub-config files
-python $BIN_DIR$CONFIG_FILE_GEN $CAMPAIGN_DIR
+python $BIN_DIR$CONFIG_FILE_GEN $CAMPAIGN_DIR $INPUT_CONFIG_FILE
 
 cd $CAMPAIGN_DIR
 

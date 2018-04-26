@@ -14,6 +14,7 @@ from trainlib.ModelFactory import ModelFactory
 from trainlib.ModelFactoryFullCategorySetOptimizedInputs import ModelFactoryFullCategorySetOptimizedInputs
 from trainlib.ModelFactoryFullCategorySetOptimizedInputsInclusive import ModelFactoryFullCategorySetOptimizedInputsInclusive
 from trainlib.ModelFactoryFullCategorySetDynamic import ModelFactoryFullCategorySetDynamic
+from trainlib.ModelFactoryFullCategorySetDynamicInclusive import ModelFactoryFullCategorySetDynamicInclusive
 
 from trainlib.ConfigFileHandler import ConfigFileHandler
 from trainlib.ModelCollectionConfigFileHandler import ModelCollectionConfigFileHandler
@@ -163,10 +164,15 @@ def augment_config(mcoll, parent_dir, iterables):
 
 def main():
     
-    if len(sys.argv) != 2:
-        print "Error: exactly 1 argument is required"
+    if len(sys.argv) < 2:
+        print "Error: at least 1 argument is required"
 
     campaign_dir = sys.argv[1]
+
+    if len(sys.argv) == 3:
+        input_config_file = sys.argv[2]
+    else:
+        input_config_file = None
 
     # make sure that the given directory ends with a /
     if not campaign_dir.endswith('/'):
@@ -214,13 +220,14 @@ def main():
                     else:
                         iterables[sweep_name].add(sweep_scope, sweep_parameter, start_list, end_list, sweep_behaviour)
 
-    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples/"
-    MC_path = "/data_CMS/cms/wind/CJLST_NTuples_masked/"
+    MC_path = "/data_CMS/cms/wind/CJLST_NTuples/"
+    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_masked/"
     model_type = confhandler.get_field('global', 'model_type') 
 
     if model_type == 'SimpleModel':
-        mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateSimpleModelCollections(MC_path)
-        #mcoll = ModelFactoryFullCategorySetDynamic.GenerateSimpleModelCollections(MC_path)
+        #mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateSimpleModelCollections(MC_path)
+        mcoll = ModelFactoryFullCategorySetDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
+        #mcoll = ModelFactoryFullCategorySetDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
         #mcoll = ModelFactoryFullCategorySetOptimizedInputsInclusive.GenerateSimpleModelCollections(MC_path)
     elif model_type == 'CombinedModel':
         mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateCombinedModelCollections(MC_path)

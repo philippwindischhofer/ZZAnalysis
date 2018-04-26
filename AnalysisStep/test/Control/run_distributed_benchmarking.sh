@@ -157,6 +157,7 @@ for JOB in $JOBS
 do
     echo "lauching benchmarking for " $CAMPAIGN_DIR$JOB
     $JOB_SUBMITTER "-short" $CAMPAIGN_DIR$JOB
+    #sh $CAMPAIGN_DIR$JOB &
 done
 
 cd $CURRENT_DIR

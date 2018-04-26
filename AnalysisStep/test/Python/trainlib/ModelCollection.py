@@ -1,4 +1,6 @@
 from config import TrainingConfig
+from ConfigFileHandler import ConfigFileHandler
+from ConfigFileUtils import ConfigFileUtils
 import pandas as pd
 import os
 
@@ -21,7 +23,14 @@ class ModelCollection:
         self.default_value = default_value
 
     @classmethod
-    def from_discriminant_endpieces(cls, cat_a, ep_a, cat_b, ep_b):
+    def from_discriminant_endpieces(cls, cat_a, ep_a, cat_b, ep_b, input_config_file = None):
+        # open the input config file, if specified
+        if input_config_file is not None:
+            confhandler = ConfigFileHandler()
+            confhandler.load_configuration(input_config_file)
+        else:
+            confhandler = None
+
         mcoll_name = "D_" + cat_a.name + "_" + cat_b.name + "_ML"
         H1_stream = cat_a.datastream
         H0_stream = cat_b.datastream
@@ -48,6 +57,15 @@ class ModelCollection:
             # only need to join the lists of inputs, such that every endpiece has the ones it needs
             periodic_columns = list(set(ep_a[cur_comp].periodic_columns + ep_b[cur_comp].periodic_columns))
             nonperiodic_columns = list(set(ep_a[cur_comp].nonperiodic_columns + ep_b[cur_comp].nonperiodic_columns))
+
+            # if an input configuration file is specified, try to look if it contains an entry for this model; if so, use the variables specified therein instead of the default above
+            if confhandler is not None:
+                if model_name in confhandler.get_sections():
+                    print "found input configuration entry for model " + str(model_name)
+                    periodic_columns = filter(None, ConfigFileUtils.parse_list(confhandler.get_field(model_name, "periodic_columns"), lambda x: x))
+                    nonperiodic_columns = filter(None, ConfigFileUtils.parse_list(confhandler.get_field(model_name, "nonperiodic_columns"), lambda x: x))
+                else:
+                    print "no input configuration entry found for model " + str(model_name)
             
             # now can construct all model components and add them to the collection
             pre = preprocessor_basetype(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = cuts)

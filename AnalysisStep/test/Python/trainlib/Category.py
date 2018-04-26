@@ -25,8 +25,7 @@ class Category:
 
             if ep_b:
                 print "matched " + cat_a.name + " with " + cat_b.name + ", using endpieces " + ep_a.name + " and " + ep_b.name
-                
-
+            
                 return cat_a, ep_a, cat_b, ep_b
         
         print "Error: these categories are mutually incompatible!"

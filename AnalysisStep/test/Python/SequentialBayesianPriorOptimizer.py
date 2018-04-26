@@ -5,6 +5,8 @@ from bayes_opt import BayesianOptimization
 from sklearn.gaussian_process.kernels import Matern, ConstantKernel
 from subprocess import check_output
 
+from scipy.optimize import minimize
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
@@ -36,6 +38,61 @@ out_dir = ""
 engine = ""
 punzi_file = "Mor18_punzi_S_comp.conf"
 
+def load_file(path, keys):
+    confhandler = ConfigFileHandler()
+    confhandler.load_configuration(path)
+    
+    retval = {}
+    
+    for section_name in confhandler.get_sections():
+        cur_section = confhandler.get_section(section_name)
+        
+        for key in keys:
+            if not key in retval:
+                retval[key] = []
+                
+            retval[key].append(float(cur_section[key]))
+            
+    return retval
+
+def gp_fitted(priors, bo):
+    priors_list = [priors[key] for key in bo.keys] # this takes care to pass them in the correct order!
+    return -bo.gp.predict(np.array(priors_list).reshape(1, -1), return_std = False)[0]
+
+def gp_fitted_wrapper(priors_list, bo):
+    # this receives the arguments (priors) as a list, to make it compatible with sklearn's minimization routine
+    priors = to_prior_dict(priors_list)
+    
+    print priors
+    
+    return gp_fitted(priors, bo)
+
+def to_prior_dict(priors_list):
+    priors = {}
+    priors["ggh_prior"] = priors_list[0]
+    priors["tthhadr_prior"] = priors_list[1]
+    priors["tthlept_prior"] = priors_list[2]
+    priors["whhadr_prior"] = priors_list[3]
+    priors["whlept_prior"] = priors_list[4]
+    priors["zhhadr_prior"] = priors_list[5]
+    priors["zhlept_prior"] = priors_list[6]
+    priors["zhmet_prior"] = priors_list[7]
+    
+    return priors
+
+def to_prior_list(prior_dict):
+    priors = []
+    priors.append(prior_dict["ggh_prior"])
+    priors.append(prior_dict["tthhadr_prior"])
+    priors.append(prior_dict["tthlept_prior"])
+    priors.append(prior_dict["whhadr_prior"])
+    priors.append(prior_dict["whlept_prior"])
+    priors.append(prior_dict["zhhadr_prior"])
+    priors.append(prior_dict["zhlept_prior"])
+    priors.append(prior_dict["zhmet_prior"])
+    
+    return priors
+
 def punzi_target(priors, relevant_classes, params):
     bin_dir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
     cost_function_evaluator = "run_prior_evaluator"
@@ -57,20 +114,20 @@ def punzi_target(priors, relevant_classes, params):
  
     return costval
 
-def save_best_priors(out_path):
+def save_priors(out_path, priors):
     # combine all the results into the final prior and save it again
     confhandler = ConfigFileHandler()
     confhandler.config.optionxform = str
     confhandler.new_section('Priors')
     confhandler.set_field('Priors', 'VBF_prior', str(1.0))
-    confhandler.set_field('Priors', 'ggH_prior', str(priors_best["ggh_prior"]))
-    confhandler.set_field('Priors', 'ttHlept_prior', str(priors_best["tthlept_prior"]))
-    confhandler.set_field('Priors', 'ttHhadr_prior', str(priors_best["tthhadr_prior"]))
-    confhandler.set_field('Priors', 'ZHlept_prior', str(priors_best["zhlept_prior"]))
-    confhandler.set_field('Priors', 'WHlept_prior', str(priors_best["whlept_prior"]))
-    confhandler.set_field('Priors', 'ZHhadr_prior', str(priors_best["zhhadr_prior"]))
-    confhandler.set_field('Priors', 'WHhadr_prior', str(priors_best["whhadr_prior"]))
-    confhandler.set_field('Priors', 'ZHMET_prior', str(priors_best["zhmet_prior"]))    
+    confhandler.set_field('Priors', 'ggH_prior', str(priors["ggh_prior"]))
+    confhandler.set_field('Priors', 'ttHlept_prior', str(priors["tthlept_prior"]))
+    confhandler.set_field('Priors', 'ttHhadr_prior', str(priors["tthhadr_prior"]))
+    confhandler.set_field('Priors', 'ZHlept_prior', str(priors["zhlept_prior"]))
+    confhandler.set_field('Priors', 'WHlept_prior', str(priors["whlept_prior"]))
+    confhandler.set_field('Priors', 'ZHhadr_prior', str(priors["zhhadr_prior"]))
+    confhandler.set_field('Priors', 'WHhadr_prior', str(priors["whhadr_prior"]))
+    confhandler.set_field('Priors', 'ZHMET_prior', str(priors["zhmet_prior"]))    
     confhandler.save_configuration(out_path)
 
 def save_params(out_path, params, evalcnt):
@@ -113,7 +170,16 @@ def punzi_target_global(ggh_prior, whhadr_prior, zhhadr_prior, whlept_prior, zhl
     # only in this last step have a continuous output of the best prior (since potentially it can be very long)
     if costval > priors_best["target"]:
         priors_best["target"] = costval
-        save_best_priors(os.path.join(out_dir, 'priors.txt'))
+        priors_best["ggh_prior"] = priors["ggh_prior"]
+        priors_best["tthhadr_prior"] = priors["tthhadr_prior"]
+        priors_best["tthlept_prior"] = priors["tthlept_prior"]
+        priors_best["zhlept_prior"] = priors["zhlept_prior"]
+        priors_best["whlept_prior"] = priors["whlept_prior"]
+        priors_best["zhhadr_prior"] = priors["zhhadr_prior"]
+        priors_best["whhadr_prior"] = priors["whhadr_prior"]
+        priors_best["zhmet_prior"] = priors["zhmet_prior"]
+
+        save_priors(os.path.join(out_dir, 'priors.txt'), priors)
     
     evalcnt += 1
     return costval                
@@ -378,8 +444,8 @@ def main():
     priors_max["tthlept_prior"] = 0.3
     priors_max["zhlept_prior"] = 0.3
     priors_max["whlept_prior"] = 0.3
-    priors_max["zhhadr_prior"] = 0.85
-    priors_max["whhadr_prior"] = 0.85
+    priors_max["zhhadr_prior"] = 1.0
+    priors_max["whhadr_prior"] = 1.0
     priors_max["zhmet_prior"] = 0.3
         
     if len(sys.argv) != 4:
@@ -426,7 +492,7 @@ def main():
                                   init_points = 2, max_iterations = 30, patience = 30, alpha = 1e-4)
     priors_best["zhmet_prior"] = res["zhmet_prior"]
     
-    save_best_priors(os.path.join(out_dir, 'priors_sequential.txt'))
+    save_priors(os.path.join(out_dir, 'priors_sequential.txt'), priors_best)
 
     # at the end, optimize globally again, tweaking all priors simultaneously, but in a very small region set by the current best guess from the sequential algorithm
     res = run_bayesian_optimization("global", "evaluations_global.txt", punzi_target_global, 
@@ -448,7 +514,40 @@ def main():
     priors_best["whhadr_prior"] = res["whhadr_prior"]
     priors_best["zhmet_prior"] = res["zhmet_prior"]
     
-    save_best_priors(os.path.join(out_dir, 'priors.txt'))
+    save_priors(os.path.join(out_dir, 'priors_prefit.txt'), priors_best)
+    
+    # now, as the very last step, also find and save the maximum of the fitted Gaussian process
+    init_dict = load_file(os.path.join(out_dir, 'evaluations_global.txt'), 
+                          ["target", "ggh_prior", "tthlept_prior", "whhadr_prior", "zhhadr_prior", "zhmet_prior", "zhlept_prior",
+                           "tthhadr_prior", "whlept_prior"])
+
+    # dummy function
+    target = lambda x: x
+
+    gp_params = {'kernel': 1.0 * Matern(length_scale = 0.01, length_scale_bounds = (1e-5, 1e5), nu = 1.5),
+                 'alpha':3e-5}
+    bo = BayesianOptimization(target, {'ggh_prior': (priors_min["ggh_prior"], priors_max["ggh_prior"]),
+                                       'tthhadr_prior': (priors_min["tthhadr_prior"], priors_max["tthhadr_prior"]),
+                                       'tthlept_prior': (priors_min["tthlept_prior"], priors_max["tthlept_prior"]),
+                                       'zhlept_prior': (priors_min["zhlept_prior"], priors_max["zhlept_prior"]),
+                                       'whlept_prior': (priors_min["whlept_prior"], priors_max["whlept_prior"]),
+                                       'zhhadr_prior': (priors_min["zhhadr_prior"], priors_max["zhhadr_prior"]),
+                                       'whhadr_prior': (priors_min["whhadr_prior"], priors_max["whhadr_prior"]),
+                                       'zhmet_prior': (priors_min["zhmet_prior"], priors_max["zhmet_prior"])})
+    
+    # fit the gaussian process to the data just read back
+    bo.initialize(init_dict)
+    bo.maximize(init_points=0, n_iter=0, acq='poi', kappa=5, xi = 0.1, **gp_params)
+    bo.gp.fit(bo.X, bo.Y)
+    
+    # start in the center of the final optimization volume
+    p0 = to_prior_list({key: 0.5 * (priors_min[key] + priors_max[key]) for key in priors_min.keys()})
+    
+    # find the maximum of the fitted gaussian process as a more robust estimate for the true prior
+    res = minimize(gp_fitted_wrapper, p0, args = (bo), method = 'Nelder-Mead', tol = 0.001)
+    smoothed_priors = to_prior_dict(res["x"])
+    
+    save_priors(os.path.join(out_dir, 'priors.txt'), smoothed_priors)
 
 if __name__ == "__main__":
     main()
