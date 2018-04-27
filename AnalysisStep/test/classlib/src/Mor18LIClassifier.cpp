@@ -74,8 +74,18 @@ int Mor18LIClassifier::ClassifyThisEvent(Tree* in)
     TString winner = comb -> GetWinningCategory();
     float margin = comb -> GetWinningMargin();
 
-    // VBF splitting: put all VBF-classified events with 2 or more jets into the VBF2j category, those with 1 or less jets into the VBF1j category (to be investigated: put a separate category for the latter events?)
-    int VBF_cat = (in -> nCleanedJetsPt30 >= 2) ? VBF2jTaggedMor18 : VBF1jTaggedMor18;
+    // VBF splitting: put all VBF-classified events with 2 or more jets into the VBF2j category, those with 1 jet into the VBF1j category, the rest into "untagged"
+    int VBF_cat = UntaggedMor18;
+    if(in -> nCleanedJetsPt30 >= 2)
+    {
+	VBF_cat = VBF2jTaggedMor18;
+    }
+    else if(in -> nCleanedJetsPt30 == 1)
+    {
+	VBF_cat = VBF1jTaggedMor18;
+    }
+    
+    //int VBF_cat = (in -> nCleanedJetsPt30 >= 2) ? VBF2jTaggedMor18 : VBF1jTaggedMor18;
 
     std::map<TString, int> conversion = {
 	{"VBF", VBF_cat},

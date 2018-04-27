@@ -138,7 +138,11 @@ int main( int argc, char *argv[] )
     std::cout << "max_iteratins = " << max_iterations << std::endl;
 
     // use the corresponding benchmark scenario without optimized priors as reference
-    refdir = run_dir + "benchmark_" + engine + "_validation/";
+    // refdir = run_dir + "benchmark_" + engine + "_validation/";
+
+    // can also try to use the validation reference of the legacy classifier as reference for the optimization
+    // Note: this really just takes the *scalings*, i.e. the reference values for the achievable Punzi purity from the other classifier -> should be OK!
+    refdir = "/data_CMS/cms/wind/Mor18References/validation/";
 
     varclass = new Mor18LIClassifier(run_dir + "calibration_validation/", run_dir + "settings.conf", engine);
 

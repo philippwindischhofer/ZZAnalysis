@@ -25,17 +25,25 @@ RUN_DIRLIST=`ls -d */ | egrep -v 'bin|statistics'`
 # for all the runs in this sweep
 for RUN in $RUN_DIRLIST
 do
-    SETTINGS_DIR=$CAMPAIGN_DIR$RUN
     TRAINING_DIR=$CAMPAIGN_DIR$RUN"training/"
-    OUT_DIR=$CAMPAIGN_DIR$RUN
+    TRAINING_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"settings_training/"
 
-    MODEL_BENCHMARKING_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"settings_model_benchmark/"
-    MODEL_BENCHMARKING_SCRIPT=$MODEL_BENCHMARKING_SETTINGS_DIR"run_model_benchmark.sh"
-    MODEL_BENCHMARKING_LOGFILE=$MODEL_BENCHMARKING_SETTINGS_DIR"log.txt"
-    mkdir -p $MODEL_BENCHMARKING_SETTINGS_DIR
+    cd $TRAINING_SETTINGS_DIR
 
-    echo "#!/bin/bash" > $MODEL_BENCHMARKING_SCRIPT
-    echo "python" $BIN_DIR$MODEL_BENCHMARKER $SETTINGS_DIR $TRAINING_DIR $OUT_DIR "&>" $MODEL_BENCHMARKING_LOGFILE >> $MODEL_BENCHMARKING_SCRIPT
+    TRAININGS=`ls -d */`
+
+    # create the scripts that each benchmark a single model collection (can take the distributed config files from the training)
+    for TRAINING in $TRAININGS
+    do
+	SETTINGS_DIR=$TRAINING_SETTINGS_DIR$TRAINING
+	OUT_DIR=$TRAINING_DIR$TRAINING
+
+	MODEL_BENCHMARKING_SCRIPT=$SETTINGS_DIR"run_model_benchmark.sh"
+	MODEL_BENCHMARKING_LOGFILE=$SETTINGS_DIR"log_model_benchmark.txt"
+
+	echo "#!/bin/bash" > $MODEL_BENCHMARKING_SCRIPT
+	echo "python" $BIN_DIR$MODEL_BENCHMARKER $SETTINGS_DIR $TRAINING_DIR $OUT_DIR "&>" $MODEL_BENCHMARKING_LOGFILE >> $MODEL_BENCHMARKING_SCRIPT
+    done
 done
 
 sleep 1
@@ -47,7 +55,7 @@ JOBS=`find * | grep run_model_benchmark.sh$`
 for JOB in $JOBS
 do
     echo "launching model benchmark for " $CAMPAIGN_DIR$JOB
-    $JOB_SUBMITTER $CAMPAIGN_DIR$JOB
+    $JOB_SUBMITTER "-short" $CAMPAIGN_DIR$JOB
 done
 
 cd $CURRENT_DIR

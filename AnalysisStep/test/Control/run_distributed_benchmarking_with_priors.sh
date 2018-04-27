@@ -18,11 +18,18 @@ COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/test/"
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
 ENGINE=$2
+PRIOR_FILE=$3
 
 if [ -z $ENGINE ]
 then
     echo "no engine name provided, using default: rand_KL"
     ENGINE="rand_KL"
+fi
+
+if [ -z $PRIOR_FILE ]
+then
+    echo "no prior file provided, using default: priors.txt"
+    PRIOR_FILE="priors.txt"
 fi
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
@@ -85,7 +92,7 @@ do
     echo "#!/bin/bash" > $BENCHMARK_VALIDATION_SCRIPT
 
     # launch the benchmarking
-    echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_DIR $BENCHMARK_VALIDATION_DIR "0.5 0.75" $ENGINE $PRIOR_DIR "&>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
+    echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_DIR $BENCHMARK_VALIDATION_DIR "0.5 0.75" $ENGINE $PRIOR_DIR$PRIOR_FILE "&>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
     # echo "sleep 5" >> $BENCHMARK_VALIDATION_SCRIPT
 
     # launch the comparison to the reference
@@ -96,7 +103,7 @@ do
     echo "#!/bin/bash" > $BENCHMARK_TEST_SCRIPT
 
     # for evaluation on the training dataset
-    echo $BIN_DIR$BENCHMARKER $CALIBRATION_TEST_DIR $AUGMENTATION_DIR $BENCHMARK_TEST_DIR "0.75 1.0" $ENGINE $PRIOR_DIR "&>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
+    echo $BIN_DIR$BENCHMARKER $CALIBRATION_TEST_DIR $AUGMENTATION_DIR $BENCHMARK_TEST_DIR "0.75 1.0" $ENGINE $PRIOR_DIR$PRIOR_FILE "&>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
 
     # this also uses the validation calibration for the evaluation on the test set
     #echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_DIR $BENCHMARK_TEST_DIR "0.75 1.0" $ENGINE $PRIOR_DIR "&>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT

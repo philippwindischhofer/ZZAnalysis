@@ -52,7 +52,7 @@ class ModelFactoryFullCategorySetOptimizedInputs:
 
         model_name = "D_VBF_ggH_0j_ML"
         nonperiodic_columns = ["ZZPt", "PFMET", "Z1Pt", "Z2Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZMass"]
-        periodic_columns = ["helphi", "phistarZ1", "xi", "xistar"]
+        periodic_columns = []
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] == 0 and row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = FlexiblePCAWhiteningPreprocessor(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = preprocessor_cuts)
         mod = SimpleModel(model_name, pre.number_processed_columns(), global_hyperparams)
@@ -1323,8 +1323,7 @@ class ModelFactoryFullCategorySetOptimizedInputs:
         model_name = "D_VBF_ZHh_1j_ML"
         scalar_input_columns = ["D_VBF1j_ggH_ME",
                                "PFMET", "nCleanedJetsPt30BTagged_bTagSF", 
-                               "ZZPt", "Z2Pt", "Z1Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZMassErr", "ZZMass",
-                               "costhetastar", "helcosthetaZ1", "helcosthetaZ2"]
+                               "ZZPt", "Z2Pt", "Z1Pt", "ZZEta", "Z1Mass", "Z2Mass", "ZZMassErr", "ZZMass"]
         preprocessor_cuts = lambda row: row["nCleanedJetsPt30"] == 1 and row["ZZMass"] > 118. and row["ZZMass"] < 130.
         pre = CombinedPreprocessor(model_name, scalar_input_columns, PCAWhiteningPreprocessor, list_input_columns, RNNPreprocessor, preprocessor_cuts)
         mod = CombinedModel(model_name, scalar_input_columns, list_input_columns, global_hyperparams)

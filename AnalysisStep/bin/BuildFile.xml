@@ -59,6 +59,10 @@
   <lib name="class_lib"/>
 </bin>
 
+<bin name="run_augment_single_tree" file="../test/Python/AugmentSingleTree/run_augment_single_tree.cpp">
+  <lib name="class_lib"/>
+</bin>
+
 <bin name="run_mask_tree" file="../test/Python/MaskTree/run_mask_tree.cpp">
   <lib name="class_lib"/>
 </bin>

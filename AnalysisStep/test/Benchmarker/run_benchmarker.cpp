@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
     {
 	// // the path to the prior file was given -> read the priors that were optimized on the training dataset, and evaluate the classification performance on the validation dataset
 	TString prior_path = argv[7];
-	ConfigFileHandler* handler = new ConfigFileHandler(prior_path + "priors.txt", "read");
+	ConfigFileHandler* handler = new ConfigFileHandler(prior_path, "read");
 	VBF_prior = handler -> GetField("VBF_prior");
 	ggH_prior = handler -> GetField("ggH_prior");
 	WHhadr_prior = handler -> GetField("WHhadr_prior");
