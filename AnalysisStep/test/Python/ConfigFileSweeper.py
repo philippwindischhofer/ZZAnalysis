@@ -233,7 +233,8 @@ def main():
         #mcoll = ModelFactoryFullCategorySetOptimizedInputsCombined.GenerateSimpleModelCollections(MC_path)
 
         # the baseline inputs that will be used for the sweep
-        mcoll = ModelFactoryFullCategorySetDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
+        #mcoll = ModelFactoryFullCategorySetDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
+        mcoll = ModelFactoryFullCategorySetDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
 
         #mcoll = ModelFactoryFullCategorySetOptimizedInputsInclusive.GenerateSimpleModelCollections(MC_path)
     elif model_type == 'CombinedModel':

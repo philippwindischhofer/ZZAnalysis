@@ -44,7 +44,7 @@ priors_min["whhadr_prior"] = 0.5
 priors_min["zhmet_prior"] = eps
 
 priors_max = {}
-priors_max["ggh_prior"] = 1.7
+priors_max["ggh_prior"] = 3.0
 priors_max["tthhadr_prior"] = 0.4
 priors_max["tthlept_prior"] = 0.3
 priors_max["zhlept_prior"] = 0.3
@@ -117,6 +117,29 @@ def to_prior_list(prior_dict):
     
     return priors
 
+def weight_func(delta_p, alpha):
+    retval = 0.0
+    
+    if(delta_p > 0.0):
+        retval = 1.0 / alpha * math.tanh(alpha * delta_p)
+    else:
+        retval = delta_p
+        
+    retval -= 1.0 / alpha
+    
+    return retval
+
+def cost_func(delta_pi, alpha, m):
+    cost = 0.0
+        
+    for delta_p in delta_pi:
+        cost += math.pow(1.0 / alpha, m) - math.pow(weight_func(delta_p, alpha), m)
+
+    # make it an *average*, since the number of evaluated classes can actually fluctuate
+    cost = cost / np.sqrt(len(delta_pi))
+        
+    return cost
+
 def punzi_target(priors, relevant_classes, params):
     bin_dir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
     cost_function_evaluator = "run_prior_evaluator"
@@ -133,8 +156,15 @@ def punzi_target(priors, relevant_classes, params):
     costval = 0.0
     
     # compute the utility function over the categories that were specified
+    #for relevant_class in relevant_classes:
+        #costval += (float(punzihandler.get_field('Punzi', relevant_class)) - 1.0)
+     
+    # use the weighted cost function
+    delta_pi = []
     for relevant_class in relevant_classes:
-        costval += (float(punzihandler.get_field('Punzi', relevant_class)) - 1.0)
+        delta_pi.append(float(punzihandler.get_field('Punzi', relevant_class)) - 1.0)
+    
+    costval = cost_func(delta_pi, 8.0, 2)
 
     if math.isnan(costval):
         print "caught NaN!"
@@ -371,7 +401,7 @@ def run_bayesian_optimization(name, eval_file, target, var_ranges, init_points, 
 
     # change the kernel to have a length scale more appropriate to this function
     # alpha ... corresponds to the value added to the diagonal elements of the covariance matrix <-> the approximate noise level in the observations
-    gp_params = {'kernel': ConstantKernel(1.0, (1e-6, 1e2)) * Matern(length_scale = 0.01, length_scale_bounds = (1e-5, 1e5), nu = 1.5),
+    gp_params = {'kernel': ConstantKernel(1.0, (1e-8, 1e2)) * Matern(length_scale = 0.01, length_scale_bounds = (1e-5, 1e5), nu = 1.5),
                  'alpha': alpha}
 
     bo = BayesianOptimization(target, var_ranges)
@@ -461,7 +491,7 @@ def gp_maximum(path, priors_min, priors_max):
     target = lambda x: x
 
     gp_params = {'kernel': 1.0 * Matern(length_scale = 0.01, length_scale_bounds = (1e-5, 1e5), nu = 1.5),
-                 'alpha':3e-5}
+                 'alpha':5e-7}
 
     prior_dict = {key: (priors_min[key], priors_max[key]) for key in priors_min.keys()}
 
@@ -506,33 +536,33 @@ def main():
 
     # start by fixing the ggH_prior by optimizing Punzi in the two VBF categories
     res = run_bayesian_optimization("ggH", "evaluations_ggH.txt", punzi_target_ggH, {'ggh_prior': (priors_min["ggh_prior"], priors_max["ggh_prior"])}, 
-                                init_points = 1, max_iterations = 10, patience = 30, alpha = 1e-4)
+                                init_points = 2, max_iterations = 40, patience = 40, alpha = 1.5e-6)
     priors_best["ggh_prior"] = res["ggh_prior"]
     
     # continue with the next ones to be fixed: ttHh and ttHl
     res = run_bayesian_optimization("ttH", "evaluations_ttH.txt", punzi_target_ttH, {'tthhadr_prior': (priors_min["tthhadr_prior"], priors_max["tthhadr_prior"]), 
                                                                                      'tthlept_prior': (priors_min["tthlept_prior"], priors_max["tthlept_prior"])}, 
-                                 init_points = 5, max_iterations = 20, patience = 40, alpha = 1e-4)
+                                 init_points = 10, max_iterations = 40, patience = 40, alpha = 1.5e-6)
     priors_best["tthhadr_prior"] = res["tthhadr_prior"]
     priors_best["tthlept_prior"] = res["tthlept_prior"]
     
     # then proceed with ZHlept and WHlept
     res = run_bayesian_optimization("VHlept", "evaluations_VHlept.txt", punzi_target_VHlept, {'zhlept_prior': (priors_min["zhlept_prior"], priors_max["zhlept_prior"]),
                                                                                               'whlept_prior': (priors_min["whlept_prior"], priors_max["whlept_prior"])}, 
-                                 init_points = 5, max_iterations = 20, patience = 40, alpha = 1e-4)
+                                 init_points = 10, max_iterations = 40, patience = 40, alpha = 1.5e-6)
     priors_best["zhlept_prior"] = res["zhlept_prior"]
     priors_best["whlept_prior"] = res["whlept_prior"]
     
     # then proceed with ZHhadr and WHhadr
     res = run_bayesian_optimization("VHhadr", "evaluations_VHhadr.txt", punzi_target_VHhadr, {'zhhadr_prior': (priors_min["zhhadr_prior"], priors_max["zhhadr_prior"]),
                                                                                               'whhadr_prior': (priors_min["whhadr_prior"], priors_max["whhadr_prior"])}, 
-                                  init_points = 5, max_iterations = 20, patience = 40, alpha = 1e-4)
+                                  init_points = 10, max_iterations = 40, patience = 40, alpha = 1.5e-6)
     priors_best["zhhadr_prior"] = res["zhhadr_prior"]
     priors_best["whhadr_prior"] = res["whhadr_prior"]
     
     # then finish off with ZHMET
     res = run_bayesian_optimization("VHMET", "evaluations_VHMET.txt", punzi_target_ZHMET, {'zhmet_prior': (priors_min["zhmet_prior"], priors_max["zhmet_prior"])}, 
-                                  init_points = 1, max_iterations = 10, patience = 30, alpha = 1e-4)
+                                  init_points = 2, max_iterations = 30, patience = 30, alpha = 1.5e-6)
     priors_best["zhmet_prior"] = res["zhmet_prior"]
     
     save_priors(os.path.join(out_dir, 'priors_sequential.txt'), priors_best)
@@ -556,7 +586,7 @@ def main():
                                      'zhhadr_prior': (max(priors_min["zhhadr_prior"], priors_best["zhhadr_prior"] - delta), min(priors_max["zhhadr_prior"], priors_best["zhhadr_prior"] + delta)),
                                      'whhadr_prior': (max(priors_min["whhadr_prior"], priors_best["whhadr_prior"] - delta), min(priors_max["whhadr_prior"], priors_best["whhadr_prior"] + delta)),
                                      'zhmet_prior': (max(priors_min["zhmet_prior"], priors_best["zhmet_prior"] - delta), min(priors_max["zhmet_prior"], priors_best["zhmet_prior"] + delta))},
-                                    init_points = 20, max_iterations = 80, patience = 70, alpha = 3e-5)
+                                    init_points = 20, max_iterations = 80, patience = 70, alpha = 5e-7)
 
     priors_best["ggh_prior"] = res["ggh_prior"]
     priors_best["tthhadr_prior"] = res["tthhadr_prior"]

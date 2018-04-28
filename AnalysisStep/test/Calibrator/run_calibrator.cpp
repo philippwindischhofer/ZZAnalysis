@@ -215,10 +215,15 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 
     // Plot the two distributions, for visualization (and cross-checking) purposes
     std::vector<TH1F*> hist_vec = {H1_distrib_validation, H0_distrib_validation, H1_distrib, H0_distrib};
-    std::vector<TString> source_labels = {H1_name + " (validation: 0.5 - 0.75)", 
-					  H0_name + " (validation: 0.5 - 0.75)", 
-					  H1_name + Form(" (%.2f - %.2f)", start_fraction, end_fraction),
-					  H0_name + Form(" (%.2f - %.2f)", start_fraction, end_fraction)};
+    // std::vector<TString> source_labels = {H1_name + " (validation: 0.5 - 0.75)", 
+    // 					  H0_name + " (validation: 0.5 - 0.75)", 
+    // 					  H1_name + Form(" (%.2f - %.2f)", start_fraction, end_fraction),
+    // 					  H0_name + Form(" (%.2f - %.2f)", start_fraction, end_fraction)};
+
+    std::vector<TString> source_labels = {H1_name + " (validation)", 
+					  H0_name + " (validation)", 
+					  H1_name + " (training)",
+					  H0_name + " (training)"};
 
     plotter -> Construct(hist_vec, source_labels, disc_name, "normalized to 1", "", "", "P H nostack");
     
