@@ -73,7 +73,7 @@ JOBS=`find * | grep run_training.sh$`
 for JOB in $JOBS
 do
     echo "launching training for " $CAMPAIGN_DIR$JOB
-    $JOB_SUBMITTER $CAMPAIGN_DIR$JOB
+    #$JOB_SUBMITTER $CAMPAIGN_DIR$JOB
 done
 
 cd $CURRENT_DIR

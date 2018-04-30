@@ -35,7 +35,7 @@ int countAssocLeptons(Tree* in)
 
 bool extraLeptons_0_cut(Tree* in)
 {
-    if(mZZ_cut(in) && (countAssocLeptons(in) == 0))
+    if(/*mZZ_cut(in) && */(countAssocLeptons(in) == 0))
 	return kTRUE;
     else
 	return kFALSE;
@@ -43,7 +43,7 @@ bool extraLeptons_0_cut(Tree* in)
 
 bool extraLeptons_1_cut(Tree* in)
 {
-    if(mZZ_cut(in) && (countAssocLeptons(in) == 1))
+    if(/*mZZ_cut(in) && */(countAssocLeptons(in) == 1))
 	return kTRUE;
     else
 	return kFALSE;
@@ -51,7 +51,7 @@ bool extraLeptons_1_cut(Tree* in)
 
 bool extraLeptons_2_cut(Tree* in)
 {
-    if(mZZ_cut(in) && (countAssocLeptons(in) == 2))
+    if(/*mZZ_cut(in) && */(countAssocLeptons(in) == 2))
 	return kTRUE;
     else
 	return kFALSE;
@@ -84,7 +84,7 @@ int countNeutrinos(Tree* in)
 
 bool extraNeutrinos_0_cut(Tree* in)
 {
-    if(mZZ_cut(in) && countNeutrinos(in) == 0)
+    if(/*mZZ_cut(in) && */countNeutrinos(in) == 0)
 	return kTRUE;
     else
 	return kFALSE;
@@ -92,7 +92,7 @@ bool extraNeutrinos_0_cut(Tree* in)
 
 bool extraNeutrinos_2_cut(Tree* in)
 {
-    if(mZZ_cut(in) && countNeutrinos(in) == 2)
+    if(/*mZZ_cut(in) && */countNeutrinos(in) == 2)
 	return kTRUE;
     else
 	return kFALSE;
@@ -100,7 +100,7 @@ bool extraNeutrinos_2_cut(Tree* in)
 
 bool extraNeutrinos_0_Leptons_0_cut(Tree* in)
 {
-    if(mZZ_cut(in) && (countAssocLeptons(in) == 0) && (countNeutrinos(in) == 0))
+    if(/*mZZ_cut(in) && */(countAssocLeptons(in) == 0) && (countNeutrinos(in) == 0))
 	return kTRUE;
     else
 	return kFALSE;

@@ -22,6 +22,17 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/me_discriminants.h>
 
+float clamp_value(float val, float min, float max)
+{
+    if(val > max)
+	return max;
+
+    if(val < min)
+	return min;
+
+    return val;
+}
+
 void augment_tree(TString inpath, TString outpath, int randomize)
 {
     TFile* input_file = new TFile(inpath, "read");
@@ -107,13 +118,13 @@ void augment_tree(TString inpath, TString outpath, int randomize)
 	}
 
 	// fill the variables holding the ME discriminants (for the classes of events for which they actually make sense)
-	buffer -> D_VBF2j_ggH_ME = buffer -> nCleanedJetsPt30 >= 2 ? DVBF2j_ME_disc(buffer) : 0.0;
-	buffer -> D_VBF1j_ggH_ME = buffer -> nCleanedJetsPt30 == 1 ? DVBF1j_ME_disc(buffer) : 0.0;
-	buffer -> D_WHh_ggH_ME = buffer -> nCleanedJetsPt30 >= 2 ? DWHh_ME_disc(buffer) : 0.0;
-	buffer -> D_ZHh_ggH_ME = buffer -> nCleanedJetsPt30 >= 2 ? DZHh_ME_disc(buffer) : 0.0;
-	buffer -> D_WHh_ZHh_ME = buffer -> nCleanedJetsPt30 >= 2 ? DWHZH_ME_disc(buffer) : 0.0;
-	buffer -> D_VBF2j_WHh_ME = buffer -> nCleanedJetsPt30 >= 2 ? DVBFWH_ME_disc(buffer) : 0.0;
-	buffer -> D_VBF2j_ZHh_ME = buffer -> nCleanedJetsPt30 >= 2 ? DVBFZH_ME_disc(buffer) : 0.0;
+	buffer -> D_VBF2j_ggH_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DVBF2j_ME_disc(buffer) : 0.0, 0.0, 1.0);
+	buffer -> D_VBF1j_ggH_ME = clamp_value(buffer -> nCleanedJetsPt30 == 1 ? DVBF1j_ME_disc(buffer) : 0.0, 0.0, 1.0);
+	buffer -> D_WHh_ggH_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DWHh_ME_disc(buffer) : 0.0, 0.0, 1.0);
+	buffer -> D_ZHh_ggH_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DZHh_ME_disc(buffer) : 0.0, 0.0, 1.0);
+	buffer -> D_WHh_ZHh_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DWHZH_ME_disc(buffer) : 0.0, 0.0, 1.0);
+	buffer -> D_VBF2j_WHh_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DVBFWH_ME_disc(buffer) : 0.0, 0.0, 1.0);
+	buffer -> D_VBF2j_ZHh_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DVBFZH_ME_disc(buffer) : 0.0, 0.0, 1.0);
 
 	output_tree -> Fill();
     }
@@ -146,6 +157,8 @@ int main( int argc, char *argv[] )
     std::cout << "randomize = " << randomize << std::endl;
     
     augment_tree(in_file, out_file, randomize);
+
+    std::cout << "done with everything" << std::endl;
 
     return(0);
 }

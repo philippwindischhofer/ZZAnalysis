@@ -26,7 +26,7 @@ std::map<TString, TH1F*> PlottingUtils::generate_classifier_histmap(int fill_his
 	    // tie together the total cut to be used
 	    auto cut = [&](Tree* in) -> bool {
 		return (ext_cut(in) && 
-			mZZ_cut(in) &&
+			//mZZ_cut(in) &&
 			(routing -> cut)(in)) ?
 		kTRUE : kFALSE;
 	    };

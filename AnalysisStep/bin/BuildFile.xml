@@ -16,6 +16,10 @@
   <lib name="class_lib"/>
 </bin>
 
+<bin name="run_benchmarker_legacy" file="../test/BenchmarkerLegacy/run_benchmarker_legacy.cpp">
+  <lib name="class_lib"/>
+</bin>
+
 <!-- tool for plotting ROC curves of individual binary discriminants -->
 <bin name="run_roc_plotter" file="../test/ROCPlotter/run_roc_plotter.cpp">
   <lib name="class_lib"/>
@@ -60,6 +64,10 @@
 </bin>
 
 <bin name="run_augment_single_tree" file="../test/Python/AugmentSingleTree/run_augment_single_tree.cpp">
+  <lib name="class_lib"/>
+</bin>
+
+<bin name="run_chunk_extractor" file="../test/ChunkExtractor/run_chunk_extractor.cpp">
   <lib name="class_lib"/>
 </bin>
 

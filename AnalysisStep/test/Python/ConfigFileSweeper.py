@@ -14,7 +14,10 @@ from trainlib.ModelFactory import ModelFactory
 from trainlib.ModelFactoryFullCategorySetOptimizedInputs import ModelFactoryFullCategorySetOptimizedInputs
 from trainlib.ModelFactoryFullCategorySetOptimizedInputsInclusive import ModelFactoryFullCategorySetOptimizedInputsInclusive
 from trainlib.ModelFactoryFullCategorySetOptimizedInputsCombined import ModelFactoryFullCategorySetOptimizedInputsCombined
+
 from trainlib.ModelFactoryFullMassRangeDynamicInclusive import ModelFactoryFullMassRangeDynamicInclusive
+from trainlib.ModelFactoryFullMassRangeDynamic import ModelFactoryFullMassRangeDynamic
+
 from trainlib.ModelFactoryFullCategorySetDynamic import ModelFactoryFullCategorySetDynamic
 from trainlib.ModelFactoryFullCategorySetDynamicInclusive import ModelFactoryFullCategorySetDynamicInclusive
 
@@ -171,7 +174,7 @@ def main():
 
     campaign_dir = sys.argv[1]
 
-    if len(sys.argv) == 3:
+    if len(sys.argv) >= 3:
         input_config_file = sys.argv[2]
     else:
         input_config_file = None
@@ -223,8 +226,17 @@ def main():
                         iterables[sweep_name].add(sweep_scope, sweep_parameter, start_list, end_list, sweep_behaviour)
 
     MC_path = "/data_CMS/cms/wind/CJLST_NTuples/"
-    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_masked/"
-    model_type = confhandler.get_field('global', 'model_type') 
+    
+    # when performing a full training
+    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/"
+
+    model_type = confhandler.get_field('global', 'model_type')
+
+    # get the mass point from the global config file in a way that ensures backward compatibility
+    try:
+        mass_point = float(confhandler.get_field('global', 'mass_point'))
+    except KeyError:
+        mass_point = 125.0
 
     if model_type == 'SimpleModel':
         #mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateSimpleModelCollections(MC_path)
@@ -234,16 +246,19 @@ def main():
         #mcoll = ModelFactoryFullCategorySetOptimizedInputsCombined.GenerateSimpleModelCollections(MC_path)
 
         # the baseline inputs that will be used for the sweep
-        mcoll = ModelFactoryFullCategorySetDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
+        #mcoll = ModelFactoryFullCategorySetDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
+        
         #mcoll = ModelFactoryFullCategorySetDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
 
         # using the full mass range for training, not using the 118/130GeV cut
-        #mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
+        mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, mass_point = mass_point)
+
+        # exclusive version for full mass range
+        #mcoll = ModelFactoryFullMassRangeDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, mass_point = mass_point)
 
         #mcoll = ModelFactoryFullCategorySetOptimizedInputsInclusive.GenerateSimpleModelCollections(MC_path)
     elif model_type == 'CombinedModel':
         mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateCombinedModelCollections(MC_path)
-        #mcoll = ModelFactory.GenerateCombinedModelCollectionsReducedCategorySet(MC_path)
         
     iterate(iterables, {}, lambda it: augment_config(mcoll, campaign_dir, it))
 

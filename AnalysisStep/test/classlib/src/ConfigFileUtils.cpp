@@ -142,6 +142,11 @@ std::function<bool(Tree*)> ConfigFileUtils::ParsePythonCut(std::string raw)
 	std::cout << "ttHhadr_cut" << std::endl;
 	return extraLeptons_0_cut;
     }
+    else if(raw.find("no_cut") != string::npos)
+    {
+	std::cout << "no_cut" << std::endl;
+	return no_cut;
+    }
 
-    return mZZ_cut;
+    return no_cut;
 }

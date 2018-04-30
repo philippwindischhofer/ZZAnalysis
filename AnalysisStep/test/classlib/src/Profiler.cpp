@@ -187,6 +187,11 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, c
 
 	float event_weight = (lumi * xsec * 1000. * overallEventWeight) / (gen_sum_weights * reweighting_factor);
 
+	if(input_file_name.Contains("ggH"))
+	{
+	    event_weight *= ggH_NNLOPS_weight;
+	}
+
 	if(cut(this))
 	{
 	    fill_callback(hist, this, event_weight);

@@ -102,11 +102,8 @@ do
 
     echo "#!/bin/bash" > $BENCHMARK_TEST_SCRIPT
 
-    # for evaluation on the training dataset
-    echo $BIN_DIR$BENCHMARKER $CALIBRATION_TEST_DIR $AUGMENTATION_DIR $BENCHMARK_TEST_DIR "0.75 1.0" $ENGINE $PRIOR_DIR$PRIOR_FILE "&>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
-
-    # this also uses the validation calibration for the evaluation on the test set
-    #echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_DIR $BENCHMARK_TEST_DIR "0.75 1.0" $ENGINE $PRIOR_DIR "&>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
+    # this also uses the validation calibration for the evaluation on the test set! (since pretend to not know the truth on the test set, can not do any calibration...)
+    echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_DIR $BENCHMARK_TEST_DIR "0.75 1.0" $ENGINE $PRIOR_DIR$PRIOR_FILE "&>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
     #echo "sleep 5" >> $BENCHMARK_TEST_SCRIPT
 
     # launch the comparison to the reference

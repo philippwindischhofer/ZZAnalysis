@@ -1,23 +1,33 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 
-Mor18Config::Mor18Config(TString MCpath, float integrated_lumi, bool use_background) : Config(MCpath, integrated_lumi, use_background)
+Mor18Config::Mor18Config(TString MCpath, float integrated_lumi, bool use_background, float mass_point) : Config(MCpath, integrated_lumi, use_background)
 { 
+    // the needed data files depend on the chosen mass point (in principle, the file names corresponding to a certain mass point can be arbitrary, thus keep the conversion as general as possible!)
+    std::map<float, TString> mass_point_translation;
+    mass_point_translation.insert(std::make_pair(120.0, "120"));
+    mass_point_translation.insert(std::make_pair(124.0, "124"));
+    mass_point_translation.insert(std::make_pair(125.0, "125"));
+    mass_point_translation.insert(std::make_pair(126.0, "126"));
+    mass_point_translation.insert(std::make_pair(130.0, "130"));
+
+    TString mass_point_suffix = mass_point_translation[mass_point];
+
     // set up the routing table for the data files
-    routing.push_back(std::make_pair("ggH125", new Routing(no_cut, "ggHhist")));
-    routing.push_back(std::make_pair("VBFH125", new Routing(no_cut, "VBFhist")));
+    routing.push_back(std::make_pair("ggH" + mass_point_suffix, new Routing(no_cut, "ggHhist")));
+    routing.push_back(std::make_pair("VBFH" + mass_point_suffix, new Routing(no_cut, "VBFhist")));
 
-    routing.push_back(std::make_pair("WplusH125", new Routing(extraLeptons_0_cut, "WHXhist")));
-    routing.push_back(std::make_pair("WminusH125", new Routing(extraLeptons_0_cut, "WHXhist")));
-    routing.push_back(std::make_pair("WplusH125", new Routing(extraLeptons_1_cut, "WHlnuhist")));
-    routing.push_back(std::make_pair("WminusH125", new Routing(extraLeptons_1_cut, "WHlnuhist")));
+    routing.push_back(std::make_pair("WplusH" + mass_point_suffix, new Routing(extraLeptons_0_cut, "WHXhist")));
+    routing.push_back(std::make_pair("WminusH" + mass_point_suffix, new Routing(extraLeptons_0_cut, "WHXhist")));
+    routing.push_back(std::make_pair("WplusH" + mass_point_suffix, new Routing(extraLeptons_1_cut, "WHlnuhist")));
+    routing.push_back(std::make_pair("WminusH" + mass_point_suffix, new Routing(extraLeptons_1_cut, "WHlnuhist")));
 
-    routing.push_back(std::make_pair("ZH125", new Routing(extraNeutrinos_0_Leptons_0_cut, "ZHXhist")));
-    routing.push_back(std::make_pair("ZH125", new Routing(extraNeutrinos_2_cut, "ZHnunuhist")));
-    routing.push_back(std::make_pair("ZH125", new Routing(extraLeptons_2_cut, "ZH2lhist")));
+    routing.push_back(std::make_pair("ZH" + mass_point_suffix, new Routing(extraNeutrinos_0_Leptons_0_cut, "ZHXhist")));
+    routing.push_back(std::make_pair("ZH" + mass_point_suffix, new Routing(extraNeutrinos_2_cut, "ZHnunuhist")));
+    routing.push_back(std::make_pair("ZH" + mass_point_suffix, new Routing(extraLeptons_2_cut, "ZH2lhist")));
 
-    routing.push_back(std::make_pair("ttH125", new Routing(extraLeptons_0_cut, "ttH0lhist")));
-    routing.push_back(std::make_pair("ttH125", new Routing(extraLeptons_1_cut, "ttH1lhist")));
-    routing.push_back(std::make_pair("ttH125", new Routing(extraLeptons_2_cut, "ttH2lhist")));
+    routing.push_back(std::make_pair("ttH" + mass_point_suffix, new Routing(extraLeptons_0_cut, "ttH0lhist")));
+    routing.push_back(std::make_pair("ttH" + mass_point_suffix, new Routing(extraLeptons_1_cut, "ttH1lhist")));
+    routing.push_back(std::make_pair("ttH" + mass_point_suffix, new Routing(extraLeptons_2_cut, "ttH2lhist")));
 
     if(use_background)
     {

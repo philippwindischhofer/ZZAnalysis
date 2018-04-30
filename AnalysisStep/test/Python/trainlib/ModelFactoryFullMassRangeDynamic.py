@@ -8,7 +8,7 @@ from SimpleModel import SimpleModel
 from config import TrainingConfig
 import cuts
 
-class ModelFactoryFullMassRangeDynamicInclusive:
+class ModelFactoryFullMassRangeDynamic:
 
     @staticmethod
     def GenerateSimpleModelCollections(MC_path, weight_path = None, input_config_file = None, mass_point = 125.0):
@@ -51,14 +51,13 @@ class ModelFactoryFullMassRangeDynamicInclusive:
         MELA_2j_variables = ["D_VBF2j_ggH_ME", "D_ZHh_ggH_ME", "D_WHh_ZHh_ME", "D_WHh_ggH_ME", "D_VBF2j_WHh_ME", "D_VBF2j_ZHh_ME"]
         MELA_1j_variables = ["D_VBF1j_ggH_ME"]
 
-        # translation dictionaries that link Higgs mass points to the corresponding training files
         mass_point_translation = {120.0: "120", 124.0: "124", 125.0: "125", 126.0: "126", 130.0: "130"}
         mass_point_suffix = mass_point_translation[mass_point]
 
         # ------------------------
 
         # define the categories for the classifier
-        VBF_cat = Category("VBF", {MC_path + "VBFH" + mass_point_suffix + "/ZZ4lAnalysis.root": cuts.no_cut})
+        VBF_cat = Category("VBF", {MC_path + "VBFH" + mass_point_suffix  + "/ZZ4lAnalysis.root": cuts.no_cut})
 
         # mode that is fully differential in the number of jets
         ep = DiscriminantEndpiece("2|1|0j")
@@ -150,6 +149,54 @@ class ModelFactoryFullMassRangeDynamicInclusive:
         # define the categories for the classifier
         WHh_cat = Category("WHh", {MC_path + "WplusH" + mass_point_suffix + "/ZZ4lAnalysis.root": cuts.WHhadr_cut,
                                    MC_path + "WminusH" + mass_point_suffix + "/ZZ4lAnalysis.root": cuts.WHhadr_cut})
+
+        # mode that is fully differential in the number of jets
+        ep = DiscriminantEndpiece("2|1|0j")
+        ep_comp = DiscriminantEndpieceComponent(name = "2j", public_name = "2j",
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] >= 2,
+                                                nonperiodic_columns = nonperiodic_variables_default + MELA_2j_variables + nonperiodic_variables_jet(2),
+                                                periodic_columns = periodic_variables_default + periodic_variables_jet(2),
+                                                model_basetype = SimpleModel,
+                                                model_hyperparams = global_hyperparams,
+                                                preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
+        ep.add_component(ep_comp)        
+        ep_comp = DiscriminantEndpieceComponent(name = "1j", public_name = "1j",
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] == 1,
+                                                nonperiodic_columns = nonperiodic_variables_default_1j + MELA_1j_variables + nonperiodic_variables_jet(1),
+                                                periodic_columns = periodic_variables_default + periodic_variables_jet(1),
+                                                model_basetype = SimpleModel,
+                                                model_hyperparams = global_hyperparams,
+                                                preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
+        ep.add_component(ep_comp)        
+        ep_comp = DiscriminantEndpieceComponent(name = "0j", public_name = "0j",
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] == 0,
+                                                nonperiodic_columns = nonperiodic_variables_default_0j,
+                                                periodic_columns = [],
+                                                model_basetype = SimpleModel,
+                                                model_hyperparams = global_hyperparams,
+                                                preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
+        ep.add_component(ep_comp)        
+        WHh_cat.add_endpiece(ep)
+
+        # mode that is partly differential in the number of jets
+        ep = DiscriminantEndpiece("2|10j")
+        ep_comp = DiscriminantEndpieceComponent(name = "2j", public_name = "2j",
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] >= 2,
+                                                nonperiodic_columns = nonperiodic_variables_default + MELA_2j_variables + nonperiodic_variables_jet(2),
+                                                periodic_columns = periodic_variables_jet(2),
+                                                model_basetype = SimpleModel,
+                                                model_hyperparams = global_hyperparams,
+                                                preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
+        ep.add_component(ep_comp)        
+        ep_comp = DiscriminantEndpieceComponent(name = "01j", public_name = "01j",
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] < 2,
+                                                nonperiodic_columns = nonperiodic_variables_default_1j + nonperiodic_variables_jet(1),
+                                                periodic_columns = periodic_variables_default + periodic_variables_jet(1),
+                                                model_basetype = SimpleModel,
+                                                model_hyperparams = global_hyperparams,
+                                                preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
+        ep.add_component(ep_comp)        
+        WHh_cat.add_endpiece(ep)
         
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
@@ -167,6 +214,54 @@ class ModelFactoryFullMassRangeDynamicInclusive:
 
         # define the categories for the classifier
         ZHh_cat = Category("ZHh", {MC_path + "ZH" + mass_point_suffix + "/ZZ4lAnalysis.root": cuts.ZHhadr_cut})
+
+        # mode that is fully differential in the number of jets
+        ep = DiscriminantEndpiece("2|1|0j")
+        ep_comp = DiscriminantEndpieceComponent(name = "2j", public_name = "2j",
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] >= 2,
+                                                nonperiodic_columns = nonperiodic_variables_default + MELA_2j_variables + nonperiodic_variables_jet(2),
+                                                periodic_columns = periodic_variables_jet(2),
+                                                model_basetype = SimpleModel,
+                                                model_hyperparams = global_hyperparams,
+                                                preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
+        ep.add_component(ep_comp)        
+        ep_comp = DiscriminantEndpieceComponent(name = "1j", public_name = "1j",
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] == 1,
+                                                nonperiodic_columns = nonperiodic_variables_default_1j + MELA_1j_variables + nonperiodic_variables_jet(1),
+                                                periodic_columns = periodic_variables_jet(1),
+                                                model_basetype = SimpleModel,
+                                                model_hyperparams = global_hyperparams,
+                                                preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
+        ep.add_component(ep_comp)        
+        ep_comp = DiscriminantEndpieceComponent(name = "0j", public_name = "0j",
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] == 0,
+                                                nonperiodic_columns = nonperiodic_variables_default_0j + nonperiodic_variables_extra_lep(1),
+                                                periodic_columns = periodic_variables_default + periodic_variables_extra_lep(1),
+                                                model_basetype = SimpleModel,
+                                                model_hyperparams = global_hyperparams,
+                                                preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
+        ep.add_component(ep_comp)        
+        ZHh_cat.add_endpiece(ep)
+
+        # mode that is partly differential in the number of jets
+        ep = DiscriminantEndpiece("2|10j")
+        ep_comp = DiscriminantEndpieceComponent(name = "2j", public_name = "2j",
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] >= 2,
+                                                nonperiodic_columns = nonperiodic_variables_default + MELA_2j_variables + nonperiodic_variables_jet(2),
+                                                periodic_columns = periodic_variables_jet(2),
+                                                model_basetype = SimpleModel,
+                                                model_hyperparams = global_hyperparams,
+                                                preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
+        ep.add_component(ep_comp)        
+        ep_comp = DiscriminantEndpieceComponent(name = "01j", public_name = "01j",
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] < 2,
+                                                nonperiodic_columns = nonperiodic_variables_default_1j + nonperiodic_variables_jet(1),
+                                                periodic_columns = periodic_variables_default + periodic_variables_jet(1),
+                                                model_basetype = SimpleModel,
+                                                model_hyperparams = global_hyperparams,
+                                                preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
+        ep.add_component(ep_comp)        
+        ZHh_cat.add_endpiece(ep)
         
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
@@ -183,7 +278,7 @@ class ModelFactoryFullMassRangeDynamicInclusive:
         # ------------------------------------
         
         # define the categories for the classifier
-        ZHl_cat = Category("ZHl", {MC_path + "ZH" + mass_point_suffix +  "/ZZ4lAnalysis.root": cuts.ZHlept_cut})
+        ZHl_cat = Category("ZHl", {MC_path + "ZH" + mass_point_suffix + "/ZZ4lAnalysis.root": cuts.ZHlept_cut})
         
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
