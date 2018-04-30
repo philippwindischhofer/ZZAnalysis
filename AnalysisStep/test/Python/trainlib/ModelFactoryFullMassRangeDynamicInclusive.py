@@ -8,7 +8,7 @@ from SimpleModel import SimpleModel
 from config import TrainingConfig
 import cuts
 
-class ModelFactoryFullCategorySetDynamicInclusive:
+class ModelFactoryFullMassRangeDynamicInclusive:
 
     @staticmethod
     def GenerateSimpleModelCollections(MC_path, weight_path = None, input_config_file = None):
@@ -54,13 +54,12 @@ class ModelFactoryFullCategorySetDynamicInclusive:
         # ------------------------
 
         # define the categories for the classifier
-        #VBF_cat = Category("VBF", {MC_path + "VBFH125/ZZ4lAnalysis.root": cuts.mZZ_cut})
         VBF_cat = Category("VBF", {MC_path + "VBFH125/ZZ4lAnalysis.root": cuts.no_cut})
 
         # mode that is fully differential in the number of jets
         ep = DiscriminantEndpiece("2|1|0j")
         ep_comp = DiscriminantEndpieceComponent(name = "2j", public_name = "2j",
-                                                component_cut = lambda row: row["nCleanedJetsPt30"] >= 2,# and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] >= 2,
                                                 nonperiodic_columns = nonperiodic_variables_default + MELA_2j_variables + nonperiodic_variables_jet(2),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(2),
                                                 model_basetype = SimpleModel,
@@ -68,7 +67,7 @@ class ModelFactoryFullCategorySetDynamicInclusive:
                                                 preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
         ep.add_component(ep_comp)        
         ep_comp = DiscriminantEndpieceComponent(name = "1j", public_name = "1j",
-                                                component_cut = lambda row: row["nCleanedJetsPt30"] == 1,# and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] == 1,
                                                 nonperiodic_columns = nonperiodic_variables_default + MELA_1j_variables + nonperiodic_variables_jet(1),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(1),
                                                 model_basetype = SimpleModel,
@@ -76,7 +75,7 @@ class ModelFactoryFullCategorySetDynamicInclusive:
                                                 preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
         ep.add_component(ep_comp)        
         ep_comp = DiscriminantEndpieceComponent(name = "0j", public_name = "0j",
-                                                component_cut = lambda row: row["nCleanedJetsPt30"] == 0,# and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] == 0,
                                                 nonperiodic_columns = nonperiodic_variables_default_0j,
                                                 periodic_columns = [],
                                                 model_basetype = SimpleModel,
@@ -88,7 +87,7 @@ class ModelFactoryFullCategorySetDynamicInclusive:
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
         ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
-                                                component_cut = lambda row: True,#row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: True,
                                                 nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_jet(2),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(2),
                                                 model_basetype = SimpleModel,
@@ -100,13 +99,12 @@ class ModelFactoryFullCategorySetDynamicInclusive:
         # ------------------------------------
 
         # define the categories for the classifier
-        #ggH_cat = Category("ggH", {MC_path + "ggH125/ZZ4lAnalysis.root": cuts.mZZ_cut})
         ggH_cat = Category("ggH", {MC_path + "ggH125/ZZ4lAnalysis.root": cuts.no_cut})
 
         # mode that is fully differential in the number of jets
         ep = DiscriminantEndpiece("2|1|0j")
         ep_comp = DiscriminantEndpieceComponent(name = "2j", public_name = "2j",
-                                                component_cut = lambda row: row["nCleanedJetsPt30"] >= 2,# and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] >= 2,
                                                 nonperiodic_columns = nonperiodic_variables_default + MELA_2j_variables + nonperiodic_variables_jet(2),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(2),
                                                 model_basetype = SimpleModel,
@@ -114,7 +112,7 @@ class ModelFactoryFullCategorySetDynamicInclusive:
                                                 preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
         ep.add_component(ep_comp)        
         ep_comp = DiscriminantEndpieceComponent(name = "1j", public_name = "1j",
-                                                component_cut = lambda row: row["nCleanedJetsPt30"] == 1,# and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] == 1,
                                                 nonperiodic_columns = nonperiodic_variables_default_1j + MELA_1j_variables + nonperiodic_variables_jet(1),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(1),
                                                 model_basetype = SimpleModel,
@@ -122,7 +120,7 @@ class ModelFactoryFullCategorySetDynamicInclusive:
                                                 preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
         ep.add_component(ep_comp)        
         ep_comp = DiscriminantEndpieceComponent(name = "0j", public_name = "0j",
-                                                component_cut = lambda row: row["nCleanedJetsPt30"] == 0,# and row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: row["nCleanedJetsPt30"] == 0,
                                                 nonperiodic_columns = nonperiodic_variables_default_0j,
                                                 periodic_columns = [],
                                                 model_basetype = SimpleModel,
@@ -134,7 +132,7 @@ class ModelFactoryFullCategorySetDynamicInclusive:
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
         ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
-                                                component_cut = lambda row: row["ZZMass"] > 0,#row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: True,
                                                 nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_jet(2),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(2),
                                                 model_basetype = SimpleModel,
@@ -152,7 +150,7 @@ class ModelFactoryFullCategorySetDynamicInclusive:
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
         ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
-                                                component_cut = lambda row: row["ZZMass"] > 0,#row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: True,
                                                 nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_jet(2),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(2),
                                                 model_basetype = SimpleModel,
@@ -169,7 +167,7 @@ class ModelFactoryFullCategorySetDynamicInclusive:
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
         ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
-                                                component_cut = lambda row: row["ZZMass"] > 0,#row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: True,
                                                 nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_jet(2),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(2),
                                                 model_basetype = SimpleModel,
@@ -186,7 +184,7 @@ class ModelFactoryFullCategorySetDynamicInclusive:
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
         ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
-                                                component_cut = lambda row: row["ZZMass"] > 0,#row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: True,
                                                 nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_extra_lep(2) + nonperiodic_variables_jet(2),
                                                 periodic_columns = periodic_variables_default + periodic_variables_extra_lep(2) + periodic_variables_jet(2),
                                                 model_basetype = SimpleModel,
@@ -204,7 +202,7 @@ class ModelFactoryFullCategorySetDynamicInclusive:
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
         ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
-                                                component_cut = lambda row: row["ZZMass"] > 0,#row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: True,
                                                 nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_extra_lep(2) + nonperiodic_variables_jet(2),
                                                 periodic_columns = periodic_variables_default + periodic_variables_extra_lep(2) + periodic_variables_jet(2),
                                                 model_basetype = SimpleModel,
@@ -221,7 +219,7 @@ class ModelFactoryFullCategorySetDynamicInclusive:
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
         ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
-                                                component_cut = lambda row: row["ZZMass"] > 0,#row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: True,
                                                 nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_jet(2),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(2),
                                                 model_basetype = SimpleModel,
@@ -238,7 +236,7 @@ class ModelFactoryFullCategorySetDynamicInclusive:
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
         ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
-                                                component_cut = lambda row: row["ZZMass"] > 0,#row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: True,
                                                 nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_jet(2) + nonperiodic_variables_extra_lep(2),
                                                 periodic_columns = periodic_variables_default + periodic_variables_jet(2) + periodic_variables_extra_lep(2),
                                                 model_basetype = SimpleModel,
@@ -255,7 +253,7 @@ class ModelFactoryFullCategorySetDynamicInclusive:
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
         ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
-                                                component_cut = lambda row: row["ZZMass"] > 0,#row["ZZMass"] > 118. and row["ZZMass"] < 130.,
+                                                component_cut = lambda row: True,
                                                 nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_extra_lep(2) + nonperiodic_variables_jet(2),
                                                 periodic_columns = periodic_variables_default + periodic_variables_extra_lep(2) + periodic_variables_jet(2),
                                                 model_basetype = SimpleModel,

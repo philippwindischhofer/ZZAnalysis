@@ -14,6 +14,7 @@ from trainlib.ModelFactory import ModelFactory
 from trainlib.ModelFactoryFullCategorySetOptimizedInputs import ModelFactoryFullCategorySetOptimizedInputs
 from trainlib.ModelFactoryFullCategorySetOptimizedInputsInclusive import ModelFactoryFullCategorySetOptimizedInputsInclusive
 from trainlib.ModelFactoryFullCategorySetOptimizedInputsCombined import ModelFactoryFullCategorySetOptimizedInputsCombined
+from trainlib.ModelFactoryFullMassRangeDynamicInclusive import ModelFactoryFullMassRangeDynamicInclusive
 from trainlib.ModelFactoryFullCategorySetDynamic import ModelFactoryFullCategorySetDynamic
 from trainlib.ModelFactoryFullCategorySetDynamicInclusive import ModelFactoryFullCategorySetDynamicInclusive
 
@@ -233,8 +234,11 @@ def main():
         #mcoll = ModelFactoryFullCategorySetOptimizedInputsCombined.GenerateSimpleModelCollections(MC_path)
 
         # the baseline inputs that will be used for the sweep
-        #mcoll = ModelFactoryFullCategorySetDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
-        mcoll = ModelFactoryFullCategorySetDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
+        mcoll = ModelFactoryFullCategorySetDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
+        #mcoll = ModelFactoryFullCategorySetDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
+
+        # using the full mass range for training, not using the 118/130GeV cut
+        #mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
 
         #mcoll = ModelFactoryFullCategorySetOptimizedInputsInclusive.GenerateSimpleModelCollections(MC_path)
     elif model_type == 'CombinedModel':
