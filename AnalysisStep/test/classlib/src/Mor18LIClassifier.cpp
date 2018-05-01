@@ -2,7 +2,8 @@
 
 Mor18LIClassifier::Mor18LIClassifier(TString calibration_folder, TString config_path, TString engine)
 {
-    Mor18Config conf;
+    // set the path to where the augmented files are (even though this information is not needed for the classification step)
+    Mor18Config conf(calibration_folder + "../augmentation/");
 
     this -> calibration_folder = calibration_folder;
     this -> config_path = config_path;

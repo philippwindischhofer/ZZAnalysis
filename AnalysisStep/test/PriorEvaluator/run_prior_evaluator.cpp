@@ -143,6 +143,7 @@ int main( int argc, char *argv[] )
     // can also try to use the validation reference of the legacy classifier as reference for the optimization
     // Note: this really just takes the *scalings*, i.e. the reference values for the achievable Punzi purity from the other classifier -> should be OK!
     refdir = "/data_CMS/cms/wind/Mor18References/validation/";
+    //refdir = "/data_CMS/cms/wind/Mor18References/125/validation/";
 
     varclass = new Mor18LIClassifier(run_dir + "calibration_validation/", run_dir + "settings.conf", engine);
 

@@ -5,6 +5,7 @@
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
+MODE=$2
 GLOBAL_SETTINGS_DIR=$CAMPAIGN_DIR
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
@@ -21,7 +22,23 @@ PYTHON_LIB="trainlib"
 
 MC_DIR="/data_CMS/cms/wind/CJLST_NTuples/"
 #MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_masked/"
-datafiles="ggH125 VBFH125 ZH125 WplusH125 WminusH125 ttH125 ZZTo4l ggTo2e2mu_Contin_MCFM701 ggTo2mu2tau_Contin_MCFM701 ggTo4mu_Contin_MCFM701 ggTo2e2tau_Contin_MCFM701 ggTo4e_Contin_MCFM701 ggTo4tau_Contin_MCFM701"
+
+if [ "$MODE" = "all" ]
+then
+    cd $MC_DIR
+    dirs=`ls -d */`
+    datafiles=""
+
+    for dir in $dirs
+    do
+	datafiles=$datafiles" ${dir%/}"
+    done 
+else
+    # augment only the core ones needed for the prior optimization
+    datafiles="ggH125 VBFH125 ZH125 WplusH125 WminusH125 ttH125"
+fi
+
+echo $datafiles
 
 # ---------------------------------------------
 #  first, copy all the executables to the campaign folder
@@ -67,7 +84,7 @@ JOBS=`find * | grep run_augmentation.sh$`
 for JOB in $JOBS
 do
     echo "launching augmentation for " $CAMPAIGN_DIR$JOB
-    #$JOB_SUBMITTER $CAMPAIGN_DIR$JOB
+    $JOB_SUBMITTER $CAMPAIGN_DIR$JOB
 done
 
 cd $CURRENT_DIR

@@ -251,10 +251,10 @@ def main():
         #mcoll = ModelFactoryFullCategorySetDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
 
         # using the full mass range for training, not using the 118/130GeV cut
-        #mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, mass_point = mass_point)
+        mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, mass_point = mass_point)
 
         # exclusive version for full mass range
-        mcoll = ModelFactoryFullMassRangeDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, mass_point = mass_point)
+        #mcoll = ModelFactoryFullMassRangeDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, mass_point = mass_point)
 
         #mcoll = ModelFactoryFullCategorySetOptimizedInputsInclusive.GenerateSimpleModelCollections(MC_path)
     elif model_type == 'CombinedModel':
