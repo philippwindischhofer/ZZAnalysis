@@ -76,8 +76,7 @@ int main( int argc, char *argv[] )
    //TString bbH130      = path + "bbH130" + file_name;
 	
    TString tqH125      = path + "tqH125" + file_name;
-   
-   
+
    // Backgrounds
    TString ZZTo4l      = path + "ZZTo4l" + file_name;
    TString ggZZ4e      = path + "ggTo4e_Contin_MCFM701" + file_name;
@@ -107,23 +106,23 @@ int main( int argc, char *argv[] )
    //yields->MakeHistograms(VBFH126);
    //yields->MakeHistograms(VBFH130);
 
-   //yields->MakeHistograms(ZH120);
-//   yields->MakeHistograms(ZH124);
+   yields->MakeHistograms(ZH120);
+   yields->MakeHistograms(ZH124);
    yields->MakeHistograms(ZH125);
-//   yields->MakeHistograms(ZH126);
-   //yields->MakeHistograms(ZH130);
+   yields->MakeHistograms(ZH126);
+   yields->MakeHistograms(ZH130);
 
-   //yields->MakeHistograms(WpH120);
-//   yields->MakeHistograms(WpH124);
+   yields->MakeHistograms(WpH120);
+   yields->MakeHistograms(WpH124);
    yields->MakeHistograms(WpH125);
-//   yields->MakeHistograms(WpH126);
-   //yields->MakeHistograms(WpH130);
-//
-   //yields->MakeHistograms(WmH120);
-//   yields->MakeHistograms(WmH124);
+   yields->MakeHistograms(WpH126);
+   yields->MakeHistograms(WpH130);
+
+   yields->MakeHistograms(WmH120);
+   yields->MakeHistograms(WmH124);
    yields->MakeHistograms(WmH125);
-//   yields->MakeHistograms(WmH126);
-   //yields->MakeHistograms(WmH130);
+   yields->MakeHistograms(WmH126);
+   yields->MakeHistograms(WmH130);
 
    //yields->MakeHistograms(ttH120);
    //yields->MakeHistograms(ttH124);
@@ -156,12 +155,14 @@ int main( int argc, char *argv[] )
 //==============
  
    yields->GetHistos("Yields");
-   //yields->Calculate_SS_ZX_Yields( Data, FakeRates);
-//   yields->Print("Yields");
+
+   yields->Calculate_SS_ZX_Yields( Data, FakeRates);
+   yields->Print("Yields");
+
    yields->Print("Yields",  70., 110.);
 
    yields->Print("Yields", 150., 300.);
-	
+
    yields->PrintLatexTables("Yields", 118., 130.);
    yields->FillGraphs("Yields", 105., 140., "Q");
    yields->PrepareYamlFiles("Yields", "13", 105., 140.);

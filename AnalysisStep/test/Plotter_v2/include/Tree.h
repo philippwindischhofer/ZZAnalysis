@@ -34,6 +34,8 @@ public :
    Short_t         NObsInt;
    Float_t         NTrueInt;
    Float_t         PFMET;
+   Float_t         PFMET_jesUp;
+   Float_t         PFMET_jesDn;
    Float_t         PFMETPhi;
    Float_t         PFMETNoHF;
    Float_t         PFMETNoHFPhi;
@@ -43,6 +45,10 @@ public :
    Short_t         nCleanedJetsPt30_jecDn;
    Short_t         nCleanedJetsPt30BTagged;
    Short_t         nCleanedJetsPt30BTagged_bTagSF;
+   Short_t         nCleanedJetsPt30BTagged_bTagSFUp;
+   Short_t         nCleanedJetsPt30BTagged_bTagSFDn;
+   Short_t         nCleanedJetsPt30BTagged_bTagSF_jecUp;
+   Short_t         nCleanedJetsPt30BTagged_bTagSF_jecDn;
    Short_t         trigWord;
    Float_t         ZZMass;
    Float_t         ZZMassErr;
@@ -85,6 +91,7 @@ public :
    vector<float>   *fsrEta;
    vector<float>   *fsrPhi;
    vector<short>   *fsrLept;
+   vector<float>   *qcd_ggF_uncertSF;
    Bool_t          passIsoPreFSR;
    Float_t         p_GG_SIG_ghg2_1_ghz1_1_JHUGen;
    Float_t         p_GG_SIG_ghg2_1_ghz1prime2_1E4_JHUGen;
@@ -204,6 +211,18 @@ public :
    Float_t         p_HadWH_SIG_ghw1_1_ghw1prime2_1E4_JHUGen_JECUp;
    Float_t         p_HadWH_SIG_ghw1_1_ghw2_1_JHUGen_JECUp;
    Float_t         p_HadWH_SIG_ghw1_1_ghw4_1_JHUGen_JECUp;
+   Float_t			 p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal;
+   Float_t			 p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal;
+   Float_t			 p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal;
+   Float_t			 p_HadZH_BKG_MCFM_JECNominal;
+   Float_t			 p_HadWH_BKG_MCFM_JECNominal;
+   Float_t			 pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal;
+   Float_t			 pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal;
+   Float_t			 pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal;
+   Float_t			 pConst_JJVBF_BKG_MCFM_JECNominal;
+   Float_t			 pConst_HadZH_BKG_MCFM_JECNominal;
+   Float_t			 pConst_HadWH_BKG_MCFM_JECNominal;
+   Float_t			 pConst_JJQCD_BKG_MCFM_JECNominal;
    Float_t         p_ttHUndecayed_SIG_kappa_1_JHUGen_JECUp;
    Float_t         p_ttHUndecayed_SIG_kappatilde_1_JHUGen_JECUp;
    Float_t         p_ttHUndecayed_SIG_kappa_1_kappatilde_1_JHUGen_JECUp;
@@ -232,9 +251,17 @@ public :
    Float_t         p_JJQCD_SIG_ghg4_1_JHUGen_JECDn;
    Float_t         p_JJQCD_SIG_ghg2_1_ghg4_1_JHUGen_JECDn;
 	Float_t         p_HadZH_mavjj_JECNominal;
+	Float_t         p_HadZH_mavjj_JECUp;
+	Float_t         p_HadZH_mavjj_JECDn;
 	Float_t         p_HadZH_mavjj_true_JECNominal;
+	Float_t         p_HadZH_mavjj_true_JECUp;
+	Float_t         p_HadZH_mavjj_true_JECDn;
 	Float_t         p_HadWH_mavjj_JECNominal;
+	Float_t         p_HadWH_mavjj_JECUp;
+	Float_t         p_HadWH_mavjj_JECDn;
 	Float_t         p_HadWH_mavjj_true_JECNominal;
+	Float_t         p_HadWH_mavjj_true_JECUp;
+	Float_t         p_HadWH_mavjj_true_JECDn;
    Float_t         p_HadZH_SIG_ghz1_1_JHUGen_JECDn;
    Float_t         p_HadZH_SIG_ghz1prime2_1E4_JHUGen_JECDn;
    Float_t         p_HadZH_SIG_ghz2_1_JHUGen_JECDn;
@@ -411,6 +438,8 @@ public :
    Float_t			 ggH_NNLOPS_weight_unc;
    Float_t         genHEPMCweight;
    Float_t         PUWeight;
+   Float_t         PUWeight_Up;
+   Float_t         PUWeight_Dn;
    Float_t         dataMCWeight;
    Float_t         trigEffWeight;
    Float_t         overallEventWeight;
@@ -467,6 +496,22 @@ public :
    Float_t         LHEweight_QCDscale_muR0p5_muF1;
    Float_t         LHEweight_QCDscale_muR0p5_muF2;
    Float_t         LHEweight_QCDscale_muR0p5_muF0p5;
+   Float_t			 LHEweight_PDFVariation_Up;
+   Float_t			 LHEweight_PDFVariation_Dn;
+   Float_t			 LHEweight_AsMZ_Up;
+   Float_t			 LHEweight_AsMZ_Dn;
+   Float_t			 PythiaWeight_isr_muRoneoversqrt2;
+   Float_t			 PythiaWeight_fsr_muRoneoversqrt2;
+   Float_t			 PythiaWeight_isr_muRsqrt2;
+   Float_t			 PythiaWeight_fsr_muRsqrt2;
+   Float_t			 PythiaWeight_isr_muR0p5;
+   Float_t			 PythiaWeight_fsr_muR0p5;
+   Float_t			 PythiaWeight_isr_muR2;
+   Float_t			 PythiaWeight_fsr_muR2;
+   Float_t			 PythiaWeight_isr_muR0p25;
+	Float_t			 PythiaWeight_fsr_muR0p25;
+	Float_t			 PythiaWeight_isr_muR4;
+	Float_t			 PythiaWeight_fsr_muR4;
 
    // List of branches
    TBranch        *b_RunNumber;   //!
@@ -478,6 +523,8 @@ public :
    TBranch        *b_NObsInt;   //!
    TBranch        *b_NTrueInt;   //!
    TBranch        *b_PFMET;   //!
+   TBranch        *b_PFMET_jesUp;   //!
+   TBranch        *b_PFMET_jesDn;   //!
    TBranch        *b_PFMETPhi;   //!
    TBranch        *b_PFMETNoHF;   //!
    TBranch        *b_PFMETNoHFPhi;   //!
@@ -487,6 +534,10 @@ public :
    TBranch        *b_nCleanedJetsPt30_jecDn;   //!
    TBranch        *b_nCleanedJetsPt30BTagged;   //!
    TBranch        *b_nCleanedJetsPt30BTagged_bTagSF;   //!
+   TBranch        *b_nCleanedJetsPt30BTagged_bTagSFUp;   //!
+   TBranch        *b_nCleanedJetsPt30BTagged_bTagSFDn;   //!
+   TBranch        *b_nCleanedJetsPt30BTagged_bTagSF_jecUp;   //!
+   TBranch        *b_nCleanedJetsPt30BTagged_bTagSF_jecDn;   //!
    TBranch        *b_trigWord;   //!
    TBranch        *b_ZZMass;   //!
    TBranch        *b_ZZMassErr;   //!
@@ -530,6 +581,7 @@ public :
    TBranch        *b_fsrPhi;   //!
    TBranch        *b_fsrLept;   //!
    TBranch        *b_passIsoPreFSR;   //!
+   TBranch		   *b_qcd_ggF_uncertSF;   //!
    TBranch        *b_p_GG_SIG_ghg2_1_ghz1_1_JHUGen;   //!
    TBranch        *b_p_GG_SIG_ghg2_1_ghz1prime2_1E4_JHUGen;   //!
    TBranch        *b_p_GG_SIG_ghg2_1_ghz2_1_JHUGen;   //!
@@ -597,6 +649,18 @@ public :
    TBranch        *b_p_HadWH_SIG_ghw1_1_ghw1prime2_1E4_JHUGen_JECNominal;   //!
    TBranch        *b_p_HadWH_SIG_ghw1_1_ghw2_1_JHUGen_JECNominal;   //!
    TBranch        *b_p_HadWH_SIG_ghw1_1_ghw4_1_JHUGen_JECNominal;   //!
+	TBranch			*b_p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal;  //!
+   TBranch			*b_p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal;  //!
+   TBranch			*b_p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal;  //!
+   TBranch			*b_p_HadZH_BKG_MCFM_JECNominal;  //!
+   TBranch			*b_p_HadWH_BKG_MCFM_JECNominal;  //!
+   TBranch			*b_pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal;  //!
+   TBranch			*b_pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal;  //!
+   TBranch			*b_pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal;  //!
+   TBranch			*b_pConst_JJVBF_BKG_MCFM_JECNominal;  //!
+   TBranch			*b_pConst_HadZH_BKG_MCFM_JECNominal;  //!
+   TBranch			*b_pConst_HadWH_BKG_MCFM_JECNominal;  //!
+   TBranch			*b_pConst_JJQCD_BKG_MCFM_JECNominal;  //!
    TBranch        *b_p_ttHUndecayed_SIG_kappa_1_JHUGen_JECNominal;   //!
    TBranch        *b_p_ttHUndecayed_SIG_kappatilde_1_JHUGen_JECNominal;   //!
    TBranch        *b_p_ttHUndecayed_SIG_kappa_1_kappatilde_1_JHUGen_JECNominal;   //!
@@ -676,9 +740,17 @@ public :
    TBranch        *b_p_JJQCD_SIG_ghg4_1_JHUGen_JECDn;   //!
    TBranch        *b_p_JJQCD_SIG_ghg2_1_ghg4_1_JHUGen_JECDn;   //!
 	TBranch        *b_p_HadZH_mavjj_JECNominal;
+	TBranch        *b_p_HadZH_mavjj_JECUp;
+	TBranch        *b_p_HadZH_mavjj_JECDn;
 	TBranch        *b_p_HadZH_mavjj_true_JECNominal;
+	TBranch        *b_p_HadZH_mavjj_true_JECUp;
+	TBranch        *b_p_HadZH_mavjj_true_JECDn;
 	TBranch        *b_p_HadWH_mavjj_JECNominal;
+	TBranch        *b_p_HadWH_mavjj_JECUp;
+	TBranch        *b_p_HadWH_mavjj_JECDn;
 	TBranch        *b_p_HadWH_mavjj_true_JECNominal;
+	TBranch        *b_p_HadWH_mavjj_true_JECUp;
+	TBranch        *b_p_HadWH_mavjj_true_JECDn;
    TBranch        *b_p_HadZH_SIG_ghz1_1_JHUGen_JECDn;   //!
    TBranch        *b_p_HadZH_SIG_ghz1prime2_1E4_JHUGen_JECDn;   //!
    TBranch        *b_p_HadZH_SIG_ghz2_1_JHUGen_JECDn;   //!
@@ -855,6 +927,8 @@ public :
    TBranch			*b_ggH_NNLOPS_weight_unc;
    TBranch        *b_genHEPMCweight;   //!
    TBranch        *b_PUWeight;   //!
+   TBranch        *b_PUWeight_Up;   //!
+   TBranch        *b_PUWeight_Dn;   //!
    TBranch        *b_dataMCWeight;   //!
    TBranch        *b_trigEffWeight;   //!
    TBranch        *b_overallEventWeight;   //!
@@ -911,6 +985,22 @@ public :
    TBranch        *b_LHEweight_QCDscale_muR0p5_muF1;   //!
    TBranch        *b_LHEweight_QCDscale_muR0p5_muF2;   //!
    TBranch        *b_LHEweight_QCDscale_muR0p5_muF0p5;   //!
+	TBranch			*b_LHEweight_PDFVariation_Up;
+   TBranch			*b_LHEweight_PDFVariation_Dn;
+   TBranch			*b_LHEweight_AsMZ_Up;
+   TBranch			*b_LHEweight_AsMZ_Dn;
+   TBranch			*b_PythiaWeight_isr_muRoneoversqrt2;
+   TBranch			*b_PythiaWeight_fsr_muRoneoversqrt2;
+   TBranch			*b_PythiaWeight_isr_muRsqrt2;
+   TBranch			*b_PythiaWeight_fsr_muRsqrt2;
+   TBranch			*b_PythiaWeight_isr_muR0p5;
+   TBranch			*b_PythiaWeight_fsr_muR0p5;
+   TBranch			*b_PythiaWeight_isr_muR2;
+   TBranch			*b_PythiaWeight_fsr_muR2;
+   TBranch			*b_PythiaWeight_isr_muR0p25;
+	TBranch			*b_PythiaWeight_fsr_muR0p25;
+	TBranch			*b_PythiaWeight_isr_muR4;
+	TBranch			*b_PythiaWeight_fsr_muR4;
 
    Tree(TTree *tree=0);
    virtual ~Tree();
@@ -1000,6 +1090,7 @@ void Tree::Init(TTree *tree, TString input_file_name)
    ExtraLepPhi = 0;
    ExtraLepLepId = 0;
    reweightingweights = 0;
+   qcd_ggF_uncertSF = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
@@ -1015,6 +1106,8 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetBranchAddress("NObsInt", &NObsInt, &b_NObsInt);
    fChain->SetBranchAddress("NTrueInt", &NTrueInt, &b_NTrueInt);
    fChain->SetBranchAddress("PFMET", &PFMET, &b_PFMET);
+   fChain->SetBranchAddress("PFMET_jesUp", &PFMET_jesUp, &b_PFMET_jesUp);
+   fChain->SetBranchAddress("PFMET_jesDn", &PFMET_jesDn, &b_PFMET_jesDn);
    fChain->SetBranchAddress("PFMETPhi", &PFMETPhi, &b_PFMETPhi);
 //   fChain->SetBranchAddress("PFMETNoHF", &PFMETNoHF, &b_PFMETNoHF);
 //   fChain->SetBranchAddress("PFMETNoHFPhi", &PFMETNoHFPhi, &b_PFMETNoHFPhi);
@@ -1024,6 +1117,10 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetBranchAddress("nCleanedJetsPt30_jecDn", &nCleanedJetsPt30_jecDn, &b_nCleanedJetsPt30_jecDn);
    fChain->SetBranchAddress("nCleanedJetsPt30BTagged", &nCleanedJetsPt30BTagged, &b_nCleanedJetsPt30BTagged);
    fChain->SetBranchAddress("nCleanedJetsPt30BTagged_bTagSF", &nCleanedJetsPt30BTagged_bTagSF, &b_nCleanedJetsPt30BTagged_bTagSF);
+   fChain->SetBranchAddress("nCleanedJetsPt30BTagged_bTagSFUp", &nCleanedJetsPt30BTagged_bTagSFUp, &b_nCleanedJetsPt30BTagged_bTagSFUp);
+   fChain->SetBranchAddress("nCleanedJetsPt30BTagged_bTagSFDn", &nCleanedJetsPt30BTagged_bTagSFDn, &b_nCleanedJetsPt30BTagged_bTagSFDn);
+   fChain->SetBranchAddress("nCleanedJetsPt30BTagged_bTagSF_jecUp", &nCleanedJetsPt30BTagged_bTagSF_jecUp, &b_nCleanedJetsPt30BTagged_bTagSF_jecUp);
+   fChain->SetBranchAddress("nCleanedJetsPt30BTagged_bTagSF_jecDn", &nCleanedJetsPt30BTagged_bTagSF_jecDn, &b_nCleanedJetsPt30BTagged_bTagSF_jecDn);
    fChain->SetBranchAddress("trigWord", &trigWord, &b_trigWord);
    fChain->SetBranchAddress("ZZMass", &ZZMass, &b_ZZMass);
    fChain->SetBranchAddress("ZZMassErr", &ZZMassErr, &b_ZZMassErr);
@@ -1134,6 +1231,18 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetBranchAddress("p_HadWH_SIG_ghw1_1_ghw1prime2_1E4_JHUGen_JECNominal", &p_HadWH_SIG_ghw1_1_ghw1prime2_1E4_JHUGen_JECNominal, &b_p_HadWH_SIG_ghw1_1_ghw1prime2_1E4_JHUGen_JECNominal);
    fChain->SetBranchAddress("p_HadWH_SIG_ghw1_1_ghw2_1_JHUGen_JECNominal", &p_HadWH_SIG_ghw1_1_ghw2_1_JHUGen_JECNominal, &b_p_HadWH_SIG_ghw1_1_ghw2_1_JHUGen_JECNominal);
    fChain->SetBranchAddress("p_HadWH_SIG_ghw1_1_ghw4_1_JHUGen_JECNominal", &p_HadWH_SIG_ghw1_1_ghw4_1_JHUGen_JECNominal, &b_p_HadWH_SIG_ghw1_1_ghw4_1_JHUGen_JECNominal);
+	fChain->SetBranchAddress("p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal", &p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal, &b_p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal);
+   fChain->SetBranchAddress("p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal", &p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal, &b_p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal);
+   fChain->SetBranchAddress("p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal", &p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal, &b_p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal);
+   fChain->SetBranchAddress("p_HadZH_BKG_MCFM_JECNominal", &p_HadZH_BKG_MCFM_JECNominal, &b_p_HadZH_BKG_MCFM_JECNominal);
+   fChain->SetBranchAddress("p_HadWH_BKG_MCFM_JECNominal", &p_HadWH_BKG_MCFM_JECNominal, &b_p_HadWH_BKG_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal", &pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal, &b_pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal", &pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal, &b_pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal", &pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal, &b_pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_JJVBF_BKG_MCFM_JECNominal", &pConst_JJVBF_BKG_MCFM_JECNominal, &b_pConst_JJVBF_BKG_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_HadZH_BKG_MCFM_JECNominal", &pConst_HadZH_BKG_MCFM_JECNominal, &b_pConst_HadZH_BKG_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_HadWH_BKG_MCFM_JECNominal", &pConst_HadWH_BKG_MCFM_JECNominal, &b_pConst_HadWH_BKG_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_JJQCD_BKG_MCFM_JECNominal", &pConst_JJQCD_BKG_MCFM_JECNominal, &b_pConst_JJQCD_BKG_MCFM_JECNominal);
    fChain->SetBranchAddress("p_ttHUndecayed_SIG_kappa_1_JHUGen_JECNominal", &p_ttHUndecayed_SIG_kappa_1_JHUGen_JECNominal, &b_p_ttHUndecayed_SIG_kappa_1_JHUGen_JECNominal);
    fChain->SetBranchAddress("p_ttHUndecayed_SIG_kappatilde_1_JHUGen_JECNominal", &p_ttHUndecayed_SIG_kappatilde_1_JHUGen_JECNominal, &b_p_ttHUndecayed_SIG_kappatilde_1_JHUGen_JECNominal);
    fChain->SetBranchAddress("p_ttHUndecayed_SIG_kappa_1_kappatilde_1_JHUGen_JECNominal", &p_ttHUndecayed_SIG_kappa_1_kappatilde_1_JHUGen_JECNominal, &b_p_ttHUndecayed_SIG_kappa_1_kappatilde_1_JHUGen_JECNominal);
@@ -1213,9 +1322,17 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetBranchAddress("p_JJQCD_SIG_ghg4_1_JHUGen_JECDn", &p_JJQCD_SIG_ghg4_1_JHUGen_JECDn, &b_p_JJQCD_SIG_ghg4_1_JHUGen_JECDn);
    fChain->SetBranchAddress("p_JJQCD_SIG_ghg2_1_ghg4_1_JHUGen_JECDn", &p_JJQCD_SIG_ghg2_1_ghg4_1_JHUGen_JECDn, &b_p_JJQCD_SIG_ghg2_1_ghg4_1_JHUGen_JECDn);
 	fChain->SetBranchAddress("p_HadZH_mavjj_JECNominal", &p_HadZH_mavjj_JECNominal, &b_p_HadZH_mavjj_JECNominal);
+	fChain->SetBranchAddress("p_HadZH_mavjj_JECUp", &p_HadZH_mavjj_JECUp, &b_p_HadZH_mavjj_JECUp);
+	fChain->SetBranchAddress("p_HadZH_mavjj_JECDn", &p_HadZH_mavjj_JECDn, &b_p_HadZH_mavjj_JECDn);
 	fChain->SetBranchAddress("p_HadZH_mavjj_true_JECNominal", &p_HadZH_mavjj_true_JECNominal, &b_p_HadZH_mavjj_true_JECNominal);
+	fChain->SetBranchAddress("p_HadZH_mavjj_true_JECUp", &p_HadZH_mavjj_true_JECUp, &b_p_HadZH_mavjj_true_JECUp);
+	fChain->SetBranchAddress("p_HadZH_mavjj_true_JECDn", &p_HadZH_mavjj_true_JECDn, &b_p_HadZH_mavjj_true_JECDn);
 	fChain->SetBranchAddress("p_HadWH_mavjj_JECNominal", &p_HadWH_mavjj_JECNominal, &b_p_HadWH_mavjj_JECNominal);
+	fChain->SetBranchAddress("p_HadWH_mavjj_JECUp", &p_HadWH_mavjj_JECUp, &b_p_HadWH_mavjj_JECUp);
+	fChain->SetBranchAddress("p_HadWH_mavjj_JECDn", &p_HadWH_mavjj_JECDn, &b_p_HadWH_mavjj_JECDn);
 	fChain->SetBranchAddress("p_HadWH_mavjj_true_JECNominal", &p_HadWH_mavjj_true_JECNominal, &b_p_HadWH_mavjj_true_JECNominal);
+	fChain->SetBranchAddress("p_HadWH_mavjj_true_JECUp", &p_HadWH_mavjj_true_JECUp, &b_p_HadWH_mavjj_true_JECUp);
+	fChain->SetBranchAddress("p_HadWH_mavjj_true_JECDn", &p_HadWH_mavjj_true_JECDn, &b_p_HadWH_mavjj_true_JECDn);
    fChain->SetBranchAddress("p_HadZH_SIG_ghz1_1_JHUGen_JECDn", &p_HadZH_SIG_ghz1_1_JHUGen_JECDn, &b_p_HadZH_SIG_ghz1_1_JHUGen_JECDn);
    fChain->SetBranchAddress("p_HadZH_SIG_ghz1prime2_1E4_JHUGen_JECDn", &p_HadZH_SIG_ghz1prime2_1E4_JHUGen_JECDn, &b_p_HadZH_SIG_ghz1prime2_1E4_JHUGen_JECDn);
    fChain->SetBranchAddress("p_HadZH_SIG_ghz2_1_JHUGen_JECDn", &p_HadZH_SIG_ghz2_1_JHUGen_JECDn, &b_p_HadZH_SIG_ghz2_1_JHUGen_JECDn);
@@ -1396,15 +1513,18 @@ void Tree::Init(TTree *tree, TString input_file_name)
          fChain->SetBranchAddress("KFactor_QCD_qqZZ_Pt", &KFactor_QCD_qqZZ_Pt, &b_KFactor_QCD_qqZZ_Pt);
       }
 		
-      if ( input_file_name.Contains("ggH") )
+      if ( input_file_name.Contains("ggH") && !input_file_name.Contains("tune"))
       {
       	fChain->SetBranchAddress("ggH_NNLOPS_weight", &ggH_NNLOPS_weight, &b_ggH_NNLOPS_weight);
       	fChain->SetBranchAddress("ggH_NNLOPS_weight_unc", &ggH_NNLOPS_weight_unc, &b_ggH_NNLOPS_weight_unc);
+      	fChain->SetBranchAddress("qcd_ggF_uncertSF", &qcd_ggF_uncertSF, &b_qcd_ggF_uncertSF);
 		}
       fChain->SetBranchAddress("genFinalState", &genFinalState, &b_genFinalState);
       fChain->SetBranchAddress("genProcessId", &genProcessId, &b_genProcessId);
       fChain->SetBranchAddress("genHEPMCweight", &genHEPMCweight, &b_genHEPMCweight);
       fChain->SetBranchAddress("PUWeight", &PUWeight, &b_PUWeight);
+      fChain->SetBranchAddress("PUWeight_Up", &PUWeight_Up, &b_PUWeight_Up);
+      fChain->SetBranchAddress("PUWeight_Dn", &PUWeight_Dn, &b_PUWeight_Dn);
       fChain->SetBranchAddress("dataMCWeight", &dataMCWeight, &b_dataMCWeight);
       fChain->SetBranchAddress("trigEffWeight", &trigEffWeight, &b_trigEffWeight);
       fChain->SetBranchAddress("overallEventWeight", &overallEventWeight, &b_overallEventWeight);
@@ -1460,7 +1580,23 @@ void Tree::Init(TTree *tree, TString input_file_name)
       fChain->SetBranchAddress("LHEweight_QCDscale_muR2_muF0p5", &LHEweight_QCDscale_muR2_muF0p5, &b_LHEweight_QCDscale_muR2_muF0p5);
       fChain->SetBranchAddress("LHEweight_QCDscale_muR0p5_muF1", &LHEweight_QCDscale_muR0p5_muF1, &b_LHEweight_QCDscale_muR0p5_muF1);
       fChain->SetBranchAddress("LHEweight_QCDscale_muR0p5_muF2", &LHEweight_QCDscale_muR0p5_muF2, &b_LHEweight_QCDscale_muR0p5_muF2);
-      fChain->SetBranchAddress("LHEweight_QCDscale_muR0p5_muF0p5", &LHEweight_QCDscale_muR0p5_muF0p5, &b_LHEweight_QCDscale_muR0p5_muF0p5);
+      fChain->SetBranchAddress("LHEweight_QCDscale_muR0p5_muF0p5", &LHEweight_QCDscale_muR0p5_muF0p5, &b_LHEweight_QCDscale_muR0p5_muF0p5);		
+      fChain->SetBranchAddress("LHEweight_PDFVariation_Up", &LHEweight_PDFVariation_Up, &b_LHEweight_PDFVariation_Up);
+      fChain->SetBranchAddress("LHEweight_PDFVariation_Dn", &LHEweight_PDFVariation_Dn, &b_LHEweight_PDFVariation_Dn);
+      fChain->SetBranchAddress("LHEweight_AsMZ_Up", &LHEweight_AsMZ_Up, &b_LHEweight_AsMZ_Up);
+      fChain->SetBranchAddress("LHEweight_AsMZ_Dn", &LHEweight_AsMZ_Dn, &b_LHEweight_AsMZ_Dn);
+      fChain->SetBranchAddress("PythiaWeight_isr_muRoneoversqrt2", &PythiaWeight_isr_muRoneoversqrt2, &b_PythiaWeight_isr_muRoneoversqrt2);
+      fChain->SetBranchAddress("PythiaWeight_fsr_muRoneoversqrt2", &PythiaWeight_fsr_muRoneoversqrt2, &b_PythiaWeight_fsr_muRoneoversqrt2);
+      fChain->SetBranchAddress("PythiaWeight_isr_muRsqrt2", &PythiaWeight_isr_muRsqrt2, &b_PythiaWeight_isr_muRsqrt2);
+      fChain->SetBranchAddress("PythiaWeight_fsr_muRsqrt2", &PythiaWeight_fsr_muRsqrt2, &b_PythiaWeight_fsr_muRsqrt2);
+      fChain->SetBranchAddress("PythiaWeight_isr_muR0p5", &PythiaWeight_isr_muR0p5, &b_PythiaWeight_isr_muR0p5);
+      fChain->SetBranchAddress("PythiaWeight_fsr_muR0p5", &PythiaWeight_fsr_muR0p5, &b_PythiaWeight_fsr_muR0p5);
+      fChain->SetBranchAddress("PythiaWeight_isr_muR2", &PythiaWeight_isr_muR2, &b_PythiaWeight_isr_muR2);
+      fChain->SetBranchAddress("PythiaWeight_fsr_muR2", &PythiaWeight_fsr_muR2, &b_PythiaWeight_fsr_muR2);
+      fChain->SetBranchAddress("PythiaWeight_isr_muR0p25", &PythiaWeight_isr_muR0p25, &b_PythiaWeight_isr_muR0p25);
+      fChain->SetBranchAddress("PythiaWeight_fsr_muR0p25", &PythiaWeight_fsr_muR0p25, &b_PythiaWeight_fsr_muR0p25);
+      fChain->SetBranchAddress("PythiaWeight_isr_muR4", &PythiaWeight_isr_muR4, &b_PythiaWeight_isr_muR4);
+      fChain->SetBranchAddress("PythiaWeight_fsr_muR4", &PythiaWeight_fsr_muR4, &b_PythiaWeight_fsr_muR4);
    }
    
    Notify();

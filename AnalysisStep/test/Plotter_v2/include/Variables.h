@@ -33,6 +33,7 @@ public:
       TString var_X_label_4e    = "m_{4#font[12]{e}} (GeV)";
       TString var_X_label_4mu   = "m_{4#font[12]{#mu}} (GeV)";
       TString var_X_label_2e2mu = "m_{2#font[12]{e}2#font[12]{#mu}} (GeV)";
+      TString var_X_label_2mu2e = "m_{2#font[12]{mu}2#font[12]{#e}} (GeV)";
       TString var_Y_label       = "Events / 4 GeV";
       TString var_cut_label     = "";
       Int_t var_N_bin = 283;
@@ -215,7 +216,7 @@ public:
       TString var_X_label = "D_{bkg}^{kin}";
       TString var_Y_label = "Events / 0.1";
       TString var_cut_label = "118 < m_{4#font[12]{l}} < 130 GeV";
-      Int_t var_N_bin = 20;
+      Int_t var_N_bin = 10;
       Float_t var_min = 0;
       Float_t var_max = 1;
       Bool_t var_log_x = 0;
@@ -226,6 +227,80 @@ public:
       Int_t varLegPos = 33;
       Int_t rebinningDYTTbar = 4;
       
+      Float_t cut_d = 118.;
+      Float_t cut_u = 130.;
+   };
+	
+	struct DVBFDEC
+   {
+      TString var_X_label = "D_{bkg}^{VBF+dec}";
+      TString var_Y_label = "Events / 0.05";
+      TString var_cut_label = "";
+      Int_t var_N_bin = 20;
+      Float_t var_min = 0;
+      Float_t var_max = 1;
+      Bool_t var_log_x = 0;
+      Bool_t var_log_y = 0;
+      Int_t restrict_count_var = 0;
+      Float_t var_min_factor = 0;
+      Int_t var_CMS_pos = 0;
+      Int_t varLegPos = 33;
+      Int_t rebinningDYTTbar = 4;
+   };
+	
+   struct DVBFDEC_M4L118130
+   {
+      TString var_X_label = "D_{bkg}^{VBF+dec}";
+      TString var_Y_label = "Events / 0.1";
+      TString var_cut_label = "118 < m_{4#font[12]{l}} < 130 GeV";
+      Int_t var_N_bin = 10;
+      Float_t var_min = 0;
+      Float_t var_max = 1;
+      Bool_t var_log_x = 0;
+      Bool_t var_log_y = 0;
+      Int_t restrict_count_var = 0;
+      Float_t var_min_factor = 0;
+      Int_t var_CMS_pos = 0;
+      Int_t varLegPos = 33;
+      Int_t rebinningDYTTbar = 4;
+		
+      Float_t cut_d = 118.;
+      Float_t cut_u = 130.;
+   };
+	
+	struct DVHDEC
+   {
+      TString var_X_label = "D_{bkg}^{VH+dec}";
+      TString var_Y_label = "Events / 0.05";
+      TString var_cut_label = "";
+      Int_t var_N_bin = 20;
+      Float_t var_min = 0;
+      Float_t var_max = 1;
+      Bool_t var_log_x = 0;
+      Bool_t var_log_y = 0;
+      Int_t restrict_count_var = 0;
+      Float_t var_min_factor = 0;
+      Int_t var_CMS_pos = 0;
+      Int_t varLegPos = 33;
+      Int_t rebinningDYTTbar = 4;
+   };
+	
+   struct DVHDEC_M4L118130
+   {
+      TString var_X_label = "D_{bkg}^{VH+dec}";
+      TString var_Y_label = "Events / 0.1";
+      TString var_cut_label = "118 < m_{4#font[12]{l}} < 130 GeV";
+      Int_t var_N_bin = 10;
+      Float_t var_min = 0;
+      Float_t var_max = 1;
+      Bool_t var_log_x = 0;
+      Bool_t var_log_y = 0;
+      Int_t restrict_count_var = 0;
+      Float_t var_min_factor = 0;
+      Int_t var_CMS_pos = 0;
+      Int_t varLegPos = 33;
+      Int_t rebinningDYTTbar = 4;
+		
       Float_t cut_d = 118.;
       Float_t cut_u = 130.;
    };
@@ -617,7 +692,130 @@ public:
       Int_t var_CMS_pos = 0;
       Int_t varLegPos = 33;
    };
-   
+	
+//===========
+// Others
+//===========
+	
+	struct PFMET
+   {
+      TString var_X_label = "E_{T}^{miss} (GeV)";
+      TString var_Y_label = "Events / 10";
+      TString var_cut_label = "";
+      Int_t var_N_bin = 40;
+      Float_t var_min = 0;
+      Float_t var_max = 400;
+      Bool_t var_log_x = 0;
+      Bool_t var_log_y = 1;
+      Int_t restrict_count_var = 0;
+      Float_t var_min_factor = 0;
+      Int_t var_CMS_pos = 33;
+      Int_t varLegPos = 33;
+      Int_t rebinningDYTTbar = 2;
+   };
+	
+	struct Pt_leading
+   {
+      TString var_X_label = "p_{T}^{Leading}";
+      TString var_Y_label = "Events / 4 (GeV)";
+      TString var_cut_label = "";
+      Int_t var_N_bin = 25;
+      Float_t var_min = 10;
+      Float_t var_max = 110;
+      Bool_t var_log_x = 0;
+      Bool_t var_log_y = 0;
+      Int_t restrict_count_var = 0;
+      Float_t var_min_factor = 0;
+      Int_t var_CMS_pos = 33;
+      Int_t varLegPos = 33;
+      Int_t rebinningDYTTbar = 2;
+   };
+	
+	struct Pt_trailing
+   {
+      TString var_X_label = "p_{T}^{Trailing}";
+      TString var_Y_label = "Events / 4 (GeV)";
+      TString var_cut_label = "";
+      Int_t var_N_bin = 25;
+      Float_t var_min = 5;
+      Float_t var_max = 105;
+      Bool_t var_log_x = 0;
+      Bool_t var_log_y = 0;
+      Int_t restrict_count_var = 0;
+      Float_t var_min_factor = 0;
+      Int_t var_CMS_pos = 33;
+      Int_t varLegPos = 33;
+      Int_t rebinningDYTTbar = 2;
+   };
+	
+	struct SIP_leading
+   {
+      TString var_X_label = "SIP_{3D}^{Maximum}";
+      TString var_Y_label = "Events / 0.1";
+      TString var_cut_label = "";
+      Int_t var_N_bin = 40;
+      Float_t var_min = 0;
+      Float_t var_max = 4;
+      Bool_t var_log_x = 0;
+      Bool_t var_log_y = 1;
+      Int_t restrict_count_var = 0;
+      Float_t var_min_factor = 0;
+      Int_t var_CMS_pos = 33;
+      Int_t varLegPos = 33;
+      Int_t rebinningDYTTbar = 2;
+   };
+	
+	struct SIP_trailing
+   {
+      TString var_X_label = "SIP_{3D}^{Minimum}";
+      TString var_Y_label = "Events / 0.1";
+      TString var_cut_label = "";
+      Int_t var_N_bin = 40;
+      Float_t var_min = 0;
+      Float_t var_max = 4;
+      Bool_t var_log_x = 0;
+      Bool_t var_log_y = 1;
+      Int_t restrict_count_var = 0;
+      Float_t var_min_factor = 0;
+      Int_t var_CMS_pos = 33;
+      Int_t varLegPos = 33;
+      Int_t rebinningDYTTbar = 2;
+   };
+	
+	struct ISO_leading
+   {
+      TString var_X_label = "RelIso_{Maximum}";
+      TString var_Y_label = "Events / 0.1";
+      TString var_cut_label = "";
+      Int_t var_N_bin = 35;
+      Float_t var_min = 0;
+      Float_t var_max = 0.35;
+      Bool_t var_log_x = 0;
+      Bool_t var_log_y = 1;
+      Int_t restrict_count_var = 0;
+      Float_t var_min_factor = 0;
+      Int_t var_CMS_pos = 33;
+      Int_t varLegPos = 33;
+      Int_t rebinningDYTTbar = 2;
+   };
+	
+	struct ISO_trailing
+   {
+      TString var_X_label = "RelIso_{Minimum}";
+      TString var_Y_label = "Events / 0.1";
+      TString var_cut_label = "";
+      Int_t var_N_bin = 35;
+      Float_t var_min = 0;
+      Float_t var_max = 0.35;
+      Bool_t var_log_x = 0;
+      Bool_t var_log_y = 1;
+      Int_t restrict_count_var = 0;
+      Float_t var_min_factor = 0;
+      Int_t var_CMS_pos = 33;
+      Int_t varLegPos = 33;
+      Int_t rebinningDYTTbar = 2;
+   };
+	
    struct Pt4l
    {
       TString var_X_label = "p_{T}^{4#font[12]{l}} (GeV)";
@@ -702,23 +900,7 @@ public:
       Int_t varLegPos = 33;
       Int_t rebinningDYTTbar = 1;
    };
-   
-   struct M4l_100180_HighKD
-   {
-      TString var_X_label = "m_{4#font[12]{l}} (GeV)";
-      TString var_Y_label = "Events / 3 GeV";
-      TString var_cut_label = "D_{bkg}^{kin} > 0.5";
-      Int_t var_N_bin = 27;
-      Float_t var_min = 100;
-      Float_t var_max = 181;
-      Bool_t var_log_x = 0;
-      Bool_t var_log_y = 0;
-      Int_t restrict_count_var = 0;
-      Float_t var_min_factor = 100000;
-      Int_t var_CMS_pos = 11;
-      Int_t varLegPos = 33;
-      Int_t rebinningDYTTbar = 1;
-   };
+	
    
    struct M4l_110150_HighKD
    {

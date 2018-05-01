@@ -13,8 +13,7 @@
 #include "DataFormats/PatCandidates/interface/Electron.h"
 
 #include <ZZAnalysis/AnalysisStep/interface/DaughterDataHelpers.h>
-#include <ZZAnalysis/AnalysisStep/interface/MELABranch.h>
-#include <ZZAnalysis/AnalysisStep/interface/MELACluster.h>
+#include <MelaAnalytics/GenericMEComputer/interface/GMECHelperFunctions.h>
 
 using namespace BranchHelpers;
 

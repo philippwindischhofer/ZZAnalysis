@@ -72,6 +72,7 @@ namespace {
   Float_t ZEta = 0;
   Float_t ZPhi = 0;
   Short_t ZFlav = 0;
+  Short_t evtPassMETTrigger = 0;
   std::vector<float> LepPt;
   std::vector<float> LepEta;
   std::vector<float> LepPhi;
@@ -89,7 +90,7 @@ namespace {
   std::vector<float> LepScale_Unc;
   std::vector<float> LepSmear_Unc;
   std::vector<float> fsrPt;
-  std::vector<float> fsrEta; 
+  std::vector<float> fsrEta;
   std::vector<float> fsrPhi;
   std::vector<float> fsrDR;
   std::vector<short> fsrLept;
@@ -158,9 +159,9 @@ class ZNtupleMaker : public edm::EDAnalyzer {
 public:
   explicit ZNtupleMaker(const edm::ParameterSet&);
   ~ZNtupleMaker();
-  
+	
   static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
-  
+	
 private:
   virtual void beginJob() ;
   virtual void beginRun(edm::Run const&, edm::EventSetup const&);
@@ -169,7 +170,7 @@ private:
   virtual void endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
   virtual void analyze(const edm::Event&, const edm::EventSetup&);
 
-  void BookAllBranches();  
+  void BookAllBranches();
   virtual void FillCandidate(const pat::CompositeCandidate& higgs, bool evtPass, const edm::Event&);
   virtual void FillJet(const pat::Jet& jet);
   virtual void endJob();
@@ -191,6 +192,7 @@ private:
   bool skipEmptyEvents; // Skip events whith no selected candidate (otherwise, gen info is preserved for all events)
   Float_t xsec;
   int year;
+  edm::InputTag metTag;
 
   edm::EDGetTokenT<GenEventInfoProduct> genInfoToken;
   edm::EDGetTokenT<edm::View<pat::CompositeCandidate> > candToken;
@@ -211,7 +213,7 @@ private:
   //counters
   Float_t Nevt_Gen;
   Float_t Nevt_Gen_lumiBlock;
-  
+	
   Float_t gen_sumPUWeight;
   Float_t gen_sumGenMCWeight;
   Float_t gen_sumWeights;
@@ -245,11 +247,12 @@ ZNtupleMaker::ZNtupleMaker(const edm::ParameterSet& pset) :
   hTH2F_El_RSE(0)
 {
   theCandLabel = pset.getUntrackedParameter<string>("CandCollection"); // Name of input Z collection
-  theFileName = pset.getUntrackedParameter<string>("fileName"); 
-  skipEmptyEvents = pset.getParameter<bool>("skipEmptyEvents"); // Do not store 
+  theFileName = pset.getUntrackedParameter<string>("fileName");
+  skipEmptyEvents = pset.getParameter<bool>("skipEmptyEvents"); // Do not store
   sampleName = pset.getParameter<string>("sampleName");
   xsec = pset.getParameter<double>("xsec");
   year = pset.getParameter<int>("setup");
+  metTag = pset.getParameter<edm::InputTag>("metSrc");
 
   consumesMany<std::vector< PileupSummaryInfo > >();
   genInfoToken = consumes<GenEventInfoProduct>(edm::InputTag("generator"));
@@ -257,7 +260,7 @@ ZNtupleMaker::ZNtupleMaker(const edm::ParameterSet& pset) :
   triggerResultToken = consumes<edm::TriggerResults>(edm::InputTag("TriggerResults"));
   vtxToken = consumes<vector<reco::Vertex> >(edm::InputTag("goodPrimaryVertices"));
   jetToken = consumes<edm::View<pat::Jet> >(edm::InputTag("cleanJets"));
-  metToken = consumes<pat::METCollection>(edm::InputTag("slimmedMETs"));
+  metToken = consumes<pat::METCollection>(metTag);
 
   electronToken = consumes<vector<pat::Electron> >(edm::InputTag("softElectrons"));
   //softElectrons->clear();
@@ -271,7 +274,7 @@ ZNtupleMaker::ZNtupleMaker(const edm::ParameterSet& pset) :
     applySkim=true;
   } else {
     applyTrigger=false;
-    applySkim=false;    
+    applySkim=false;
   }
 
   isMC = myHelper.isMC();
@@ -370,7 +373,7 @@ ZNtupleMaker::ZNtupleMaker(const edm::ParameterSet& pset) :
     	 abort();
 	 }
   }
-  
+	
 }
 
 
@@ -390,15 +393,15 @@ void ZNtupleMaker::analyze(const edm::Event& event, const edm::EventSetup& eSetu
     // get PU weights
     vector<Handle<std::vector< PileupSummaryInfo > > >  PupInfos; //FIXME support for miniAOD v1/v2 where name changed; catch does not work...
     event.getManyByType(PupInfos);
-    Handle<std::vector< PileupSummaryInfo > > PupInfo = PupInfos.front(); 
-    
+    Handle<std::vector< PileupSummaryInfo > > PupInfo = PupInfos.front();
+	  
     std::vector<PileupSummaryInfo>::const_iterator PVI;
     for(PVI = PupInfo->begin(); PVI != PupInfo->end(); ++PVI) {
-      if(PVI->getBunchCrossing() == 0) { 
+      if(PVI->getBunchCrossing() == 0) {
         NObsInt  = PVI->getPU_NumInteractions();
         NTrueInt = PVI->getTrueNumInteractions();
         break;
-      } 
+      }
     }
 
     PUWeight = pileUpReweight.weight(NTrueInt);
@@ -435,6 +438,9 @@ void ZNtupleMaker::analyze(const edm::Event& event, const edm::EventSetup& eSetu
   // Apply trigger request (skip event)
   bool evtPassTrigger = myHelper.passTrigger(event,triggerResults,trigWord);
   if (applyTrigger && !evtPassTrigger) return;
+	
+  // Apply MET trigger request (skip event)
+  evtPassMETTrigger = myHelper.passMETTrigger(event,triggerResults);
 
 
   // General event information
@@ -488,9 +494,9 @@ void ZNtupleMaker::analyze(const edm::Event& event, const edm::EventSetup& eSetu
     myTree->FillCurrentTree();
     ++nFilled;
   }
-  
+	
   // If no candidate was filled but we still want to keep gen-level and weights, we need to fill one entry anyhow.
-  if (skipEmptyEvents==false && nFilled==0) myTree->FillCurrentTree(); 
+  if (skipEmptyEvents==false && nFilled==0) myTree->FillCurrentTree();
 }
 
 
@@ -523,7 +529,7 @@ void ZNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool evtPa
   vector<short> fsrIndex;
   vector<string> labels;
   userdatahelpers::getSortedZLeptons(cand, leptons, labels, fsrPhot, fsrIndex);
-  
+	
   LepPt.clear();
   LepEta.clear();
   LepPhi.clear();
@@ -547,7 +553,7 @@ void ZNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool evtPa
     // Check that I don't mess up with labels[] and leptons[]
     assert(userdatahelpers::getUserFloat(leptons[i],"SIP") == cand.userFloat(labels[i]+"SIP"));
 
-    //Fill the info on the lepton candidates  
+    //Fill the info on the lepton candidates
     LepPt .push_back( leptons[i]->pt() );
     LepEta.push_back( leptons[i]->eta() );
     LepPhi.push_back( leptons[i]->phi() );
@@ -566,14 +572,14 @@ void ZNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool evtPa
     LepCombRelIsoPFPreFSR.push_back( userdatahelpers::getUserFloat(leptons[i],"combRelIsoPF") );
   }
 
-  // FSR 
+  // FSR
   fsrPt.clear();
   fsrEta.clear();
   fsrPhi.clear();
   fsrLept.clear();
   fsrLeptID.clear();
   fsrDR.clear();
-  for (unsigned i=0; i<fsrPhot.size(); ++i) { 
+  for (unsigned i=0; i<fsrPhot.size(); ++i) {
     math::XYZTLorentzVector fsr = fsrPhot[i]->p4();
     fsrPt.push_back(fsr.pt());
     fsrEta.push_back(fsr.eta());
@@ -703,7 +709,7 @@ void ZNtupleMaker::beginJob()
 // ------------ method called once each job just after ending the event loop  ------------
 void ZNtupleMaker::endJob()
 {
-  hCounter->SetBinContent(1,gen_sumWeights); 
+  hCounter->SetBinContent(1,gen_sumWeights);
   hCounter->SetBinContent(2,gen_sumGenMCWeight);
   hCounter->SetBinContent(3,gen_sumPUWeight);
 
@@ -716,7 +722,7 @@ void ZNtupleMaker::endJob()
 
 // ------------ method called when starting to processes a run  ------------
 void ZNtupleMaker::beginRun(edm::Run const&, edm::EventSetup const&)
-{ 
+{
 }
 
 // ------------ method called when ending the processing of a run  ------------
@@ -737,11 +743,11 @@ void ZNtupleMaker::endLuminosityBlock(edm::LuminosityBlock const& iLumi, edm::Ev
   edm::Handle<edm::MergeableCounter> preSkimCounter;
   if (iLumi.getByToken(preSkimToken, preSkimCounter)) { // Counter before skim. Does not exist for non-skimmed samples.
     Nevt_preskim = preSkimCounter->value;
-  }  
+  }
 
   // Nevt_gen: this is the number before any skim
   if (Nevt_preskim>=0.) {
-    Nevt_Gen += Nevt_preskim; 
+    Nevt_Gen += Nevt_preskim;
   } else {
     Nevt_Gen += Nevt_Gen_lumiBlock ;
   }
@@ -921,6 +927,7 @@ void ZNtupleMaker::BookAllBranches(){
   myTree->Book("trigWord",trigWord);
   myTree->Book("Zsel",Zsel);
   myTree->Book("ZMass",ZMass);
+  myTree->Book("evtPassMETFilter",evtPassMETTrigger);
   myTree->Book("ZMassPreFSR",ZMassPreFSR);
   myTree->Book("ZPt",ZPt);
   myTree->Book("ZEta",ZEta);
@@ -975,7 +982,7 @@ void ZNtupleMaker::BookAllBranches(){
     myTree->Book("AddMuPhotonIso",AddMuPhotonIso);
     myTree->Book("AddMuCombRelIsoPF",AddMuCombRelIsoPF);
   }
-  
+	
   myTree->Book("nCleanedJetsPt30",nCleanedJetsPt30);
 
   if (addJets) {
@@ -1001,7 +1008,7 @@ void ZNtupleMaker::BookAllBranches(){
     myTree->Book("PFMET_jesDn",PFMET_jesDn);
     myTree->Book("PFMETPhi",PFMETPhi);
   }
-  
+	
   if(addQGLInputs){
     myTree->Book("JetAxis2",JetAxis2);
     myTree->Book("JetMult",JetMult);
@@ -1017,3 +1024,4 @@ void ZNtupleMaker::BookAllBranches(){
 
 //define this as a plug-in
 DEFINE_FWK_MODULE(ZNtupleMaker);
+

@@ -62,7 +62,6 @@
 #include <ZZAnalysis/AnalysisStep/interface/miscenums.h>
 #include <ZZAnalysis/AnalysisStep/interface/ggF_qcd_uncertainty_2017.h>
 
-#include <ZZMatrixElement/MELA/interface/Mela.h>
 #include <MelaAnalytics/CandidateLOCaster/interface/MELACandidateRecaster.h>
 
 #include "ZZ4lConfigHelper.h"
@@ -161,6 +160,7 @@ namespace {
   Float_t xistar  = 0;
   Float_t TLE_dR_Z = -1; // Delta-R between a TLE and the Z it does not belong to.
   Float_t TLE_min_dR_3l = 999; // Minimum DR between a TLE and any of the other leptons
+  Short_t evtPassMETTrigger = 0;
 
   std::vector<float> LepPt;
   std::vector<float> LepEta;
@@ -171,9 +171,10 @@ namespace {
   std::vector<bool> LepisID;
   std::vector<float> LepBDT;
   std::vector<char> LepMissingHit;
-  //std::vector<float> LepChargedHadIso;
-  //std::vector<float> LepNeutralHadIso;
-  //std::vector<float> LepPhotonIso;
+  std::vector<float> LepChargedHadIso;
+  std::vector<float> LepNeutralHadIso;
+  std::vector<float> LepPhotonIso;
+  std::vector<float> LepPUIsoComponent;
   std::vector<float> LepCombRelIsoPF;
   std::vector<short> LepisLoose;
   std::vector<float> LepRecoSF;
@@ -391,7 +392,6 @@ private:
   void getCheckedUserFloat(const pat::CompositeCandidate& cand, const std::string& strval, Float_t& setval, Float_t defaultval=0);
 
   void buildMELABranches();
-  void addToMELACluster(MELAComputation* me_computer, std::vector<MELACluster*>& me_clusters);
   void computeMELABranches(MELACandidate* cand);
   void updateMELAClusters_Common(const string clustertype);
   void updateMELAClusters_NoInitialQ(const string clustertype);
@@ -532,6 +532,7 @@ HZZ4lNtupleMaker::HZZ4lNtupleMaker(const edm::ParameterSet& pset) :
   theChannel(myHelper.channel()), // Valid options: ZZ, ZLL, ZL
   theCandLabel(pset.getUntrackedParameter<string>("CandCollection")), // Name of input ZZ collection
   theFileName(pset.getUntrackedParameter<string>("fileName")),
+  myTree(nullptr),
   skipEmptyEvents(pset.getParameter<bool>("skipEmptyEvents")), // Do not store events with no selected candidate (normally: true)
   failedTreeLevel(FailedTreeLevel(pset.getParameter<int>("failedTreeLevel"))),
   metTag(pset.getParameter<edm::InputTag>("metSrc")),
@@ -999,6 +1000,9 @@ void HZZ4lNtupleMaker::analyze(const edm::Event& event, const edm::EventSetup& e
   // Apply trigger request (skip event)
   bool evtPassTrigger = myHelper.passTrigger(event,triggerResults,trigWord);
   if (applyTrigger && !evtPassTrigger) failed = true; //but gen information will still be recorded if failedTreeLevel != 0
+	
+  // Apply MET trigger request (skip event)
+  evtPassMETTrigger = myHelper.passMETTrigger(event,triggerResults);
 
   if (skipEmptyEvents && !failedTreeLevel && (cands->size() == 0 || failed)) return; // Skip events with no candidate, unless skipEmptyEvents = false or failedTreeLevel != 0
 
@@ -1512,9 +1516,10 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
   LepisID.clear();
   LepBDT.clear();
   LepMissingHit.clear();
-  //LepChargedHadIso.clear();
-  //LepNeutralHadIso.clear();
-  //LepPhotonIso.clear();
+  LepChargedHadIso.clear();
+  LepNeutralHadIso.clear();
+  LepPhotonIso.clear();
+  LepPUIsoComponent.clear();
   LepCombRelIsoPF.clear();
 
   LepRecoSF.clear();
@@ -1689,9 +1694,10 @@ void HZZ4lNtupleMaker::FillCandidate(const pat::CompositeCandidate& cand, bool e
     LepMissingHit.push_back( lepFlav==11 ? userdatahelpers::getUserFloat(leptons[i],"missingHit") : 0 );
     LepScale_Unc.push_back( userdatahelpers::getUserFloat(leptons[i],"scale_unc") );
     LepSmear_Unc.push_back( userdatahelpers::getUserFloat(leptons[i],"smear_unc") );
-    //LepChargedHadIso[i].push_back( userdatahelpers::getUserFloat(leptons[i],"PFChargedHadIso") );
-    //LepNeutralHadIso[i].push_back( userdatahelpers::getUserFloat(leptons[i],"PFNeutralHadIso") );
-    //LepPhotonIso[i].push_back( userdatahelpers::getUserFloat(leptons[i],"PFPhotonIso") );
+    LepChargedHadIso.push_back( userdatahelpers::getUserFloat(leptons[i],"PFChargedHadIso") );
+    LepNeutralHadIso.push_back( userdatahelpers::getUserFloat(leptons[i],"PFNeutralHadIso") );
+    LepPhotonIso.push_back( userdatahelpers::getUserFloat(leptons[i],"PFPhotonIso") );
+	 LepPUIsoComponent.push_back( lepFlav==13 ? userdatahelpers::getUserFloat(leptons[i],"PFPUChargedHadIso") : 0. );
     LepCombRelIsoPF.push_back( combRelIsoPF[i] );
     LepisLoose.push_back(userdatahelpers::hasUserFloat(leptons[i],"isLoose") == 1 ? userdatahelpers::getUserFloat(leptons[i],"isLoose") : -2);
 
@@ -1857,6 +1863,8 @@ void HZZ4lNtupleMaker::endJob()
     h[i]->GetXaxis()->SetBinLabel(41,"gen_sumGenMCWeight");
     h[i]->GetXaxis()->SetBinLabel(42,"gen_sumPUWeight");
   }
+
+  delete myTree;
 
   return;
 }
@@ -2276,6 +2284,7 @@ void HZZ4lNtupleMaker::BookAllBranches(){
   myTree->Book("nCleanedJetsPt30BTagged_bTagSFUp",nCleanedJetsPt30BTagged_bTagSFUp, failedTreeLevel >= fullFailedTree);
   myTree->Book("nCleanedJetsPt30BTagged_bTagSFDn",nCleanedJetsPt30BTagged_bTagSFDn, failedTreeLevel >= fullFailedTree);
   myTree->Book("trigWord",trigWord, failedTreeLevel >= minimalFailedTree);
+  myTree->Book("evtPassMETFilter",evtPassMETTrigger, failedTreeLevel >= minimalFailedTree);
   myTree->Book("ZZMass",ZZMass, false);
   myTree->Book("ZZMassErr",ZZMassErr, false);
   myTree->Book("ZZMassErrCorr",ZZMassErrCorr, false);
@@ -2328,9 +2337,10 @@ void HZZ4lNtupleMaker::BookAllBranches(){
   myTree->Book("LepisLoose",LepisLoose, false);
   myTree->Book("LepBDT",LepBDT, false);
   myTree->Book("LepMissingHit",LepMissingHit, false);
-  //myTree->Book("LepChargedHadIso",LepChargedHadIso, false);
-  //myTree->Book("LepNeutralHadIso",LepNeutralHadIso, false);
-  //myTree->Book("LepPhotonIso",LepPhotonIso, false);
+  myTree->Book("LepChargedHadIso",LepChargedHadIso, false);
+  myTree->Book("LepNeutralHadIso",LepNeutralHadIso, false);
+  myTree->Book("LepPhotonIso",LepPhotonIso, false);
+  myTree->Book("LepPUIsoComponent",LepPUIsoComponent, false);
   myTree->Book("LepCombRelIsoPF",LepCombRelIsoPF, false);
   myTree->Book("LepRecoSF",LepRecoSF, false);
   myTree->Book("LepRecoSF_Unc",LepRecoSF_Unc, false);
@@ -2588,7 +2598,7 @@ void HZZ4lNtupleMaker::buildMELABranches(){
     lheme_computers.push_back(lheme_computer);
 
     // Add the computation to a named cluster to keep track of JECUp/JECDn, or for best-pWH_SM Lep_WH computations
-    addToMELACluster(lheme_computer, lheme_clusters);
+    GMECHelperFunctions::addToMELACluster(lheme_computer, lheme_clusters);
 
     // Create the necessary branches for each computation
     myTree->BookMELABranches(lheme_opt, true, lheme_computer);
@@ -2615,7 +2625,7 @@ void HZZ4lNtupleMaker::buildMELABranches(){
 
     // The rest is the same story...
     // Add the computation to a named cluster to keep track of JECUp/JECDn, or for best-pWH_SM Lep_WH computations
-    addToMELACluster(lheme_computer, lheme_clusters);
+    GMECHelperFunctions::addToMELACluster(lheme_computer, lheme_clusters);
 
     // Create the necessary branches for each computation
     myTree->BookMELABranches(lheme_opt, true, lheme_computer);
@@ -2627,16 +2637,6 @@ void HZZ4lNtupleMaker::buildMELABranches(){
     std::vector<MELABranch*>* lheme_branches = myTree->getLHEMELABranches();
     for (unsigned int ib=0; ib<lheme_branches->size(); ib++) lheme_branches->at(ib)->Print();
     for (unsigned int icl=0; icl<lheme_clusters.size(); icl++) cout << "LHE ME cluster " << lheme_clusters.at(icl)->getName() << " is present in " << lheme_clusters.size() << " clusters with #Computations = " << lheme_clusters.at(icl)->getComputations()->size() << endl;
-  }
-}
-
-void HZZ4lNtupleMaker::addToMELACluster(MELAComputation* me_computer, std::vector<MELACluster*>& me_clusters){
-  bool isAdded=false;
-  for (unsigned int it=0; it<me_clusters.size(); it++){ if (me_clusters.at(it)->getName()==me_computer->getCluster()){ me_clusters.at(it)->addComputation(me_computer); isAdded=true; } }
-  if (!isAdded){
-    MELACluster* tmpcluster = new MELACluster(me_computer->getCluster());
-    tmpcluster->addComputation(me_computer);
-    me_clusters.push_back(tmpcluster);
   }
 }
 

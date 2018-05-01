@@ -136,9 +136,9 @@ elif (SAMPLE_TYPE == 2016):
 elif (SAMPLE_TYPE == 2017): 
     if IsMC:
         #process.GlobalTag = GlobalTag(process.GlobalTag, '94X_mc2017_realistic_v10', '')
-        process.GlobalTag = GlobalTag(process.GlobalTag, '94X_mc2017_realistic_v12', '') #For JEC
+        process.GlobalTag = GlobalTag(process.GlobalTag, '94X_mc2017_realistic_v13', '') #For JEC
     else:
-        process.GlobalTag = GlobalTag(process.GlobalTag, '94X_dataRun2_ReReco_EOY17_v2', '')
+        process.GlobalTag = GlobalTag(process.GlobalTag, '94X_dataRun2_v6', '')
 
 
 print '\t',process.GlobalTag.globaltag
@@ -315,6 +315,22 @@ process.triggerMuEle  = cms.Path(process.hltFilterMuEle)
 
 
 ### ----------------------------------------------------------------------
+### MET FILTERS
+### ----------------------------------------------------------------------
+process.METFilters  = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
+process.METFilters.TriggerResultsTag  = cms.InputTag("TriggerResults","","RECO")
+if (IsMC):
+	process.METFilters.TriggerResultsTag  = cms.InputTag("TriggerResults","","PAT")
+
+if (LEPTON_SETUP == 2017):#MET Filters available in miniAOD as described here https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFiltersRun2
+	if (IsMC):
+		process.METFilters.HLTPaths = ["Flag_goodVertices","Flag_globalSuperTightHalo2016Filter","Flag_HBHENoiseFilter","Flag_HBHENoiseIsoFilter","Flag_EcalDeadCellTriggerPrimitiveFilter","Flag_BadPFMuonFilter","Flag_BadChargedCandidateFilter"]
+	else:
+		process.METFilters.HLTPaths = ["Flag_goodVertices","Flag_globalSuperTightHalo2016Filter","Flag_HBHENoiseFilter","Flag_HBHENoiseIsoFilter","Flag_EcalDeadCellTriggerPrimitiveFilter","Flag_BadPFMuonFilter","Flag_BadChargedCandidateFilter","Flag_eeBadScFilter"]
+
+process.triggerMETFilters = cms.Path(process.METFilters)
+
+### ----------------------------------------------------------------------
 ### MC Filters and tools
 ### ----------------------------------------------------------------------
 
@@ -462,11 +478,14 @@ elif LEPTON_SETUP == 2016: # (KalmanMuonCalibrator, ICHEP 2016) FIXME: still usi
          process.calibratedMuons.identifier = cms.string("MC_80X_13TeV")
      else:
          process.calibratedMuons.identifier = cms.string("DATA_80X_13TeV")
-elif LEPTON_SETUP == 2017:
-     if IsMC:
-         process.calibratedMuons.identifier = cms.string("MC_80X_13TeV") #FIXME: still same as 2016
-     else: 
-         process.calibratedMuons.identifier = cms.string("DATA_80X_13TeV") #FIXME: still same as 2016
+elif LEPTON_SETUP == 2017:# (Rochester corrections, Moriond 2018)
+     process.calibratedMuons = cms.EDProducer("RochesterPATMuonCorrector",
+                                         src = cms.InputTag("slimmedMuons"),
+                                         identifier = cms.string("RoccoR2017v0"),
+                                         isMC = cms.bool(IsMC),
+                                         isSynchronization = cms.bool(False),
+                                         )
+
 else:
     if APPLYMUCORR:
         print "APPLYMUCORR not configured for LEPTON_SETUP =", LEPTON_SETUP
@@ -507,7 +526,6 @@ process.softMuons = cms.EDProducer("MuFiller",
     sampleType = cms.int32(SAMPLE_TYPE),
     setup = cms.int32(LEPTON_SETUP), # define the set of effective areas, rho corrections, etc.
     cut = cms.string("userFloat('dxy')<0.5 && userFloat('dz')<1."),
-    correctionFile = process.calibratedMuons.identifier,
     flags = cms.PSet(
         ID = cms.string(TIGHTMUON), # tight muon ID
         isSIP = cms.string(SIP),
@@ -1353,7 +1371,7 @@ if (APPLYJEC and SAMPLE_TYPE == 2017):
 #                    tag    = cms.string('JetCorrectorParametersCollection_Spring16_25nsV1_MC_AK4PFchs'), #for 80X/Moriond16
 #                    tag    = cms.string('JetCorrectorParametersCollection_Spring16_25nsV6_MC_AK4PFchs'), #for 80X/ICHEP16
 #                    tag    = cms.string('JetCorrectorParametersCollection_Summer16_23Sep2016V4_MC_AK4PFchs'), #for 80X/Moriond17
-						  tag    = cms.string('JetCorrectorParametersCollection_Fall17_17Nov2017_V4_MC_AK4PFchs'), #for 94X/Moriond18
+						  tag    = cms.string('JetCorrectorParametersCollection_Fall17_17Nov2017_V6_MC_AK4PFchs'), #for 94X/Moriond18
                     label  = cms.untracked.string('AK4PFchs')
                     ),
                 ),
@@ -1361,7 +1379,7 @@ if (APPLYJEC and SAMPLE_TYPE == 2017):
 #             connect = cms.string('sqlite_fip:ZZAnalysis/AnalysisStep/data/JEC/Spring16_25nsV1_MC.db'), #for 80X/Moriond16
 #             connect = cms.string('sqlite_fip:ZZAnalysis/AnalysisStep/data/JEC/Spring16_25nsV6_MC.db'), #for 80X/ICHEP16
 #             connect = cms.string('sqlite_fip:ZZAnalysis/AnalysisStep/data/JEC/Summer16_23Sep2016V4_MC.db'), #for 80X/Moriond17
-             connect = cms.string('sqlite_fip:ZZAnalysis/AnalysisStep/data/JEC/Fall17_17Nov2017_V4_MC.db'), #for 94X/Moriond18
+             connect = cms.string('sqlite_fip:ZZAnalysis/AnalysisStep/data/JEC/Fall17_17Nov2017_V6_MC.db'), #for 94X/Moriond18
             )
     else:
         process.jec = cms.ESSource("PoolDBESSource",
@@ -1375,13 +1393,13 @@ if (APPLYJEC and SAMPLE_TYPE == 2017):
 #                    tag    = cms.string('JetCorrectorParametersCollection_Fall15_25nsV2_DATA_AK4PFchs'), #for 76X
 #                    tag    = cms.string('JetCorrectorParametersCollection_Spring16_25nsV6_DATA_AK4PFchs'), #for 80X/ICHEP16
 #                    tag    = cms.string('JetCorrectorParametersCollection_Summer16_23Sep2016AllV4_DATA_AK4PFchs'), #for 80X/Moriond17
-                    tag    = cms.string('JetCorrectorParametersCollection_Fall17_17Nov2017_V4_MC_AK4PFchs'), #for 94X/Moriond18
+                    tag    = cms.string('JetCorrectorParametersCollection_Fall17_17Nov2017BCDEF_V6_DATA_AK4PFchs'), #for 94X/Moriond18
                     label  = cms.untracked.string('AK4PFchs')
                     ),
                 ),
 #            connect = cms.string('sqlite_fip:ZZAnalysis/AnalysisStep/data/JEC/Fall15_25nsV2_DATA.db'), #for 76X
 #            connect = cms.string('sqlite_fip:ZZAnalysis/AnalysisStep/data/JEC/Summer16_23Sep2016AllV4_DATA.db'), #for 80X/ICHEP16
-            connect = cms.string('sqlite_fip:ZZAnalysis/AnalysisStep/data/JEC/Fall17_17Nov2017_V4_MC.db'), #for 94X/Moriond18 FIXME!!!! Use MC corrections before Data arrives
+            connect = cms.string('sqlite_fip:ZZAnalysis/AnalysisStep/data/JEC/Fall17_17Nov2017BCDEF_V6_DATA.db'),
             )
 
     ## add an es_prefer statement to resolve a possible conflict from simultaneous connection to a global tag
@@ -1438,10 +1456,10 @@ if FSRMODE=="Legacy" :
 ### Missing ET
 ### ----------------------------------------------------------------------
 
-metTag = cms.InputTag("slimmedMETs")
+metTag = cms.InputTag("slimmedMETsMuEGClean")
 
 ### Recorrect MET, cf. https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETUncertaintyPrescription#Instructions_for_8_0_X_X_26_patc
-if RECORRECTMET:
+if (RECORRECTMET and SAMPLE_TYPE == 2016):
 
     from PhysicsTools.PatUtils.tools.runMETCorrectionsAndUncertainties import runMetCorAndUncFromMiniAOD
     runMetCorAndUncFromMiniAOD(process,
@@ -1449,7 +1467,7 @@ if RECORRECTMET:
                                )
     metTag = cms.InputTag("slimmedMETs","","ZZ")
 
-    if (not IsMC and SAMPLE_TYPE == 2016): 
+    if (not IsMC):
         ### recorrect MET based on e/gamma gain switch correction on the fly for Re-Miniaod Data
         ### cf. https://twiki.cern.ch/twiki/bin/view/CMSPublic/ReMiniAOD03Feb2017Notes#MET_Recipes 
 
@@ -1495,6 +1513,29 @@ if RECORRECTMET:
     process.patJetsReapplyJEC.userData.userInts.src += ['pileupJetIdUpdated:fullId']
 
 
+### Recorrect MET, cf. https://indico.cern.ch/event/718013/contributions/2953032/attachments/1625419/2588212/met-ppd-20180329-LG.pdf slide 19
+if (RECORRECTMET and SAMPLE_TYPE == 2017):
+
+    from PhysicsTools.PatUtils.tools.runMETCorrectionsAndUncertainties import runMetCorAndUncFromMiniAOD
+    process.testCands = cms.EDFilter("CandPtrSelector",
+												 src=cms.InputTag("packedPFCandidates"),
+												 cut=cms.string("abs(eta)<2.5")
+												 )
+		
+    runMetCorAndUncFromMiniAOD(process,
+                               isData=(not IsMC),
+                               pfCandColl=cms.InputTag("testCands"),
+                               reclusterJets=True,
+                               recoMetFromPFCs=True,
+                               postfix="Test",
+                               )
+    metTag = cms.InputTag("slimmedMETsTest","","ZZ")
+	 
+    ### somehow MET recorrection gets this lost again...
+    process.patJetsReapplyJEC.userData.userFloats.src += ['pileupJetIdUpdated:fullDiscriminant']
+    process.patJetsReapplyJEC.userData.userInts.src += ['pileupJetIdUpdated:fullId']
+
+
 ### ----------------------------------------------------------------------
 ### Paths
 ### ----------------------------------------------------------------------
@@ -1515,9 +1556,9 @@ if (RECORRECTMET and SAMPLE_TYPE == 2016):
 
 if (RECORRECTMET and SAMPLE_TYPE == 2017):
     if IsMC:
-        process.MET = cms.Path(process.fullPatMetSequence)
+        process.MET = cms.Path(process.testCands + process.fullPatMetSequenceTest)
     else:
-        process.MET = cms.Path(process.fullPatMetSequence)
+        process.MET = cms.Path(process.testCands + process.fullPatMetSequenceTest)
 
 
 ### ----------------------------------------------------------------------

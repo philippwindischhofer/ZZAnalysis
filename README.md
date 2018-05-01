@@ -10,19 +10,21 @@ Download and execute the setup script:
 wget -O ${TMPDIR}/checkout_80X.csh https://raw.githubusercontent.com/CJLST/ZZAnalysis/miniAOD_80X/checkout_80X.csh
 cd $CMSSW_BASE/src
 cmsenv
-source ${TMPDIR}/checkout_80X.csh
+chmod u+x ${TMPDIR}/checkout_80X.csh
+${TMPDIR}/checkout_80X.csh
 ```
 
 To install a complete CMSSW 9X area (including this package)
 ------------------------------
-Please use CMSSW_9_4_2.
+Please use CMSSW_9_4_4.
 
 Download and execute the setup script:
 ```
 wget -O ${TMPDIR}/checkout_9X.csh https://raw.githubusercontent.com/CJLST/ZZAnalysis/miniAOD_80X/checkout_9X.csh
 cd $CMSSW_BASE/src
 cmsenv
-source ${TMPDIR}/checkout_9X.csh
+chmod u+x ${TMPDIR}/checkout_9X.csh
+${TMPDIR}/checkout_9X.csh
 ```
 
 To update this package from the release
