@@ -58,9 +58,9 @@ int main( int argc, char *argv[] )
    TString WmH130      = path + "WminusH130" + file_name;
      
    TString ZH120       = path + "ZH120" + file_name;
-   TString ZH124       = path + "ZH124" + file_name;
+   // TString ZH124       = path + "ZH124" + file_name;
    TString ZH125       = path + "ZH125" + file_name;
-   TString ZH126       = path + "ZH126" + file_name;
+   // TString ZH126       = path + "ZH126" + file_name;
    TString ZH130       = path + "ZH130" + file_name;
    
    TString ttH120      = path + "ttH120" + file_name;
@@ -69,7 +69,7 @@ int main( int argc, char *argv[] )
    TString ttH126      = path + "ttH126" + file_name;
    TString ttH130      = path + "ttH130" + file_name;
 	
-   TString bbH120      = path + "bbH120" + file_name;
+   // TString bbH120      = path + "bbH120" + file_name;
    TString bbH124      = path + "bbH124" + file_name;
    TString bbH125      = path + "bbH125" + file_name;
    TString bbH126      = path + "bbH126" + file_name;
@@ -86,7 +86,7 @@ int main( int argc, char *argv[] )
    TString ggZZ2e2tau  = path + "ggTo2e2tau_Contin_MCFM701" + file_name;
    TString ggZZ2mu2tau = path + "ggTo2mu2tau_Contin_MCFM701" + file_name;
    
-   Yields *yields = new Yields( 41.37 );
+   Yields *yields = new Yields( 35.9 );
    
 //===============
 // Produce plots 
@@ -107,9 +107,9 @@ int main( int argc, char *argv[] )
    yields->MakeHistograms(VBFH130);
 
    yields->MakeHistograms(ZH120);
-   yields->MakeHistograms(ZH124);
+   // yields->MakeHistograms(ZH124);
    yields->MakeHistograms(ZH125);
-   yields->MakeHistograms(ZH126);
+   // yields->MakeHistograms(ZH126);
    yields->MakeHistograms(ZH130);
 
    yields->MakeHistograms(WpH120);

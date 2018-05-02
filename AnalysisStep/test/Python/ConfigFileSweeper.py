@@ -225,7 +225,9 @@ def main():
                     else:
                         iterables[sweep_name].add(sweep_scope, sweep_parameter, start_list, end_list, sweep_behaviour)
 
-    MC_path = "/data_CMS/cms/wind/CJLST_NTuples/"
+    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples/"
+
+    MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZZMask/"
     
     # when performing a full training
     #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/"
@@ -239,24 +241,11 @@ def main():
         mass_point = 125.0
 
     if model_type == 'SimpleModel':
-        #mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateSimpleModelCollections(MC_path)
-        #mcoll = ModelFactoryFullCategorySetDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
-
-        # the "enhanced" set of inputs, and the combined topology (hard-coded, no input configuration file)
-        #mcoll = ModelFactoryFullCategorySetOptimizedInputsCombined.GenerateSimpleModelCollections(MC_path)
-
-        # the baseline inputs that will be used for the sweep
-        #mcoll = ModelFactoryFullCategorySetDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
-        
-        #mcoll = ModelFactoryFullCategorySetDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file)
-
         # using the full mass range for training, not using the 118/130GeV cut
         mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, mass_point = mass_point)
 
         # exclusive version for full mass range
         #mcoll = ModelFactoryFullMassRangeDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, mass_point = mass_point)
-
-        #mcoll = ModelFactoryFullCategorySetOptimizedInputsInclusive.GenerateSimpleModelCollections(MC_path)
     elif model_type == 'CombinedModel':
         mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateCombinedModelCollections(MC_path)
         

@@ -30,22 +30,22 @@ def countAssocLeptons(row):
 
 
 def WHhadr_cut(row):
-    return countAssocLeptons(row) == 0# and mZZ_cut(row)
+    return countAssocLeptons(row) == 0
 
 def ZHhadr_cut(row):
-    return countAssocLeptons(row) == 0 and countNeutrinos(row) == 0# and mZZ_cut(row)
+    return countAssocLeptons(row) == 0 and countNeutrinos(row) == 0
 
 def WHlept_cut(row):
-    return countAssocLeptons(row) == 1# and mZZ_cut(row)
+    return countAssocLeptons(row) == 1
 
 def ZHlept_cut(row):
-    return countAssocLeptons(row) == 2# and mZZ_cut(row)
+    return countAssocLeptons(row) == 2
 
 def ZHMET_cut(row):
-    return countNeutrinos(row) == 2# and mZZ_cut(row)
+    return countNeutrinos(row) == 2
 
 def ttHhadr_cut(row):
-    return countAssocLeptons(row) == 0# and mZZ_cut(row)
+    return countAssocLeptons(row) == 0
 
 def ttHlept_cut(row):
-    return (countAssocLeptons(row) == 1 or countAssocLeptons(row) == 2)# and mZZ_cut(row)
+    return (countAssocLeptons(row) == 1 or countAssocLeptons(row) == 2)

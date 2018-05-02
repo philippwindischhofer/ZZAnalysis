@@ -59,6 +59,8 @@ void augment_tree(TString inpath, TString outpath, int randomize)
     // create the new branches that are needed in the output tree
     output_tree -> Branch("training_weight", &(buffer -> training_weight), "training_weight/F");
 
+    output_tree -> Branch("ZZMass_masked", &(buffer -> ZZMass_masked), "ZZMass_masked/F");
+
     output_tree -> Branch("D_VBF2j_ggH_ME", &(buffer -> D_VBF2j_ggH_ME), "D_VBF2j_ggH_ME/F");
     output_tree -> Branch("D_VBF1j_ggH_ME", &(buffer -> D_VBF1j_ggH_ME), "D_VBF1j_ggH_ME/F");
     output_tree -> Branch("D_WHh_ggH_ME", &(buffer -> D_WHh_ggH_ME), "D_WHh_ggH_ME/F");
@@ -69,15 +71,36 @@ void augment_tree(TString inpath, TString outpath, int randomize)
 
     // also homogenize in the information needed for the cuts on the Python side, i.e. add dummy values for "LHEAssociatedparticleId"
     TBranch* br_lhe = (TBranch*)(buffer -> fChain -> GetListOfBranches() -> FindObject("LHEAssociatedParticleId"));
-
     if(br_lhe)
     {
-	std::cout << "LHEAssociatedParticleId available in file " << inpath << std::endl;
+    	std::cout << "LHEAssociatedParticleId available in file " << inpath << std::endl;
     }
     else
     {
-	std::cout << "adding LHEAssociatedParticleId in file " << inpath << std::endl;
-	output_tree -> Branch("LHEAssociatedParticleId", &(buffer -> LHEAssociatedParticleId));
+    	std::cout << "adding LHEAssociatedParticleId in file " << inpath << std::endl;
+    	output_tree -> Branch("LHEAssociatedParticleId", &(buffer -> LHEAssociatedParticleId));
+    }
+
+    TBranch* br_gap1 = (TBranch*)(buffer -> fChain -> GetListOfBranches() -> FindObject("GenAssocLep1Id"));
+    if(br_gap1)
+    {
+    	std::cout << "GenAssocLep1Id available in file " << inpath << std::endl;
+    }
+    else
+    {
+    	std::cout << "adding GenAssocLep1Id in file " << inpath << std::endl;
+    	output_tree -> Branch("GenAssocLep1Id", &(buffer -> GenAssocLep1Id));
+    }
+
+    TBranch* br_gap2 = (TBranch*)(buffer -> fChain -> GetListOfBranches() -> FindObject("GenAssocLep2Id"));
+    if(br_gap2)
+    {
+    	std::cout << "GenAssocLep2Id available in file " << inpath << std::endl;
+    }
+    else
+    {
+    	std::cout << "adding GenAssocLep2Id in file " << inpath << std::endl;
+    	output_tree -> Branch("GenAssocLep2Id", &(buffer -> GenAssocLep2Id));
     }
 
     std::cout << "generating random numbers" << std::endl;
@@ -117,6 +140,16 @@ void augment_tree(TString inpath, TString outpath, int randomize)
 	    buffer -> LHEAssociatedParticleId = new std::vector<short>();
 	}
 
+	if(!br_gap1)
+	{
+	    buffer -> GenAssocLep1Id = 0.0;
+	}
+
+	if(!br_gap2)
+	{
+	    buffer -> GenAssocLep2Id = 0.0;
+	}
+
 	// fill the variables holding the ME discriminants (for the classes of events for which they actually make sense)
 	buffer -> D_VBF2j_ggH_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DVBF2j_ME_disc(buffer) : 0.0, 0.0, 1.0);
 	buffer -> D_VBF1j_ggH_ME = clamp_value(buffer -> nCleanedJetsPt30 == 1 ? DVBF1j_ME_disc(buffer) : 0.0, 0.0, 1.0);
@@ -125,6 +158,16 @@ void augment_tree(TString inpath, TString outpath, int randomize)
 	buffer -> D_WHh_ZHh_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DWHZH_ME_disc(buffer) : 0.0, 0.0, 1.0);
 	buffer -> D_VBF2j_WHh_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DVBFWH_ME_disc(buffer) : 0.0, 0.0, 1.0);
 	buffer -> D_VBF2j_ZHh_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DVBFZH_ME_disc(buffer) : 0.0, 0.0, 1.0);
+
+	// fill the masked ZZMass
+	if(buffer -> ZZMass > 150.0)
+	{
+	    buffer -> ZZMass_masked = buffer -> ZZMass;
+	}
+	else
+	{
+	    buffer -> ZZMass_masked = 0.0;
+	}
 
 	output_tree -> Fill();
     }

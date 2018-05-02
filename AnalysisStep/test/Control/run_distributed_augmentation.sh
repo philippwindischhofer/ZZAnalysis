@@ -20,8 +20,9 @@ BIN_DIR=$CAMPAIGN_DIR"bin/"
 AUGMENTER="SingleAugmentation.py"
 PYTHON_LIB="trainlib"
 
-MC_DIR="/data_CMS/cms/wind/CJLST_NTuples/"
-#MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_masked/"
+#MC_DIR="/data_CMS/cms/wind/CJLST_NTuples/"
+#MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_additional_mass_points/"
+MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_ZZMask_all/"
 
 if [ "$MODE" = "all" ]
 then
@@ -84,7 +85,7 @@ JOBS=`find * | grep run_augmentation.sh$`
 for JOB in $JOBS
 do
     echo "launching augmentation for " $CAMPAIGN_DIR$JOB
-    $JOB_SUBMITTER $CAMPAIGN_DIR$JOB
+    #$JOB_SUBMITTER $CAMPAIGN_DIR$JOB
 done
 
 cd $CURRENT_DIR

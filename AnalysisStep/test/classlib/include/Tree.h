@@ -28,6 +28,7 @@ public :
 
    // weight with which each event is going to be used for the training etc.
    float training_weight;
+   float ZZMass_masked;
 
    // easy-access variables that concern the leading (i.e. hardest) Jet in the event
    // in fact, the case of just 1 jet is special: don't have any MELA discriminants available anymore in this case, and these easy-access variables therefore allow to access the jet variables with less preprocessing
@@ -564,6 +565,7 @@ public :
 
    // List of branches
    TBranch* b_training_weight;
+   TBranch* b_ZZMass_masked;
 
    TBranch* b_leading_jet_eta;
    TBranch* b_leading_jet_sin_phi;
@@ -1127,6 +1129,8 @@ void Tree::Init(TTree *tree, TString input_file_name)
 
    // Set object pointer
    training_weight = 0;
+   ZZMass_masked = 0;
+
    leading_jet_pt = 0;
    leading_jet_eta = 0;
    leading_jet_sin_phi = 0;
@@ -1232,6 +1236,7 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetMakeClass(1);
 
    fChain->SetBranchAddress("training_weight", &training_weight, &b_training_weight);
+   fChain->SetBranchAddress("ZZMass_masked", &ZZMass_masked, &b_ZZMass_masked);
 
    fChain->SetBranchAddress("leading_jet_eta", &leading_jet_eta, &b_leading_jet_eta);
    fChain->SetBranchAddress("leading_jet_sin_phi", &leading_jet_sin_phi, &b_leading_jet_sin_phi);

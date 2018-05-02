@@ -39,8 +39,8 @@ priors_min["tthhadr_prior"] = eps
 priors_min["tthlept_prior"] = eps
 priors_min["zhlept_prior"] = eps
 priors_min["whlept_prior"] = eps
-priors_min["zhhadr_prior"] = eps
-priors_min["whhadr_prior"] = eps
+priors_min["zhhadr_prior"] = 0.3
+priors_min["whhadr_prior"] = 0.3
 priors_min["zhmet_prior"] = eps
 
 priors_max = {}
@@ -49,8 +49,8 @@ priors_max["tthhadr_prior"] = 0.4
 priors_max["tthlept_prior"] = 0.3
 priors_max["zhlept_prior"] = 0.3
 priors_max["whlept_prior"] = 0.3
-priors_max["zhhadr_prior"] = 1.0
-priors_max["whhadr_prior"] = 1.0
+priors_max["zhhadr_prior"] = 0.8
+priors_max["whhadr_prior"] = 0.8
 priors_max["zhmet_prior"] = 0.3
 
 # global evaluation counter
@@ -536,27 +536,27 @@ def main():
 
     # start by fixing the ggH_prior by optimizing Punzi in the two VBF categories
     res = run_bayesian_optimization("ggH", "evaluations_ggH.txt", punzi_target_ggH, {'ggh_prior': (priors_min["ggh_prior"], priors_max["ggh_prior"])}, 
-                                init_points = 1, max_iterations = 1, patience = 40, alpha = 1.5e-6)
+                                init_points = 2, max_iterations = 30, patience = 40, alpha = 1.5e-6)
     priors_best["ggh_prior"] = res["ggh_prior"]
     
     # continue with the next ones to be fixed: ttHh and ttHl
     res = run_bayesian_optimization("ttH", "evaluations_ttH.txt", punzi_target_ttH, {'tthhadr_prior': (priors_min["tthhadr_prior"], priors_max["tthhadr_prior"]), 
                                                                                      'tthlept_prior': (priors_min["tthlept_prior"], priors_max["tthlept_prior"])}, 
-                                 init_points = 1, max_iterations = 1, patience = 40, alpha = 1.5e-6)
+                                 init_points = 10, max_iterations = 40, patience = 40, alpha = 1.5e-6)
     priors_best["tthhadr_prior"] = res["tthhadr_prior"]
     priors_best["tthlept_prior"] = res["tthlept_prior"]
     
     # then proceed with ZHlept and WHlept
     res = run_bayesian_optimization("VHlept", "evaluations_VHlept.txt", punzi_target_VHlept, {'zhlept_prior': (priors_min["zhlept_prior"], priors_max["zhlept_prior"]),
                                                                                               'whlept_prior': (priors_min["whlept_prior"], priors_max["whlept_prior"])}, 
-                                 init_points = 1, max_iterations = 1, patience = 40, alpha = 1.5e-6)
+                                 init_points = 10, max_iterations = 40, patience = 40, alpha = 1.5e-6)
     priors_best["zhlept_prior"] = res["zhlept_prior"]
     priors_best["whlept_prior"] = res["whlept_prior"]
     
     # then proceed with ZHhadr and WHhadr
     res = run_bayesian_optimization("VHhadr", "evaluations_VHhadr.txt", punzi_target_VHhadr, {'zhhadr_prior': (priors_min["zhhadr_prior"], priors_max["zhhadr_prior"]),
                                                                                               'whhadr_prior': (priors_min["whhadr_prior"], priors_max["whhadr_prior"])}, 
-                                  init_points = 1, max_iterations = 1, patience = 40, alpha = 1.5e-6)
+                                  init_points = 10, max_iterations = 40, patience = 40, alpha = 1.5e-6)
     priors_best["zhhadr_prior"] = res["zhhadr_prior"]
     priors_best["whhadr_prior"] = res["whhadr_prior"]
     

@@ -14,8 +14,8 @@ PRIOR_FILE=$4
 
 if [ -z $ENGINE ]
 then
-    echo "no engine name provided, using default: rand_KL"
-    ENGINE="rand_KL"
+    echo "no engine name provided, using default: tree"
+    ENGINE="tree"
 fi
 
 if [ -z $PRIOR_FILE ]
@@ -33,14 +33,14 @@ fi
 # ---------------------------------------------
 #  settings for this training campaign
 # ---------------------------------------------
-# COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/training/"
-# COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/validation/"
-# COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/test/"
-# COMP_REF_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/"
+COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/training/"
+COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/validation/"
+COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/test/"
+COMP_REF_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/"
 
-COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/training/"
-COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/validation/"
-COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/test/"
+# COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/training/"
+# COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/validation/"
+# COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/test/"
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
@@ -142,7 +142,7 @@ do
 
         # launch the benchmarking
 	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_DIR $MASS_POINT $BENCHMARK_DIR "0.5 0.75" $ENGINE $PRIOR_DIR$PRIOR_FILE "&>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
-	echo "sleep 5" >> $BENCHMARK_TRAINING_SCRIPT
+	echo "sleep 5" >> $BENCHMARK_SCRIPT
 
         # launch the comparison to the reference
 	echo $BIN_DIR$COMPARER $BENCHMARK_DIR $COMP_REF_DIR $COMP_DIR "&>>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT	

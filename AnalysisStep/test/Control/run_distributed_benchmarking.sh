@@ -13,8 +13,8 @@ MASS_POINT=$3
 
 if [ -z $ENGINE ]
 then
-    echo "no engine name provided, using default: rand_KL"
-    ENGINE="rand_KL"
+    echo "no engine name provided, using default: tree"
+    ENGINE="tree"
 fi
 
 if [ -z $MASS_POINT ]
@@ -26,14 +26,14 @@ fi
 # ---------------------------------------------
 #  settings for this training campaign
 # ---------------------------------------------
-# COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/training/"
-# COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/validation/"
-# COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/test/"
-# COMP_REF_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/"
+COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/training/"
+COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/validation/"
+COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/test/"
+COMP_REF_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/"
 
-COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/training/"
-COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/validation/"
-COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/test/"
+# COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/training/"
+# COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/validation/"
+# COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/test/"
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 

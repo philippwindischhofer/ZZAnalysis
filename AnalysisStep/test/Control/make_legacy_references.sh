@@ -11,7 +11,7 @@ BENCHMARKER="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_benc
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 # mass points for which references (for training, validation and test) are required
-MASS_POINTS="120 124 125 126 130"
+MASS_POINTS="120 125 130"
 TRAINING_MASS_POINT="125"
 
 for MASS_POINT in $MASS_POINTS
