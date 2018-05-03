@@ -34,11 +34,16 @@ def augment_file(data_inpath, data_outpath, data_file, mcolls):
     data_outfile = data_outdir + Config.MC_filename
     copyfile(data_inpath + data_file + Config.MC_filename, data_outfile)
 
+    if "AllData" in data_outfile:
+        tree_name = "CRZLLTree"
+    else:
+        tree_name = "ZZTree"
+
     # now, can read the file from its new location and change it
     fcoll = FileCollection({data_outfile: cuts.no_cut}, 0.0, 1.0)
     length = fcoll.get_length()
 
-    indata = utils.read_data(fcoll, start = 0, stop = length, branches = Config.branches)
+    indata = utils.read_data(fcoll, start = 0, stop = length, branches = Config.branches, tree_name = tree_name)
 
     # loop over ModelCollections here to get the prediction from each
     out_branches = []
@@ -60,7 +65,7 @@ def augment_file(data_inpath, data_outpath, data_file, mcolls):
 
     # now re-open the output file in append mode
     outfile = root_open(data_outfile, mode = "a");
-    outtree = outfile.Get("ZZTree/candTree")
+    outtree = outfile.Get(tree_name + "/candTree")
 
     root_numpy.array2tree(new_branches, tree = outtree)
     outfile.write()

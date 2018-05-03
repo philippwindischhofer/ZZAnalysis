@@ -28,7 +28,8 @@
 #include "TColor.h"
 
 // Include classes
-#include "Tree.h"
+//#include "Tree.h"
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
 #include "Histograms.h"
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/interface/FinalStates.h>
@@ -68,7 +69,7 @@ public:
    void Print( TString, float, float );
    void PrintLatexTables( TString, float, float );
    
-private:
+protected:
 
    TFile *input_file, *input_file_data;
    TTree *input_tree, *input_tree_data;

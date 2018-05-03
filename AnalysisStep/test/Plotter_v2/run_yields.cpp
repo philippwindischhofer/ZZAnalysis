@@ -14,7 +14,7 @@
 #include "TStyle.h"
 
 // My own files
-#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/Yields.h>
+#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/YieldsLI.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/Variables.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/src/setTDRStyle.cpp>
 
@@ -24,12 +24,13 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   TString path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/";
+   TString path = "/data_CMS/cms/wind/180503_packaged/CJLST_NTuples/";
+   //TString path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/";
    TString file_name = "/ZZ4lAnalysis.root";
    TString file_name_FR = "/FakeRates_SS_Moriond18.root";
    
    //Data
-   //TString Data        = path + "AllData" + file_name;
+   TString Data        = path + "AllData" + file_name;
    TString FakeRates   = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/data/FakeRates" + file_name_FR;
    
    // Signal
@@ -58,9 +59,7 @@ int main( int argc, char *argv[] )
    TString WmH130      = path + "WminusH130" + file_name;
      
    TString ZH120       = path + "ZH120" + file_name;
-   // TString ZH124       = path + "ZH124" + file_name;
    TString ZH125       = path + "ZH125" + file_name;
-   // TString ZH126       = path + "ZH126" + file_name;
    TString ZH130       = path + "ZH130" + file_name;
    
    TString ttH120      = path + "ttH120" + file_name;
@@ -69,7 +68,6 @@ int main( int argc, char *argv[] )
    TString ttH126      = path + "ttH126" + file_name;
    TString ttH130      = path + "ttH130" + file_name;
 	
-   // TString bbH120      = path + "bbH120" + file_name;
    TString bbH124      = path + "bbH124" + file_name;
    TString bbH125      = path + "bbH125" + file_name;
    TString bbH126      = path + "bbH126" + file_name;
@@ -86,69 +84,65 @@ int main( int argc, char *argv[] )
    TString ggZZ2e2tau  = path + "ggTo2e2tau_Contin_MCFM701" + file_name;
    TString ggZZ2mu2tau = path + "ggTo2mu2tau_Contin_MCFM701" + file_name;
    
-   Yields *yields = new Yields( 35.9 );
+   YieldsLI *yields = new YieldsLI( 41.37 );
+   yields -> SetPackagePath("/data_CMS/cms/wind/180503_packaged/", "tree");
    
 //===============
 // Produce plots 
 //===============
    
-   //yields->MakeHistograms(Data);
+   // yields->MakeHistograms(ggH120);
+   // yields->MakeHistograms(ggH124);
+   // yields->MakeHistograms(ggH125);
+   // yields->MakeHistograms(ggH126);
+   // yields->MakeHistograms(ggH130);
 
-   yields->MakeHistograms(ggH120);
-   yields->MakeHistograms(ggH124);
-   yields->MakeHistograms(ggH125);
-   yields->MakeHistograms(ggH126);
-   yields->MakeHistograms(ggH130);
+   // yields->MakeHistograms(VBFH120);
+   // yields->MakeHistograms(VBFH124);
+   // yields->MakeHistograms(VBFH125);
+   // yields->MakeHistograms(VBFH126);
+   // yields->MakeHistograms(VBFH130);
 
-   yields->MakeHistograms(VBFH120);
-   yields->MakeHistograms(VBFH124);
-   yields->MakeHistograms(VBFH125);
-   yields->MakeHistograms(VBFH126);
-   yields->MakeHistograms(VBFH130);
+   // yields->MakeHistograms(ZH120);
+   // yields->MakeHistograms(ZH125);
+   // yields->MakeHistograms(ZH130);
 
-   yields->MakeHistograms(ZH120);
-   // yields->MakeHistograms(ZH124);
-   yields->MakeHistograms(ZH125);
-   // yields->MakeHistograms(ZH126);
-   yields->MakeHistograms(ZH130);
+   // yields->MakeHistograms(WpH120);
+   // yields->MakeHistograms(WpH124);
+   // yields->MakeHistograms(WpH125);
+   // yields->MakeHistograms(WpH126);
+   // yields->MakeHistograms(WpH130);
 
-   yields->MakeHistograms(WpH120);
-   yields->MakeHistograms(WpH124);
-   yields->MakeHistograms(WpH125);
-   yields->MakeHistograms(WpH126);
-   yields->MakeHistograms(WpH130);
+   // yields->MakeHistograms(WmH120);
+   // yields->MakeHistograms(WmH124);
+   // yields->MakeHistograms(WmH125);
+   // yields->MakeHistograms(WmH126);
+   // yields->MakeHistograms(WmH130);
 
-   yields->MakeHistograms(WmH120);
-   yields->MakeHistograms(WmH124);
-   yields->MakeHistograms(WmH125);
-   yields->MakeHistograms(WmH126);
-   yields->MakeHistograms(WmH130);
+   // yields->MakeHistograms(ttH120);
+   // yields->MakeHistograms(ttH124);
+   // yields->MakeHistograms(ttH125);
+   // yields->MakeHistograms(ttH126);
+   // yields->MakeHistograms(ttH130);
 
-   yields->MakeHistograms(ttH120);
-   yields->MakeHistograms(ttH124);
-   yields->MakeHistograms(ttH125);
-   yields->MakeHistograms(ttH126);
-   yields->MakeHistograms(ttH130);
+   // yields->MakeHistograms(bbH124);
+   // yields->MakeHistograms(bbH125);
+   // yields->MakeHistograms(bbH126);
+   // yields->MakeHistograms(bbH130);
 
-   //yields->MakeHistograms(bbH120);
-   yields->MakeHistograms(bbH124);
-   yields->MakeHistograms(bbH125);
-   yields->MakeHistograms(bbH126);
-   yields->MakeHistograms(bbH130);
+   // yields->MakeHistograms(tqH125);
 
-   yields->MakeHistograms(tqH125);
+   // yields->MakeHistograms(ZZTo4l);
+   // yields->MakeHistograms(ggZZ4e);
+   // yields->MakeHistograms(ggZZ4mu);
+   // yields->MakeHistograms(ggZZ4tau);
+   // yields->MakeHistograms(ggZZ2e2mu);
+   // yields->MakeHistograms(ggZZ2e2tau);
+   // yields->MakeHistograms(ggZZ2mu2tau);
 
-   yields->MakeHistograms(ZZTo4l);
-   yields->MakeHistograms(ggZZ4e);
-   yields->MakeHistograms(ggZZ4mu);
-   yields->MakeHistograms(ggZZ4tau);
-   yields->MakeHistograms(ggZZ2e2mu);
-   yields->MakeHistograms(ggZZ2e2tau);
-   yields->MakeHistograms(ggZZ2mu2tau);
+   // yields->FillInclusive();
 
-   yields->FillInclusive();
-
-   yields->Save();
+   // yields->Save();
 	
 //==============
 // Print Yields 
@@ -156,7 +150,7 @@ int main( int argc, char *argv[] )
  
    yields->GetHistos("Yields");
 
-   //yields->Calculate_SS_ZX_Yields( Data, FakeRates);
+   yields->Calculate_SS_ZX_Yields( Data, FakeRates);
    yields->Print("Yields");
 
    yields->Print("Yields",  70., 110.);

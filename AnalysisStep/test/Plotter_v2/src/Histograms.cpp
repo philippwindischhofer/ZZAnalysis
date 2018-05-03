@@ -3388,7 +3388,8 @@ void Histograms::FillYieldGraphs( float M4l_down, float M4l_up , TString fit_opt
             // Set fit model
             TString fit_model;
             fit_model = "pol2";
-				
+			
+	    // these are the exceptions for those combinations that do not use a quadratic polynomial, but a linear or a constant one
             if( i_prod_mode == Settings::bbH
             || (i_prod_mode == Settings::WH_had && i_cat != Settings::untagged)
             || (i_prod_mode == Settings::WH_lep && i_cat != Settings::untagged)

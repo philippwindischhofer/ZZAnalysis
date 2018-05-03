@@ -6,12 +6,18 @@ import pandas as pd
 def get_size(filepath):
     print "skimming " + filepath
     f = TFile.Open(filepath)
-    size = f.Get("ZZTree/candTree").GetEntries()
+
+    if "AllData" in filepath:
+        tree_name = "CRZLLTree"
+    else:
+        tree_name = "ZZTree"
+
+    size = f.Get(tree_name + "/candTree").GetEntries()
     f.Close()
 
     return size
 
-def read_data(collection, start, stop, branches):
+def read_data(collection, start, stop, branches, tree_name = "ZZTree"):
     #print "requesting data in range (" + str(start) + ", " + str(stop) + ")"
     filetuple = collection.transform_index_range(start, stop)
         
@@ -24,7 +30,7 @@ def read_data(collection, start, stop, branches):
     for (cur_file, cur_cut, cur_start_index, cur_stop_index) in zip(files, cuts, start_indices, stop_indices):
         #print "reading from " + cur_file + ": (" + str(cur_start_index) + ", " + str(cur_stop_index) + ")" 
 
-        read_data = pd.DataFrame(root2array(cur_file, treename = "ZZTree/candTree", branches = branches, start = cur_start_index, stop = cur_stop_index + 1))
+        read_data = pd.DataFrame(root2array(cur_file, treename = tree_name + "/candTree", branches = branches, start = cur_start_index, stop = cur_stop_index + 1))
         cut_data = read_data.loc[read_data.apply(cur_cut, axis = 1)]
         read_list.append(cut_data)
 
