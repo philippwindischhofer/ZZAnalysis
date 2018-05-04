@@ -225,9 +225,7 @@ def main():
                     else:
                         iterables[sweep_name].add(sweep_scope, sweep_parameter, start_list, end_list, sweep_behaviour)
 
-    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples/"
-
-    MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZZMask/"
+    MC_path = "/data_CMS/cms/wind/CJLST_NTuples/trainval/"
     
     # when performing a full training
     #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/"

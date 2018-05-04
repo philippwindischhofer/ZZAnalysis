@@ -1,5 +1,5 @@
 // Include classes
-#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/FakeRates.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/FakeRates.h>
 
 using namespace std;
 

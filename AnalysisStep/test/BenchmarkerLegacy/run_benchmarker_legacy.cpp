@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     float mass_point = std::atof(argv[5]);
 
     //TString MCpath = "/data_CMS/cms/wind/CJLST_NTuples_prepared/";
-    TString MCpath = "/data_CMS/cms/wind/CJLST_NTuples/";
+    TString MCpath = "/data_CMS/cms/wind/CJLST_NTuples_raw/";
 
     // switch here between the classifier based on trained discriminants or the one based only on the available MELA values
     Classifier* refclass = new Mor18Classifier();
@@ -80,13 +80,14 @@ int main(int argc, char *argv[])
 
     std::cout << "-------------------------------------------------------" << std::endl;
 
-    // PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", mZZ_cut, conf, start_fraction, end_fraction, false);
-    // PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", mZZ_cut, conf, start_fraction, end_fraction, false);
-    // PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", mZZ_cut, conf, start_fraction, end_fraction, false);
-    // PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", mZZ_cut, conf, start_fraction, end_fraction, false);
+    
 
-    PlottingUtils::make_S_barchart(kTRUE, refclass, out_folder, "categorization_S", "no_cut_data_S", "", mZZ_cut, conf_S, start_fraction, end_fraction, false);
-    PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi_S", "no_cut_data_S", mZZ_cut, conf_S, start_fraction, end_fraction, false);
+    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", mZZ_cut, conf, start_fraction, end_fraction, false);
+    PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", mZZ_cut, conf, start_fraction, end_fraction, false);
+    PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", mZZ_cut, conf, start_fraction, end_fraction, false);
+    PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", mZZ_cut, conf, start_fraction, end_fraction, false);
+
+    PlottingUtils::make_punzi(kTRUE, refclass, out_folder, "punzi_S", "no_cut_data_S", mZZ_cut, conf_S, start_fraction, end_fraction, false);
 
     std::cout << "done" << std::endl;
 

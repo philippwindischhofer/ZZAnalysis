@@ -43,7 +43,7 @@ std::map<TString, TH1F*> PlottingUtils::generate_classifier_histmap(int fill_his
 
 	    for(auto& assignment: conf -> bin_assignment())
 	    {
-		std::cout << "bin : " << assignment.first << " (" << assignment.second << "): " << fill_counts -> GetBinContent(assignment.second + 1) << " fills" << std::endl;
+		std::cout << "bin : " << assignment.first << " (" << assignment.second << "): " << fill_counts -> GetBinContent(assignment.second + 1) << " fills, " << histmap[routing -> hist_name] -> GetBinContent(assignment.second + 1) << " events" << std::endl;
 	    }
 
 	    std::cout << "-----------------------------------------" << std::endl;

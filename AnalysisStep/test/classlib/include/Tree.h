@@ -30,23 +30,6 @@ public :
    float training_weight;
    float ZZMass_masked;
 
-   // easy-access variables that concern the leading (i.e. hardest) Jet in the event
-   // in fact, the case of just 1 jet is special: don't have any MELA discriminants available anymore in this case, and these easy-access variables therefore allow to access the jet variables with less preprocessing
-   float leading_jet_eta;
-   float leading_jet_sin_phi;
-   float leading_jet_cos_phi;
-   float leading_jet_pt;
-
-   float leading_lep_eta;
-   float leading_lep_sin_phi;
-   float leading_lep_cos_phi;
-   float leading_lep_pt;
-
-   float leading_extra_lep_eta;
-   float leading_extra_lep_sin_phi;
-   float leading_extra_lep_cos_phi;
-   float leading_extra_lep_pt;
-
    // values of the MELA-discriminants for this event (as computed by the functions in me_discriminants.cpp)
    float D_VBF2j_ggH_ME;
    float D_VBF1j_ggH_ME;
@@ -566,21 +549,6 @@ public :
    // List of branches
    TBranch* b_training_weight;
    TBranch* b_ZZMass_masked;
-
-   TBranch* b_leading_jet_eta;
-   TBranch* b_leading_jet_sin_phi;
-   TBranch* b_leading_jet_cos_phi;
-   TBranch* b_leading_jet_pt;
-
-   TBranch* b_leading_lep_eta;
-   TBranch* b_leading_lep_sin_phi;
-   TBranch* b_leading_lep_cos_phi;
-   TBranch* b_leading_lep_pt;
-
-   TBranch* b_leading_extra_lep_eta;
-   TBranch* b_leading_extra_lep_sin_phi;
-   TBranch* b_leading_extra_lep_cos_phi;
-   TBranch* b_leading_extra_lep_pt;   
 
    TBranch* b_D_VBF2j_ggH_ME;
    TBranch* b_D_VBF1j_ggH_ME;
@@ -1131,21 +1099,6 @@ void Tree::Init(TTree *tree, TString input_file_name)
    training_weight = 0;
    ZZMass_masked = 0;
 
-   leading_jet_pt = 0;
-   leading_jet_eta = 0;
-   leading_jet_sin_phi = 0;
-   leading_jet_cos_phi = 0;
-
-   leading_lep_pt = 0;
-   leading_lep_eta = 0;
-   leading_lep_sin_phi = 0;
-   leading_lep_cos_phi = 0;
-
-   leading_extra_lep_pt = 0;
-   leading_extra_lep_eta = 0;
-   leading_extra_lep_sin_phi = 0;
-   leading_extra_lep_cos_phi = 0;
-
    D_VBF2j_ggH_ME = 0;
    D_VBF1j_ggH_ME = 0;
    D_WHh_ggH_ME = 0;
@@ -1237,21 +1190,6 @@ void Tree::Init(TTree *tree, TString input_file_name)
 
    fChain->SetBranchAddress("training_weight", &training_weight, &b_training_weight);
    fChain->SetBranchAddress("ZZMass_masked", &ZZMass_masked, &b_ZZMass_masked);
-
-   fChain->SetBranchAddress("leading_jet_eta", &leading_jet_eta, &b_leading_jet_eta);
-   fChain->SetBranchAddress("leading_jet_sin_phi", &leading_jet_sin_phi, &b_leading_jet_sin_phi);
-   fChain->SetBranchAddress("leading_jet_cos_phi", &leading_jet_cos_phi, &b_leading_jet_cos_phi);
-   fChain->SetBranchAddress("leading_jet_pt", &leading_jet_pt, &b_leading_jet_pt);
-
-   fChain->SetBranchAddress("leading_lep_eta", &leading_lep_eta, &b_leading_lep_eta);
-   fChain->SetBranchAddress("leading_lep_sin_phi", &leading_lep_sin_phi, &b_leading_lep_sin_phi);
-   fChain->SetBranchAddress("leading_lep_cos_phi", &leading_lep_cos_phi, &b_leading_lep_cos_phi);
-   fChain->SetBranchAddress("leading_lep_pt", &leading_lep_pt, &b_leading_lep_pt);
-
-   fChain->SetBranchAddress("leading_extra_lep_eta", &leading_extra_lep_eta, &b_leading_extra_lep_eta);
-   fChain->SetBranchAddress("leading_extra_lep_sin_phi", &leading_extra_lep_sin_phi, &b_leading_extra_lep_sin_phi);
-   fChain->SetBranchAddress("leading_extra_lep_cos_phi", &leading_extra_lep_cos_phi, &b_leading_extra_lep_cos_phi);
-   fChain->SetBranchAddress("leading_extra_lep_pt", &leading_extra_lep_pt, &b_leading_extra_lep_pt);
 
    fChain->SetBranchAddress("D_VBF2j_ggH_ME", &D_VBF2j_ggH_ME, &b_D_VBF2j_ggH_ME);
    fChain->SetBranchAddress("D_VBF1j_ggH_ME", &D_VBF1j_ggH_ME, &b_D_VBF1j_ggH_ME);

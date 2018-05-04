@@ -6,9 +6,19 @@ bool no_cut(Tree* in)
     return kTRUE;
 }
 
+float mZZ_cut_min()
+{
+    return 105.;
+}
+
+float mZZ_cut_max()
+{
+    return 140.;
+}
+
 bool mZZ_cut(Tree* in)
 {
-    if((in -> ZZMass > 118.) && (in -> ZZMass < 130.))
+    if((in -> ZZMass > mZZ_cut_min()) && (in -> ZZMass < mZZ_cut_max()))
 	return kTRUE;
     else
 	return kFALSE;

@@ -3,6 +3,9 @@
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
 
+float mZZ_cut_min();
+float mZZ_cut_max();
+
 bool no_cut(Tree* in);
 bool mZZ_cut(Tree* in);
 bool extraLeptons_0_cut(Tree* in);

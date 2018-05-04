@@ -39,6 +39,8 @@ Mor18Config::Mor18Config(TString MCpath, float integrated_lumi, bool use_backgro
 	routing.push_back(std::make_pair("ggTo4e_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
 	routing.push_back(std::make_pair("ggTo4mu_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
 	routing.push_back(std::make_pair("ggTo4tau_Contin_MCFM701", new Routing(no_cut, "gg4lhist")));
+
+	routing.push_back(std::make_pair("AllData", new Routing(no_cut, "ZXhist")));
     }
 }
 

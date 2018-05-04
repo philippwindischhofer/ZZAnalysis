@@ -34,10 +34,7 @@ def augment_file(data_inpath, data_outpath, data_file, mcolls):
     data_outfile = data_outdir + Config.MC_filename
     copyfile(data_inpath + data_file + Config.MC_filename, data_outfile)
 
-    if "AllData" in data_outfile:
-        tree_name = "CRZLLTree"
-    else:
-        tree_name = "ZZTree"
+    tree_name = "ClassTree"
 
     # now, can read the file from its new location and change it
     fcoll = FileCollection({data_outfile: cuts.no_cut}, 0.0, 1.0)

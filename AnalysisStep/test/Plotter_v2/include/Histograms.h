@@ -28,8 +28,9 @@
 #include "TROOT.h"
 
 // Include classes
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/M4lZX.h>
+
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/Settings.h>
-#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/M4lZX.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/CMS_lumi.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/Variables.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/Cosmetics.h>

@@ -2,7 +2,7 @@ def no_cut(row):
     return True
 
 def mZZ_cut(row):
-    if row["ZZMass"] >= 118.0 and row["ZZMass"] < 130.0:
+    if row["ZZMass"] >= 105.0 and row["ZZMass"] < 140.0:
         return True
     else:
         return False

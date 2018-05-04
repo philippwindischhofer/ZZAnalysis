@@ -68,6 +68,10 @@
   <lib name="class_lib"/>
 </bin>
 
+<bin name="run_scrambler" file="../test/Scrambler/run_scrambler.cpp">
+  <lib name="class_lib"/>
+</bin>
+
 <bin name="run_chunk_extractor" file="../test/ChunkExtractor/run_chunk_extractor.cpp">
   <lib name="class_lib"/>
 </bin>

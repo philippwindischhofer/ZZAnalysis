@@ -20,7 +20,12 @@
 #include "TH2F.h"
 #include "TH3F.h"
 
-#include "Tree.h"
+#include <ZZAnalysis/AnalysisStep/interface/bitops.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/M4lZX.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/cuts.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/FinalState.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/FakeRates.h>
 
 class Profiler: public Tree
 {
@@ -45,6 +50,10 @@ private:
     Long64_t gen_sum_weights;
 
     void FillProfile(TString input_file_name, float lumi, TObject* hist, const std::function<bool(Tree*)>& cut, const std::function<void(TObject*, Tree*, float)>& fill_callback, float start_fraction = 0.0, float end_fraction = 1.0, bool fast_reweighting = false);
+    
+    void FillProfileData(TString input_file_name, TString input_file_FR_name, TObject* hist, const std::function<bool(Tree*)>& cut, const std::function<void(TObject*, Tree*, float)>& fill_callback, float start_fraction = 0.0, float end_fraction = 1.0);
+
+    double ComputeKFactor(TString input_file_name, Tree* in);
 };
 
 #endif

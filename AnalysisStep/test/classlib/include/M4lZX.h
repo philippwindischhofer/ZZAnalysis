@@ -5,7 +5,7 @@
 #include "TF1.h"
 #include "TH1F.h"
 
-#include "Settings.h"
+#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/Settings.h>
 
 using namespace std;
 
@@ -21,6 +21,10 @@ public:
    void RenormalizeZX( int, vector< vector <float> >, TH1F* , TH1F*, TH1F* );
    void SetNormalization ( int );
 
+   void ComputeLandauScalings(float m4l_min, float m4l_max);
+
+   float GetLandauScaling(int final_state);
+
 private:
    
    TF1 *f_4e_comb, *f_4mu_comb, *f_2e2mu_comb;
@@ -28,5 +32,9 @@ private:
    int _n_entries;
    float _bin_down, _bin_up;
    float _norm_4mu, _norm_4e, _norm_2e2mu, _norm_ZX_OS_SR_4e, _norm_ZX_OS_SR_4mu, _norm_ZX_OS_SR_2e2mu;
+
+   float landau_scaling_4mu;
+   float landau_scaling_4e;
+   float landau_scaling_2e2mu;
 };
 #endif

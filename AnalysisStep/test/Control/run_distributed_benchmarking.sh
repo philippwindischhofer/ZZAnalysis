@@ -26,10 +26,15 @@ fi
 # ---------------------------------------------
 #  settings for this training campaign
 # ---------------------------------------------
-COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/training/"
-COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/validation/"
-COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/test/"
-COMP_REF_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/"
+COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/training/"
+COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/validation/"
+COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/test/"
+COMP_REF_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/"
+
+# COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/training/"
+# COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/validation/"
+# COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/test/"
+# COMP_REF_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/"
 
 # COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/training/"
 # COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/validation/"

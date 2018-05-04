@@ -22,7 +22,7 @@ PYTHON_LIB="trainlib"
 
 #MC_DIR="/data_CMS/cms/wind/CJLST_NTuples/"
 #MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_additional_mass_points/"
-MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_missing/"
+MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_missing_2/"
 #MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_ZZMask_all/"
 
 if [ "$MODE" = "all" ]

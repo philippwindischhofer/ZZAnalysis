@@ -37,6 +37,7 @@ void augment_tree(TString inpath, TString outpath, int randomize)
 {
     TFile* input_file = new TFile(inpath, "read");
 
+    // the name of the relevant input tree will differ, depending on whether this script is run on data or MC!
     TString tree_name;
     if(inpath.Contains("AllData"))
     {
@@ -47,17 +48,22 @@ void augment_tree(TString inpath, TString outpath, int randomize)
 	tree_name = "ZZTree";
     }
 
+    // ... but the augmented tree it produces is always going to have the same name!
+    TString tree_name_output = "ClassTree";
+    
     // read the metadata
     TH1F* hCounters = (TH1F*)input_file -> Get(tree_name + "/Counters");
     Long64_t n_gen_events = (Long64_t)hCounters -> GetBinContent(1);
     Long64_t gen_sum_weights = (Long64_t)hCounters -> GetBinContent(40);
 
     TFile* output_file = new TFile(outpath, "recreate");
-    output_file -> mkdir(tree_name);
+    output_file -> mkdir(tree_name_output);
 
     // read some auxiliary information
     TH1F* input_metadata = (TH1F*)input_file -> Get(tree_name + "/Counters");
     TTree* input_tree = (TTree*)input_file -> Get(tree_name + "/candTree");
+
+    input_tree -> LoadBaskets();
 
     Tree* buffer = new Tree();
     buffer -> Init(input_tree, inpath);
@@ -182,7 +188,7 @@ void augment_tree(TString inpath, TString outpath, int randomize)
 	output_tree -> Fill();
     }
 
-    output_file -> cd(tree_name);
+    output_file -> cd(tree_name_output);
     output_tree -> Write();
     output_metadata -> Write();
 

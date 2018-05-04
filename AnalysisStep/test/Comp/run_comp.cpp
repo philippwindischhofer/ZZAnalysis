@@ -49,10 +49,9 @@ int main( int argc, char *argv[] )
 
     // choose the category set that is used on both sides of the comparison
     Mor18Config* conf = new Mor18Config("", 35.9, true);
-    //Mor18ConfigReducedCategorySet* conf = new Mor18ConfigReducedCategorySet();
 
     // compare the punzi values computed on signal + background ...
-    // CompUtils::compare_punzi(indir_a, indir_b, name_a, name_b, conf -> storage_prefix() + punzi_infile, punzi_hist_name, out_folder, conf -> storage_prefix() + punzi_outfile, zoom_scale, conf);
+    CompUtils::compare_punzi(indir_a, indir_b, name_a, name_b, conf -> storage_prefix() + punzi_infile, punzi_hist_name, out_folder, conf -> storage_prefix() + punzi_outfile, zoom_scale, conf);
 
     // ... and also separately on signal only
     CompUtils::compare_punzi(indir_a, indir_b, name_a, name_b, conf -> storage_prefix() + punzi_S_infile, punzi_hist_name, out_folder, conf -> storage_prefix() + punzi_S_outfile, zoom_scale, conf);

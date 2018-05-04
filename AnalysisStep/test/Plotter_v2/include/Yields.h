@@ -28,13 +28,12 @@
 #include "TColor.h"
 
 // Include classes
-//#include "Tree.h"
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/FakeRates.h>
 #include "Histograms.h"
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/interface/FinalStates.h>
 #include <ZZAnalysis/AnalysisStep/interface/bitops.h>
-#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/FakeRates.h>
 #include <ZZAnalysis/AnalysisStep/interface/cConstants.h>
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
 

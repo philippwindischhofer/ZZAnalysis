@@ -148,7 +148,7 @@ void make_plots2d(std::function<float(Tree*)> var_x, std::function<float(Tree*)>
 int main(int argc, char *argv[])
 {
     Mor18Classifier* testclass = new Mor18Classifier();
-    Mor18Config conf("/data_CMS/cms/wind/CJLST_NTuples/");
+    Mor18Config conf("/data_CMS/cms/wind/CJLST_NTuples_ZZMask_all/");
 
     auto var = [&](Tree* in) -> float{return in -> ZZMass;};
 
@@ -164,10 +164,8 @@ int main(int argc, char *argv[])
     TString plot_name = "ZZMass_ZHl";
     make_plot1d("ZH125", new Routing(extraLeptons_2_cut, "ZHlhist"), var, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
 
-    plot_name = "ZZMass_VBF";
-    make_plot1d("VBFH125", new Routing(no_cut, "VBFhist"), var, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
-
-    //make_plots1d(testclass, var, number_bins, axis_lower, axis_upper, j2cut, category, quantity, y_label, category_name, normalize, plot_name, conf);
+    plot_name = "AllData";
+    make_plot1d("AllData", new Routing(no_cut, "VBFhist"), var, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
 
     return(0);
 }

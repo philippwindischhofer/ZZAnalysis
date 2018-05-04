@@ -7,17 +7,14 @@ def get_size(filepath):
     print "skimming " + filepath
     f = TFile.Open(filepath)
 
-    if "AllData" in filepath:
-        tree_name = "CRZLLTree"
-    else:
-        tree_name = "ZZTree"
+    tree_name = "ClassTree"
 
     size = f.Get(tree_name + "/candTree").GetEntries()
     f.Close()
 
     return size
 
-def read_data(collection, start, stop, branches, tree_name = "ZZTree"):
+def read_data(collection, start, stop, branches, tree_name = "ClassTree"):
     #print "requesting data in range (" + str(start) + ", " + str(stop) + ")"
     filetuple = collection.transform_index_range(start, stop)
         

@@ -24,19 +24,21 @@
 
 void extract_chunk(TString inpath, TString outpath, float start_fraction, float end_fraction)
 {
+    TString tree_name = "ClassTree";
+
     TFile* input_file = new TFile(inpath, "read");
 
     // read the metadata
-    TH1F* hCounters = (TH1F*)input_file -> Get("ZZTree/Counters");
+    TH1F* hCounters = (TH1F*)input_file -> Get(tree_name + "/Counters");
     Long64_t n_gen_events = (Long64_t)hCounters -> GetBinContent(1);
     Long64_t gen_sum_weights = (Long64_t)hCounters -> GetBinContent(40);
 
     TFile* output_file = new TFile(outpath, "recreate");
-    output_file -> mkdir("ZZTree");
+    output_file -> mkdir(tree_name);
 
     // read some auxiliary information
-    TH1F* input_metadata = (TH1F*)input_file -> Get("ZZTree/Counters");
-    TTree* input_tree = (TTree*)input_file -> Get("ZZTree/candTree");
+    TH1F* input_metadata = (TH1F*)input_file -> Get(tree_name + "/Counters");
+    TTree* input_tree = (TTree*)input_file -> Get(tree_name + "/candTree");
 
     Tree* buffer = new Tree();
     buffer -> Init(input_tree, inpath);
@@ -101,7 +103,7 @@ void extract_chunk(TString inpath, TString outpath, float start_fraction, float 
 	output_tree -> Fill();
     }
 
-    output_file -> cd("ZZTree");
+    output_file -> cd(tree_name);
     output_tree -> Write();
     output_metadata -> Write();
 

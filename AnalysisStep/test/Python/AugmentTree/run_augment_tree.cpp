@@ -48,21 +48,6 @@ void augment_tree(TString inpath, TString outpath)
     // create the new branches that are needed in the output tree
     output_tree -> Branch("training_weight", &(buffer -> training_weight), "training_weight/F");
 
-    output_tree -> Branch("leading_jet_pt", &(buffer -> leading_jet_pt), "leading_jet_pt/F");
-    output_tree -> Branch("leading_jet_eta", &(buffer -> leading_jet_eta), "leading_jet_eta/F");
-    output_tree -> Branch("leading_jet_sin_phi", &(buffer -> leading_jet_sin_phi), "leading_jet_sin_phi/F");
-    output_tree -> Branch("leading_jet_cos_phi", &(buffer -> leading_jet_cos_phi), "leading_jet_cos_phi/F");
-
-    output_tree -> Branch("leading_lep_pt", &(buffer -> leading_lep_pt), "leading_lep_pt/F");
-    output_tree -> Branch("leading_lep_eta", &(buffer -> leading_lep_eta), "leading_lep_eta/F");
-    output_tree -> Branch("leading_lep_sin_phi", &(buffer -> leading_lep_sin_phi), "leading_lep_sin_phi/F");
-    output_tree -> Branch("leading_lep_cos_phi", &(buffer -> leading_lep_cos_phi), "leading_lep_cos_phi/F");
-    
-    output_tree -> Branch("leading_extra_lep_pt", &(buffer -> leading_extra_lep_pt), "leading_extra_lep_pt/F");
-    output_tree -> Branch("leading_extra_lep_eta", &(buffer -> leading_extra_lep_eta), "leading_extra_lep_eta/F");
-    output_tree -> Branch("leading_extra_lep_sin_phi", &(buffer -> leading_extra_lep_sin_phi), "leading_extra_lep_sin_phi/F");
-    output_tree -> Branch("leading_extra_lep_cos_phi", &(buffer -> leading_extra_lep_cos_phi), "leading_extra_lep_cos_phi/F");
-
     output_tree -> Branch("D_VBF2j_ggH_ME", &(buffer -> D_VBF2j_ggH_ME), "D_VBF2j_ggH_ME/F");
     output_tree -> Branch("D_VBF1j_ggH_ME", &(buffer -> D_VBF1j_ggH_ME), "D_VBF1j_ggH_ME/F");
     output_tree -> Branch("D_WHh_ggH_ME", &(buffer -> D_WHh_ggH_ME), "D_WHh_ggH_ME/F");
@@ -128,90 +113,6 @@ void augment_tree(TString inpath, TString outpath)
 	buffer -> D_WHh_ZHh_ME = buffer -> nCleanedJetsPt30 >= 2 ? DWHZH_ME_disc(buffer) : 0.0;
 	buffer -> D_VBF2j_WHh_ME = buffer -> nCleanedJetsPt30 >= 2 ? DVBFWH_ME_disc(buffer) : 0.0;
 	buffer -> D_VBF2j_ZHh_ME = buffer -> nCleanedJetsPt30 >= 2 ? DVBFZH_ME_disc(buffer) : 0.0;
-
-	// look for the leading jets and store its variables separately
-	float leading_jet_pt = std::numeric_limits<float>::min();
-	unsigned int leading_jet = 0;
-	unsigned int number_jets = buffer -> JetPt -> size();
-	for(unsigned int i = 0; i < number_jets; i++)
-	{
-	    if(buffer -> JetPt -> at(i) > leading_jet_pt)
-	    {
-		leading_jet = i;
-		leading_jet_pt = buffer -> JetPt -> at(i);
-	    }
-	}
-
-	if((number_jets > 0) && (leading_jet_pt > 30.0))
-	{
-	    buffer -> leading_jet_pt = leading_jet_pt;
-	    buffer -> leading_jet_eta = buffer -> JetEta -> at(leading_jet);
-	    buffer -> leading_jet_sin_phi = TMath::Sin(buffer -> JetPhi -> at(leading_jet));
-	    buffer -> leading_jet_cos_phi = TMath::Cos(buffer -> JetPhi -> at(leading_jet));
-	}
-	else
-	{
-	    buffer -> leading_jet_pt = 0.0;
-	    buffer -> leading_jet_eta = 0.0;
-	    buffer -> leading_jet_sin_phi = 0.0;
-	    buffer -> leading_jet_cos_phi = 0.0;
-	}
-
-	// look for the leading leptons and store its variables separately
-	float leading_lep_pt = std::numeric_limits<float>::min();
-	unsigned int leading_lep = 0;
-	unsigned int number_leps = buffer -> LepPt -> size();
-	for(unsigned int i = 0; i < number_leps; i++)
-	{
-	    if(buffer -> LepPt -> at(i) > leading_lep_pt)
-	    {
-		leading_lep = i;
-		leading_lep_pt = buffer -> LepPt -> at(i);
-	    }
-	}
-
-	if((number_leps > 0) && (leading_lep_pt > 30.0))
-	{
-	    buffer -> leading_lep_pt = leading_lep_pt;
-	    buffer -> leading_lep_eta = buffer -> LepEta -> at(leading_lep);
-	    buffer -> leading_lep_sin_phi = TMath::Sin(buffer -> LepPhi -> at(leading_lep));
-	    buffer -> leading_lep_cos_phi = TMath::Cos(buffer -> LepPhi -> at(leading_lep));
-	}
-	else
-	{
-	    buffer -> leading_lep_pt = 0.0;
-	    buffer -> leading_lep_eta = 0.0;
-	    buffer -> leading_lep_sin_phi = 0.0;
-	    buffer -> leading_lep_cos_phi = 0.0;
-	}
-
-	// look for the leading extra leptons and store its variables separately
-	float leading_extra_lep_pt = std::numeric_limits<float>::min();
-	unsigned int leading_extra_lep = 0;
-	unsigned int number_extra_leps = buffer -> ExtraLepPt -> size();
-	for(unsigned int i = 0; i < number_extra_leps; i++)
-	{
-	    if(buffer -> ExtraLepPt -> at(i) > leading_extra_lep_pt)
-	    {
-		leading_extra_lep = i;
-		leading_extra_lep_pt = buffer -> ExtraLepPt -> at(i);
-	    }
-	}
-
-	if((number_extra_leps > 0) && (leading_extra_lep_pt > 30.0))
-	{
-	    buffer -> leading_extra_lep_pt = leading_extra_lep_pt;
-	    buffer -> leading_extra_lep_eta = buffer -> ExtraLepEta -> at(leading_extra_lep);
-	    buffer -> leading_extra_lep_sin_phi = TMath::Sin(buffer -> ExtraLepPhi -> at(leading_extra_lep));
-	    buffer -> leading_extra_lep_cos_phi = TMath::Cos(buffer -> ExtraLepPhi -> at(leading_extra_lep));
-	}
-	else
-	{
-	    buffer -> leading_extra_lep_pt = 0.0;
-	    buffer -> leading_extra_lep_eta = 0.0;
-	    buffer -> leading_extra_lep_sin_phi = 0.0;
-	    buffer -> leading_extra_lep_cos_phi = 0.0;
-	}
 
 	output_tree -> Fill();
     }

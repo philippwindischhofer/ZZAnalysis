@@ -1,6 +1,6 @@
 // Include classes
-#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/M4lZX.h>
-#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/ZXVariables.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/M4lZX.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/ZXVariables.h>
 
 using namespace std;
 
@@ -31,7 +31,25 @@ M4lZX::~M4lZX()
 }
 //================
 
+void M4lZX::ComputeLandauScalings(float m4l_min, float m4l_max)
+{
+   landau_scaling_4mu = f_4mu_comb->Integral(m4l_min, m4l_max)/f_4mu_comb->Integral(_bin_down, _bin_up);
+   landau_scaling_4e = f_4e_comb->Integral(m4l_min, m4l_max)/f_4e_comb->Integral(_bin_down, _bin_up);
+   landau_scaling_2e2mu = f_2e2mu_comb->Integral(m4l_min, m4l_max)/f_2e2mu_comb->Integral(_bin_down, _bin_up);    
+}
 
+float M4lZX::GetLandauScaling(int final_state)
+{
+    if(final_state == Settings::fs2mu2e || final_state == Settings::fs2e2mu)
+	return landau_scaling_2e2mu;
+    else if(final_state == Settings::fs4mu)
+	return landau_scaling_4mu;
+    else if(final_state == Settings::fs4e)
+	return landau_scaling_4e;
+
+    std::cerr << "Error: final state unknown!!" << std::endl;
+    return 0.0;
+}
 
 //===================================================================================
 void M4lZX::GetM4lZX(int n_bins, int x_min, int x_max, int category, vector< vector <float> > _norm_ZX_SS_SR, TH1F* h_4e, TH1F* h_4mu, TH1F* h_2e2mu, TH1F* h_4l )

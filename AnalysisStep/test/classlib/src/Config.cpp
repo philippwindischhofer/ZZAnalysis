@@ -36,7 +36,8 @@ std::vector<TString> Config::background_hist_names()
 {    
     std::vector<TString> background_hist_names = {
 	"qq4lhist", 
-	"gg4lhist"
+	"gg4lhist",
+	"ZXhist"
     };
 
     return background_hist_names;
@@ -56,7 +57,8 @@ TString Config::source_label(TString histname)
 	{"ttH1lhist", "t#bar{t}H, t#bar{t} #rightarrow 1l + X"},
 	{"ttH2lhist", "t#bar{t}H, t#bar{t} #rightarrow 2l + X"},
 	{"qq4lhist", "q#bar{q} #rightarrow ZZ #rightarrow 4l"},
-	{"gg4lhist","gg #rightarrow ZZ #rightarrow 4l"}
+	{"gg4lhist", "gg #rightarrow ZZ #rightarrow 4l"},
+	{"ZXhist", "Z + X"}
     };
 
     return mapping[histname];
@@ -76,7 +78,8 @@ int Config::source_color(TString histname)
 	{"ttH1lhist", kCyan - 2},
 	{"ttH2lhist", kCyan + 3},
 	{"qq4lhist", kGray},
-	{"gg4lhist", kBlack}
+	{"gg4lhist", kGray + 2},
+	{"ZXhist", kBlack}
     };
 
     return mapping[histname];
@@ -96,7 +99,8 @@ int Config::source_style(TString histname)
 	{"ttH1lhist", 1001},
 	{"ttH2lhist", 1001},
 	{"qq4lhist", 3244},
-	{"gg4lhist", 3244}
+	{"gg4lhist", 3244},
+	{"ZXhist", 3244}
     };
 
     return mapping[histname];
