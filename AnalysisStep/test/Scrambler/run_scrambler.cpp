@@ -40,7 +40,7 @@ void scramble(TString inpath, TString outpath)
     TH1F* input_metadata = (TH1F*)input_file -> Get(tree_name + "/Counters");
     TTree* input_tree = (TTree*)input_file -> Get(tree_name + "/candTree");
 
-    input_tree -> LoadBaskets();
+    input_tree -> LoadBaskets(1000000000000);
 
     Tree* buffer = new Tree();
     buffer -> Init(input_tree, inpath);

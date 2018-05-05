@@ -28,20 +28,21 @@
 
 int main(int argc, char *argv[])
 {
-    if(argc < 6)
+    if(argc < 7)
     {
-	std::cerr << "Error: at least 5 arguments are required" << std::endl;
+	std::cerr << "Error: at least 6 arguments are required" << std::endl;
 	return(-1);
     }
 
-    TString out_folder = argv[1];
-    float start_fraction = std::atof(argv[2]);
-    float end_fraction = std::atof(argv[3]);
-    float lumi = std::atof(argv[4]);
-    float mass_point = std::atof(argv[5]);
+    TString MCpath = argv[1];
+    TString out_folder = argv[2];
+    float start_fraction = std::atof(argv[3]);
+    float end_fraction = std::atof(argv[4]);
+    float lumi = std::atof(argv[5]);
+    float mass_point = std::atof(argv[6]);
 
     //TString MCpath = "/data_CMS/cms/wind/CJLST_NTuples_prepared/";
-    TString MCpath = "/data_CMS/cms/wind/CJLST_NTuples_raw/";
+    //TString MCpath = "/data_CMS/cms/wind/CJLST_NTuples/";
 
     // switch here between the classifier based on trained discriminants or the one based only on the available MELA values
     Classifier* refclass = new Mor18Classifier();
@@ -53,10 +54,10 @@ int main(int argc, char *argv[])
     std::cout << "start_fraction = " << start_fraction << std::endl;
     std::cout << "end_fraction = " << end_fraction << std::endl;
 
-    if(argc == 7)
+    if(argc == 8)
     {
 	// the path to the prior file was given -> read the priors that were optimized on the training dataset, and evaluate the classification performance on the validation dataset
-	TString WP_path = argv[6];
+	TString WP_path = argv[7];
 	ConfigFileHandler* handler = new ConfigFileHandler(WP_path, "read");
 	float WP_VBF2j = handler -> GetField("WP_VBF2j");
 	float WP_VBF1j = handler -> GetField("WP_VBF1j");
@@ -78,9 +79,7 @@ int main(int argc, char *argv[])
 	std::cout << "using default working points" << std::endl;
     }
 
-    std::cout << "-------------------------------------------------------" << std::endl;
-
-    
+    std::cout << "-------------------------------------------------------" << std::endl;    
 
     PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", mZZ_cut, conf, start_fraction, end_fraction, false);
     PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", mZZ_cut, conf, start_fraction, end_fraction, false);

@@ -30,6 +30,7 @@ priors_best["zhlept_prior"] = 1.0
 priors_best["tthhadr_prior"] = 1.0
 priors_best["tthlept_prior"] = 1.0
 priors_best["zhmet_prior"] = 1.0
+priors_best["bkg"] = 1.0
 priors_best["target"] = -7.0
 
 # set the ranges in which to optimize the individual priors
@@ -42,6 +43,7 @@ priors_min["whlept_prior"] = eps
 priors_min["zhhadr_prior"] = 0.3
 priors_min["whhadr_prior"] = 0.3
 priors_min["zhmet_prior"] = eps
+priors_min["bkg"] = eps
 
 priors_max = {}
 priors_max["ggh_prior"] = 3.0
@@ -52,6 +54,7 @@ priors_max["whlept_prior"] = 0.3
 priors_max["zhhadr_prior"] = 0.8
 priors_max["whhadr_prior"] = 0.8
 priors_max["zhmet_prior"] = 0.3
+priors_max["bkg"] = 1.5
 
 # global evaluation counter
 evalcnt = 0
@@ -60,7 +63,6 @@ evalcnt = 0
 run_dir = ""
 out_dir = ""
 engine = ""
-punzi_file = "Mor18_punzi_S_comp.conf"
 
 def load_file(path, keys):
     confhandler = ConfigFileHandler()
@@ -101,6 +103,7 @@ def to_prior_dict(priors_list):
     priors["zhhadr_prior"] = priors_list[5]
     priors["zhlept_prior"] = priors_list[6]
     priors["zhmet_prior"] = priors_list[7]
+    priors["bkg_prior"] = priors_list[8]
     
     return priors
 
@@ -114,6 +117,7 @@ def to_prior_list(prior_dict):
     priors.append(prior_dict["zhhadr_prior"])
     priors.append(prior_dict["zhlept_prior"])
     priors.append(prior_dict["zhmet_prior"])
+    priors.append(prior_dict["bkg_prior"])
     
     return priors
 
@@ -140,14 +144,19 @@ def cost_func(delta_pi, alpha, m):
         
     return cost
 
-def punzi_target(priors, relevant_classes, params):
+def punzi_target(priors, relevant_classes, params, mode = "S"):
     bin_dir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
     cost_function_evaluator = "run_prior_evaluator"
     
     output = check_output([bin_dir + cost_function_evaluator, run_dir, out_dir, engine, str(params["min_iterations"]), str(params["max_iterations"]), str(priors["ggh_prior"]), str(priors["whhadr_prior"]), 
               str(priors["zhhadr_prior"]), str(priors["whlept_prior"]), str(priors["zhlept_prior"]), str(priors["zhmet_prior"]), 
-              str(priors["tthhadr_prior"]), str(priors["tthlept_prior"])])
-    
+              str(priors["tthhadr_prior"]), str(priors["tthlept_prior"]), str(priors["bkg_prior"]), mode])
+
+    if mode == "S":
+        punzi_file = "Mor18_punzi_S_comp.conf"
+    else if mode == "SB":
+        punzi_file = "Mor18_punzi_comp.conf"
+
     # read directly the configuration file containing the relative Punzi improvements w.r.t. the reference 
     # (the one with flat priors)
     punzihandler = ConfigFileHandler()
@@ -186,6 +195,7 @@ def save_priors(out_path, priors):
     confhandler.set_field('Priors', 'ZHhadr_prior', str(priors["zhhadr_prior"]))
     confhandler.set_field('Priors', 'WHhadr_prior', str(priors["whhadr_prior"]))
     confhandler.set_field('Priors', 'ZHMET_prior', str(priors["zhmet_prior"]))    
+    confhandler.set_field('Priors', "bkg_prior", str(priors["bkg_prior"]))
     confhandler.save_configuration(out_path)
 
 def save_params(out_path, params, evalcnt):
@@ -214,6 +224,7 @@ def punzi_target_global(ggh_prior, whhadr_prior, zhhadr_prior, whlept_prior, zhl
     priors["zhmet_prior"] = zhmet_prior
     priors["tthhadr_prior"] = tthhadr_prior
     priors["tthlept_prior"] = tthlept_prior
+    priors["bkg_prior"] = priors_best["bkg_prior"]
 
     # go for higher quality for the final round of optimization: have three times as many rounds, i.e. the variance on the function output will naively be 3 times smaller
     params = {}
@@ -236,6 +247,7 @@ def punzi_target_global(ggh_prior, whhadr_prior, zhhadr_prior, whlept_prior, zhl
         priors_best["zhhadr_prior"] = priors["zhhadr_prior"]
         priors_best["whhadr_prior"] = priors["whhadr_prior"]
         priors_best["zhmet_prior"] = priors["zhmet_prior"]
+        priors_best["bkg_prior"] = priors_best["bkg_prior"]
 
         save_priors(os.path.join(out_dir, 'priors.txt'), priors)
 
@@ -247,6 +259,44 @@ def punzi_target_global(ggh_prior, whhadr_prior, zhhadr_prior, whlept_prior, zhl
     evalcnt += 1
     return costval                
     
+def punzi_target_bkg(bkg_prior):
+    global evalcnt
+
+    priors = {}
+    priors["ggh_prior"] = priors_best["ggh_prior"]
+    priors["whhadr_prior"] = priors_best["whhadr_prior"]
+    priors["zhhadr_prior"] = priors_best["zhhadr_prior"]
+    priors["whlept_prior"] = priors_best["whlept_prior"]
+    priors["zhlept_prior"] = priors_best["zhlept_prior"]
+    priors["zhmet_prior"] = priors_best["zhmet_prior"]
+    priors["tthhadr_prior"] = priors_best["tthhadr_prior"]
+    priors["tthlept_prior"] = priors_best["tthlept_prior"]
+    priors["bkg_prior"] = bkg_prior
+
+    params = {}
+    params["min_iterations"] = 25
+    params["max_iterations"] = 100
+
+    costval = punzi_target(priors, ["VBF1j", "VBF2j", "ttHlept", "ttHhadr", "VHlept", "VHhadr", "VHMET"], params, mode = "SB")
+    priors["target"] = costval
+
+    if costval > priors_best["target"]:
+        priors_best["target"] = costval
+        priors_best["ggh_prior"] = priors["ggh_prior"]
+        priors_best["tthhadr_prior"] = priors["tthhadr_prior"]
+        priors_best["tthlept_prior"] = priors["tthlept_prior"]
+        priors_best["zhlept_prior"] = priors["zhlept_prior"]
+        priors_best["whlept_prior"] = priors["whlept_prior"]
+        priors_best["zhhadr_prior"] = priors["zhhadr_prior"]
+        priors_best["whhadr_prior"] = priors["whhadr_prior"]
+        priors_best["zhmet_prior"] = priors["zhmet_prior"]
+        priors_best["bkg_prior"] = priors["bkg_prior"]
+
+        save_priors(os.path.join(out_dir, 'priors_bkg.txt'), priors)
+    
+    evalcnt += 1
+    return costval    
+
 def punzi_target_ggH(ggh_prior):
     global evalcnt
 
@@ -259,6 +309,7 @@ def punzi_target_ggH(ggh_prior):
     priors["zhmet_prior"] = priors_best["zhmet_prior"]
     priors["tthhadr_prior"] = priors_best["tthhadr_prior"]
     priors["tthlept_prior"] = priors_best["tthlept_prior"]
+    priors["bkg_prior"] = priors_best["bkg_prior"]
     
     # default settings for faster, but noisy, evaluation
     params = {}
@@ -288,6 +339,7 @@ def punzi_target_ttH(tthhadr_prior, tthlept_prior):
     priors["zhmet_prior"] = priors_best["zhmet_prior"]
     priors["tthhadr_prior"] = tthhadr_prior
     priors["tthlept_prior"] = tthlept_prior
+    priors["bkg_prior"] = priors_best["bkg_prior"]
 
     # default settings for faster, but noisy, evaluation
     params = {}
@@ -317,6 +369,7 @@ def punzi_target_VHlept(zhlept_prior, whlept_prior):
     priors["zhmet_prior"] = priors_best["zhmet_prior"]
     priors["tthhadr_prior"] = priors_best["tthhadr_prior"]
     priors["tthlept_prior"] = priors_best["tthlept_prior"]
+    priors["bkg_prior"] = priors_best["bkg_prior"]
 
     # go for higher quality for the final round of optimization
     params = {}
@@ -346,6 +399,7 @@ def punzi_target_VHhadr(zhhadr_prior, whhadr_prior):
     priors["zhmet_prior"] = priors_best["zhmet_prior"]
     priors["tthhadr_prior"] = priors_best["tthhadr_prior"]
     priors["tthlept_prior"] = priors_best["tthlept_prior"]
+    priors["bkg_prior"] = priors_best["bkg_prior"]
 
     # go for higher quality for the final round of optimization
     params = {}
@@ -375,6 +429,7 @@ def punzi_target_ZHMET(zhmet_prior):
     priors["zhmet_prior"] = zhmet_prior
     priors["tthhadr_prior"] = priors_best["tthhadr_prior"]
     priors["tthlept_prior"] = priors_best["tthlept_prior"]
+    priors["bkg_prior"] = priors_best["bkg_prior"]
 
     # go for higher quality for the final round of optimization
     params = {}
@@ -536,45 +591,36 @@ def main():
 
     # start by fixing the ggH_prior by optimizing Punzi in the two VBF categories
     res = run_bayesian_optimization("ggH", "evaluations_ggH.txt", punzi_target_ggH, {'ggh_prior': (priors_min["ggh_prior"], priors_max["ggh_prior"])}, 
-                                init_points = 2, max_iterations = 30, patience = 40, alpha = 1.5e-6)
+                                init_points = 1, max_iterations = 1, patience = 40, alpha = 1.5e-6)
     priors_best["ggh_prior"] = res["ggh_prior"]
     
     # continue with the next ones to be fixed: ttHh and ttHl
     res = run_bayesian_optimization("ttH", "evaluations_ttH.txt", punzi_target_ttH, {'tthhadr_prior': (priors_min["tthhadr_prior"], priors_max["tthhadr_prior"]), 
                                                                                      'tthlept_prior': (priors_min["tthlept_prior"], priors_max["tthlept_prior"])}, 
-                                 init_points = 10, max_iterations = 40, patience = 40, alpha = 1.5e-6)
+                                 init_points = 1, max_iterations = 1, patience = 40, alpha = 1.5e-6)
     priors_best["tthhadr_prior"] = res["tthhadr_prior"]
     priors_best["tthlept_prior"] = res["tthlept_prior"]
     
     # then proceed with ZHlept and WHlept
     res = run_bayesian_optimization("VHlept", "evaluations_VHlept.txt", punzi_target_VHlept, {'zhlept_prior': (priors_min["zhlept_prior"], priors_max["zhlept_prior"]),
                                                                                               'whlept_prior': (priors_min["whlept_prior"], priors_max["whlept_prior"])}, 
-                                 init_points = 10, max_iterations = 40, patience = 40, alpha = 1.5e-6)
+                                 init_points = 1, max_iterations = 1, patience = 40, alpha = 1.5e-6)
     priors_best["zhlept_prior"] = res["zhlept_prior"]
     priors_best["whlept_prior"] = res["whlept_prior"]
     
     # then proceed with ZHhadr and WHhadr
     res = run_bayesian_optimization("VHhadr", "evaluations_VHhadr.txt", punzi_target_VHhadr, {'zhhadr_prior': (priors_min["zhhadr_prior"], priors_max["zhhadr_prior"]),
                                                                                               'whhadr_prior': (priors_min["whhadr_prior"], priors_max["whhadr_prior"])}, 
-                                  init_points = 10, max_iterations = 40, patience = 40, alpha = 1.5e-6)
+                                  init_points = 1, max_iterations = 1, patience = 40, alpha = 1.5e-6)
     priors_best["zhhadr_prior"] = res["zhhadr_prior"]
     priors_best["whhadr_prior"] = res["whhadr_prior"]
     
     # then finish off with ZHMET
     res = run_bayesian_optimization("VHMET", "evaluations_VHMET.txt", punzi_target_ZHMET, {'zhmet_prior': (priors_min["zhmet_prior"], priors_max["zhmet_prior"])}, 
-                                  init_points = 2, max_iterations = 30, patience = 30, alpha = 1.5e-6)
+                                  init_points = 1, max_iterations = 1, patience = 30, alpha = 1.5e-6)
     priors_best["zhmet_prior"] = res["zhmet_prior"]
     
     save_priors(os.path.join(out_dir, 'priors_sequential.txt'), priors_best)
-
-    # priors_best["ggh_prior"] = 1.3
-    # priors_best["tthhadr_prior"] = 0.2
-    # priors_best["tthlept_prior"] = 0.04
-    # priors_best["zhlept_prior"] = 0.03
-    # priors_best["zhhadr_prior"] = 0.81
-    # priors_best["whlept_prior"] = 0.19
-    # priors_best["whhadr_prior"] = 0.73
-    # priors_best["zhmet_prior"] = 0.15
 
     # at the end, optimize globally again, tweaking all priors simultaneously, but in a very small region set by the current best guess from the sequential algorithm
     res = run_bayesian_optimization("global", "evaluations_global.txt", punzi_target_global, 
@@ -586,7 +632,7 @@ def main():
                                      'zhhadr_prior': (max(priors_min["zhhadr_prior"], priors_best["zhhadr_prior"] - delta), min(priors_max["zhhadr_prior"], priors_best["zhhadr_prior"] + delta)),
                                      'whhadr_prior': (max(priors_min["whhadr_prior"], priors_best["whhadr_prior"] - delta), min(priors_max["whhadr_prior"], priors_best["whhadr_prior"] + delta)),
                                      'zhmet_prior': (max(priors_min["zhmet_prior"], priors_best["zhmet_prior"] - delta), min(priors_max["zhmet_prior"], priors_best["zhmet_prior"] + delta))},
-                                    init_points = 20, max_iterations = 80, patience = 70, alpha = 5e-7)
+                                    init_points = 1, max_iterations = 1, patience = 70, alpha = 5e-7)
 
     priors_best["ggh_prior"] = res["ggh_prior"]
     priors_best["tthhadr_prior"] = res["tthhadr_prior"]
@@ -602,6 +648,12 @@ def main():
     postfit_priors = gp_maximum(os.path.join(out_dir, 'evaluations_global.txt'), priors_min, priors_max)
 
     save_priors(os.path.join(out_dir, 'priors_postfit.txt'), postfit_priors)
+
+    # once this is done, go ahead and also optimize the splitting between S and B
+    res = run_bayesian_optimization("bkg", "evaluations_bkg.txt", punzi_target_bkg, {'bkg_prior': (priors_min["bkg_prior"], priors_max["bkg_prior"])}, 
+                                init_points = 2, max_iterations = 30, patience = 40, alpha = 1.5e-6)
+    priors_best["bkg_prior"] = res["bkg_prior"]
+    save_priors(os.path.join(out_dir, 'priors_bkg.txt'), priors_best)    
 
 if __name__ == "__main__":
     main()

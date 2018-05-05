@@ -31,15 +31,6 @@ COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/vali
 COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/test/"
 COMP_REF_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/"
 
-# COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/training/"
-# COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/validation/"
-# COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/test/"
-# COMP_REF_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/"
-
-# COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/training/"
-# COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/validation/"
-# COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/test/"
-
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 # the directories where the original sources are located
@@ -92,7 +83,11 @@ do
 	COMP_TEST_DIR=$CAMPAIGN_DIR$RUN"comp_"$ENGINE"/"$MASS_POINT"/test/"
 
 	ROC_DIR=$CAMPAIGN_DIR$RUN"ROCs/"
-	AUGMENTATION_DIR=$CAMPAIGN_DIR$RUN"augmentation/"
+
+	AUGMENTATION_TRAINING_DIR=$CAMPAIGN_DIR$RUN"augmentation_training/"
+	AUGMENTATION_VALIDATION_DIR=$CAMPAIGN_DIR$RUN"augmentation_validation/"
+	AUGMENTATION_TEST_DIR=$CAMPAIGN_DIR$RUN"augmentation_test/"
+
 	BENCHMARK_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"settings_benchmark_"$ENGINE"/"$MASS_POINT"/"
 
 	mkdir -p $BENCHMARK_SETTINGS_DIR
@@ -121,7 +116,7 @@ do
 	echo "#!/bin/bash" > $BENCHMARK_TRAINING_SCRIPT
 
         # launch the benchmarking
-	echo $BIN_DIR$BENCHMARKER $CALIBRATION_TRAINING_DIR $AUGMENTATION_DIR $MASS_POINT $BENCHMARK_TRAINING_DIR "0.0 0.5" $ENGINE "&>>" $BENCHMARK_TRAINING_LOGFILE >> $BENCHMARK_TRAINING_SCRIPT
+	echo $BIN_DIR$BENCHMARKER $CALIBRATION_TRAINING_DIR $AUGMENTATION_TRAINING_DIR $MASS_POINT $BENCHMARK_TRAINING_DIR "0.0" "1.0" $ENGINE "&>>" $BENCHMARK_TRAINING_LOGFILE >> $BENCHMARK_TRAINING_SCRIPT
 	echo "sleep 5" >> $BENCHMARK_TRAINING_SCRIPT
 
         # launch the comparison to the reference
@@ -132,7 +127,7 @@ do
 	echo "#!/bin/bash" > $BENCHMARK_VALIDATION_SCRIPT
 
         # launch the benchmarking
-	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_DIR $MASS_POINT $BENCHMARK_VALIDATION_DIR "0.5 0.75" $ENGINE "&>>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
+	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_VALIDATION_DIR $MASS_POINT $BENCHMARK_VALIDATION_DIR "0.0" "1.0" $ENGINE "&>>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
 	echo "sleep 5" >> $BENCHMARK_VALIDATION_SCRIPT
 
         # launch the comparison to the reference
@@ -143,7 +138,7 @@ do
 	echo "#!/bin/bash" > $BENCHMARK_TEST_SCRIPT
 
         # launch the benchmarking
-	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_DIR $MASS_POINT $BENCHMARK_TEST_DIR "0.75 1.0" $ENGINE "&>>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
+	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_TEST_DIR $MASS_POINT $BENCHMARK_TEST_DIR "0.0" "1.0" $ENGINE "&>>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
 	echo "sleep 5" >> $BENCHMARK_VALIDATION_SCRIPT
 
         # launch the comparison to the reference
@@ -154,7 +149,7 @@ do
 	    echo "ROCs already computed, skipping this step now"
 	else
         # launch the plotting of ROCs
-	    echo $BIN_DIR$ROC_PLOTTER $AUGMENTATION_DIR $ROC_DIR "&>>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
+	    echo $BIN_DIR$ROC_PLOTTER $AUGMENTATION_TEST_DIR $ROC_DIR "&>>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
 
 	    cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $ROC_DIR
 	fi
@@ -169,7 +164,7 @@ do
 
 	COMP_DIR=$CAMPAIGN_DIR$RUN"comp_"$ENGINE"/"$MASS_POINT"/"
 
-	AUGMENTATION_DIR=$CAMPAIGN_DIR$RUN"augmentation/"
+	AUGMENTATION_DIR=$CAMPAIGN_DIR$RUN"augmentation_test/"
 	BENCHMARK_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"settings_benchmark_"$ENGINE"/"$MASS_POINT"/"
 
 	mkdir -p $BENCHMARK_SETTINGS_DIR
@@ -200,7 +195,7 @@ JOBS=`find * | grep $MASS_POINT.*run_benchmark_$ENGINE.*.sh$`
 for JOB in $JOBS
 do
     echo "lauching benchmarking for " $CAMPAIGN_DIR$JOB
-    $JOB_SUBMITTER "-short" $CAMPAIGN_DIR$JOB
+    #$JOB_SUBMITTER "-short" $CAMPAIGN_DIR$JOB
     #sh $CAMPAIGN_DIR$JOB &
 done
 

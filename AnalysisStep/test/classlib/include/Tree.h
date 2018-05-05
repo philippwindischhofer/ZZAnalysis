@@ -1608,6 +1608,10 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetBranchAddress("ExtraLepLepId", &ExtraLepLepId, &b_ExtraLepLepId);
    fChain->SetBranchAddress("ZXFakeweight", &ZXFakeweight, &b_ZXFakeweight);
 
+   fChain->SetBranchAddress("overallEventWeight", &overallEventWeight, &b_overallEventWeight);
+   fChain->SetBranchAddress("GenAssocLep1Id", &GenAssocLep1Id, &b_GenAssocLep1Id);
+   fChain->SetBranchAddress("GenAssocLep2Id", &GenAssocLep2Id, &b_GenAssocLep2Id);
+
    if ( !(input_file_name.Contains("Data")) )
    {
       if ( input_file_name.Contains("ggT") )
@@ -1636,14 +1640,13 @@ void Tree::Init(TTree *tree, TString input_file_name)
       {
       	fChain->SetBranchAddress("ggH_NNLOPS_weight", &ggH_NNLOPS_weight, &b_ggH_NNLOPS_weight);
       	fChain->SetBranchAddress("ggH_NNLOPS_weight_unc", &ggH_NNLOPS_weight_unc, &b_ggH_NNLOPS_weight_unc);
-		}
+      }
       fChain->SetBranchAddress("genFinalState", &genFinalState, &b_genFinalState);
       fChain->SetBranchAddress("genProcessId", &genProcessId, &b_genProcessId);
       fChain->SetBranchAddress("genHEPMCweight", &genHEPMCweight, &b_genHEPMCweight);
       fChain->SetBranchAddress("PUWeight", &PUWeight, &b_PUWeight);
       fChain->SetBranchAddress("dataMCWeight", &dataMCWeight, &b_dataMCWeight);
       fChain->SetBranchAddress("trigEffWeight", &trigEffWeight, &b_trigEffWeight);
-      fChain->SetBranchAddress("overallEventWeight", &overallEventWeight, &b_overallEventWeight);
       fChain->SetBranchAddress("HqTMCweight", &HqTMCweight, &b_HqTMCweight);
       fChain->SetBranchAddress("xsec", &xsec, &b_xsec);
       fChain->SetBranchAddress("genExtInfo", &genExtInfo, &b_genExtInfo);
@@ -1681,11 +1684,11 @@ void Tree::Init(TTree *tree, TString input_file_name)
       fChain->SetBranchAddress("GenAssocLep1Pt", &GenAssocLep1Pt, &b_GenAssocLep1Pt);
       fChain->SetBranchAddress("GenAssocLep1Eta", &GenAssocLep1Eta, &b_GenAssocLep1Eta);
       fChain->SetBranchAddress("GenAssocLep1Phi", &GenAssocLep1Phi, &b_GenAssocLep1Phi);
-      fChain->SetBranchAddress("GenAssocLep1Id", &GenAssocLep1Id, &b_GenAssocLep1Id);
+
       fChain->SetBranchAddress("GenAssocLep2Pt", &GenAssocLep2Pt, &b_GenAssocLep2Pt);
       fChain->SetBranchAddress("GenAssocLep2Eta", &GenAssocLep2Eta, &b_GenAssocLep2Eta);
       fChain->SetBranchAddress("GenAssocLep2Phi", &GenAssocLep2Phi, &b_GenAssocLep2Phi);
-      fChain->SetBranchAddress("GenAssocLep2Id", &GenAssocLep2Id, &b_GenAssocLep2Id);
+
       //   fChain->SetBranchAddress("reweightingweights", &reweightingweights, &b_reweightingweights);
       fChain->SetBranchAddress("LHEPDFScale", &LHEPDFScale, &b_LHEPDFScale);
       fChain->SetBranchAddress("LHEweight_QCDscale_muR1_muF1", &LHEweight_QCDscale_muR1_muF1, &b_LHEweight_QCDscale_muR1_muF1);

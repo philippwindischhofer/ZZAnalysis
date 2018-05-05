@@ -62,6 +62,7 @@ float ZHlept_prior_best = 1.0;
 float ZHMET_prior_best = 1.0;
 float ttHhadr_prior_best = 1.0;
 float ttHlept_prior_best = 1.0;
+float bkg_prior_best = 1.0;
 
 void dump_current_priors()
 {
@@ -77,6 +78,7 @@ void dump_current_priors()
     handler -> AddField("ZHMET_prior", ZHMET_prior_best);
     handler -> AddField("ttHhadr_prior", ttHhadr_prior_best);
     handler -> AddField("ttHlept_prior", ttHlept_prior_best);
+    handler -> AddField("bkg_prior", bkg_prior_best);
     handler -> SaveConfiguration();
 }
 
@@ -93,8 +95,9 @@ double costfunc(const double* params)
     float ZHMET_prior = (float)params[6];
     float ttHhadr_prior = (float)params[7];
     float ttHlept_prior = (float)params[8];
+    float bkg_prior = (float)params[9];
 
-    varclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior);
+    varclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior);
 
     std::cout << "-------------------------------------------------------" << std::endl;
     std::cout << "evaluation = " << evalcnt << std::endl;
@@ -108,6 +111,7 @@ double costfunc(const double* params)
     std::cout << "ZHMET_prior = " << ZHMET_prior << std::endl;
     std::cout << "ttHhadr_prior = " << ttHhadr_prior << std::endl;
     std::cout << "ttHlept_prior = " << ttHlept_prior << std::endl;
+    std::cout << "bkg_prior = " << bkg_prior << std::endl;
 
     // evaluate the Punzi value with this (modified) Classifier now
     PlottingUtils::make_punzi(kTRUE, varclass, outdir, "punzi", "no_cut_data", no_cut, conf, 0.15, 0.25);
@@ -132,6 +136,7 @@ double costfunc(const double* params)
 	ZHMET_prior_best = ZHMET_prior;
 	ttHhadr_prior_best = ttHhadr_prior;
 	ttHlept_prior_best = ttHlept_prior;
+	bkg_prior_best = bkg_prior;
 
 	dump_current_priors();
     }

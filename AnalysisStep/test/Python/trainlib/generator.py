@@ -5,7 +5,7 @@ import numpy as np
 
 class Generator:
     
-    def __init__(self, H1_stream, H0_stream, branches, preprocessor, training_split = 0.5, chunks = 1000, MC_weighting = False):
+    def __init__(self, H1_stream, H0_stream, branches, preprocessor, training_split = 0.66, chunks = 1000, MC_weighting = False):
         self.H1_stream = H1_stream
         self.H0_stream = H0_stream
 

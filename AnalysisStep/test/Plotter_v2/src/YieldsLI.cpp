@@ -40,6 +40,7 @@ void YieldsLI::SetPackagePath(TString package_path, TString engine)
     float ZHMET_prior = handler -> GetField("ZHMET_prior");
     float ttHhadr_prior = handler -> GetField("ttHhadr_prior");
     float ttHlept_prior = handler -> GetField("ttHlept_prior");
+    float bkg_prior = handler -> GetField("bkg_prior");
 
     std::cout << "-----------------------------------------------------------" << std::endl;
     std::cout << " using the following priors: " << std::endl;
@@ -52,13 +53,14 @@ void YieldsLI::SetPackagePath(TString package_path, TString engine)
     std::cout << " ZHMET_prior = " << ZHMET_prior << std::endl;
     std::cout << " ttHhadr_prior = " << ttHhadr_prior << std::endl;
     std::cout << " ttHlept_prior = " << ttHlept_prior << std::endl;
+    std::cout << " bkg_prior = " << bkg_prior << std::endl;
     std::cout << "-----------------------------------------------------------" << std::endl;
 
     Mor18LIClassifier* refclass18 = static_cast<Mor18LIClassifier*>(refclass);
     refclass18 -> SetEngineParameter("min_iterations", 25);
     refclass18 -> SetEngineParameter("max_iterations", 75);
 
-    refclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior);
+    refclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior);
 }
 
 
@@ -70,11 +72,11 @@ void YieldsLI::MakeHistograms( TString input_file_name )
 
    input_file = new TFile(input_file_name);
 
-   hCounters = (TH1F*)input_file->Get("ZZTree/Counters");
+   hCounters = (TH1F*)input_file->Get("ClassTree/Counters");
    n_gen_events = (Long64_t)hCounters->GetBinContent(1);
    gen_sum_weights = (Long64_t)hCounters->GetBinContent(40);
    
-   input_tree = (TTree*)input_file->Get("ZZTree/candTree");
+   input_tree = (TTree*)input_file->Get("ClassTree/candTree");
    Init( input_tree, input_file_name );
    
    if (fChain == 0) return;
@@ -135,7 +137,7 @@ void YieldsLI::Calculate_SS_ZX_Yields( TString input_file_data_name, TString  in
    FakeRates *FR = new FakeRates( input_file_FR_name );
    
    input_file_data = new TFile(input_file_data_name);
-   input_tree_data = (TTree*)input_file_data->Get("CRZLLTree/candTree");
+   input_tree_data = (TTree*)input_file_data->Get("ClassTree/candTree");
    Init( input_tree_data, input_file_data_name );
    
    
@@ -160,7 +162,7 @@ void YieldsLI::Calculate_SS_ZX_Yields( TString input_file_data_name, TString  in
       _current_category = refclass -> ClassifyThisEvent(this);
       
       // Calculate yield
-      _yield_SR = _fs_ROS_SS.at(_current_final_state)*FR->GetFakeRate(LepPt->at(2),LepEta->at(2),LepLepId->at(2))*FR->GetFakeRate(LepPt->at(3),LepEta->at(3),LepLepId->at(3));
+      _yield_SR = overallEventWeight * _fs_ROS_SS.at(_current_final_state)*FR->GetFakeRate(LepPt->at(2),LepEta->at(2),LepLepId->at(2))*FR->GetFakeRate(LepPt->at(3),LepEta->at(3),LepLepId->at(3));
       
       _expected_yield_SR[_current_final_state][_current_category] += _yield_SR; // this number needs to be used when renormalizing histograms that have some cut/blinding
       _number_of_events_CR[_current_final_state][_current_category]++;

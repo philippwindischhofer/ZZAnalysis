@@ -147,7 +147,7 @@ class Trainer:
 
             # stops the training as soon as the loss starts to saturate
             early_stop = EarlyStopping(monitor = 'val_loss',
-                                       patience = 10,
+                                       patience = 7,
                                        verbose = 1,
                                        mode = 'auto')
 

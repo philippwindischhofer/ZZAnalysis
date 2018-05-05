@@ -34,19 +34,9 @@
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 
 // compare (and optimize) the Punzi values evaluated on the signal sources (no background taken into account because of insufficient statistics in some categories)
-#define OPTIMIZE_PUNZI_S
-
-#ifdef OPTIMIZE_PUNZI_S
-TString punzi_infile = "punzi_S_plot_hist.root";
-TString punzi_histname = "punzi_S";
-TString punzi_outfile = "punzi_S_comp";
-#endif
-
-#ifdef OPTIMIZE_PUNZI_SB
-TString punzi_infile = "punzi_plot_hist.root";
-TString punzi_histname = "punzi";
-TString punzi_outfile = "punzi_comp";
-#endif
+TString punzi_infile;
+TString punzi_histname;
+TString punzi_outfile;
 
 TString punzi_hist_name = "punzi_purity";
 
@@ -72,8 +62,9 @@ double costfunc(const double* params)
     float ZHMET_prior = (float)params[6];
     float ttHhadr_prior = (float)params[7];
     float ttHlept_prior = (float)params[8];
+    float bkg_prior = (float)params[9];
 
-    varclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior);
+    varclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior);
 
     std::cout << "VBF_prior = " << VBF_prior << std::endl;
     std::cout << "ggH_prior = " << ggH_prior << std::endl;
@@ -84,9 +75,10 @@ double costfunc(const double* params)
     std::cout << "ZHMET_prior = " << ZHMET_prior << std::endl;
     std::cout << "ttHhadr_prior = " << ttHhadr_prior << std::endl;
     std::cout << "ttHlept_prior = " << ttHlept_prior << std::endl;
+    std::cout << "bkg_prior = " << bkg_prior << std::endl;
 
     // evaluate the Punzi value with this (modified) Classifier now
-    PlottingUtils::make_punzi(kTRUE, varclass, outdir, punzi_histname, "no_cut_data", no_cut, conf, 0.5, 0.75, false);
+    PlottingUtils::make_punzi(kTRUE, varclass, outdir, punzi_histname, "no_cut_data", no_cut, conf, 0.0, 1.0, false);
     
     // load low the Punzi histogram of the optimized classifier and compare the two. From this point onwards, is exactly the same as in "Comp"
     float zoom_scale = 1.0;
@@ -99,9 +91,9 @@ double costfunc(const double* params)
 
 int main( int argc, char *argv[] )
 {
-    if(argc != 14)
+    if(argc != 16)
     {
-    	std::cerr << "Error: exactly 13 arguments are required" << std::endl;
+    	std::cerr << "Error: exactly 15 arguments are required" << std::endl;
     }
 
     // set default values
@@ -114,6 +106,7 @@ int main( int argc, char *argv[] )
     float ZHMET_prior = 0.0666923;
     float ttHhadr_prior = 0.145215;
     float ttHlept_prior = 0.1954;
+    float bkg_prior = 1.0;
     
     TString run_dir = argv[1];
     outdir = argv[2];
@@ -130,6 +123,30 @@ int main( int argc, char *argv[] )
     ZHMET_prior = std::stof(argv[11]);
     ttHhadr_prior = std::stof(argv[12]);
     ttHlept_prior = std::stof(argv[13]);
+    bkg_prior = std::stof(argv[14]);
+
+    TString switchval = argv[15];
+
+    if(switchval == "S")
+    {
+	std::cout << "evaluating priors on S" << std::endl;
+
+	punzi_infile = "punzi_S_plot_hist.root";
+	punzi_histname = "punzi_S";
+	punzi_outfile = "punzi_S_comp";
+
+	conf = new Mor18Config(run_dir + "augmentation/validation/", 41.37, false);
+    }
+    else if(switchval == "SB")
+    {
+	std::cout << "evaluating priors on S + B" << std::endl;
+
+	punzi_infile = "punzi_plot_hist.root";
+	punzi_histname = "punzi";
+	punzi_outfile = "punzi_comp";
+
+	conf = new Mor18Config(run_dir + "augmentation/validation/", 41.37, true);
+    }
 
     std::cout << "run_dir = " << run_dir << std::endl;
     std::cout << "engine = " << engine << std::endl;
@@ -142,8 +159,7 @@ int main( int argc, char *argv[] )
 
     // can also try to use the validation reference of the legacy classifier as reference for the optimization
     // Note: this really just takes the *scalings*, i.e. the reference values for the achievable Punzi purity from the other classifier -> should be OK!
-    refdir = "/data_CMS/cms/wind/Mor18References/validation/";
-    //refdir = "/data_CMS/cms/wind/Mor18References/125/validation/";
+    refdir = "/data_CMS/cms/wind/Mor18References/125/validation/";
 
     varclass = new Mor18LIClassifier(run_dir + "calibration_validation/", run_dir + "settings.conf", engine);
 
@@ -153,15 +169,7 @@ int main( int argc, char *argv[] )
     varclass18 -> SetEngineParameter("min_iterations", min_iterations); // 25 is default
     varclass18 -> SetEngineParameter("max_iterations", max_iterations); // 100 is default
 
-#ifdef OPTIMIZE_PUNZI_SB
-    conf = new Mor18Config(run_dir + "augmentation/", 35.9, true);
-#endif
-
-#ifdef OPTIMIZE_PUNZI_S
-    conf = new Mor18Config(run_dir + "augmentation/", 35.9, false);
-#endif
-
-    double params[] = {VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior};
+    double params[] = {VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior};
 
     costfunc(params);
    

@@ -82,6 +82,8 @@ void extract_chunk(TString inpath, TString outpath, float start_fraction, float 
 
     reweighting_factor = reduced_gen_sum_weights / full_gen_sum_weights;
 
+    std::cout << "reduced_gen_sum_weights = " << reduced_gen_sum_weights << std::endl;
+    std::cout << "full_gen_sum_weights = " << full_gen_sum_weights << std::endl;
     std::cout << "reweighting_factor = " << reweighting_factor << std::endl;
  
     // loop over the entries in chain

@@ -5,8 +5,10 @@
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
-MODE=$2
-GLOBAL_SETTINGS_DIR=$CAMPAIGN_DIR
+SOURCE_ROOT=$2
+DEST_ROOT=$3
+AUGMENTATION_SETTINGS_ROOT=$4
+GLOBAL_SETTINGS_DIR=$5
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
@@ -20,32 +22,23 @@ BIN_DIR=$CAMPAIGN_DIR"bin/"
 AUGMENTER="SingleAugmentation.py"
 PYTHON_LIB="trainlib"
 
-#MC_DIR="/data_CMS/cms/wind/CJLST_NTuples/"
-#MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_additional_mass_points/"
-MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_missing_2/"
-#MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_ZZMask_all/"
+MC_DIR=$SOURCE_ROOT
 
-if [ "$MODE" = "all" ]
-then
-    cd $MC_DIR
-    dirs=`ls -d */`
-    datafiles=""
+cd $MC_DIR
+dirs=`ls -d */`
+datafiles=""
 
-    for dir in $dirs
-    do
-	datafiles=$datafiles" ${dir%/}"
-    done 
-else
-    # augment only the core ones needed for the prior optimization
-    datafiles="ggH125 VBFH125 ZH125 WplusH125 WminusH125 ttH125"
-fi
+for dir in $dirs
+do
+    datafiles=$datafiles" ${dir%/}"
+done 
 
 echo $datafiles
 
 # ---------------------------------------------
 #  first, copy all the executables to the campaign folder
 # ---------------------------------------------
-echo "preparing filesystem for training campaign"
+echo "preparing filesystem for augmentation campaign"
 
 mkdir -p $BIN_DIR
 cp -r $PYTHON_DIR_ORIGINAL$PYTHON_LIB $BIN_DIR
@@ -53,40 +46,34 @@ cp $PYTHON_DIR_ORIGINAL$AUGMENTER $BIN_DIR
 
 cd $CAMPAIGN_DIR
 
-RUN_DIRLIST=`ls -d */ | egrep -v 'bin|statistics'`
+# create the directory that will hold the augmented MC files
+AUGMENTATION_DIR=$DEST_ROOT"/"
+TRAINING_DIR=$GLOBAL_SETTINGS_DIR"/training/"
+AUGMENTATION_SETTINGS_DIR=$AUGMENTATION_SETTINGS_ROOT"/"
+mkdir -p $AUGMENTATION_DIR
+mkdir -p $AUGMENTATION_SETTINGS_DIR
 
-# for all the runs in this sweep
-for RUN in $RUN_DIRLIST
+for datafile in $datafiles
 do
-    # create the directory that will hold the augmented MC files
-    AUGMENTATION_DIR=$CAMPAIGN_DIR$RUN"augmentation/"
-    TRAINING_DIR=$CAMPAIGN_DIR$RUN"training/"
-    AUGMENTATION_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"settings_augmentation/"
-    mkdir -p $AUGMENTATION_DIR
-    mkdir -p $AUGMENTATION_SETTINGS_DIR
+    mkdir -p $AUGMENTATION_SETTINGS_DIR$datafile
 
-    for datafile in $datafiles
-    do
-	mkdir -p $AUGMENTATION_SETTINGS_DIR$datafile
-
-	# prepare the job augmenting this specific datafile
-	AUGMENTATION_SCRIPT=$AUGMENTATION_SETTINGS_DIR$datafile"/run_augmentation.sh"
-	AUGMENTATION_LOGFILE=$AUGMENTATION_SETTINGS_DIR$datafile"/log_augmentation.txt"
-	
-	echo "#!/bin/bash" > $AUGMENTATION_SCRIPT
-	echo "python" $BIN_DIR$AUGMENTER $MC_DIR $datafile $GLOBAL_SETTINGS_DIR$RUN $TRAINING_DIR $AUGMENTATION_DIR "&>" $AUGMENTATION_LOGFILE >> $AUGMENTATION_SCRIPT
-    done
+    # prepare the job augmenting this specific datafile
+    AUGMENTATION_SCRIPT=$AUGMENTATION_SETTINGS_DIR$datafile"/run_augmentation.sh"
+    AUGMENTATION_LOGFILE=$AUGMENTATION_SETTINGS_DIR$datafile"/log_augmentation.txt"
+    
+    echo "#!/bin/bash" > $AUGMENTATION_SCRIPT
+    echo "python" $BIN_DIR$AUGMENTER $MC_DIR $datafile $GLOBAL_SETTINGS_DIR $TRAINING_DIR $AUGMENTATION_DIR "&>" $AUGMENTATION_LOGFILE >> $AUGMENTATION_SCRIPT
 done
 
 # now go back and launch all the jobs that have been prepared
-cd $CAMPAIGN_DIR
+cd $AUGMENTATION_SETTINGS_DIR
 
 JOBS=`find * | grep run_augmentation.sh$`
 
 for JOB in $JOBS
 do
-    echo "launching augmentation for " $CAMPAIGN_DIR$JOB
-    $JOB_SUBMITTER $CAMPAIGN_DIR$JOB
+    echo "launching augmentation for " $AUGMENTATION_SETTINGS_DIR$JOB
+    #$JOB_SUBMITTER $CAMPAIGN_DIR$JOB
 done
 
 cd $CURRENT_DIR

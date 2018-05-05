@@ -58,10 +58,12 @@ TH1F* Profiler::FillProfile(TString input_file_name, float lumi, TH1F* hist, con
     {
 	TString fake_rate_file_name = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/data/FakeRates/FakeRates_SS_Moriond18.root";
 	// TODO: remove the mZZ_cut (if existing) in "cut" and pass the resulting function on! Right now it works only if mZZ_cut is the ONLY cut that is passed to this function from the outside world (i.e. NO cut in final state is currently possible)
+	std::cout << "reading from DATA file" << std::endl;
 	FillProfileData(input_file_name, fake_rate_file_name, hist, no_cut, TH1F_callback, start_fraction, end_fraction);
     }
     else
     {
+	std::cout << "reading from MC file" << std::endl;
 	FillProfile(input_file_name, lumi, hist, cut, TH1F_callback, start_fraction, end_fraction, fast_reweighting);
     }
     
@@ -147,7 +149,7 @@ void Profiler::FillProfileData(TString input_file_name, TString input_file_FR_na
 
     FakeRates* FR = new FakeRates(input_file_FR_name);
     
-    TString tree_name = "CRZLLTree";
+    TString tree_name = "ClassTree";
 
     std::cout << "reading DATA from " << input_file_name << std::endl;
 
@@ -187,7 +189,7 @@ void Profiler::FillProfileData(TString input_file_name, TString input_file_FR_na
 	    FR -> GetFakeRate(LepPt -> at(3), LepEta -> at(3), LepLepId -> at(3));
 
 	// scale it down to the signal region mass window via the Landau scaling...
-	yield_SR *= scaler -> GetLandauScaling(cur_final_state);
+	yield_SR *= overallEventWeight * (scaler -> GetLandauScaling(cur_final_state));
 
 	// ... which works only if "cut" below does not contain any mass_cut itself!
 
@@ -213,7 +215,7 @@ void Profiler::FillProfile(TString input_file_name, float lumi, TObject* hist, c
 {
     input_file = new TFile(input_file_name);
 
-    TString tree_name = "ZZTree";
+    TString tree_name = "ClassTree";
     
     std::cout << "reading from " << input_file_name << std::endl;
     

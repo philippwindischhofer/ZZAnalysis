@@ -42,13 +42,13 @@ RUN_DIRLIST=`ls -d */ | egrep -v 'bin|statistics'`
 for RUN in $RUN_DIRLIST
 do
     # create the directory that will hold the training output
-    TRAINING_DIR=$CAMPAIGN_DIR$RUN"training/"
+    TRAINING_DIR=$CAMPAIGN_DIR$RUN"/training/"
     mkdir -p $TRAINING_DIR
 
     # for each run, first make all the config files for the individual trainings
     python $BIN_DIR$TRAINING_CONFIG_FILE_GEN $CAMPAIGN_DIR$RUN
 
-    TRAINING_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"settings_training/"
+    TRAINING_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"/settings_training/"
     cd $TRAINING_SETTINGS_DIR
 
     TRAININGS=`ls -d */`

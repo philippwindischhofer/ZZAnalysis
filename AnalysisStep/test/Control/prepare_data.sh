@@ -24,6 +24,7 @@ do
     PREPARATION_LOGFILE=$DEST_ROOT"log_preparation_"${SOURCE_FOLDER%/}".txt"
 
     echo "#!/bin/bash" > $PREPARATION_SCRIPT
+    echo "source /home/llr/cms/wind/se.sh" >> $PREPARATION_SCRIPT
     echo $FILE_PREPARER $SOURCE_PATH $DEST_PATH "1" "&>" $PREPARATION_LOGFILE >> $PREPARATION_SCRIPT
 done
 

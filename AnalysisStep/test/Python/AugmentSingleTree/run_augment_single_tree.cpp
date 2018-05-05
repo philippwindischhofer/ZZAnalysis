@@ -63,7 +63,7 @@ void augment_tree(TString inpath, TString outpath, int randomize)
     TH1F* input_metadata = (TH1F*)input_file -> Get(tree_name + "/Counters");
     TTree* input_tree = (TTree*)input_file -> Get(tree_name + "/candTree");
 
-    input_tree -> LoadBaskets();
+    input_tree -> LoadBaskets(1000000000000);
 
     Tree* buffer = new Tree();
     buffer -> Init(input_tree, inpath);
@@ -84,6 +84,17 @@ void augment_tree(TString inpath, TString outpath, int randomize)
     output_tree -> Branch("D_WHh_ZHh_ME", &(buffer -> D_WHh_ZHh_ME), "D_WHh_ZHh_ME/F");
     output_tree -> Branch("D_VBF2j_WHh_ME", &(buffer -> D_VBF2j_WHh_ME), "D_VBF2j_WHh_ME/F");
     output_tree -> Branch("D_VBF2j_ZHh_ME", &(buffer -> D_VBF2j_ZHh_ME), "D_VBF2j_ZHh_ME/F");
+
+    TBranch* br_oew = (TBranch*)(buffer -> fChain -> GetListOfBranches() -> FindObject("overallEventWeight"));
+    if(br_oew)
+    {
+    	std::cout << "overallEventWeight available in file " << inpath << std::endl;
+    }
+    else
+    {
+    	std::cout << "adding overallEventWeight in file " << inpath << std::endl;
+    	output_tree -> Branch("overallEventWeight", &(buffer -> overallEventWeight), "overallEventWeight/F");
+    }
 
     // also homogenize in the information needed for the cuts on the Python side, i.e. add dummy values for "LHEAssociatedparticleId"
     TBranch* br_lhe = (TBranch*)(buffer -> fChain -> GetListOfBranches() -> FindObject("LHEAssociatedParticleId"));
@@ -119,6 +130,16 @@ void augment_tree(TString inpath, TString outpath, int randomize)
     	output_tree -> Branch("GenAssocLep2Id", &(buffer -> GenAssocLep2Id));
     }
 
+    TBranch* br_xs = (TBranch*)(buffer -> fChain -> GetListOfBranches() -> FindObject("xsec"));
+    if(br_xs)
+    {
+	std::cout << "xsec available in file " << inpath << std::endl;
+    }
+    else
+    {
+	std::cout << "xsec not available in file " << inpath << std::endl;
+    }
+
     std::cout << "generating random numbers" << std::endl;
 
     // generate the randomization of the data:
@@ -143,13 +164,10 @@ void augment_tree(TString inpath, TString outpath, int randomize)
 	Long64_t i_entry = buffer -> LoadTree(rand_index);
 	if(i_entry < 0) break;
 
+	std::cout << j_entry << " <-> " << rand_index << std::endl;
+	
 	// now actually read this entry
 	buffer -> fChain -> GetEntry(rand_index);
-
-	float training_weight = ((buffer -> xsec) * (buffer -> overallEventWeight)) / gen_sum_weights;
-
-	// fill the placeholder variable
-	buffer -> training_weight = training_weight;
 
 	if(!br_lhe)
 	{
@@ -184,6 +202,19 @@ void augment_tree(TString inpath, TString outpath, int randomize)
 	{
 	    buffer -> ZZMass_masked = 0.0;
 	}
+
+	if(!br_oew)
+	{
+	    buffer -> overallEventWeight = 1.0;
+	}
+
+	float training_weight = 1.0;
+	if(br_xs)
+	{
+	    training_weight = ((buffer -> xsec) * (buffer -> overallEventWeight)) / gen_sum_weights;
+	}
+
+	buffer -> training_weight = training_weight;
 
 	output_tree -> Fill();
     }

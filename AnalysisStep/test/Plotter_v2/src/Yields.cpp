@@ -67,11 +67,11 @@ void Yields::MakeHistograms( TString input_file_name )
 
    input_file = new TFile(input_file_name);
 
-   hCounters = (TH1F*)input_file->Get("ZZTree/Counters");
+   hCounters = (TH1F*)input_file->Get("ClassTree/Counters");
    n_gen_events = (Long64_t)hCounters->GetBinContent(1);
    gen_sum_weights = (Long64_t)hCounters->GetBinContent(40);
    
-   input_tree = (TTree*)input_file->Get("ZZTree/candTree");
+   input_tree = (TTree*)input_file->Get("ClassTree/candTree");
    Init( input_tree, input_file_name );
    
    if (fChain == 0) return;
@@ -162,7 +162,7 @@ void Yields::Calculate_SS_ZX_Yields( TString input_file_data_name, TString  inpu
    FakeRates *FR = new FakeRates( input_file_FR_name );
    
    input_file_data = new TFile(input_file_data_name);
-   input_tree_data = (TTree*)input_file_data->Get("CRZLLTree/candTree");
+   input_tree_data = (TTree*)input_file_data->Get("ClassTree/candTree");
    Init( input_tree_data, input_file_data_name );
    
    
@@ -209,7 +209,7 @@ void Yields::Calculate_SS_ZX_Yields( TString input_file_data_name, TString  inpu
       
       
       // Calculate yield
-      _yield_SR = _fs_ROS_SS.at(_current_final_state)*FR->GetFakeRate(LepPt->at(2),LepEta->at(2),LepLepId->at(2))*FR->GetFakeRate(LepPt->at(3),LepEta->at(3),LepLepId->at(3));
+      _yield_SR = overallEventWeight * _fs_ROS_SS.at(_current_final_state)*FR->GetFakeRate(LepPt->at(2),LepEta->at(2),LepLepId->at(2))*FR->GetFakeRate(LepPt->at(3),LepEta->at(3),LepLepId->at(3));
       
       _expected_yield_SR[_current_final_state][_current_category] += _yield_SR; // this number needs to be used when renormalizing histograms that have some cut/blinding
       _number_of_events_CR[_current_final_state][_current_category]++;
