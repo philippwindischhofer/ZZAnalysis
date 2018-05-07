@@ -27,7 +27,7 @@ cp $SOURCE_ROOT$CONFIG_FILE $DEST_ROOT$CONFIG_FILE
 cp -r $SOURCE_ROOT"priors_"$ENGINE $DEST_ROOT
 
 # now, copy the augmentation, but for the mass point on which the classifier was trained, get only the (reweighted) test portion
-AUGMENTATION_SOURCE=$SOURCE_ROOT"augmentation/"
+AUGMENTATION_SOURCE=$SOURCE_ROOT"augmentation_test/"
 AUGMENTATION_DEST=$DEST_ROOT"CJLST_NTuples/"
 mkdir -p $AUGMENTATION_DEST
 
@@ -39,12 +39,6 @@ do
     DEST_FOLDER=$AUGMENTATION_DEST$SOURCE_FOLDER
     mkdir -p $DEST_FOLDER
 
-    if [[ "$SOURCE_FOLDER" =~ "$TRAINING_MASS_POINT" ]]
-    then
-	# this file has been used for training, need to pass it through the chunk extractor that gives back only the test piece
-	$BIN_DIR$CHUNK_EXTRACTOR $AUGMENTATION_SOURCE$SOURCE_FOLDER$MC_FILE_NAME $DEST_FOLDER$MC_FILE_NAME "0.75" "1.0"
-    else
-	# this file has not been used for training, can just copy it through
-	cp $AUGMENTATION_SOURCE$SOURCE_FOLDER$MC_FILE_NAME $DEST_FOLDER$MC_FILE_NAME 
-    fi
+    # this file has not been used for training, can just copy it through
+    cp $AUGMENTATION_SOURCE$SOURCE_FOLDER$MC_FILE_NAME $DEST_FOLDER$MC_FILE_NAME 
 done

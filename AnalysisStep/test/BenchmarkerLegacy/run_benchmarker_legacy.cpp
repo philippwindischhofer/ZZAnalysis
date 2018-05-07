@@ -81,8 +81,8 @@ int main(int argc, char *argv[])
 
     std::cout << "-------------------------------------------------------" << std::endl;    
 
-    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "", mZZ_cut, conf, start_fraction, end_fraction, false);
-    PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "", mZZ_cut, conf, start_fraction, end_fraction, false);
+    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "105 GeV < m_{4#font[12]{l}} < 140 GeV", mZZ_cut, conf, start_fraction, end_fraction, false);
+    PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S", "no_cut_data", "105 GeV < m_{4#font[12]{l}} < 140 GeV", mZZ_cut, conf, start_fraction, end_fraction, false);
     PlottingUtils::make_punzi(kFALSE, refclass, out_folder, "punzi", "no_cut_data", mZZ_cut, conf, start_fraction, end_fraction, false);
     PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", mZZ_cut, conf, start_fraction, end_fraction, false);
 

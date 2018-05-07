@@ -144,18 +144,6 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
     H0_distrib -> SetMarkerColor(kRed - 7);
     H0_distrib -> SetFillColor(kWhite);
 
-    TH1F* H1_distrib_validation = new TH1F("H1_distrib_validation", "H1_distrib_validation", number_bins_H1, -0.02, 1.02);
-    H1_distrib_validation -> SetLineColor(kWhite);
-    H1_distrib_validation -> SetFillColor(kWhite);
-    H1_distrib_validation -> SetMarkerStyle(21);
-    H1_distrib_validation -> SetMarkerColor(kBlue - 9);
-
-    TH1F* H0_distrib_validation = new TH1F("H0_distrib_validation", "H0_distrib_validation", number_bins_H0, -0.02, 1.02);
-    H0_distrib_validation -> SetLineColor(kWhite);
-    H0_distrib_validation -> SetFillColor(kWhite);
-    H0_distrib_validation -> SetMarkerStyle(21);
-    H0_distrib_validation -> SetMarkerColor(kRed - 7);
-
     // make the signal distribution
     for(auto tup: boost::combine(H1_paths, H1_cuts))
     {
@@ -169,7 +157,6 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 	    kTRUE : kFALSE;};
 	
 	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, start_fraction, end_fraction);
-	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib_validation, total_cut, disc, false, 0.5, 0.75);
     }
 
     for(auto tup: boost::combine(H0_paths, H0_cuts))
@@ -184,7 +171,6 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 	    kTRUE : kFALSE;};
 	
 	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib, total_cut, disc, false, start_fraction, end_fraction);
-	prof -> FillProfile(H0_path, conf.lumi(), H0_distrib_validation, total_cut, disc, false, 0.5, 0.75);
     }
 
     // only now do the normalization of both distributions
@@ -192,11 +178,6 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
     double bkg_norm = 1.0 / H0_distrib -> Integral("width");
     H1_distrib -> Scale(sig_norm);
     H0_distrib -> Scale(bkg_norm);
-
-    double sig_norm_validation = 1.0 / H1_distrib_validation -> Integral("width");
-    double bkg_norm_validation = 1.0 / H0_distrib_validation -> Integral("width");
-    H1_distrib_validation -> Scale(sig_norm_validation);
-    H0_distrib_validation -> Scale(bkg_norm_validation);
 
     TH1F* H1_distrib_smooth = (TH1F*)(H1_distrib -> Clone("H1_distrib_smooth"));
     TH1F* H0_distrib_smooth = (TH1F*)(H0_distrib -> Clone("H0_distrib_smooth"));
@@ -214,16 +195,14 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
     H0_spline -> SetLineWidth(3);
 
     // Plot the two distributions, for visualization (and cross-checking) purposes
-    std::vector<TH1F*> hist_vec = {H1_distrib_validation, H0_distrib_validation, H1_distrib, H0_distrib};
+    std::vector<TH1F*> hist_vec = {H1_distrib, H0_distrib};
     // std::vector<TString> source_labels = {H1_name + " (validation: 0.5 - 0.75)", 
     // 					  H0_name + " (validation: 0.5 - 0.75)", 
     // 					  H1_name + Form(" (%.2f - %.2f)", start_fraction, end_fraction),
     // 					  H0_name + Form(" (%.2f - %.2f)", start_fraction, end_fraction)};
 
-    std::vector<TString> source_labels = {H1_name + " (validation)", 
-					  H0_name + " (validation)", 
-					  H1_name + " (training)",
-					  H0_name + " (training)"};
+    std::vector<TString> source_labels = {H1_name,
+					  H0_name};
 
     plotter -> Construct(hist_vec, source_labels, disc_name, "normalized to 1", "", "", "P H nostack");
     

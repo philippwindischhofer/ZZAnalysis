@@ -148,24 +148,137 @@ void make_plots2d(std::function<float(Tree*)> var_x, std::function<float(Tree*)>
 int main(int argc, char *argv[])
 {
     Mor18Classifier* testclass = new Mor18Classifier();
-    Mor18Config conf("/data_CMS/cms/wind/CJLST_NTuples_ZZMask_all/");
+    Mor18Config conf("/data_CMS/cms/wind/CJLST_NTuples_prepared/");
 
-    auto var = [&](Tree* in) -> float{return in -> ZZMass;};
+    TString quantity;
+    TString plot_name;
 
-    TString quantity = "ZZMass";
     TString y_label = "events";
     TString category_name = "";
-    int number_bins = 100;
-    float axis_lower = 0.0;
-    float axis_upper = 300.0;
+    int number_bins;
+    float axis_lower;
+    float axis_upper;
     int category = -1;
     bool normalize = false;
 
-    TString plot_name = "ZZMass_ZHl";
-    make_plot1d("ZH125", new Routing(extraLeptons_2_cut, "ZHlhist"), var, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+    auto var1 = [&](Tree* in) -> float{return in -> ZZMass;};
+    axis_lower = 100.0;
+    axis_upper = 500.0;
+    number_bins = 100;
+    quantity = "ZZMass";
+    plot_name = "ZZMass_ZHl";
+    make_plot1d("ZH125", new Routing(extraLeptons_2_cut, "ZHlhist"), var1, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
 
-    plot_name = "AllData";
-    make_plot1d("AllData", new Routing(no_cut, "VBFhist"), var, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+    plot_name = "ZZMass_WminusHl";
+    make_plot1d("WminusH125", new Routing(extraLeptons_1_cut, "WminusHlhist"), var1, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "ZZMass_WplusHl";
+    make_plot1d("WplusH125", new Routing(extraLeptons_1_cut, "WplusHlhist"), var1, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "ZZMass_AllData";
+    make_plot1d("AllData", new Routing(no_cut, "datahist"), var1, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    // -------------------------------------------------
+
+    auto var2 = [&](Tree* in) -> float{return in -> nExtraLep;};
+    axis_lower = 0;
+    axis_upper = 5;
+    number_bins = 6;
+    quantity = "nExtraLep";
+    plot_name = "nExtraLep_ZHl";
+    make_plot1d("ZH125", new Routing(extraLeptons_2_cut, "ZHlhist"), var2, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "nExtraLep_WminusHl";
+    make_plot1d("WminusH125", new Routing(extraLeptons_1_cut, "WminusHlhist"), var2, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "nExtraLep_WplusHl";
+    make_plot1d("WplusH125", new Routing(extraLeptons_1_cut, "WplusHlhist"), var2, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "nExtraLep_AllData";
+    make_plot1d("AllData", new Routing(no_cut, "datahist"), var2, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    // -------------------------------------------------
+
+    auto var3 = [&](Tree* in) -> float{return in -> PFMET;};
+    axis_lower = 0;
+    axis_upper = 500;
+    number_bins = 100;
+    quantity = "PFMET";
+    plot_name = "PFMET_ZHl";
+    make_plot1d("ZH125", new Routing(extraLeptons_2_cut, "ZHlhist"), var3, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "PFMET_WminusHl";
+    make_plot1d("WminusH125", new Routing(extraLeptons_1_cut, "WminusHlhist"), var3, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "PFMET_WplusHl";
+    make_plot1d("WplusH125", new Routing(extraLeptons_1_cut, "WplusHlhist"), var3, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "PFMET_AllData";
+    make_plot1d("AllData", new Routing(no_cut, "datahist"), var3, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    // -------------------------------------------------
+
+    auto var4 = [&](Tree* in) -> float{return in -> ZZEta;};
+    axis_lower = -3;
+    axis_upper = 3;
+    number_bins = 100;
+    quantity = "ZZEta";
+    plot_name = "ZZEta_ZHl";
+    make_plot1d("ZH125", new Routing(extraLeptons_2_cut, "ZHlhist"), var4, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "ZZEta_WminusHl";
+    make_plot1d("WminusH125", new Routing(extraLeptons_1_cut, "WminusHlhist"), var4, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "ZZEta_WplusHl";
+    make_plot1d("WplusH125", new Routing(extraLeptons_1_cut, "WplusHlhist"), var4, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "ZZEta_AllData";
+    make_plot1d("AllData", new Routing(no_cut, "datahist"), var4, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    // -------------------------------------------------
+
+    auto var5 = [&](Tree* in) -> float{return in -> Z1Mass;};
+    axis_lower = 40;
+    axis_upper = 120;
+    number_bins = 100;
+    quantity = "Z1Mass";
+    plot_name = "Z1Mass_ZHl";
+    make_plot1d("ZH125", new Routing(extraLeptons_2_cut, "ZHlhist"), var5, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "Z1Mass_WminusHl";
+    make_plot1d("WminusH125", new Routing(extraLeptons_1_cut, "WminusHlhist"), var5, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "Z1Mass_WplusHl";
+    make_plot1d("WplusH125", new Routing(extraLeptons_1_cut, "WplusHlhist"), var5, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "Z1Mass_AllData";
+    make_plot1d("AllData", new Routing(no_cut, "datahist"), var5, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "Z1Mass_ggH";
+    make_plot1d("ggH125", new Routing(no_cut, "datahist"), var5, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+
+    // -------------------------------------------------
+
+    auto var6 = [&](Tree* in) -> float{return in -> Z2Mass;};
+    axis_lower = 15;
+    axis_upper = 120;
+    number_bins = 100;
+    quantity = "Z2Mass";
+    plot_name = "Z2Mass_ZHl";
+    make_plot1d("ZH125", new Routing(extraLeptons_2_cut, "ZHlhist"), var6, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "Z2Mass_WminusHl";
+    make_plot1d("WminusH125", new Routing(extraLeptons_1_cut, "WminusHlhist"), var6, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "Z2Mass_WplusHl";
+    make_plot1d("WplusH125", new Routing(extraLeptons_1_cut, "WplusHlhist"), var6, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "Z2Mass_AllData";
+    make_plot1d("AllData", new Routing(no_cut, "datahist"), var6, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
+
+    plot_name = "Z2Mass_ggH";
+    make_plot1d("ggH125", new Routing(no_cut, "datahist"), var6, number_bins, axis_lower, axis_upper, normalize, quantity, y_label, category_name, plot_name, conf);
 
     return(0);
 }

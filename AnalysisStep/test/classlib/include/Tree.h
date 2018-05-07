@@ -38,6 +38,7 @@ public :
    float D_WHh_ZHh_ME;
    float D_VBF2j_WHh_ME;
    float D_VBF2j_ZHh_ME;
+   float D_bkg_ME;
 
    // values for the ML-discriminants for this event (as computed by the neural networks and appended to the tree)
    float D_VBF_ggH_ML;
@@ -78,6 +79,16 @@ public :
    float D_ttHl_VBF_ML;
    float D_ttHl_WHh_ML;
 
+   float D_ggH_bkg_ML;
+   float D_VBF_bkg_ML;
+   float D_WHl_bkg_ML;
+   float D_ZHl_bkg_ML;
+   float D_WHh_bkg_ML;
+   float D_ZHh_bkg_ML;
+   float D_ZHMET_bkg_ML;
+   float D_ttHh_bkg_ML;
+   float D_ttHl_bkg_ML;
+
    std::map<TString, float*> ML_discriminants = {
        {"D_VBF_ggH_ML", &D_VBF_ggH_ML}, {"D_WHh_ggH_ML", &D_WHh_ggH_ML},
        {"D_ZHh_ggH_ML", &D_ZHh_ggH_ML}, {"D_WHh_ZHh_ML", &D_WHh_ZHh_ML},
@@ -96,7 +107,12 @@ public :
        {"D_ZHMET_ttHl_ML", &D_ZHMET_ttHl_ML}, {"D_ttHh_ggH_ML", &D_ttHh_ggH_ML},
        {"D_ttHh_VBF_ML", &D_ttHh_VBF_ML}, {"D_ttHh_WHh_ML", &D_ttHh_WHh_ML},
        {"D_ttHh_ttHl_ML", &D_ttHh_ttHl_ML}, {"D_ttHl_ggH_ML", &D_ttHl_ggH_ML},
-       {"D_ttHl_VBF_ML", &D_ttHl_VBF_ML}, {"D_ttHl_WHh_ML", &D_ttHl_WHh_ML}
+       {"D_ttHl_VBF_ML", &D_ttHl_VBF_ML}, {"D_ttHl_WHh_ML", &D_ttHl_WHh_ML},
+       {"D_ggH_bkg_ML", &D_ggH_bkg_ML}, {"D_VBF_bkg_ML", &D_VBF_bkg_ML},
+       {"D_WHl_bkg_ML", &D_WHl_bkg_ML}, {"D_ZHl_bkg_ML", &D_ZHl_bkg_ML},
+       {"D_WHh_bkg_ML", &D_WHh_bkg_ML}, {"D_ZHh_bkg_ML", &D_ZHh_bkg_ML},
+       {"D_ZHMET_bkg_ML", &D_ZHMET_bkg_ML}, {"D_ttHh_bkg_ML", &D_ttHh_bkg_ML},
+       {"D_ttHl_bkg_ML", &D_ttHl_bkg_ML}
    };
 
    // Declaration of leaf types
@@ -557,6 +573,7 @@ public :
    TBranch* b_D_WHh_ZHh_ME;
    TBranch* b_D_VBF2j_WHh_ME;
    TBranch* b_D_VBF2j_ZHh_ME;
+   TBranch* b_D_bkg_ME;
 
    TBranch* b_D_VBF_ggH_ML;
    TBranch* b_D_WHh_ggH_ML;
@@ -595,6 +612,16 @@ public :
    TBranch* b_D_ttHl_ggH_ML;
    TBranch* b_D_ttHl_VBF_ML;
    TBranch* b_D_ttHl_WHh_ML;
+
+   TBranch* b_D_ggH_bkg_ML;
+   TBranch* b_D_VBF_bkg_ML;
+   TBranch* b_D_WHl_bkg_ML;
+   TBranch* b_D_ZHl_bkg_ML;
+   TBranch* b_D_WHh_bkg_ML;
+   TBranch* b_D_ZHh_bkg_ML;
+   TBranch* b_D_ZHMET_bkg_ML;
+   TBranch* b_D_ttHh_bkg_ML;
+   TBranch* b_D_ttHl_bkg_ML;   
 
    TBranch        *b_RunNumber;   //!
    TBranch        *b_EventNumber;   //!
@@ -1106,6 +1133,7 @@ void Tree::Init(TTree *tree, TString input_file_name)
    D_WHh_ZHh_ME = 0;
    D_VBF2j_WHh_ME = 0;
    D_VBF2j_ZHh_ME = 0;
+   D_bkg_ME = 0;
 
    D_VBF_ggH_ML = 0;
    D_WHh_ggH_ML = 0;
@@ -1199,6 +1227,8 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetBranchAddress("D_VBF2j_WHh_ME", &D_VBF2j_WHh_ME, &b_D_VBF2j_WHh_ME);
    fChain->SetBranchAddress("D_VBF2j_ZHh_ME", &D_VBF2j_ZHh_ME, &b_D_VBF2j_ZHh_ME);
 
+   fChain->SetBranchAddress("D_bkg_ME", &D_bkg_ME, &b_D_bkg_ME);
+
    fChain->SetBranchAddress("D_VBF_ggH_ML", &D_VBF_ggH_ML, &b_D_VBF_ggH_ML);
    fChain->SetBranchAddress("D_WHh_ggH_ML", &D_WHh_ggH_ML, &b_D_WHh_ggH_ML);
    fChain->SetBranchAddress("D_ZHh_ggH_ML", &D_ZHh_ggH_ML, &b_D_ZHh_ggH_ML);
@@ -1237,6 +1267,15 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetBranchAddress("D_ttHl_VBF_ML", &D_ttHl_VBF_ML, &b_D_ttHl_VBF_ML);
    fChain->SetBranchAddress("D_ttHl_WHh_ML", &D_ttHl_WHh_ML, &b_D_ttHl_WHh_ML);
 
+   fChain->SetBranchAddress("D_ggH_bkg_ML", &D_ggH_bkg_ML, &b_D_ggH_bkg_ML);
+   fChain->SetBranchAddress("D_VBF_bkg_ML", &D_VBF_bkg_ML, &b_D_VBF_bkg_ML);
+   fChain->SetBranchAddress("D_WHl_bkg_ML", &D_WHl_bkg_ML, &b_D_WHl_bkg_ML);
+   fChain->SetBranchAddress("D_ZHl_bkg_ML", &D_ZHl_bkg_ML, &b_D_ZHl_bkg_ML);
+   fChain->SetBranchAddress("D_WHh_bkg_ML", &D_WHh_bkg_ML, &b_D_WHh_bkg_ML);
+   fChain->SetBranchAddress("D_ZHh_bkg_ML", &D_ZHh_bkg_ML, &b_D_ZHh_bkg_ML);
+   fChain->SetBranchAddress("D_ZHMET_bkg_ML", &D_ZHMET_bkg_ML, &b_D_ZHMET_bkg_ML);
+   fChain->SetBranchAddress("D_ttHh_bkg_ML", &D_ttHh_bkg_ML, &b_D_ttHh_bkg_ML);
+   fChain->SetBranchAddress("D_ttHl_bkg_ML", &D_ttHl_bkg_ML, &b_D_ttHl_bkg_ML);
 
    fChain->SetBranchAddress("LHEAssociatedParticleId", &LHEAssociatedParticleId, &b_LHEAssociatedParticleId);
    fChain->SetBranchAddress("LHEAssociatedParticleMass", &LHEAssociatedParticleMass, &b_LHEAssociatedParticleMass);

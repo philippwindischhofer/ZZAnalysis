@@ -27,7 +27,6 @@ void YieldsLI::SetPackagePath(TString package_path, TString engine)
 
     refclass = new Mor18Classifier();
     refclass = new Mor18LIClassifier(calibration_dir, config_file_path, engine);
-    //refclass = new Mor18Classifier();
 
     // load priors here and assign them etc.
     ConfigFileHandler* handler = new ConfigFileHandler(priors_file_path, "read");

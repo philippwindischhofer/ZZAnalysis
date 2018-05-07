@@ -1,5 +1,12 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/me_discriminants.h>
 
+float D_bkg_ME_disc(Tree* in)
+{
+    float retval = (in -> p_GG_SIG_ghg2_1_ghz1_1_JHUGen) / (in -> p_GG_SIG_ghg2_1_ghz1_1_JHUGen + (in -> p_QQB_BKG_MCFM) * getDbkgkinConstant((in -> Z1Flav) * (in -> Z2Flav), in -> ZZMass));
+
+    return retval;
+}
+
 // need the raw MELA kinematic discriminants
 float DVBF2j_ME_disc(Tree* in)
 {

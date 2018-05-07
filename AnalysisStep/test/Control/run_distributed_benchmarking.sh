@@ -26,10 +26,10 @@ fi
 # ---------------------------------------------
 #  settings for this training campaign
 # ---------------------------------------------
-COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/training/"
-COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/validation/"
-COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/test/"
-COMP_REF_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/"
+COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/training/"
+COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/validation/"
+COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/test/"
+COMP_REF_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/"
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
@@ -113,14 +113,14 @@ do
 	
         # -------------------------------------------------------
 	
-	echo "#!/bin/bash" > $BENCHMARK_TRAINING_SCRIPT
+	# echo "#!/bin/bash" > $BENCHMARK_TRAINING_SCRIPT
 
-        # launch the benchmarking
-	echo $BIN_DIR$BENCHMARKER $CALIBRATION_TRAINING_DIR $AUGMENTATION_TRAINING_DIR $MASS_POINT $BENCHMARK_TRAINING_DIR "0.0" "1.0" $ENGINE "&>>" $BENCHMARK_TRAINING_LOGFILE >> $BENCHMARK_TRAINING_SCRIPT
-	echo "sleep 5" >> $BENCHMARK_TRAINING_SCRIPT
+        # # launch the benchmarking
+	# echo $BIN_DIR$BENCHMARKER $CALIBRATION_TRAINING_DIR $AUGMENTATION_TRAINING_DIR $MASS_POINT $BENCHMARK_TRAINING_DIR "0.0" "1.0" $ENGINE "&>>" $BENCHMARK_TRAINING_LOGFILE >> $BENCHMARK_TRAINING_SCRIPT
+	# echo "sleep 5" >> $BENCHMARK_TRAINING_SCRIPT
 
-        # launch the comparison to the reference
-	echo $BIN_DIR$COMPARER $BENCHMARK_TRAINING_DIR $COMP_REF_TRAINING_DIR $COMP_TRAINING_DIR "&>>" $BENCHMARK_TRAINING_LOGFILE >> $BENCHMARK_TRAINING_SCRIPT
+        # # launch the comparison to the reference
+	# echo $BIN_DIR$COMPARER $BENCHMARK_TRAINING_DIR $COMP_REF_TRAINING_DIR $COMP_TRAINING_DIR "&>>" $BENCHMARK_TRAINING_LOGFILE >> $BENCHMARK_TRAINING_SCRIPT
 
         # -------------------------------------------------------
 
@@ -128,6 +128,7 @@ do
 
         # launch the benchmarking
 	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_VALIDATION_DIR $MASS_POINT $BENCHMARK_VALIDATION_DIR "0.0" "1.0" $ENGINE "&>>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
+
 	echo "sleep 5" >> $BENCHMARK_VALIDATION_SCRIPT
 
         # launch the comparison to the reference
@@ -139,7 +140,7 @@ do
 
         # launch the benchmarking
 	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_TEST_DIR $MASS_POINT $BENCHMARK_TEST_DIR "0.0" "1.0" $ENGINE "&>>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
-	echo "sleep 5" >> $BENCHMARK_VALIDATION_SCRIPT
+	echo "sleep 5" >> $BENCHMARK_TEST_SCRIPT
 
         # launch the comparison to the reference
 	echo $BIN_DIR$COMPARER $BENCHMARK_TEST_DIR $COMP_REF_TEST_DIR $COMP_TEST_DIR "&>>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
@@ -195,7 +196,7 @@ JOBS=`find * | grep $MASS_POINT.*run_benchmark_$ENGINE.*.sh$`
 for JOB in $JOBS
 do
     echo "lauching benchmarking for " $CAMPAIGN_DIR$JOB
-    #$JOB_SUBMITTER "-short" $CAMPAIGN_DIR$JOB
+    $JOB_SUBMITTER "-short" $CAMPAIGN_DIR$JOB
     #sh $CAMPAIGN_DIR$JOB &
 done
 

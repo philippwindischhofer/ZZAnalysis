@@ -24,11 +24,9 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   //TString package_path = "/data_CMS/cms/wind/180504_noZZ_packaged/";
-   TString package_path = "/data_CMS/cms/wind/";
-   TString path = package_path + "CJLST_NTuples/test/";
+   TString package_path = "/data_CMS/cms/wind/180507_packaged_bkg/";
+   TString path = package_path + "CJLST_NTuples/";
 
-   //TString path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/";
    TString file_name = "/ZZ4lAnalysis.root";
    TString file_name_FR = "/FakeRates_SS_Moriond18.root";
    
@@ -87,10 +85,10 @@ int main( int argc, char *argv[] )
    TString ggZZ2e2tau  = path + "ggTo2e2tau_Contin_MCFM701" + file_name;
    TString ggZZ2mu2tau = path + "ggTo2mu2tau_Contin_MCFM701" + file_name;
    
-   Yields* yields = new Yields(41.37);
+   //Yields* yields = new Yields(41.37);
 
-   //YieldsLI *yields = new YieldsLI( 41.37 );
-   //yields -> SetPackagePath(package_path, "tree");
+   YieldsLI *yields = new YieldsLI( 41.37 );
+   yields -> SetPackagePath(package_path, "tree");
    
 //===============
 // Produce plots 

@@ -77,6 +77,8 @@ void augment_tree(TString inpath, TString outpath, int randomize)
 
     output_tree -> Branch("ZZMass_masked", &(buffer -> ZZMass_masked), "ZZMass_masked/F");
 
+    output_tree -> Branch("D_bkg_ME", &(buffer -> D_bkg_ME), "D_bkg_ME/F");
+
     output_tree -> Branch("D_VBF2j_ggH_ME", &(buffer -> D_VBF2j_ggH_ME), "D_VBF2j_ggH_ME/F");
     output_tree -> Branch("D_VBF1j_ggH_ME", &(buffer -> D_VBF1j_ggH_ME), "D_VBF1j_ggH_ME/F");
     output_tree -> Branch("D_WHh_ggH_ME", &(buffer -> D_WHh_ggH_ME), "D_WHh_ggH_ME/F");
@@ -185,6 +187,8 @@ void augment_tree(TString inpath, TString outpath, int randomize)
 	}
 
 	// fill the variables holding the ME discriminants (for the classes of events for which they actually make sense)
+	buffer -> D_bkg_ME = clamp_value(D_bkg_ME_disc(buffer), 0.0, 1.0);
+
 	buffer -> D_VBF2j_ggH_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DVBF2j_ME_disc(buffer) : 0.0, 0.0, 1.0);
 	buffer -> D_VBF1j_ggH_ME = clamp_value(buffer -> nCleanedJetsPt30 == 1 ? DVBF1j_ME_disc(buffer) : 0.0, 0.0, 1.0);
 	buffer -> D_WHh_ggH_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DWHh_ME_disc(buffer) : 0.0, 0.0, 1.0);

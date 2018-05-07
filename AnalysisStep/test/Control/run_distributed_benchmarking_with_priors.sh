@@ -33,10 +33,10 @@ fi
 # ---------------------------------------------
 #  settings for this training campaign
 # ---------------------------------------------
-COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/training/"
-COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/validation/"
-COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/test/"
-COMP_REF_DIR="/data_CMS/cms/wind/Mor18ReferencesSB/"$MASS_POINT"/"
+COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/training/"
+COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/validation/"
+COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/test/"
+COMP_REF_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/"
 
 # COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/training/"
 # COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/validation/"
@@ -90,7 +90,9 @@ do
 
 	PRIOR_DIR=$CAMPAIGN_DIR$RUN"priors_"$ENGINE"/"
 
-	AUGMENTATION_DIR=$CAMPAIGN_DIR$RUN"augmentation/"
+	AUGMENTATION_VALIDATION_DIR=$CAMPAIGN_DIR$RUN"augmentation_validation/"
+	AUGMENTATION_TEST_DIR=$CAMPAIGN_DIR$RUN"augmentation_test/"
+
 	BENCHMARK_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"settings_benchmark_priors_"$ENGINE"/"$MASS_POINT"/"
 
 	mkdir -p $BENCHMARK_SETTINGS_DIR
@@ -110,8 +112,8 @@ do
 	echo "#!/bin/bash" > $BENCHMARK_VALIDATION_SCRIPT
 
         # launch the benchmarking
-	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_DIR $MASS_POINT $BENCHMARK_VALIDATION_DIR "0.5 0.75" $ENGINE $PRIOR_DIR$PRIOR_FILE "&>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
-        # echo "sleep 5" >> $BENCHMARK_VALIDATION_SCRIPT
+	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_VALIDATION_DIR $MASS_POINT $BENCHMARK_VALIDATION_DIR "0.0 1.0" $ENGINE $PRIOR_DIR$PRIOR_FILE "&>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
+        echo "sleep 5" >> $BENCHMARK_VALIDATION_SCRIPT
 
         # launch the comparison to the reference
 	echo $BIN_DIR$COMPARER $BENCHMARK_VALIDATION_DIR $COMP_REF_VALIDATION_DIR $COMP_VALIDATION_DIR "&>>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
@@ -121,8 +123,8 @@ do
 	echo "#!/bin/bash" > $BENCHMARK_TEST_SCRIPT
 
         # this also uses the validation calibration for the evaluation on the test set! (since pretend to not know the truth on the test set, can not do any calibration...)
-	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_DIR $MASS_POINT $BENCHMARK_TEST_DIR "0.75 1.0" $ENGINE $PRIOR_DIR$PRIOR_FILE "&>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
-        #echo "sleep 5" >> $BENCHMARK_TEST_SCRIPT
+	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_TEST_DIR $MASS_POINT $BENCHMARK_TEST_DIR "0.0 1.0" $ENGINE $PRIOR_DIR$PRIOR_FILE "&>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
+        echo "sleep 5" >> $BENCHMARK_TEST_SCRIPT
 
         # launch the comparison to the reference
 	echo $BIN_DIR$COMPARER $BENCHMARK_TEST_DIR $COMP_REF_TEST_DIR $COMP_TEST_DIR "&>>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
@@ -133,7 +135,7 @@ do
 
 	PRIOR_DIR=$CAMPAIGN_DIR$RUN"priors_"$ENGINE"/"
 
-	AUGMENTATION_DIR=$CAMPAIGN_DIR$RUN"augmentation/"
+	AUGMENTATION_DIR=$CAMPAIGN_DIR$RUN"augmentation_test/"
 	BENCHMARK_SETTINGS_DIR=$CAMPAIGN_DIR$RUN"settings_benchmark_priors_"$ENGINE"/"$MASS_POINT"/"
 
 	mkdir -p $BENCHMARK_SETTINGS_DIR
@@ -146,7 +148,7 @@ do
 	echo "#!/bin/bash" > $BENCHMARK_SCRIPT
 
         # launch the benchmarking
-	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_DIR $MASS_POINT $BENCHMARK_DIR "0.5 0.75" $ENGINE $PRIOR_DIR$PRIOR_FILE "&>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
+	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_DIR $MASS_POINT $BENCHMARK_DIR "0.0 1.0" $ENGINE $PRIOR_DIR$PRIOR_FILE "&>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
 	echo "sleep 5" >> $BENCHMARK_SCRIPT
 
         # launch the comparison to the reference

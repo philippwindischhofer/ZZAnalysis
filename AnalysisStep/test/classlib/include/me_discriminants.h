@@ -11,6 +11,9 @@
 #include <ZZAnalysis/AnalysisStep/interface/cConstants.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
 
+// signal / background discriminant
+float D_bkg_ME_disc(Tree* in);
+
 // discriminants that do not make use of QG tagging
 float DVBF2j_ME_disc(Tree* in);
 float DVBF1j_ME_disc(Tree* in);
