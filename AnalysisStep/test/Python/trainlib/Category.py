@@ -1,8 +1,14 @@
 class Category:
     
-    def __init__(self, name, datastream):
+    def __init__(self, name, datastream, datastream_unmixed = None):
         self.name = name
         self.datastream = datastream
+
+        if datastream_unmixed is not None:
+            self.datastream_unmixed = datastream_unmixed
+        else:
+            self.datastream_unmixed = self.datastream
+
         self.endpieces = []
 
     def add_endpiece(self, endpiece):

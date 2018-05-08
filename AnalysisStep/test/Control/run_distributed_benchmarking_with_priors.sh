@@ -38,15 +38,6 @@ COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/valida
 COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/test/"
 COMP_REF_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/"
 
-# COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/training/"
-# COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/validation/"
-# COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/test/"
-# COMP_REF_DIR="/data_CMS/cms/wind/Mor18References_newMC/"$MASS_POINT"/"
-
-# COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/training/"
-# COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/validation/"
-# COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/test/"
-
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 # the directories where the original sources are located
@@ -109,14 +100,14 @@ do
 	BENCHMARK_TEST_SCRIPT=$BENCHMARK_SETTINGS_DIR"run_benchmark_priors_"$ENGINE"_test.sh"
 	BENCHMARK_TEST_LOGFILE=$BENCHMARK_SETTINGS_DIR"log_benchmark_priors_"$ENGINE"_test.txt"
 
-	echo "#!/bin/bash" > $BENCHMARK_VALIDATION_SCRIPT
+	# echo "#!/bin/bash" > $BENCHMARK_VALIDATION_SCRIPT
 
-        # launch the benchmarking
-	echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_VALIDATION_DIR $MASS_POINT $BENCHMARK_VALIDATION_DIR "0.0 1.0" $ENGINE $PRIOR_DIR$PRIOR_FILE "&>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
-        echo "sleep 5" >> $BENCHMARK_VALIDATION_SCRIPT
+        # # launch the benchmarking
+	# echo $BIN_DIR$BENCHMARKER $CALIBRATION_VALIDATION_DIR $AUGMENTATION_VALIDATION_DIR $MASS_POINT $BENCHMARK_VALIDATION_DIR "0.0 1.0" $ENGINE $PRIOR_DIR$PRIOR_FILE "&>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
+        # echo "sleep 5" >> $BENCHMARK_VALIDATION_SCRIPT
 
-        # launch the comparison to the reference
-	echo $BIN_DIR$COMPARER $BENCHMARK_VALIDATION_DIR $COMP_REF_VALIDATION_DIR $COMP_VALIDATION_DIR "&>>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
+        # # launch the comparison to the reference
+	# echo $BIN_DIR$COMPARER $BENCHMARK_VALIDATION_DIR $COMP_REF_VALIDATION_DIR $COMP_VALIDATION_DIR "&>>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
 
         # ------------------------------------------------------------
 

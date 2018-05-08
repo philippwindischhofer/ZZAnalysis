@@ -138,11 +138,12 @@ void YieldsLI::Calculate_SS_ZX_Yields( TString input_file_data_name, TString  in
    input_file_data = new TFile(input_file_data_name);
    input_tree_data = (TTree*)input_file_data->Get("ClassTree/candTree");
    Init( input_tree_data, input_file_data_name );
-   
-   
+      
    if (fChain == 0) return;
    
    Long64_t nentries = fChain->GetEntriesFast();
+
+   std::cout << "have " << nentries << " events" << std::endl;
    
    Long64_t nbytes = 0, nb = 0;
    

@@ -30,7 +30,7 @@ priors_best["zhlept_prior"] = 1.0
 priors_best["tthhadr_prior"] = 1.0
 priors_best["tthlept_prior"] = 1.0
 priors_best["zhmet_prior"] = 1.0
-priors_best["bkg"] = 1.0
+priors_best["bkg_prior"] = 1.0
 priors_best["target"] = -7.0
 
 # set the ranges in which to optimize the individual priors
@@ -43,7 +43,7 @@ priors_min["whlept_prior"] = eps
 priors_min["zhhadr_prior"] = 0.3
 priors_min["whhadr_prior"] = 0.3
 priors_min["zhmet_prior"] = eps
-priors_min["bkg"] = eps
+priors_min["bkg_prior"] = eps
 
 priors_max = {}
 priors_max["ggh_prior"] = 3.0
@@ -54,7 +54,7 @@ priors_max["whlept_prior"] = 0.3
 priors_max["zhhadr_prior"] = 0.8
 priors_max["whhadr_prior"] = 0.8
 priors_max["zhmet_prior"] = 0.3
-priors_max["bkg"] = 1.5
+priors_max["bkg_prior"] = 50
 
 # global evaluation counter
 evalcnt = 0
@@ -154,7 +154,7 @@ def punzi_target(priors, relevant_classes, params, mode = "S"):
 
     if mode == "S":
         punzi_file = "Mor18_punzi_S_comp.conf"
-    else if mode == "SB":
+    elif mode == "SB":
         punzi_file = "Mor18_punzi_comp.conf"
 
     # read directly the configuration file containing the relative Punzi improvements w.r.t. the reference 
@@ -252,9 +252,9 @@ def punzi_target_global(ggh_prior, whhadr_prior, zhhadr_prior, whlept_prior, zhl
         save_priors(os.path.join(out_dir, 'priors.txt'), priors)
 
     # also keep updating the fitted maximum of the gaussian process
-    postfit_priors = gp_maximum(os.path.join(out_dir, 'evaluations_global.txt'), priors_min, priors_max)
+    #postfit_priors = gp_maximum(os.path.join(out_dir, 'evaluations_global.txt'), priors_min, priors_max)
 
-    save_priors(os.path.join(out_dir, 'priors_postfit.txt'), postfit_priors)
+    #save_priors(os.path.join(out_dir, 'priors_postfit.txt'), postfit_priors)
     
     evalcnt += 1
     return costval                
@@ -536,6 +536,7 @@ def gp_maximum(path, priors_min, priors_max):
     print "computing fitted GP maximum"
 
     keys = priors_min.keys() + ["target"]
+    keys = [key for key in keys if "bkg" not in key]
 
     print keys
 
@@ -645,11 +646,10 @@ def main():
     
     save_priors(os.path.join(out_dir, 'priors.txt'), priors_best)
 
-    postfit_priors = gp_maximum(os.path.join(out_dir, 'evaluations_global.txt'), priors_min, priors_max)
+    #postfit_priors = gp_maximum(os.path.join(out_dir, 'evaluations_global.txt'), priors_min, priors_max)
+    #save_priors(os.path.join(out_dir, 'priors_postfit.txt'), postfit_priors)
 
-    save_priors(os.path.join(out_dir, 'priors_postfit.txt'), postfit_priors)
-
-    # once this is done, go ahead and also optimize the splitting between S and B
+    # once the signal priors are fixed w.r.t. each other (i.e. in the signal-only subspace), go ahead and also optimize the relation between S and B
     res = run_bayesian_optimization("bkg", "evaluations_bkg.txt", punzi_target_bkg, {'bkg_prior': (priors_min["bkg_prior"], priors_max["bkg_prior"])}, 
                                 init_points = 2, max_iterations = 30, patience = 40, alpha = 1.5e-6)
     priors_best["bkg_prior"] = res["bkg_prior"]

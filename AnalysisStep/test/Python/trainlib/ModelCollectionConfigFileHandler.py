@@ -41,12 +41,15 @@ class ModelCollectionConfigFileHandler(ConfigFileHandler):
         H1_stream = ConfigFileUtils.parse_dict(cur_sect['H1_stream'], lambda x: eval(x))
         H0_stream = ConfigFileUtils.parse_dict(cur_sect['H0_stream'], lambda x: eval(x))
 
+        H1_stream_unmixed = ConfigFileUtils.parse_dict(cur_sect['H1_stream_unmixed'], lambda x: eval(x))
+        H0_stream_unmixed = ConfigFileUtils.parse_dict(cur_sect['H0_stream_unmixed'], lambda x: eval(x))
+        
         H1_name = cur_sect['H1_name']
         H0_name = cur_sect['H0_name']
 
         model_names = ConfigFileUtils.parse_list(cur_sect['models'], lambda x: x)
     
-        mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name)
+        mcoll = ModelCollection(mcoll_name, H1_stream, H0_stream, H1_name = H1_name, H0_name = H0_name, H1_stream_unmixed = H1_stream_unmixed, H0_stream_unmixed = H0_stream_unmixed)
 
         for model in model_names:
             mod, pre = self._parse_model(model)
@@ -72,6 +75,9 @@ class ModelCollectionConfigFileHandler(ConfigFileHandler):
         H1_stream = mcoll.H1_stream
         H0_stream = mcoll.H0_stream
 
+        H1_stream_unmixed = mcoll.H1_stream_unmixed
+        H0_stream_unmixed = mcoll.H0_stream_unmixed
+
         H1_name = mcoll.H1_name
         H0_name = mcoll.H0_name
 
@@ -83,6 +89,9 @@ class ModelCollectionConfigFileHandler(ConfigFileHandler):
     
         cur_sect['H1_stream'] = ConfigFileUtils.serialize_dict(H1_stream, lambda x: inspect.getmodule(x).__name__ + "." + x.__name__)
         cur_sect['H0_stream'] = ConfigFileUtils.serialize_dict(H0_stream, lambda x: inspect.getmodule(x).__name__ + "." + x.__name__)
+
+        cur_sect['H1_stream_unmixed'] = ConfigFileUtils.serialize_dict(H1_stream_unmixed, lambda x: inspect.getmodule(x).__name__ + "." + x.__name__)
+        cur_sect['H0_stream_unmixed'] = ConfigFileUtils.serialize_dict(H0_stream_unmixed, lambda x: inspect.getmodule(x).__name__ + "." + x.__name__)
         
         cur_sect['H1_name'] = H1_name
         cur_sect['H0_name'] = H0_name

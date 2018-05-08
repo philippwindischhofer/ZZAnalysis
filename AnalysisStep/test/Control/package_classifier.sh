@@ -26,19 +26,20 @@ cp $SOURCE_ROOT$CONFIG_FILE $DEST_ROOT$CONFIG_FILE
 # copy the priors
 cp -r $SOURCE_ROOT"priors_"$ENGINE $DEST_ROOT
 
-# now, copy the augmentation, but for the mass point on which the classifier was trained, get only the (reweighted) test portion
+# now, copy the augmentation
 AUGMENTATION_SOURCE=$SOURCE_ROOT"augmentation_test/"
 AUGMENTATION_DEST=$DEST_ROOT"CJLST_NTuples/"
-mkdir -p $AUGMENTATION_DEST
 
-cd $AUGMENTATION_SOURCE
-SOURCE_FOLDERS=`ls -d */`
+cp -r $AUGMENTATION_SOURCE $AUGMENTATION_DEST
 
-for SOURCE_FOLDER in $SOURCE_FOLDERS
-do
-    DEST_FOLDER=$AUGMENTATION_DEST$SOURCE_FOLDER
-    mkdir -p $DEST_FOLDER
+# cd $AUGMENTATION_SOURCE
+# SOURCE_FOLDERS=`ls -d */`
 
-    # this file has not been used for training, can just copy it through
-    cp $AUGMENTATION_SOURCE$SOURCE_FOLDER$MC_FILE_NAME $DEST_FOLDER$MC_FILE_NAME 
-done
+# for SOURCE_FOLDER in $SOURCE_FOLDERS
+# do
+#     DEST_FOLDER=$AUGMENTATION_DEST$SOURCE_FOLDER
+#     mkdir -p $DEST_FOLDER
+
+#     # this file has not been used for training, can just copy it through
+#     cp $AUGMENTATION_SOURCE$SOURCE_FOLDER$MC_FILE_NAME $DEST_FOLDER$MC_FILE_NAME 
+# done

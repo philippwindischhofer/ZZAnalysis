@@ -109,7 +109,7 @@ void calibrate_discriminant(std::vector<TString> H1_paths, std::vector<std::func
 	    return (H1_cut(in) &&
 		    disc_cut(in)) ? 
 	    kTRUE : kFALSE;};
-	
+
 	prof -> FillProfile(H1_path, conf.lumi(), H1_distrib, total_cut, disc, false, start_fraction, end_fraction);
     }
 

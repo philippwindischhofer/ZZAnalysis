@@ -8,7 +8,7 @@ class Config:
     MC_filename = "/ZZ4lAnalysis.root"
 
 class TrainingConfig:
-    def __init__(self, steps_per_epoch = 512, batch_size = 1024, max_epochs = 10):
+    def __init__(self, steps_per_epoch = 512, batch_size = 1024, max_epochs = 100):
         self.steps_per_epoch = steps_per_epoch
         self.batch_size = batch_size
         self.max_epochs = max_epochs

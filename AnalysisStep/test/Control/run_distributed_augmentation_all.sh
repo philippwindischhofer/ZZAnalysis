@@ -5,9 +5,9 @@ CAMPAIGN_DIR=$1
 CONTROL_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Control/"
 SUBMIT_AUGMENTATION="run_distributed_augmentation.sh"
 
-MC_DIR="/data_CMS/cms/wind/CJLST_NTuples/"
+MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_ZXonly/"
 
-PARTS="training validation test"
+PARTS="training_chunks validation_chunks test_chunks"
 
 cd $CAMPAIGN_DIR
 RUN_DIRLIST=`ls -d */ | egrep -v 'bin|statistics'`

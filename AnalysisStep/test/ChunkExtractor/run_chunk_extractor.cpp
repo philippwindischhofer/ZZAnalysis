@@ -22,7 +22,7 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/me_discriminants.h>
 
-void extract_chunk(TString inpath, TString outpath, float start_fraction, float end_fraction)
+void extract_chunk(TString inpath, TString outpath, float start_fraction, float end_fraction, bool reweighting)
 {
     TString tree_name = "ClassTree";
 
@@ -30,7 +30,6 @@ void extract_chunk(TString inpath, TString outpath, float start_fraction, float 
 
     // read the metadata
     TH1F* hCounters = (TH1F*)input_file -> Get(tree_name + "/Counters");
-    Long64_t n_gen_events = (Long64_t)hCounters -> GetBinContent(1);
     Long64_t gen_sum_weights = (Long64_t)hCounters -> GetBinContent(40);
 
     TFile* output_file = new TFile(outpath, "recreate");
@@ -50,40 +49,44 @@ void extract_chunk(TString inpath, TString outpath, float start_fraction, float 
     std::cout << "preparation done. starting chunk extraction" << std::endl;
 
     // compute the reweighting factor
-    float reweighting_factor = 0.0;
+    float reweighting_factor = 1.0;
 
-    float full_gen_sum_weights = 0.0;
-    float reduced_gen_sum_weights = 0.0;
-
-    for(Long64_t j_entry = (Long64_t)(n_entries * start_fraction); j_entry < (Long64_t)(n_entries * end_fraction); j_entry++)
+    if(reweighting)
     {
-	buffer -> LoadTree(j_entry);
-	buffer -> fChain -> GetEntry(j_entry);
-	reduced_gen_sum_weights += buffer -> overallEventWeight;	
+	float full_gen_sum_weights = 0.0;
+	float reduced_gen_sum_weights = 0.0;
+
+	for(Long64_t j_entry = (Long64_t)(n_entries * start_fraction); j_entry < (Long64_t)(n_entries * end_fraction); j_entry++)
+	{
+	    buffer -> LoadTree(j_entry);
+	    buffer -> fChain -> GetEntry(j_entry);
+	    reduced_gen_sum_weights += buffer -> overallEventWeight;	
+	}
+
+	full_gen_sum_weights = reduced_gen_sum_weights;
+
+	// for the full weight sum, need to add the part in the beginning
+	for(Long64_t j_entry = 0; j_entry < (Long64_t)(n_entries * start_fraction); j_entry++)
+	{
+	    buffer -> LoadTree(j_entry);
+	    buffer -> fChain -> GetEntry(j_entry);
+	    full_gen_sum_weights += buffer -> overallEventWeight;
+	}
+
+	// and in the end
+	for(Long64_t j_entry = (Long64_t)(n_entries * end_fraction); j_entry < n_entries; j_entry++)
+	{
+	    buffer -> LoadTree(j_entry);
+	    buffer -> fChain -> GetEntry(j_entry);
+	    full_gen_sum_weights += buffer -> overallEventWeight;
+	}
+
+	reweighting_factor = reduced_gen_sum_weights / full_gen_sum_weights;
+
+	std::cout << "reduced_gen_sum_weights = " << reduced_gen_sum_weights << std::endl;
+	std::cout << "full_gen_sum_weights = " << full_gen_sum_weights << std::endl;
     }
 
-    full_gen_sum_weights = reduced_gen_sum_weights;
-
-    // for the full weight sum, need to add the part in the beginning
-    for(Long64_t j_entry = 0; j_entry < (Long64_t)(n_entries * start_fraction); j_entry++)
-    {
-	buffer -> LoadTree(j_entry);
-	buffer -> fChain -> GetEntry(j_entry);
-	full_gen_sum_weights += buffer -> overallEventWeight;
-    }
-
-    // and in the end
-    for(Long64_t j_entry = (Long64_t)(n_entries * end_fraction); j_entry < n_entries; j_entry++)
-    {
-	buffer -> LoadTree(j_entry);
-	buffer -> fChain -> GetEntry(j_entry);
-	full_gen_sum_weights += buffer -> overallEventWeight;
-    }
-
-    reweighting_factor = reduced_gen_sum_weights / full_gen_sum_weights;
-
-    std::cout << "reduced_gen_sum_weights = " << reduced_gen_sum_weights << std::endl;
-    std::cout << "full_gen_sum_weights = " << full_gen_sum_weights << std::endl;
     std::cout << "reweighting_factor = " << reweighting_factor << std::endl;
  
     // loop over the entries in chain
@@ -115,9 +118,9 @@ void extract_chunk(TString inpath, TString outpath, float start_fraction, float 
 
 int main( int argc, char *argv[] )
 {
-    if(argc != 5)
+    if(argc < 5)
     {
-	std::cerr << "Error: exactly 4 arguments are required" << std::endl;
+	std::cerr << "Error: at least 4 arguments are required" << std::endl;
 	return(-1);
     }
 
@@ -126,12 +129,20 @@ int main( int argc, char *argv[] )
     float start_fraction = std::atof(argv[3]);
     float end_fraction = std::atof(argv[4]);
 
+    bool reweighting = true;
+
+    if(argc == 6)
+    {
+	reweighting = std::atoi(argv[5]);
+    }
+
     std::cout << "in_file = " << in_file << std::endl;
     std::cout << "out_file = " << out_file << std::endl;
     std::cout << "start_fraction = " << start_fraction << std::endl;
     std::cout << "end_fraction = " << end_fraction << std::endl;
+    std::cout << "reweighting = " << reweighting << std::endl;
     
-    extract_chunk(in_file, out_file, start_fraction, end_fraction);
+    extract_chunk(in_file, out_file, start_fraction, end_fraction, reweighting);
 
     std::cout << "done with everything" << std::endl;
 

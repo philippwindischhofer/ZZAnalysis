@@ -71,8 +71,8 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySetDynamic::GenerateDis
 	    std::cout << "H1_name = " << H1_name << std::endl;
 	    std::cout << "H0_name = " << H0_name << std::endl;
 
-	    std::map<TString, TString> H1_stream_def = ConfigFileUtils::ParsePythonDict(confhandler -> GetField(section, "H1_stream").Data());
-	    std::map<TString, TString> H0_stream_def = ConfigFileUtils::ParsePythonDict(confhandler -> GetField(section, "H0_stream").Data());
+	    std::map<TString, TString> H1_stream_def = ConfigFileUtils::ParsePythonDict(confhandler -> GetField(section, "H1_stream_unmixed").Data());
+	    std::map<TString, TString> H0_stream_def = ConfigFileUtils::ParsePythonDict(confhandler -> GetField(section, "H0_stream_unmixed").Data());
 
 	    EventStream* H1Stream = new EventStream();
 	    for(auto& entry: H1_stream_def)

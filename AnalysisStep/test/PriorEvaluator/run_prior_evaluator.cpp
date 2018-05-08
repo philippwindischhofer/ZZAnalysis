@@ -78,6 +78,7 @@ double costfunc(const double* params)
     std::cout << "bkg_prior = " << bkg_prior << std::endl;
 
     // evaluate the Punzi value with this (modified) Classifier now
+    // note: this computes Punzi in the total mass range - no mass cut at all is placed here --> therefore, the Punzi values themselves will differ from the ones produced by the Benchmarker
     PlottingUtils::make_punzi(kTRUE, varclass, outdir, punzi_histname, "no_cut_data", no_cut, conf, 0.0, 1.0, false);
     
     // load low the Punzi histogram of the optimized classifier and compare the two. From this point onwards, is exactly the same as in "Comp"
@@ -135,7 +136,7 @@ int main( int argc, char *argv[] )
 	punzi_histname = "punzi_S";
 	punzi_outfile = "punzi_S_comp";
 
-	conf = new Mor18Config(run_dir + "augmentation/validation/", 41.37, false);
+	conf = new Mor18Config(run_dir + "augmentation_validation/", 41.37, false);
     }
     else if(switchval == "SB")
     {
@@ -145,7 +146,7 @@ int main( int argc, char *argv[] )
 	punzi_histname = "punzi";
 	punzi_outfile = "punzi_comp";
 
-	conf = new Mor18Config(run_dir + "augmentation/validation/", 41.37, true);
+	conf = new Mor18Config(run_dir + "augmentation_validation/", 41.37, true);
     }
 
     std::cout << "run_dir = " << run_dir << std::endl;

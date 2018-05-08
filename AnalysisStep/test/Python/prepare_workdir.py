@@ -1,9 +1,11 @@
 import sys
 import os
 import subprocess as sp
+import numpy as np
+import uuid
 
 from trainlib.ConfigFileHandler import ConfigFileHandler
-from trainlib.ConfigFileUtils import ConfigFileUtils
+from trainlib.ConfigFileUtils import ConfigFileUtils    
 
 def main():
     if len(sys.argv) != 2:
@@ -16,6 +18,59 @@ def main():
     bin_dir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
     scrambler = os.path.join(bin_dir, "run_scrambler")
     chunk_extractor = os.path.join(bin_dir, "run_chunk_extractor")
+
+    settings_path = os.path.join(dest_path, "settings.conf")
+
+    confhandler = ConfigFileHandler()
+    confhandler.load_configuration(settings_path)
+
+    # load global settings from the configuration file
+    root_file_name = confhandler.get_field("Global", "root_file_name")
+    source_dir = confhandler.get_field("Global", "source_dir")
+    chunk_size = int(confhandler.get_field("Global", "chunk_size"))
+
+    def submit_job(cmd_dir, command):
+        job_submitter = "/opt/exp_soft/cms/t3/t3submit_new"
+
+        filename = str(uuid.uuid4()) + ".sh"
+        file_path = os.path.join(cmd_dir, filename)
+        with open(file_path, "w") as cmd_file:
+            cmd_file.write("#!/bin/bash\n")
+            cmd_file.write(command)
+
+        output = sp.check_output([job_submitter, "-short", file_path])
+        print output
+
+    def chunk_file(in_dir, out_root, base_name, number_chunks, cmd_dir):
+        splits = np.linspace(0, 1, number_chunks)
+        in_file = os.path.join(in_dir, root_file_name)
+
+        if number_chunks == 1:
+            out_folder = os.path.join(out_root, base_name + "_chunk_0/")
+
+            if not os.path.exists(out_folder):
+                os.makedirs(out_folder)
+
+            out_file = os.path.join(out_folder, root_file_name)
+
+            command = " ".join([chunk_extractor, in_file, out_file, str(0.0), str(1.0), str(0)])
+            submit_job(cmd_dir, command)
+            print command
+
+        else:
+            for i in range(len(splits) - 1):
+                start_split = splits[i]
+                end_split = splits[i + 1]
+            
+                out_folder = os.path.join(out_root, base_name + "_chunk_" + str(i) + "/")
+                if not os.path.exists(out_folder):
+                    os.makedirs(out_folder)
+
+                out_file = os.path.join(out_folder, root_file_name)
+                
+                command = " ".join([chunk_extractor, in_file, out_file, str(start_split), str(end_split), str(0)])
+                submit_job(cmd_dir, command)
+                print command
 
     # create the needed folders:
     train_dir = os.path.join(dest_path, "training/")
@@ -39,15 +94,6 @@ def main():
     
     if not os.path.exists(temp_dir):
         os.makedirs(temp_dir)
-
-    settings_path = os.path.join(dest_path, "settings.conf")
-
-    confhandler = ConfigFileHandler()
-    confhandler.load_configuration(settings_path)
-
-    # load global settings from the configuration file
-    root_file_name = confhandler.get_field("Global", "root_file_name")
-    source_dir = confhandler.get_field("Global", "source_dir")
 
     training_files = [cur_file for cur_file in confhandler.get_sections() if "Global" not in cur_file]
     available_files = next(os.walk(source_path))[1]
@@ -106,15 +152,32 @@ def main():
 
     unused_files = [cur_file for cur_file in available_files if cur_file not in used_files]
 
-    # copy all unused files (i.e. those that will never end up in some combined training dataset) directly into the test folder
+    # for all files that are not used for training, split them 50:50 into validation and test
     for unused_file in unused_files:
-        dest_dir = test_dir
         source_dir = os.path.join(source_path, unused_file)
+
+        print "extracting 0.0 - 0.5 from " + unused_file
+            
+        dest_dir = os.path.join(validation_dir, unused_file)
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
     
-        print "cp -r " + source_dir + " " + dest_dir
-        output = sp.check_output(["cp", "-r", source_dir, dest_dir])      
+        output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
+                                  os.path.join(dest_dir, root_file_name), str(0.0), str(0.5)])      
         print output
 
+        print "-- -- -- -- -- -- -- -- -- -- -- --"
+
+        print "extracting 0.5 - 1.0 from " + unused_file
+            
+        dest_dir = os.path.join(test_dir, unused_file)
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
+    
+        output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
+                                  os.path.join(dest_dir, root_file_name), str(0.0), str(0.5)])      
+        print output
+    
     # now have all the needed files split apart, can now proceed to combine them into the training 
     # datasets that will end up in trainval
     for training_file in training_files:
@@ -157,8 +220,38 @@ def main():
                                  os.path.join(dest_path, temp_dir, "scrambled", training_file, "validation", root_file_name)])
         print output
 
-        print "done."
+    # at the end, chunk the ROOT files into many smaller ones, to keep the augmentation time short
+    train_chunks_dir = os.path.join(dest_path, "training_chunks/")
+    validation_chunks_dir = os.path.join(dest_path, "validation_chunks/")
+    test_chunks_dir = os.path.join(dest_path, "test_chunks/")
+
+    # create these directories
+    if not os.path.exists(train_chunks_dir):
+        os.makedirs(train_chunks_dir)
+    
+    if not os.path.exists(validation_chunks_dir):
+        os.makedirs(validation_chunks_dir)
+    
+    if not os.path.exists(test_chunks_dir):
+        os.makedirs(test_chunks_dir)
+
+    for mode in ["training", "validation", "test"]:
+        # look at each file individually and put it into chunks
+        cur_dir = os.path.join(dest_path, mode)
+        available_folders = next(os.walk(cur_dir))[1]
+
+        for available_folder in available_folders:
+            available_file = os.path.join(cur_dir, available_folder, root_file_name)
+
+            number_chunks = max(1, os.path.getsize(available_file) / chunk_size)
+
+            print "now splitting file " + available_file + " into " + str(number_chunks) + " chunks"
+
+            out_root = os.path.join(dest_path, mode + "_chunks")
+            
+            chunk_file(os.path.join(dest_path, mode, available_folder), out_root, available_folder, number_chunks, temp_dir)
         
+    print "done."        
     
 if __name__ == "__main__":
     main()

@@ -269,7 +269,8 @@ class ModelFactoryFullMassRangeDynamicInclusive:
         # ------------------------------------
         
         # define the categories for the classifier
-        bkg_cat = Category("bkg", {MC_path + "bkg/ZZ4lAnalysis.root": cuts.no_cut})
+        bkg_datastream = {MC_path + "AllData/ZZ4lAnalysis.root": cuts_no_cut}
+        bkg_cat = Category("bkg", {MC_path + "bkg/ZZ4lAnalysis.root": cuts.no_cut}, bkg_datastream)
         
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
