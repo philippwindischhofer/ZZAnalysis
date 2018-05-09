@@ -269,8 +269,21 @@ class ModelFactoryFullMassRangeDynamicInclusive:
         # ------------------------------------
         
         # define the categories for the classifier
-        bkg_datastream = {MC_path + "AllData/ZZ4lAnalysis.root": cuts_no_cut}
-        bkg_cat = Category("bkg", {MC_path + "bkg/ZZ4lAnalysis.root": cuts.no_cut}, bkg_datastream)
+
+        # for training on Z+X only
+        bkg_datastream = {MC_path + "AllData/ZZ4lAnalysis.root": cuts.no_cut}
+
+        # for training on any mixture of Z+X, qq and gg
+        # bkg_datastream = {MC_path + "AllData/ZZ4lAnalysis.root": cuts.no_cut,
+        #                   MC_path + "ZZTo4l/ZZ4lAnalysis.root": cuts.no_cut,
+        #                   MC_path + "ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root": cuts.no_cut,
+        #                   MC_path + "ggTo2e2tau_Contin_MCFM701/ZZ4lAnalysis.root": cuts.no_cut,
+        #                   MC_path + "ggTo2mu2tau_Contin_MCFM701/ZZ4lAnalysis.root": cuts.no_cut,
+        #                   MC_path + "ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root": cuts.no_cut,
+        #                   MC_path + "ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root": cuts.no_cut,
+        #                   MC_path + "ggTo4tau_Contin_MCFM701/ZZ4lAnalysis.root": cuts.no_cut}
+
+        bkg_cat = Category("bkg", {MC_path + "bkg/ZZ4lAnalysis.root": cuts.no_cut}, datastream_unmixed = bkg_datastream)
         
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        

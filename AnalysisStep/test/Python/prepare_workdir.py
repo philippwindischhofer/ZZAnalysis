@@ -175,7 +175,7 @@ def main():
             os.makedirs(dest_dir)
     
         output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
-                                  os.path.join(dest_dir, root_file_name), str(0.0), str(0.5)])      
+                                  os.path.join(dest_dir, root_file_name), str(0.5), str(1.0)])      
         print output
     
     # now have all the needed files split apart, can now proceed to combine them into the training 

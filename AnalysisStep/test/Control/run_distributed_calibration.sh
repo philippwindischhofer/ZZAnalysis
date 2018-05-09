@@ -51,7 +51,7 @@ do
 
     # ----------------
 
-    if [ "$(ls -A $AUGMENTATION_VALIDATION_DIR)" ]
+    if [ -d "$AUGMENTATION_VALIDATION_DIR" ]
     then
 	echo "chunks already merged!"
     else

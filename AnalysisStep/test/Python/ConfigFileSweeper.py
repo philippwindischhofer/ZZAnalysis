@@ -225,8 +225,11 @@ def main():
                     else:
                         iterables[sweep_name].add(sweep_scope, sweep_parameter, start_list, end_list, sweep_behaviour)
 
-    MC_path = "/data_CMS/cms/wind/CJLST_NTuples/trainval/"
+    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples/trainval/"
     #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZXonly/trainval/"
+    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZXonly_033/trainval/"
+    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZXonly_022/trainval/"
+    MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZXonly_016/trainval/"
 
     model_type = confhandler.get_field('global', 'model_type')
 
