@@ -148,7 +148,7 @@ void CatPlotter::Redraw()
     Tl -> SetTextSize(0.025);
     Tl -> SetTextColor(kBlack);
     Tl -> SetTextAlign(31);
-    Tl -> DrawLatex(pad1 -> GetUxmax(), upper_bound, Form("%.2f fb^{-1} (13TeV)", lumi));			    
+    Tl -> DrawLatex(pad1 -> GetUxmax(), upper_bound, Form("%.2f fb^{-1} (13 TeV)", lumi));			    
     if(draw_label)
     {
 	TLatex* Tl = new TLatex(pad1 -> GetUxmin(), upper_bound, label);
