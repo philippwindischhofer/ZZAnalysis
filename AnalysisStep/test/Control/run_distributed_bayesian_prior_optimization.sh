@@ -69,7 +69,7 @@ JOBS=`find * | grep run_prior_optimizer_$ENGINE.sh$`
 for JOB in $JOBS
 do
     echo "lauching prior optimization for " $CAMPAIGN_DIR$JOB
-    #$JOB_SUBMITTER $CAMPAIGN_DIR$JOB
+    $JOB_SUBMITTER $CAMPAIGN_DIR$JOB
 done
 
 cd $CURRENT_DIR

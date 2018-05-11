@@ -1,6 +1,24 @@
 def no_cut(row):
     return True
 
+def j2cut(row):
+    if row["nCleanedJetsPt30"] >= 2:
+        return True
+    else:
+        return False
+
+def j1cut(row):
+    if row["nCleanedJetsPt30"] == 1:
+        return True
+    else:
+        return False
+
+def j0cut(row):
+    if row["nCleanedJetsPt30"] == 0:
+        return True
+    else:
+        return False
+
 def mZZ_cut(row):
     if row["ZZMass"] >= 105.0 and row["ZZMass"] < 140.0:
         return True

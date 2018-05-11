@@ -53,6 +53,8 @@ AUGMENTATION_SETTINGS_DIR=$AUGMENTATION_SETTINGS_ROOT"/"
 mkdir -p $AUGMENTATION_DIR
 mkdir -p $AUGMENTATION_SETTINGS_DIR
 
+sleep 5
+
 for datafile in $datafiles
 do
     mkdir -p $AUGMENTATION_SETTINGS_DIR$datafile

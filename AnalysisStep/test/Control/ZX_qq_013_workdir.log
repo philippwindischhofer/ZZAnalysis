@@ -1,0 +1,2817 @@
+attempting to load configuration file from /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/settings.conf
+--------------------------------------------------
+currently splitting: ggH125
+extracting 0.0 - 0.5 from ggH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ggH125/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 1.64524e+06
+full_gen_sum_weights = 3.29453e+06
+reweighting_factor = 0.499386
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 0.75 from ggH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH125/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 0.75
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 825432
+full_gen_sum_weights = 3.2945e+06
+reweighting_factor = 0.250549
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.75 - 1.0 from ggH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH125/ZZ4lAnalysis.root
+start_fraction = 0.75
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 823835
+full_gen_sum_weights = 3.29449e+06
+reweighting_factor = 0.250064
+done with everything
+
+--------------------------------------------------
+--------------------------------------------------
+currently splitting: ttH125
+extracting 0.0 - 0.5 from ttH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ttH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ttH125/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 10386.2
+full_gen_sum_weights = 20674.2
+reweighting_factor = 0.502376
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 0.75 from ttH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ttH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH125/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 0.75
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 5141.09
+full_gen_sum_weights = 20674.2
+reweighting_factor = 0.248672
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.75 - 1.0 from ttH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ttH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH125/ZZ4lAnalysis.root
+start_fraction = 0.75
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 5146.72
+full_gen_sum_weights = 20674.2
+reweighting_factor = 0.248945
+done with everything
+
+--------------------------------------------------
+--------------------------------------------------
+currently splitting: VBFH125
+extracting 0.0 - 0.5 from VBFH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/VBFH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/VBFH125/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 118272
+full_gen_sum_weights = 236723
+reweighting_factor = 0.499622
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 0.75 from VBFH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/VBFH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH125/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 0.75
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 59279.7
+full_gen_sum_weights = 236723
+reweighting_factor = 0.250418
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.75 - 1.0 from VBFH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/VBFH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH125/ZZ4lAnalysis.root
+start_fraction = 0.75
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 59171.8
+full_gen_sum_weights = 236723
+reweighting_factor = 0.249962
+done with everything
+
+--------------------------------------------------
+--------------------------------------------------
+currently splitting: WminusH125
+extracting 0.0 - 0.5 from WminusH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WminusH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/WminusH125/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 6766.61
+full_gen_sum_weights = 13542.1
+reweighting_factor = 0.499671
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 0.75 from WminusH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WminusH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH125/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 0.75
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 3403.51
+full_gen_sum_weights = 13542.2
+reweighting_factor = 0.251327
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.75 - 1.0 from WminusH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WminusH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH125/ZZ4lAnalysis.root
+start_fraction = 0.75
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 3372.04
+full_gen_sum_weights = 13542.2
+reweighting_factor = 0.249003
+done with everything
+
+--------------------------------------------------
+--------------------------------------------------
+currently splitting: WplusH125
+extracting 0.0 - 0.5 from WplusH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WplusH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/WplusH125/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 13782.2
+full_gen_sum_weights = 27648.4
+reweighting_factor = 0.49848
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 0.75 from WplusH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WplusH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH125/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 0.75
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 6918.2
+full_gen_sum_weights = 27648.5
+reweighting_factor = 0.25022
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.75 - 1.0 from WplusH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WplusH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH125/ZZ4lAnalysis.root
+start_fraction = 0.75
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 6948
+full_gen_sum_weights = 27648.4
+reweighting_factor = 0.251298
+done with everything
+
+--------------------------------------------------
+--------------------------------------------------
+currently splitting: ZH125
+extracting 0.0 - 0.5 from ZH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ZH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZH125/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 24497.1
+full_gen_sum_weights = 49019.7
+reweighting_factor = 0.49974
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 0.75 from ZH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ZH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZH125/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 0.75
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 12259.2
+full_gen_sum_weights = 49019.7
+reweighting_factor = 0.250086
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.75 - 1.0 from ZH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ZH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZH125/ZZ4lAnalysis.root
+start_fraction = 0.75
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 12263.5
+full_gen_sum_weights = 49019.6
+reweighting_factor = 0.250175
+done with everything
+
+--------------------------------------------------
+--------------------------------------------------
+currently splitting: bkg
+extracting 0.0 - 0.1333 from AllData
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/AllData/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/AllData/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.1333
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 8444
+full_gen_sum_weights = 63349
+reweighting_factor = 0.133293
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.1333 - 0.2 from AllData
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/AllData/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/AllData/ZZ4lAnalysis.root
+start_fraction = 0.1333
+end_fraction = 0.2
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 4225
+full_gen_sum_weights = 63349
+reweighting_factor = 0.066694
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.2 - 1.0 from AllData
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/AllData/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/AllData/ZZ4lAnalysis.root
+start_fraction = 0.2
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 50680
+full_gen_sum_weights = 63349
+reweighting_factor = 0.800013
+done with everything
+
+--------------------------------------------------
+--------------------------------------------------
+currently splitting: ZZTo4l
+extracting 0.0 - 0.3333 from ZZTo4l
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ZZTo4l/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZZTo4l/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.3333
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 67353.9
+full_gen_sum_weights = 202422
+reweighting_factor = 0.33274
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.3333 - 0.5 from ZZTo4l
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ZZTo4l/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZZTo4l/ZZ4lAnalysis.root
+start_fraction = 0.3333
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 33665.6
+full_gen_sum_weights = 202422
+reweighting_factor = 0.166314
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ZZTo4l
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ZZTo4l/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZZTo4l/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 101398
+full_gen_sum_weights = 202417
+reweighting_factor = 0.500937
+done with everything
+
+--------------------------------------------------
+extracting 0.0 - 0.5 from VBFH120
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/VBFH120/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH120/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 47176.1
+full_gen_sum_weights = 94378.9
+reweighting_factor = 0.499859
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from VBFH120
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/VBFH120/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH120/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 47202.5
+full_gen_sum_weights = 94378.7
+reweighting_factor = 0.500139
+done with everything
+
+extracting 0.0 - 0.5 from VBFH124
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/VBFH124/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH124/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 119188
+full_gen_sum_weights = 238368
+reweighting_factor = 0.500018
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from VBFH124
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/VBFH124/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH124/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 119178
+full_gen_sum_weights = 238367
+reweighting_factor = 0.499976
+done with everything
+
+extracting 0.0 - 0.5 from VBFH126
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/VBFH126/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH126/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 121276
+full_gen_sum_weights = 242652
+reweighting_factor = 0.499795
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from VBFH126
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/VBFH126/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH126/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 121377
+full_gen_sum_weights = 242653
+reweighting_factor = 0.500207
+done with everything
+
+extracting 0.0 - 0.5 from VBFH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/VBFH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH130/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 48156.5
+full_gen_sum_weights = 96463.1
+reweighting_factor = 0.499222
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from VBFH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/VBFH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH130/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 48306.3
+full_gen_sum_weights = 96462.8
+reweighting_factor = 0.500777
+done with everything
+
+extracting 0.0 - 0.5 from WminusH120
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WminusH120/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH120/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 4020.17
+full_gen_sum_weights = 8085.68
+reweighting_factor = 0.497196
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from WminusH120
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WminusH120/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH120/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 4065.51
+full_gen_sum_weights = 8085.67
+reweighting_factor = 0.502804
+done with everything
+
+extracting 0.0 - 0.5 from WminusH124
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WminusH124/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH124/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 6692.05
+full_gen_sum_weights = 13371.4
+reweighting_factor = 0.500473
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from WminusH124
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WminusH124/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH124/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 6679.35
+full_gen_sum_weights = 13371.4
+reweighting_factor = 0.499524
+done with everything
+
+extracting 0.0 - 0.5 from WminusH126
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WminusH126/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH126/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 5836.32
+full_gen_sum_weights = 11679.2
+reweighting_factor = 0.49972
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from WminusH126
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WminusH126/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH126/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 5842.88
+full_gen_sum_weights = 11679.2
+reweighting_factor = 0.50028
+done with everything
+
+extracting 0.0 - 0.5 from WminusH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WminusH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH130/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 3368.29
+full_gen_sum_weights = 6710.09
+reweighting_factor = 0.501973
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from WminusH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WminusH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH130/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 3341.81
+full_gen_sum_weights = 6710.09
+reweighting_factor = 0.498027
+done with everything
+
+extracting 0.0 - 0.5 from WplusH120
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WplusH120/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH120/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 9012.7
+full_gen_sum_weights = 17959.3
+reweighting_factor = 0.50184
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from WplusH120
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WplusH120/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH120/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 8946.62
+full_gen_sum_weights = 17959.3
+reweighting_factor = 0.498161
+done with everything
+
+extracting 0.0 - 0.5 from WplusH124
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WplusH124/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH124/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 6120.83
+full_gen_sum_weights = 12166.8
+reweighting_factor = 0.503076
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from WplusH124
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WplusH124/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH124/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 6046
+full_gen_sum_weights = 12166.8
+reweighting_factor = 0.496924
+done with everything
+
+extracting 0.0 - 0.5 from WplusH126
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WplusH126/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH126/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 13718.7
+full_gen_sum_weights = 27412.6
+reweighting_factor = 0.500454
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from WplusH126
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WplusH126/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH126/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 13693.8
+full_gen_sum_weights = 27412.4
+reweighting_factor = 0.499548
+done with everything
+
+extracting 0.0 - 0.5 from WplusH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WplusH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH130/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 7894.02
+full_gen_sum_weights = 15779.8
+reweighting_factor = 0.50026
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from WplusH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/WplusH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH130/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 7885.81
+full_gen_sum_weights = 15779.8
+reweighting_factor = 0.49974
+done with everything
+
+extracting 0.0 - 0.5 from ZH120
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ZH120/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZH120/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 10123
+full_gen_sum_weights = 20286.9
+reweighting_factor = 0.498992
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ZH120
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ZH120/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZH120/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 10164
+full_gen_sum_weights = 20286.9
+reweighting_factor = 0.50101
+done with everything
+
+extracting 0.0 - 0.5 from ZH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ZH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZH130/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 9400.83
+full_gen_sum_weights = 18738.8
+reweighting_factor = 0.501676
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ZH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ZH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZH130/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 9337.91
+full_gen_sum_weights = 18738.7
+reweighting_factor = 0.498321
+done with everything
+
+extracting 0.0 - 0.5 from bbH124
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/bbH124/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH124/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 29328.4
+full_gen_sum_weights = 58662.5
+reweighting_factor = 0.499952
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from bbH124
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/bbH124/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH124/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 29334.3
+full_gen_sum_weights = 58662.8
+reweighting_factor = 0.50005
+done with everything
+
+extracting 0.0 - 0.5 from bbH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/bbH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH125/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 30826.2
+full_gen_sum_weights = 61740.8
+reweighting_factor = 0.499284
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from bbH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/bbH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH125/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 30914.8
+full_gen_sum_weights = 61740.9
+reweighting_factor = 0.500718
+done with everything
+
+extracting 0.0 - 0.5 from bbH126
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/bbH126/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH126/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 16928.5
+full_gen_sum_weights = 33696.1
+reweighting_factor = 0.502387
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from bbH126
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/bbH126/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH126/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 16767.6
+full_gen_sum_weights = 33696.2
+reweighting_factor = 0.497611
+done with everything
+
+extracting 0.0 - 0.5 from bbH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/bbH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH130/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 12183.3
+full_gen_sum_weights = 24449.2
+reweighting_factor = 0.498313
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from bbH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/bbH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH130/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 12265.8
+full_gen_sum_weights = 24449.2
+reweighting_factor = 0.501686
+done with everything
+
+extracting 0.0 - 0.5 from ggH120
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggH120/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH120/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 787866
+full_gen_sum_weights = 1.57708e+06
+reweighting_factor = 0.499573
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ggH120
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggH120/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH120/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 789222
+full_gen_sum_weights = 1.57708e+06
+reweighting_factor = 0.500434
+done with everything
+
+extracting 0.0 - 0.5 from ggH124
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggH124/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH124/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 1.77402e+06
+full_gen_sum_weights = 3.5457e+06
+reweighting_factor = 0.50033
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ggH124
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggH124/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH124/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 1.77168e+06
+full_gen_sum_weights = 3.5457e+06
+reweighting_factor = 0.49967
+done with everything
+
+extracting 0.0 - 0.5 from ggH126
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggH126/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH126/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 1.58471e+06
+full_gen_sum_weights = 3.16962e+06
+reweighting_factor = 0.499968
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ggH126
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggH126/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH126/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 1.58491e+06
+full_gen_sum_weights = 3.1696e+06
+reweighting_factor = 0.500034
+done with everything
+
+extracting 0.0 - 0.5 from ggH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH130/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 859244
+full_gen_sum_weights = 1.71677e+06
+reweighting_factor = 0.500501
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ggH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH130/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 857516
+full_gen_sum_weights = 1.71676e+06
+reweighting_factor = 0.499498
+done with everything
+
+extracting 0.0 - 0.5 from ggTo2e2mu_Contin_MCFM701
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 309835
+full_gen_sum_weights = 620112
+reweighting_factor = 0.499643
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ggTo2e2mu_Contin_MCFM701
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 310232
+full_gen_sum_weights = 620095
+reweighting_factor = 0.500298
+done with everything
+
+extracting 0.0 - 0.5 from ggTo2e2tau_Contin_MCFM701
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggTo2e2tau_Contin_MCFM701/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2tau_Contin_MCFM701/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 1439.32
+full_gen_sum_weights = 2889.79
+reweighting_factor = 0.498071
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ggTo2e2tau_Contin_MCFM701
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggTo2e2tau_Contin_MCFM701/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2tau_Contin_MCFM701/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 1450.47
+full_gen_sum_weights = 2889.79
+reweighting_factor = 0.501929
+done with everything
+
+extracting 0.0 - 0.5 from ggTo2mu2tau_Contin_MCFM701
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggTo2mu2tau_Contin_MCFM701/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2mu2tau_Contin_MCFM701/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 1766.51
+full_gen_sum_weights = 3536.31
+reweighting_factor = 0.499534
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ggTo2mu2tau_Contin_MCFM701
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggTo2mu2tau_Contin_MCFM701/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2mu2tau_Contin_MCFM701/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 1769.8
+full_gen_sum_weights = 3536.31
+reweighting_factor = 0.500465
+done with everything
+
+extracting 0.0 - 0.5 from ggTo4e_Contin_MCFM701
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 109864
+full_gen_sum_weights = 218564
+reweighting_factor = 0.502661
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ggTo4e_Contin_MCFM701
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 108709
+full_gen_sum_weights = 218565
+reweighting_factor = 0.497377
+done with everything
+
+extracting 0.0 - 0.5 from ggTo4mu_Contin_MCFM701
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 200671
+full_gen_sum_weights = 402837
+reweighting_factor = 0.498146
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ggTo4mu_Contin_MCFM701
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 202167
+full_gen_sum_weights = 402843
+reweighting_factor = 0.501851
+done with everything
+
+extracting 0.0 - 0.5 from ggTo4tau_Contin_MCFM701
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggTo4tau_Contin_MCFM701/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4tau_Contin_MCFM701/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 30.3138
+full_gen_sum_weights = 58.1738
+reweighting_factor = 0.52109
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ggTo4tau_Contin_MCFM701
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ggTo4tau_Contin_MCFM701/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4tau_Contin_MCFM701/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 27.86
+full_gen_sum_weights = 58.1738
+reweighting_factor = 0.47891
+done with everything
+
+extracting 0.0 - 0.5 from tqH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/tqH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/tqH125/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 61069.6
+full_gen_sum_weights = 122174
+reweighting_factor = 0.499859
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from tqH125
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/tqH125/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/tqH125/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 61104.2
+full_gen_sum_weights = 122174
+reweighting_factor = 0.500142
+done with everything
+
+extracting 0.0 - 0.5 from ttH120
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ttH120/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH120/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 4348.75
+full_gen_sum_weights = 8742.34
+reweighting_factor = 0.497436
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ttH120
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ttH120/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH120/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 4393.58
+full_gen_sum_weights = 8742.32
+reweighting_factor = 0.502565
+done with everything
+
+extracting 0.0 - 0.5 from ttH124
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ttH124/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH124/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 6033.57
+full_gen_sum_weights = 12043.6
+reweighting_factor = 0.500976
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ttH124
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ttH124/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH124/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 6010.03
+full_gen_sum_weights = 12043.6
+reweighting_factor = 0.499024
+done with everything
+
+extracting 0.0 - 0.5 from ttH126
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ttH126/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH126/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 9603
+full_gen_sum_weights = 19198.9
+reweighting_factor = 0.500185
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ttH126
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ttH126/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH126/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 9595.94
+full_gen_sum_weights = 19198.9
+reweighting_factor = 0.499816
+done with everything
+
+extracting 0.0 - 0.5 from ttH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ttH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH130/ZZ4lAnalysis.root
+start_fraction = 0
+end_fraction = 0.5
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 4451.39
+full_gen_sum_weights = 8936.26
+reweighting_factor = 0.498127
+done with everything
+
+-- -- -- -- -- -- -- -- -- -- -- --
+extracting 0.5 - 1.0 from ttH130
+in_file = /data_CMS/cms/wind/CJLST_NTuples_prepared/ttH130/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH130/ZZ4lAnalysis.root
+start_fraction = 0.5
+end_fraction = 1
+reweighting = 1
+preparation done. starting chunk extraction
+reduced_gen_sum_weights = 4484.91
+full_gen_sum_weights = 8936.29
+reweighting_factor = 0.501876
+done with everything
+
+now building training dataset: ggH125
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ggH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ggH125/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ggH125/training/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ggH125/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ggH125/training/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ggH125/training/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ggH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ggH125/training/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ggH125/training/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ggH125/training/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ggH125/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH125/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ggH125/validation/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH125/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ggH125/validation/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ggH125/validation/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ggH125/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ggH125/validation/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ggH125/validation/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ggH125/validation/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ggH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ggH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ggH125/validation/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ggH125/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ggH125/training/ZZ4lAnalysis.root
+hadd Source file 2: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ggH125/validation/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ggH125/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ggH125/ZZ4lAnalysis.root:/ClassTree
+
+now building training dataset: ttH125
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ttH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ttH125/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ttH125/training/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ttH125/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ttH125/training/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ttH125/training/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ttH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ttH125/training/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ttH125/training/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ttH125/training/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ttH125/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH125/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ttH125/validation/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH125/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ttH125/validation/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ttH125/validation/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ttH125/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ttH125/validation/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ttH125/validation/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ttH125/validation/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ttH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ttH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ttH125/validation/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ttH125/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ttH125/training/ZZ4lAnalysis.root
+hadd Source file 2: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ttH125/validation/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ttH125/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ttH125/ZZ4lAnalysis.root:/ClassTree
+
+now building training dataset: VBFH125
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/VBFH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/VBFH125/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/VBFH125/training/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/VBFH125/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/VBFH125/training/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/VBFH125/training/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/VBFH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/VBFH125/training/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/VBFH125/training/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/VBFH125/training/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/VBFH125/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH125/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/VBFH125/validation/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH125/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/VBFH125/validation/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/VBFH125/validation/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/VBFH125/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/VBFH125/validation/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/VBFH125/validation/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/VBFH125/validation/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/VBFH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/VBFH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/VBFH125/validation/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/VBFH125/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/VBFH125/training/ZZ4lAnalysis.root
+hadd Source file 2: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/VBFH125/validation/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/VBFH125/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/VBFH125/ZZ4lAnalysis.root:/ClassTree
+
+now building training dataset: WminusH125
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WminusH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/WminusH125/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WminusH125/training/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/WminusH125/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WminusH125/training/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WminusH125/training/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WminusH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WminusH125/training/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WminusH125/training/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WminusH125/training/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WminusH125/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH125/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WminusH125/validation/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH125/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WminusH125/validation/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WminusH125/validation/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WminusH125/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WminusH125/validation/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WminusH125/validation/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WminusH125/validation/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/WminusH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WminusH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WminusH125/validation/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/WminusH125/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WminusH125/training/ZZ4lAnalysis.root
+hadd Source file 2: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WminusH125/validation/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/WminusH125/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/WminusH125/ZZ4lAnalysis.root:/ClassTree
+
+now building training dataset: WplusH125
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WplusH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/WplusH125/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WplusH125/training/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/WplusH125/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WplusH125/training/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WplusH125/training/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WplusH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WplusH125/training/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WplusH125/training/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WplusH125/training/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WplusH125/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH125/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WplusH125/validation/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH125/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WplusH125/validation/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WplusH125/validation/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WplusH125/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WplusH125/validation/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/WplusH125/validation/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WplusH125/validation/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/WplusH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WplusH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WplusH125/validation/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/WplusH125/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WplusH125/training/ZZ4lAnalysis.root
+hadd Source file 2: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/WplusH125/validation/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/WplusH125/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/WplusH125/ZZ4lAnalysis.root:/ClassTree
+
+now building training dataset: ZH125
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZH125/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZH125/training/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZH125/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZH125/training/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZH125/training/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZH125/training/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZH125/training/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZH125/training/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZH125/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZH125/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZH125/validation/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZH125/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZH125/validation/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZH125/validation/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZH125/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZH125/validation/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZH125/validation/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZH125/validation/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ZH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZH125/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZH125/validation/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ZH125/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZH125/training/ZZ4lAnalysis.root
+hadd Source file 2: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZH125/validation/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ZH125/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ZH125/ZZ4lAnalysis.root:/ClassTree
+
+now building training dataset: bkg
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/bkg/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/AllData/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/bkg/training/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/AllData/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/bkg/training/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/bkg/training/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/bkg/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/bkg/training/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/bkg/training/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/bkg/training/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/bkg/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/AllData/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/bkg/validation/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/AllData/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/bkg/validation/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/bkg/validation/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/bkg/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/bkg/validation/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/bkg/validation/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/bkg/validation/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/bkg/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/bkg/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/bkg/validation/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/bkg/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/bkg/training/ZZ4lAnalysis.root
+hadd Source file 2: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/bkg/validation/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/bkg/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/bkg/ZZ4lAnalysis.root:/ClassTree
+
+now building training dataset: ZZTo4l
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZZTo4l/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZZTo4l/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZZTo4l/training/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZZTo4l/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZZTo4l/training/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZZTo4l/training/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZZTo4l/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZZTo4l/training/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZZTo4l/training/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZZTo4l/training/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZZTo4l/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZZTo4l/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZZTo4l/validation/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZZTo4l/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZZTo4l/validation/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZZTo4l/validation/ZZ4lAnalysis.root:/ClassTree
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_scrambler /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZZTo4l/validation/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZZTo4l/validation/ZZ4lAnalysis.root
+in_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/ZZTo4l/validation/ZZ4lAnalysis.root
+out_file = /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZZTo4l/validation/ZZ4lAnalysis.root
+preparation done. starting chunk extraction
+done with everything
+
+hadd /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ZZTo4l/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZZTo4l/training/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZZTo4l/validation/ZZ4lAnalysis.root
+hadd Target file: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ZZTo4l/ZZ4lAnalysis.root
+hadd compression setting for all ouput: 1
+hadd Source file 1: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZZTo4l/training/ZZ4lAnalysis.root
+hadd Source file 2: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/temp/scrambled/ZZTo4l/validation/ZZ4lAnalysis.root
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ZZTo4l/ZZ4lAnalysis.root:/
+hadd Target path: /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/trainval/ZZTo4l/ZZ4lAnalysis.root:/ClassTree
+
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ggH125/ZZ4lAnalysis.root into 7 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016914.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ggH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ggH125_chunk_0/ZZ4lAnalysis.root 0.0 0.166666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016915.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ggH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ggH125_chunk_1/ZZ4lAnalysis.root 0.166666666667 0.333333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016916.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ggH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ggH125_chunk_2/ZZ4lAnalysis.root 0.333333333333 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016917.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ggH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ggH125_chunk_3/ZZ4lAnalysis.root 0.5 0.666666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016918.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ggH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ggH125_chunk_4/ZZ4lAnalysis.root 0.666666666667 0.833333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016919.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ggH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ggH125_chunk_5/ZZ4lAnalysis.root 0.833333333333 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ttH125/ZZ4lAnalysis.root into 4 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016920.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ttH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ttH125_chunk_0/ZZ4lAnalysis.root 0.0 0.333333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016921.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ttH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ttH125_chunk_1/ZZ4lAnalysis.root 0.333333333333 0.666666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016922.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ttH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ttH125_chunk_2/ZZ4lAnalysis.root 0.666666666667 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/VBFH125/ZZ4lAnalysis.root into 5 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016923.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/VBFH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/VBFH125_chunk_0/ZZ4lAnalysis.root 0.0 0.25 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016924.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/VBFH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/VBFH125_chunk_1/ZZ4lAnalysis.root 0.25 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016925.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/VBFH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/VBFH125_chunk_2/ZZ4lAnalysis.root 0.5 0.75 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016926.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/VBFH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/VBFH125_chunk_3/ZZ4lAnalysis.root 0.75 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/WminusH125/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016927.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/WminusH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/WminusH125_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/WplusH125/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016928.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/WplusH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/WplusH125_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZH125/ZZ4lAnalysis.root into 5 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016929.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ZH125_chunk_0/ZZ4lAnalysis.root 0.0 0.25 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016930.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ZH125_chunk_1/ZZ4lAnalysis.root 0.25 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016931.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ZH125_chunk_2/ZZ4lAnalysis.root 0.5 0.75 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016932.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ZH125_chunk_3/ZZ4lAnalysis.root 0.75 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/AllData/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016933.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/AllData/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/AllData_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZZTo4l/ZZ4lAnalysis.root into 4 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016934.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZZTo4l/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ZZTo4l_chunk_0/ZZ4lAnalysis.root 0.0 0.333333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016935.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZZTo4l/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ZZTo4l_chunk_1/ZZ4lAnalysis.root 0.333333333333 0.666666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016936.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training/ZZTo4l/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/training_chunks/ZZTo4l_chunk_2/ZZ4lAnalysis.root 0.666666666667 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH125/ZZ4lAnalysis.root into 3 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016937.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH125_chunk_0/ZZ4lAnalysis.root 0.0 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016938.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH125_chunk_1/ZZ4lAnalysis.root 0.5 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH125/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016939.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ttH125_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH125/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016940.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/VBFH125_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH125/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016941.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/WminusH125_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH125/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016942.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/WplusH125_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZH125/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016943.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ZH125_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/AllData/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016944.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/AllData/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/AllData_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZZTo4l/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016945.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZZTo4l/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ZZTo4l_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH120/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016946.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/VBFH120_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH124/ZZ4lAnalysis.root into 5 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016947.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/VBFH124_chunk_0/ZZ4lAnalysis.root 0.0 0.25 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016948.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/VBFH124_chunk_1/ZZ4lAnalysis.root 0.25 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016949.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/VBFH124_chunk_2/ZZ4lAnalysis.root 0.5 0.75 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016950.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/VBFH124_chunk_3/ZZ4lAnalysis.root 0.75 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH126/ZZ4lAnalysis.root into 6 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016951.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/VBFH126_chunk_0/ZZ4lAnalysis.root 0.0 0.2 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016952.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/VBFH126_chunk_1/ZZ4lAnalysis.root 0.2 0.4 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016953.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/VBFH126_chunk_2/ZZ4lAnalysis.root 0.4 0.6 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016954.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/VBFH126_chunk_3/ZZ4lAnalysis.root 0.6 0.8 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016955.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/VBFH126_chunk_4/ZZ4lAnalysis.root 0.8 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH130/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016956.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/VBFH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/VBFH130_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH120/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016957.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/WminusH120_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH124/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016958.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/WminusH124_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH126/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016959.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/WminusH126_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH130/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016960.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WminusH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/WminusH130_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH120/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016961.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/WplusH120_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH124/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016962.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/WplusH124_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH126/ZZ4lAnalysis.root into 3 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016963.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/WplusH126_chunk_0/ZZ4lAnalysis.root 0.0 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016964.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/WplusH126_chunk_1/ZZ4lAnalysis.root 0.5 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH130/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016965.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/WplusH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/WplusH130_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZH120/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016966.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ZH120_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZH130/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016967.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ZH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ZH130_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH124/ZZ4lAnalysis.root into 3 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016968.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/bbH124_chunk_0/ZZ4lAnalysis.root 0.0 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016969.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/bbH124_chunk_1/ZZ4lAnalysis.root 0.5 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH125/ZZ4lAnalysis.root into 3 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016970.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/bbH125_chunk_0/ZZ4lAnalysis.root 0.0 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016971.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/bbH125_chunk_1/ZZ4lAnalysis.root 0.5 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH126/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016972.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/bbH126_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH130/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016973.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/bbH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/bbH130_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH120/ZZ4lAnalysis.root into 3 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016974.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH120_chunk_0/ZZ4lAnalysis.root 0.0 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016975.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH120_chunk_1/ZZ4lAnalysis.root 0.5 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH124/ZZ4lAnalysis.root into 7 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016976.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH124_chunk_0/ZZ4lAnalysis.root 0.0 0.166666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016977.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH124_chunk_1/ZZ4lAnalysis.root 0.166666666667 0.333333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016978.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH124_chunk_2/ZZ4lAnalysis.root 0.333333333333 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016979.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH124_chunk_3/ZZ4lAnalysis.root 0.5 0.666666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016980.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH124_chunk_4/ZZ4lAnalysis.root 0.666666666667 0.833333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016981.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH124_chunk_5/ZZ4lAnalysis.root 0.833333333333 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH126/ZZ4lAnalysis.root into 7 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016982.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH126_chunk_0/ZZ4lAnalysis.root 0.0 0.166666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016983.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH126_chunk_1/ZZ4lAnalysis.root 0.166666666667 0.333333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016984.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH126_chunk_2/ZZ4lAnalysis.root 0.333333333333 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016985.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH126_chunk_3/ZZ4lAnalysis.root 0.5 0.666666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016986.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH126_chunk_4/ZZ4lAnalysis.root 0.666666666667 0.833333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016987.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH126_chunk_5/ZZ4lAnalysis.root 0.833333333333 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH130/ZZ4lAnalysis.root into 4 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016988.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH130_chunk_0/ZZ4lAnalysis.root 0.0 0.333333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016989.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH130_chunk_1/ZZ4lAnalysis.root 0.333333333333 0.666666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016990.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggH130_chunk_2/ZZ4lAnalysis.root 0.666666666667 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root into 41 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1016991.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_0/ZZ4lAnalysis.root 0.0 0.025 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016992.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_1/ZZ4lAnalysis.root 0.025 0.05 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016993.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_2/ZZ4lAnalysis.root 0.05 0.075 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016994.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_3/ZZ4lAnalysis.root 0.075 0.1 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016995.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_4/ZZ4lAnalysis.root 0.1 0.125 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016996.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_5/ZZ4lAnalysis.root 0.125 0.15 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016997.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_6/ZZ4lAnalysis.root 0.15 0.175 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016998.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_7/ZZ4lAnalysis.root 0.175 0.2 0
+Submitting job(s).
+1 job(s) submitted to cluster 1016999.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_8/ZZ4lAnalysis.root 0.2 0.225 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017000.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_9/ZZ4lAnalysis.root 0.225 0.25 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017001.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_10/ZZ4lAnalysis.root 0.25 0.275 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017002.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_11/ZZ4lAnalysis.root 0.275 0.3 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017003.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_12/ZZ4lAnalysis.root 0.3 0.325 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017004.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_13/ZZ4lAnalysis.root 0.325 0.35 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017005.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_14/ZZ4lAnalysis.root 0.35 0.375 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017006.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_15/ZZ4lAnalysis.root 0.375 0.4 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017007.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_16/ZZ4lAnalysis.root 0.4 0.425 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017008.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_17/ZZ4lAnalysis.root 0.425 0.45 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017009.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_18/ZZ4lAnalysis.root 0.45 0.475 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017010.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_19/ZZ4lAnalysis.root 0.475 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017011.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_20/ZZ4lAnalysis.root 0.5 0.525 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017012.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_21/ZZ4lAnalysis.root 0.525 0.55 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017013.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_22/ZZ4lAnalysis.root 0.55 0.575 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017014.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_23/ZZ4lAnalysis.root 0.575 0.6 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017015.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_24/ZZ4lAnalysis.root 0.6 0.625 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017016.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_25/ZZ4lAnalysis.root 0.625 0.65 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017017.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_26/ZZ4lAnalysis.root 0.65 0.675 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017018.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_27/ZZ4lAnalysis.root 0.675 0.7 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017019.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_28/ZZ4lAnalysis.root 0.7 0.725 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017020.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_29/ZZ4lAnalysis.root 0.725 0.75 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017021.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_30/ZZ4lAnalysis.root 0.75 0.775 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017022.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_31/ZZ4lAnalysis.root 0.775 0.8 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017023.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_32/ZZ4lAnalysis.root 0.8 0.825 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017024.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_33/ZZ4lAnalysis.root 0.825 0.85 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017025.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_34/ZZ4lAnalysis.root 0.85 0.875 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017026.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_35/ZZ4lAnalysis.root 0.875 0.9 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017027.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_36/ZZ4lAnalysis.root 0.9 0.925 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017028.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_37/ZZ4lAnalysis.root 0.925 0.95 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017029.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_38/ZZ4lAnalysis.root 0.95 0.975 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017030.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2mu_Contin_MCFM701_chunk_39/ZZ4lAnalysis.root 0.975 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2tau_Contin_MCFM701/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017031.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2e2tau_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2e2tau_Contin_MCFM701_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2mu2tau_Contin_MCFM701/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017032.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo2mu2tau_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo2mu2tau_Contin_MCFM701_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root into 14 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017033.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4e_Contin_MCFM701_chunk_0/ZZ4lAnalysis.root 0.0 0.0769230769231 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017034.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4e_Contin_MCFM701_chunk_1/ZZ4lAnalysis.root 0.0769230769231 0.153846153846 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017035.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4e_Contin_MCFM701_chunk_2/ZZ4lAnalysis.root 0.153846153846 0.230769230769 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017036.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4e_Contin_MCFM701_chunk_3/ZZ4lAnalysis.root 0.230769230769 0.307692307692 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017037.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4e_Contin_MCFM701_chunk_4/ZZ4lAnalysis.root 0.307692307692 0.384615384615 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017038.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4e_Contin_MCFM701_chunk_5/ZZ4lAnalysis.root 0.384615384615 0.461538461538 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017039.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4e_Contin_MCFM701_chunk_6/ZZ4lAnalysis.root 0.461538461538 0.538461538462 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017040.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4e_Contin_MCFM701_chunk_7/ZZ4lAnalysis.root 0.538461538462 0.615384615385 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017041.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4e_Contin_MCFM701_chunk_8/ZZ4lAnalysis.root 0.615384615385 0.692307692308 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017042.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4e_Contin_MCFM701_chunk_9/ZZ4lAnalysis.root 0.692307692308 0.769230769231 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017043.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4e_Contin_MCFM701_chunk_10/ZZ4lAnalysis.root 0.769230769231 0.846153846154 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017044.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4e_Contin_MCFM701_chunk_11/ZZ4lAnalysis.root 0.846153846154 0.923076923077 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017045.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4e_Contin_MCFM701_chunk_12/ZZ4lAnalysis.root 0.923076923077 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root into 22 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017046.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_0/ZZ4lAnalysis.root 0.0 0.047619047619 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017047.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_1/ZZ4lAnalysis.root 0.047619047619 0.0952380952381 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017048.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_2/ZZ4lAnalysis.root 0.0952380952381 0.142857142857 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017049.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_3/ZZ4lAnalysis.root 0.142857142857 0.190476190476 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017050.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_4/ZZ4lAnalysis.root 0.190476190476 0.238095238095 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017051.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_5/ZZ4lAnalysis.root 0.238095238095 0.285714285714 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017052.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_6/ZZ4lAnalysis.root 0.285714285714 0.333333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017053.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_7/ZZ4lAnalysis.root 0.333333333333 0.380952380952 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017054.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_8/ZZ4lAnalysis.root 0.380952380952 0.428571428571 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017055.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_9/ZZ4lAnalysis.root 0.428571428571 0.47619047619 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017056.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_10/ZZ4lAnalysis.root 0.47619047619 0.52380952381 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017057.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_11/ZZ4lAnalysis.root 0.52380952381 0.571428571429 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017058.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_12/ZZ4lAnalysis.root 0.571428571429 0.619047619048 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017059.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_13/ZZ4lAnalysis.root 0.619047619048 0.666666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017060.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_14/ZZ4lAnalysis.root 0.666666666667 0.714285714286 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017061.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_15/ZZ4lAnalysis.root 0.714285714286 0.761904761905 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017062.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_16/ZZ4lAnalysis.root 0.761904761905 0.809523809524 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017063.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_17/ZZ4lAnalysis.root 0.809523809524 0.857142857143 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017064.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_18/ZZ4lAnalysis.root 0.857142857143 0.904761904762 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017065.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_19/ZZ4lAnalysis.root 0.904761904762 0.952380952381 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017066.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4mu_Contin_MCFM701_chunk_20/ZZ4lAnalysis.root 0.952380952381 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4tau_Contin_MCFM701/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017067.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ggTo4tau_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ggTo4tau_Contin_MCFM701_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/tqH125/ZZ4lAnalysis.root into 11 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017068.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/tqH125_chunk_0/ZZ4lAnalysis.root 0.0 0.1 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017069.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/tqH125_chunk_1/ZZ4lAnalysis.root 0.1 0.2 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017070.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/tqH125_chunk_2/ZZ4lAnalysis.root 0.2 0.3 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017071.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/tqH125_chunk_3/ZZ4lAnalysis.root 0.3 0.4 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017072.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/tqH125_chunk_4/ZZ4lAnalysis.root 0.4 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017073.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/tqH125_chunk_5/ZZ4lAnalysis.root 0.5 0.6 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017074.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/tqH125_chunk_6/ZZ4lAnalysis.root 0.6 0.7 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017075.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/tqH125_chunk_7/ZZ4lAnalysis.root 0.7 0.8 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017076.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/tqH125_chunk_8/ZZ4lAnalysis.root 0.8 0.9 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017077.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/tqH125_chunk_9/ZZ4lAnalysis.root 0.9 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH120/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017078.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ttH120_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH124/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017079.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ttH124_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH126/ZZ4lAnalysis.root into 3 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017080.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ttH126_chunk_0/ZZ4lAnalysis.root 0.0 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017081.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ttH126_chunk_1/ZZ4lAnalysis.root 0.5 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH130/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017082.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation/ttH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/validation_chunks/ttH130_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH125/ZZ4lAnalysis.root into 3 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017083.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH125_chunk_0/ZZ4lAnalysis.root 0.0 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017084.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH125_chunk_1/ZZ4lAnalysis.root 0.5 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH125/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017085.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ttH125_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH125/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017086.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/VBFH125_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH125/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017087.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/WminusH125_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH125/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017088.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/WplusH125_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZH125/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017089.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ZH125_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/AllData/ZZ4lAnalysis.root into 5 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017090.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/AllData/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/AllData_chunk_0/ZZ4lAnalysis.root 0.0 0.25 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017091.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/AllData/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/AllData_chunk_1/ZZ4lAnalysis.root 0.25 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017092.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/AllData/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/AllData_chunk_2/ZZ4lAnalysis.root 0.5 0.75 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017093.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/AllData/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/AllData_chunk_3/ZZ4lAnalysis.root 0.75 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZZTo4l/ZZ4lAnalysis.root into 7 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017094.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZZTo4l/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ZZTo4l_chunk_0/ZZ4lAnalysis.root 0.0 0.166666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017095.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZZTo4l/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ZZTo4l_chunk_1/ZZ4lAnalysis.root 0.166666666667 0.333333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017096.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZZTo4l/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ZZTo4l_chunk_2/ZZ4lAnalysis.root 0.333333333333 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017097.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZZTo4l/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ZZTo4l_chunk_3/ZZ4lAnalysis.root 0.5 0.666666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017098.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZZTo4l/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ZZTo4l_chunk_4/ZZ4lAnalysis.root 0.666666666667 0.833333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017099.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZZTo4l/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ZZTo4l_chunk_5/ZZ4lAnalysis.root 0.833333333333 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH120/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017100.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/VBFH120_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH124/ZZ4lAnalysis.root into 5 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017101.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/VBFH124_chunk_0/ZZ4lAnalysis.root 0.0 0.25 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017102.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/VBFH124_chunk_1/ZZ4lAnalysis.root 0.25 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017103.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/VBFH124_chunk_2/ZZ4lAnalysis.root 0.5 0.75 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017104.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/VBFH124_chunk_3/ZZ4lAnalysis.root 0.75 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH126/ZZ4lAnalysis.root into 6 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017105.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/VBFH126_chunk_0/ZZ4lAnalysis.root 0.0 0.2 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017106.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/VBFH126_chunk_1/ZZ4lAnalysis.root 0.2 0.4 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017107.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/VBFH126_chunk_2/ZZ4lAnalysis.root 0.4 0.6 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017108.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/VBFH126_chunk_3/ZZ4lAnalysis.root 0.6 0.8 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017109.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/VBFH126_chunk_4/ZZ4lAnalysis.root 0.8 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH130/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017110.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/VBFH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/VBFH130_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH120/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017111.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/WminusH120_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH124/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017112.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/WminusH124_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH126/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017113.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/WminusH126_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH130/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017114.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WminusH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/WminusH130_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH120/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017115.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/WplusH120_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH124/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017116.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/WplusH124_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH126/ZZ4lAnalysis.root into 3 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017117.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/WplusH126_chunk_0/ZZ4lAnalysis.root 0.0 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017118.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/WplusH126_chunk_1/ZZ4lAnalysis.root 0.5 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH130/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017119.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/WplusH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/WplusH130_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZH120/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017120.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ZH120_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZH130/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017121.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ZH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ZH130_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH124/ZZ4lAnalysis.root into 3 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017122.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/bbH124_chunk_0/ZZ4lAnalysis.root 0.0 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017123.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/bbH124_chunk_1/ZZ4lAnalysis.root 0.5 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH125/ZZ4lAnalysis.root into 3 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017124.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/bbH125_chunk_0/ZZ4lAnalysis.root 0.0 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017125.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/bbH125_chunk_1/ZZ4lAnalysis.root 0.5 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH126/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017126.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/bbH126_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH130/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017127.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/bbH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/bbH130_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH120/ZZ4lAnalysis.root into 3 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017128.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH120_chunk_0/ZZ4lAnalysis.root 0.0 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017129.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH120_chunk_1/ZZ4lAnalysis.root 0.5 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH124/ZZ4lAnalysis.root into 7 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017130.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH124_chunk_0/ZZ4lAnalysis.root 0.0 0.166666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017131.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH124_chunk_1/ZZ4lAnalysis.root 0.166666666667 0.333333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017132.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH124_chunk_2/ZZ4lAnalysis.root 0.333333333333 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017133.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH124_chunk_3/ZZ4lAnalysis.root 0.5 0.666666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017134.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH124_chunk_4/ZZ4lAnalysis.root 0.666666666667 0.833333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017135.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH124_chunk_5/ZZ4lAnalysis.root 0.833333333333 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH126/ZZ4lAnalysis.root into 7 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017136.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH126_chunk_0/ZZ4lAnalysis.root 0.0 0.166666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017137.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH126_chunk_1/ZZ4lAnalysis.root 0.166666666667 0.333333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017138.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH126_chunk_2/ZZ4lAnalysis.root 0.333333333333 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017139.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH126_chunk_3/ZZ4lAnalysis.root 0.5 0.666666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017140.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH126_chunk_4/ZZ4lAnalysis.root 0.666666666667 0.833333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017141.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH126_chunk_5/ZZ4lAnalysis.root 0.833333333333 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH130/ZZ4lAnalysis.root into 4 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017142.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH130_chunk_0/ZZ4lAnalysis.root 0.0 0.333333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017143.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH130_chunk_1/ZZ4lAnalysis.root 0.333333333333 0.666666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017144.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggH130_chunk_2/ZZ4lAnalysis.root 0.666666666667 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root into 41 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017145.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_0/ZZ4lAnalysis.root 0.0 0.025 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017146.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_1/ZZ4lAnalysis.root 0.025 0.05 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017147.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_2/ZZ4lAnalysis.root 0.05 0.075 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017148.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_3/ZZ4lAnalysis.root 0.075 0.1 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017149.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_4/ZZ4lAnalysis.root 0.1 0.125 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017150.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_5/ZZ4lAnalysis.root 0.125 0.15 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017151.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_6/ZZ4lAnalysis.root 0.15 0.175 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017152.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_7/ZZ4lAnalysis.root 0.175 0.2 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017153.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_8/ZZ4lAnalysis.root 0.2 0.225 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017154.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_9/ZZ4lAnalysis.root 0.225 0.25 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017155.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_10/ZZ4lAnalysis.root 0.25 0.275 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017156.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_11/ZZ4lAnalysis.root 0.275 0.3 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017157.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_12/ZZ4lAnalysis.root 0.3 0.325 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017158.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_13/ZZ4lAnalysis.root 0.325 0.35 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017159.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_14/ZZ4lAnalysis.root 0.35 0.375 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017160.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_15/ZZ4lAnalysis.root 0.375 0.4 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017161.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_16/ZZ4lAnalysis.root 0.4 0.425 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017162.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_17/ZZ4lAnalysis.root 0.425 0.45 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017163.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_18/ZZ4lAnalysis.root 0.45 0.475 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017164.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_19/ZZ4lAnalysis.root 0.475 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017165.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_20/ZZ4lAnalysis.root 0.5 0.525 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017166.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_21/ZZ4lAnalysis.root 0.525 0.55 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017167.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_22/ZZ4lAnalysis.root 0.55 0.575 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017168.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_23/ZZ4lAnalysis.root 0.575 0.6 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017169.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_24/ZZ4lAnalysis.root 0.6 0.625 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017170.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_25/ZZ4lAnalysis.root 0.625 0.65 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017171.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_26/ZZ4lAnalysis.root 0.65 0.675 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017172.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_27/ZZ4lAnalysis.root 0.675 0.7 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017173.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_28/ZZ4lAnalysis.root 0.7 0.725 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017174.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_29/ZZ4lAnalysis.root 0.725 0.75 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017175.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_30/ZZ4lAnalysis.root 0.75 0.775 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017176.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_31/ZZ4lAnalysis.root 0.775 0.8 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017177.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_32/ZZ4lAnalysis.root 0.8 0.825 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017178.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_33/ZZ4lAnalysis.root 0.825 0.85 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017179.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_34/ZZ4lAnalysis.root 0.85 0.875 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017180.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_35/ZZ4lAnalysis.root 0.875 0.9 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017181.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_36/ZZ4lAnalysis.root 0.9 0.925 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017182.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_37/ZZ4lAnalysis.root 0.925 0.95 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017183.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_38/ZZ4lAnalysis.root 0.95 0.975 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017184.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2mu_Contin_MCFM701_chunk_39/ZZ4lAnalysis.root 0.975 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2tau_Contin_MCFM701/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017185.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2e2tau_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2e2tau_Contin_MCFM701_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2mu2tau_Contin_MCFM701/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017186.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo2mu2tau_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo2mu2tau_Contin_MCFM701_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root into 14 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017187.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4e_Contin_MCFM701_chunk_0/ZZ4lAnalysis.root 0.0 0.0769230769231 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017188.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4e_Contin_MCFM701_chunk_1/ZZ4lAnalysis.root 0.0769230769231 0.153846153846 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017189.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4e_Contin_MCFM701_chunk_2/ZZ4lAnalysis.root 0.153846153846 0.230769230769 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017190.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4e_Contin_MCFM701_chunk_3/ZZ4lAnalysis.root 0.230769230769 0.307692307692 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017191.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4e_Contin_MCFM701_chunk_4/ZZ4lAnalysis.root 0.307692307692 0.384615384615 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017192.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4e_Contin_MCFM701_chunk_5/ZZ4lAnalysis.root 0.384615384615 0.461538461538 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017193.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4e_Contin_MCFM701_chunk_6/ZZ4lAnalysis.root 0.461538461538 0.538461538462 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017194.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4e_Contin_MCFM701_chunk_7/ZZ4lAnalysis.root 0.538461538462 0.615384615385 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017195.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4e_Contin_MCFM701_chunk_8/ZZ4lAnalysis.root 0.615384615385 0.692307692308 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017196.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4e_Contin_MCFM701_chunk_9/ZZ4lAnalysis.root 0.692307692308 0.769230769231 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017197.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4e_Contin_MCFM701_chunk_10/ZZ4lAnalysis.root 0.769230769231 0.846153846154 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017198.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4e_Contin_MCFM701_chunk_11/ZZ4lAnalysis.root 0.846153846154 0.923076923077 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017199.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4e_Contin_MCFM701_chunk_12/ZZ4lAnalysis.root 0.923076923077 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root into 22 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017200.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_0/ZZ4lAnalysis.root 0.0 0.047619047619 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017201.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_1/ZZ4lAnalysis.root 0.047619047619 0.0952380952381 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017202.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_2/ZZ4lAnalysis.root 0.0952380952381 0.142857142857 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017203.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_3/ZZ4lAnalysis.root 0.142857142857 0.190476190476 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017204.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_4/ZZ4lAnalysis.root 0.190476190476 0.238095238095 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017205.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_5/ZZ4lAnalysis.root 0.238095238095 0.285714285714 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017206.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_6/ZZ4lAnalysis.root 0.285714285714 0.333333333333 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017207.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_7/ZZ4lAnalysis.root 0.333333333333 0.380952380952 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017208.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_8/ZZ4lAnalysis.root 0.380952380952 0.428571428571 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017209.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_9/ZZ4lAnalysis.root 0.428571428571 0.47619047619 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017210.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_10/ZZ4lAnalysis.root 0.47619047619 0.52380952381 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017211.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_11/ZZ4lAnalysis.root 0.52380952381 0.571428571429 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017212.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_12/ZZ4lAnalysis.root 0.571428571429 0.619047619048 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017213.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_13/ZZ4lAnalysis.root 0.619047619048 0.666666666667 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017214.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_14/ZZ4lAnalysis.root 0.666666666667 0.714285714286 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017215.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_15/ZZ4lAnalysis.root 0.714285714286 0.761904761905 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017216.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_16/ZZ4lAnalysis.root 0.761904761905 0.809523809524 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017217.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_17/ZZ4lAnalysis.root 0.809523809524 0.857142857143 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017218.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_18/ZZ4lAnalysis.root 0.857142857143 0.904761904762 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017219.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_19/ZZ4lAnalysis.root 0.904761904762 0.952380952381 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017220.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4mu_Contin_MCFM701_chunk_20/ZZ4lAnalysis.root 0.952380952381 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4tau_Contin_MCFM701/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017221.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ggTo4tau_Contin_MCFM701/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ggTo4tau_Contin_MCFM701_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/tqH125/ZZ4lAnalysis.root into 11 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017222.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/tqH125_chunk_0/ZZ4lAnalysis.root 0.0 0.1 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017223.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/tqH125_chunk_1/ZZ4lAnalysis.root 0.1 0.2 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017224.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/tqH125_chunk_2/ZZ4lAnalysis.root 0.2 0.3 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017225.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/tqH125_chunk_3/ZZ4lAnalysis.root 0.3 0.4 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017226.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/tqH125_chunk_4/ZZ4lAnalysis.root 0.4 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017227.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/tqH125_chunk_5/ZZ4lAnalysis.root 0.5 0.6 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017228.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/tqH125_chunk_6/ZZ4lAnalysis.root 0.6 0.7 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017229.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/tqH125_chunk_7/ZZ4lAnalysis.root 0.7 0.8 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017230.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/tqH125_chunk_8/ZZ4lAnalysis.root 0.8 0.9 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017231.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/tqH125/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/tqH125_chunk_9/ZZ4lAnalysis.root 0.9 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH120/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017232.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH120/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ttH120_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH124/ZZ4lAnalysis.root into 2 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017233.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH124/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ttH124_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH126/ZZ4lAnalysis.root into 3 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017234.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ttH126_chunk_0/ZZ4lAnalysis.root 0.0 0.5 0
+Submitting job(s).
+1 job(s) submitted to cluster 1017235.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH126/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ttH126_chunk_1/ZZ4lAnalysis.root 0.5 1.0 0
+now splitting file /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH130/ZZ4lAnalysis.root into 1 chunks
+Submitting job(s).
+1 job(s) submitted to cluster 1017236.
+
+/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_chunk_extractor /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test/ttH130/ZZ4lAnalysis.root /data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/test_chunks/ttH130_chunk_0/ZZ4lAnalysis.root 0.0 1.0 0
+done.

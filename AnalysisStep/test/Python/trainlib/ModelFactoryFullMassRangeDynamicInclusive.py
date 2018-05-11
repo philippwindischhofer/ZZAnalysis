@@ -267,23 +267,10 @@ class ModelFactoryFullMassRangeDynamicInclusive:
         ttHl_cat.add_endpiece(ep)
 
         # ------------------------------------
-        
-        # define the categories for the classifier
 
         # for training on Z+X only
         bkg_datastream = {MC_path + "AllData/ZZ4lAnalysis.root": cuts.no_cut}
-
-        # for training on any mixture of Z+X, qq and gg
-        # bkg_datastream = {MC_path + "AllData/ZZ4lAnalysis.root": cuts.no_cut,
-        #                   MC_path + "ZZTo4l/ZZ4lAnalysis.root": cuts.no_cut,
-        #                   MC_path + "ggTo2e2mu_Contin_MCFM701/ZZ4lAnalysis.root": cuts.no_cut,
-        #                   MC_path + "ggTo2e2tau_Contin_MCFM701/ZZ4lAnalysis.root": cuts.no_cut,
-        #                   MC_path + "ggTo2mu2tau_Contin_MCFM701/ZZ4lAnalysis.root": cuts.no_cut,
-        #                   MC_path + "ggTo4e_Contin_MCFM701/ZZ4lAnalysis.root": cuts.no_cut,
-        #                   MC_path + "ggTo4mu_Contin_MCFM701/ZZ4lAnalysis.root": cuts.no_cut,
-        #                   MC_path + "ggTo4tau_Contin_MCFM701/ZZ4lAnalysis.root": cuts.no_cut}
-
-        bkg_cat = Category("bkg", {MC_path + "bkg/ZZ4lAnalysis.root": cuts.no_cut}, datastream_unmixed = bkg_datastream)
+        bkg_cat = Category("bkg", {MC_path + "bkg/ZZ4lAnalysis.root": cuts.no_cut}, datastream_unmixed = bkg_datastream) # change back the name from bkg to qq!
         
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
@@ -296,6 +283,23 @@ class ModelFactoryFullMassRangeDynamicInclusive:
                                                 preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
         ep.add_component(ep_comp)
         bkg_cat.add_endpiece(ep)
+
+        # ------------------------------------
+
+        # for training on Z+X only
+        qq_cat = Category("qq", {MC_path + "ZZTo4l/ZZ4lAnalysis.root": cuts.no_cut}) # change back the name from bkg to qq!
+        
+        # mode that is inclusive in the number of jets
+        ep = DiscriminantEndpiece("210j")        
+        ep_comp = DiscriminantEndpieceComponent(name = "210j", public_name = "",
+                                                component_cut = lambda row: True,
+                                                nonperiodic_columns = nonperiodic_variables_default + nonperiodic_variables_extra_lep(2) + nonperiodic_variables_jet(2),
+                                                periodic_columns = periodic_variables_default + periodic_variables_extra_lep(2) + periodic_variables_jet(2),
+                                                model_basetype = SimpleModel,
+                                                model_hyperparams = global_hyperparams,
+                                                preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
+        ep.add_component(ep_comp)
+        qq_cat.add_endpiece(ep)
 
 
         # now make all combinations between those categories and add them to the model collections (do it manually now, automatized later)
@@ -336,6 +340,7 @@ class ModelFactoryFullMassRangeDynamicInclusive:
         mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ttHl_cat, VBF_cat), input_config_file = input_config_file))
         mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ttHl_cat, WHh_cat), input_config_file = input_config_file))
 
+        # pairings of Z+X category with the signals
         mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ggH_cat, bkg_cat), input_config_file = input_config_file))
         mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(VBF_cat, bkg_cat), input_config_file = input_config_file))
         mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ZHh_cat, bkg_cat), input_config_file = input_config_file))
@@ -345,5 +350,19 @@ class ModelFactoryFullMassRangeDynamicInclusive:
         mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ZHMET_cat, bkg_cat), input_config_file = input_config_file))
         mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ttHh_cat, bkg_cat), input_config_file = input_config_file))
         mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ttHl_cat, bkg_cat), input_config_file = input_config_file))
+
+        # pairings of qq category with the signals
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ggH_cat, qq_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(VBF_cat, qq_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ZHh_cat, qq_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ZHl_cat, qq_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(WHh_cat, qq_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(WHl_cat, qq_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ZHMET_cat, qq_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ttHh_cat, qq_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ttHl_cat, qq_cat), input_config_file = input_config_file))
+
+        # the two background categories among themselves
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(bkg_cat, qq_cat), input_config_file = input_config_file))
 
         return mcolls

@@ -163,11 +163,7 @@ def punzi_target(priors, relevant_classes, params, mode = "S"):
     punzihandler.load_configuration(os.path.join(out_dir, punzi_file))
     
     costval = 0.0
-    
-    # compute the utility function over the categories that were specified
-    #for relevant_class in relevant_classes:
-        #costval += (float(punzihandler.get_field('Punzi', relevant_class)) - 1.0)
-     
+         
     # use the weighted cost function
     delta_pi = []
     for relevant_class in relevant_classes:
@@ -250,11 +246,6 @@ def punzi_target_global(ggh_prior, whhadr_prior, zhhadr_prior, whlept_prior, zhl
         priors_best["bkg_prior"] = priors_best["bkg_prior"]
 
         save_priors(os.path.join(out_dir, 'priors.txt'), priors)
-
-    # also keep updating the fitted maximum of the gaussian process
-    #postfit_priors = gp_maximum(os.path.join(out_dir, 'evaluations_global.txt'), priors_min, priors_max)
-
-    #save_priors(os.path.join(out_dir, 'priors_postfit.txt'), postfit_priors)
     
     evalcnt += 1
     return costval                
@@ -279,6 +270,8 @@ def punzi_target_bkg(bkg_prior):
 
     costval = punzi_target(priors, ["VBF1j", "VBF2j", "ttHlept", "ttHhadr", "VHlept", "VHhadr", "VHMET"], params, mode = "SB")
     priors["target"] = costval
+
+    save_params(os.path.join(out_dir, 'evaluations_bkg.txt'), priors, evalcnt)
 
     if costval > priors_best["target"]:
         priors_best["target"] = costval
@@ -532,43 +525,6 @@ def run_bayesian_optimization(name, eval_file, target, var_ranges, init_points, 
             
     return curparams
 
-def gp_maximum(path, priors_min, priors_max):
-    print "computing fitted GP maximum"
-
-    keys = priors_min.keys() + ["target"]
-    keys = [key for key in keys if "bkg" not in key]
-
-    print keys
-
-    # now, as the very last step, also find and save the maximum of the fitted Gaussian process
-    init_dict = load_file(path, keys) 
-
-    # dummy function
-    target = lambda x: x
-
-    gp_params = {'kernel': 1.0 * Matern(length_scale = 0.01, length_scale_bounds = (1e-5, 1e5), nu = 1.5),
-                 'alpha':5e-7}
-
-    prior_dict = {key: (priors_min[key], priors_max[key]) for key in priors_min.keys()}
-
-    bo = BayesianOptimization(target, prior_dict)
-    
-    # fit the gaussian process to the data just read back
-    bo.initialize(init_dict)
-    bo.maximize(init_points=0, n_iter=0, acq='poi', kappa=5, xi = 0.1, **gp_params)
-    bo.gp.fit(bo.X, bo.Y)
-    
-    # start in the center of the final optimization volume
-    p0 = to_prior_list({key: 0.5 * (priors_min[key] + priors_max[key]) for key in priors_min.keys()})
-    
-    # find the maximum of the fitted gaussian process as a more robust estimate for the true prior
-    res = minimize(gp_fitted_wrapper, p0, args = (bo), method = 'Nelder-Mead', tol = 0.001)
-
-    postfit_priors = to_prior_dict(res["x"])
-
-    return postfit_priors
-
-
 def xi_scheduler(iteration, max_iterations):
     return 0.001 + 0.19 * np.exp(-2.0 * float(iteration) / float(max_iterations))
 
@@ -592,33 +548,33 @@ def main():
 
     # start by fixing the ggH_prior by optimizing Punzi in the two VBF categories
     res = run_bayesian_optimization("ggH", "evaluations_ggH.txt", punzi_target_ggH, {'ggh_prior': (priors_min["ggh_prior"], priors_max["ggh_prior"])}, 
-                                init_points = 1, max_iterations = 1, patience = 40, alpha = 1.5e-6)
+                                init_points = 2, max_iterations = 40, patience = 40, alpha = 1.5e-6)
     priors_best["ggh_prior"] = res["ggh_prior"]
     
     # continue with the next ones to be fixed: ttHh and ttHl
     res = run_bayesian_optimization("ttH", "evaluations_ttH.txt", punzi_target_ttH, {'tthhadr_prior': (priors_min["tthhadr_prior"], priors_max["tthhadr_prior"]), 
                                                                                      'tthlept_prior': (priors_min["tthlept_prior"], priors_max["tthlept_prior"])}, 
-                                 init_points = 1, max_iterations = 1, patience = 40, alpha = 1.5e-6)
+                                 init_points = 10, max_iterations = 40, patience = 40, alpha = 1.5e-6)
     priors_best["tthhadr_prior"] = res["tthhadr_prior"]
     priors_best["tthlept_prior"] = res["tthlept_prior"]
     
     # then proceed with ZHlept and WHlept
     res = run_bayesian_optimization("VHlept", "evaluations_VHlept.txt", punzi_target_VHlept, {'zhlept_prior': (priors_min["zhlept_prior"], priors_max["zhlept_prior"]),
                                                                                               'whlept_prior': (priors_min["whlept_prior"], priors_max["whlept_prior"])}, 
-                                 init_points = 1, max_iterations = 1, patience = 40, alpha = 1.5e-6)
+                                 init_points = 10, max_iterations = 40, patience = 40, alpha = 1.5e-6)
     priors_best["zhlept_prior"] = res["zhlept_prior"]
     priors_best["whlept_prior"] = res["whlept_prior"]
     
     # then proceed with ZHhadr and WHhadr
     res = run_bayesian_optimization("VHhadr", "evaluations_VHhadr.txt", punzi_target_VHhadr, {'zhhadr_prior': (priors_min["zhhadr_prior"], priors_max["zhhadr_prior"]),
                                                                                               'whhadr_prior': (priors_min["whhadr_prior"], priors_max["whhadr_prior"])}, 
-                                  init_points = 1, max_iterations = 1, patience = 40, alpha = 1.5e-6)
+                                  init_points = 10, max_iterations = 40, patience = 40, alpha = 1.5e-6)
     priors_best["zhhadr_prior"] = res["zhhadr_prior"]
     priors_best["whhadr_prior"] = res["whhadr_prior"]
     
     # then finish off with ZHMET
     res = run_bayesian_optimization("VHMET", "evaluations_VHMET.txt", punzi_target_ZHMET, {'zhmet_prior': (priors_min["zhmet_prior"], priors_max["zhmet_prior"])}, 
-                                  init_points = 1, max_iterations = 1, patience = 30, alpha = 1.5e-6)
+                                  init_points = 2, max_iterations = 30, patience = 30, alpha = 1.5e-6)
     priors_best["zhmet_prior"] = res["zhmet_prior"]
     
     save_priors(os.path.join(out_dir, 'priors_sequential.txt'), priors_best)
@@ -633,7 +589,7 @@ def main():
                                      'zhhadr_prior': (max(priors_min["zhhadr_prior"], priors_best["zhhadr_prior"] - delta), min(priors_max["zhhadr_prior"], priors_best["zhhadr_prior"] + delta)),
                                      'whhadr_prior': (max(priors_min["whhadr_prior"], priors_best["whhadr_prior"] - delta), min(priors_max["whhadr_prior"], priors_best["whhadr_prior"] + delta)),
                                      'zhmet_prior': (max(priors_min["zhmet_prior"], priors_best["zhmet_prior"] - delta), min(priors_max["zhmet_prior"], priors_best["zhmet_prior"] + delta))},
-                                    init_points = 1, max_iterations = 1, patience = 70, alpha = 5e-7)
+                                    init_points = 10, max_iterations = 70, patience = 70, alpha = 5e-7)
 
     priors_best["ggh_prior"] = res["ggh_prior"]
     priors_best["tthhadr_prior"] = res["tthhadr_prior"]
@@ -646,12 +602,9 @@ def main():
     
     save_priors(os.path.join(out_dir, 'priors.txt'), priors_best)
 
-    #postfit_priors = gp_maximum(os.path.join(out_dir, 'evaluations_global.txt'), priors_min, priors_max)
-    #save_priors(os.path.join(out_dir, 'priors_postfit.txt'), postfit_priors)
-
     # once the signal priors are fixed w.r.t. each other (i.e. in the signal-only subspace), go ahead and also optimize the relation between S and B
     res = run_bayesian_optimization("bkg", "evaluations_bkg.txt", punzi_target_bkg, {'bkg_prior': (priors_min["bkg_prior"], priors_max["bkg_prior"])}, 
-                                init_points = 2, max_iterations = 30, patience = 40, alpha = 1.5e-6)
+                                init_points = 2, max_iterations = 40, patience = 40, alpha = 1.5e-6)
     priors_best["bkg_prior"] = res["bkg_prior"]
     save_priors(os.path.join(out_dir, 'priors_bkg.txt'), priors_best)    
 

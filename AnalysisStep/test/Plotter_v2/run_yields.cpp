@@ -24,7 +24,7 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   TString package_path = "/data_CMS/cms/wind/180509_packaged_033/";
+   TString package_path = "/data_CMS/cms/wind/180510_packaged_013_flatpriors/";
    TString path = package_path + "CJLST_NTuples/";
 
    TString file_name = "/ZZ4lAnalysis.root";
