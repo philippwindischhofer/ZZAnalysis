@@ -24,7 +24,8 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   TString package_path = "/data_CMS/cms/wind/180510_packaged_013_flatpriors/";
+   TString package_path = "/data_CMS/cms/wind/180514_packaged_013/";
+   TString engine = "rand";
    TString path = package_path + "CJLST_NTuples/";
 
    TString file_name = "/ZZ4lAnalysis.root";
@@ -88,7 +89,7 @@ int main( int argc, char *argv[] )
    //Yields* yields = new Yields(41.37);
 
    YieldsLI *yields = new YieldsLI( 41.37 );
-   yields -> SetPackagePath(package_path, "tree");
+   yields -> SetPackagePath(package_path, engine);
    
 //===============
 // Produce plots 

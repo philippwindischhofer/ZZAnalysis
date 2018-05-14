@@ -287,7 +287,7 @@ class ModelFactoryFullMassRangeDynamicInclusive:
         # ------------------------------------
 
         # for training on Z+X only
-        qq_cat = Category("qq", {MC_path + "ZZTo4l/ZZ4lAnalysis.root": cuts.no_cut}) # change back the name from bkg to qq!
+        qq_cat = Category("qq", {MC_path + "ZZTo4l/ZZ4lAnalysis.root": cuts.no_cut})
         
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
