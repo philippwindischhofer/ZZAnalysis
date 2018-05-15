@@ -231,7 +231,8 @@ def main():
     #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZXonly_022/trainval/"
     #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZXonly_016/trainval/"
     #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZXonly_013/trainval/"
-    MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013//trainval/"
+    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013//trainval/"
+    MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZX_qq/trainval/"
 
     model_type = confhandler.get_field('global', 'model_type')
 

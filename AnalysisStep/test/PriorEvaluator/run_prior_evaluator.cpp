@@ -63,8 +63,9 @@ double costfunc(const double* params)
     float ttHhadr_prior = (float)params[7];
     float ttHlept_prior = (float)params[8];
     float bkg_prior = (float)params[9];
+    float qq_prior = (float)params[10];
 
-    varclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior);
+    varclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior, qq_prior);
 
     std::cout << "VBF_prior = " << VBF_prior << std::endl;
     std::cout << "ggH_prior = " << ggH_prior << std::endl;
@@ -76,6 +77,7 @@ double costfunc(const double* params)
     std::cout << "ttHhadr_prior = " << ttHhadr_prior << std::endl;
     std::cout << "ttHlept_prior = " << ttHlept_prior << std::endl;
     std::cout << "bkg_prior = " << bkg_prior << std::endl;
+    std::cout << "qq_prior = " << qq_prior << std::endl;
 
     // evaluate the Punzi value with this (modified) Classifier now
     // note: this computes Punzi in the total mass range - no mass cut at all is placed here --> therefore, the Punzi values themselves will differ from the ones produced by the Benchmarker
@@ -92,9 +94,9 @@ double costfunc(const double* params)
 
 int main( int argc, char *argv[] )
 {
-    if(argc != 16)
+    if(argc != 17)
     {
-    	std::cerr << "Error: exactly 15 arguments are required" << std::endl;
+    	std::cerr << "Error: exactly 16 arguments are required" << std::endl;
     }
 
     // set default values
@@ -108,6 +110,7 @@ int main( int argc, char *argv[] )
     float ttHhadr_prior = 0.145215;
     float ttHlept_prior = 0.1954;
     float bkg_prior = 1.0;
+    float qq_prior = 1.0;
     
     TString run_dir = argv[1];
     outdir = argv[2];
@@ -125,8 +128,9 @@ int main( int argc, char *argv[] )
     ttHhadr_prior = std::stof(argv[12]);
     ttHlept_prior = std::stof(argv[13]);
     bkg_prior = std::stof(argv[14]);
+    qq_prior = std::stof(argv[15]);
 
-    TString switchval = argv[15];
+    TString switchval = argv[16];
 
     if(switchval == "S")
     {
@@ -170,7 +174,7 @@ int main( int argc, char *argv[] )
     varclass18 -> SetEngineParameter("min_iterations", min_iterations); // 25 is default
     varclass18 -> SetEngineParameter("max_iterations", max_iterations); // 100 is default
 
-    double params[] = {VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior};
+    double params[] = {VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior, qq_prior};
 
     costfunc(params);
    

@@ -269,8 +269,8 @@ class ModelFactoryFullMassRangeDynamicInclusive:
         # ------------------------------------
 
         # for training on Z+X only
-        bkg_datastream = {MC_path + "AllData/ZZ4lAnalysis.root": cuts.no_cut}
-        bkg_cat = Category("bkg", {MC_path + "bkg/ZZ4lAnalysis.root": cuts.no_cut}, datastream_unmixed = bkg_datastream) # change back the name from bkg to qq!
+        ZX_datastream = {MC_path + "AllData/ZZ4lAnalysis.root": cuts.no_cut}
+        ZX_cat = Category("ZX", {MC_path + "ZX/ZZ4lAnalysis.root": cuts.no_cut}, datastream_unmixed = ZX_datastream)
         
         # mode that is inclusive in the number of jets
         ep = DiscriminantEndpiece("210j")        
@@ -282,7 +282,7 @@ class ModelFactoryFullMassRangeDynamicInclusive:
                                                 model_hyperparams = global_hyperparams,
                                                 preprocessor_basetype = FlexiblePCAWhiteningPreprocessor)
         ep.add_component(ep_comp)
-        bkg_cat.add_endpiece(ep)
+        ZX_cat.add_endpiece(ep)
 
         # ------------------------------------
 
@@ -341,15 +341,15 @@ class ModelFactoryFullMassRangeDynamicInclusive:
         mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ttHl_cat, WHh_cat), input_config_file = input_config_file))
 
         # pairings of Z+X category with the signals
-        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ggH_cat, bkg_cat), input_config_file = input_config_file))
-        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(VBF_cat, bkg_cat), input_config_file = input_config_file))
-        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ZHh_cat, bkg_cat), input_config_file = input_config_file))
-        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ZHl_cat, bkg_cat), input_config_file = input_config_file))
-        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(WHh_cat, bkg_cat), input_config_file = input_config_file))
-        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(WHl_cat, bkg_cat), input_config_file = input_config_file))
-        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ZHMET_cat, bkg_cat), input_config_file = input_config_file))
-        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ttHh_cat, bkg_cat), input_config_file = input_config_file))
-        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ttHl_cat, bkg_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ggH_cat, ZX_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(VBF_cat, ZX_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ZHh_cat, ZX_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ZHl_cat, ZX_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(WHh_cat, ZX_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(WHl_cat, ZX_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ZHMET_cat, ZX_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ttHh_cat, ZX_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ttHl_cat, ZX_cat), input_config_file = input_config_file))
 
         # pairings of qq category with the signals
         mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ggH_cat, qq_cat), input_config_file = input_config_file))
@@ -363,6 +363,6 @@ class ModelFactoryFullMassRangeDynamicInclusive:
         mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ttHl_cat, qq_cat), input_config_file = input_config_file))
 
         # the two background categories among themselves
-        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(bkg_cat, qq_cat), input_config_file = input_config_file))
+        mcolls.append(ModelCollection.from_discriminant_endpieces(*Category.match(ZX_cat, qq_cat), input_config_file = input_config_file))
 
         return mcolls

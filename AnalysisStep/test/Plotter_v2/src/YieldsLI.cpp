@@ -40,6 +40,7 @@ void YieldsLI::SetPackagePath(TString package_path, TString engine)
     float ttHhadr_prior = handler -> GetField("ttHhadr_prior");
     float ttHlept_prior = handler -> GetField("ttHlept_prior");
     float bkg_prior = handler -> GetField("bkg_prior");
+    float qq_prior = handler -> GetField("qq_prior");
 
     std::cout << "-----------------------------------------------------------" << std::endl;
     std::cout << " using the following priors: " << std::endl;
@@ -53,13 +54,14 @@ void YieldsLI::SetPackagePath(TString package_path, TString engine)
     std::cout << " ttHhadr_prior = " << ttHhadr_prior << std::endl;
     std::cout << " ttHlept_prior = " << ttHlept_prior << std::endl;
     std::cout << " bkg_prior = " << bkg_prior << std::endl;
+    std::cout << " qq_prior = " << qq_prior << std::endl;
     std::cout << "-----------------------------------------------------------" << std::endl;
 
     Mor18LIClassifier* refclass18 = static_cast<Mor18LIClassifier*>(refclass);
     refclass18 -> SetEngineParameter("min_iterations", 25);
     refclass18 -> SetEngineParameter("max_iterations", 75);
 
-    refclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior);
+    refclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior, qq_prior);
 }
 
 

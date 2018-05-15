@@ -13,12 +13,12 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySetDynamic::GenerateDis
     float ttHhadr_prior = 1.0;
     float ttHlept_prior = 1.0;
     float bkg_prior = 1.0;
+    float qq_prior = 1.0;
 
-    return GenerateDiscriminantCollection(calibration_dir, config_path, conf, VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior);
-
+    return GenerateDiscriminantCollection(calibration_dir, config_path, conf, VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior, qq_prior);
 }
 
-DiscriminantCollection* MLDiscriminantFactoryFullCategorySetDynamic::GenerateDiscriminantCollection(TString calibration_dir, TString config_path, Config& conf, float VBF_prior, float ggH_prior, float WHhadr_prior, float ZHhadr_prior, float WHlept_prior, float ZHlept_prior, float ZHMET_prior, float ttHhadr_prior, float ttHlept_prior, float bkg_prior)
+DiscriminantCollection* MLDiscriminantFactoryFullCategorySetDynamic::GenerateDiscriminantCollection(TString calibration_dir, TString config_path, Config& conf, float VBF_prior, float ggH_prior, float WHhadr_prior, float ZHhadr_prior, float WHlept_prior, float ZHlept_prior, float ZHMET_prior, float ttHhadr_prior, float ttHlept_prior, float bkg_prior, float qq_prior)
 {
     std::map<TString, float> priors;
 
@@ -32,6 +32,7 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySetDynamic::GenerateDis
     priors["ttHh"] = ttHhadr_prior;
     priors["ttHl"] = ttHlept_prior;
     priors["bkg"] = bkg_prior;
+    priors["qq"] = qq_prior;
 
     return GenerateDiscriminantCollection(calibration_dir, config_path, conf, priors);
 }

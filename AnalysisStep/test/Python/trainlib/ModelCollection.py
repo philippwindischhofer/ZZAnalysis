@@ -78,7 +78,9 @@ class ModelCollection:
                     periodic_columns = filter(None, ConfigFileUtils.parse_list(confhandler.get_field(model_name, "periodic_columns"), lambda x: x))
                     nonperiodic_columns = filter(None, ConfigFileUtils.parse_list(confhandler.get_field(model_name, "nonperiodic_columns"), lambda x: x))
                 else:
-                    print "no input configuration entry found for model " + str(model_name)
+                    print "-------------------------------------------------------------------------------"
+                    print "!!! no input configuration entry found for model " + str(model_name) + " !!!"
+                    print "-------------------------------------------------------------------------------"
             
             # now can construct all model components and add them to the collection
             pre = preprocessor_basetype(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = cuts)

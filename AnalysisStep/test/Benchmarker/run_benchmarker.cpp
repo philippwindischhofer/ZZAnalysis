@@ -67,6 +67,7 @@ int main(int argc, char *argv[])
     float ttHhadr_prior = 1.0;
     float ttHlept_prior = 1.0;
     float bkg_prior = 1.0;
+    float qq_prior = 1.0;
 
     if(argc == 9)
     {
@@ -83,6 +84,7 @@ int main(int argc, char *argv[])
 	ttHhadr_prior = handler -> GetField("ttHhadr_prior");
 	ttHlept_prior = handler -> GetField("ttHlept_prior");
 	bkg_prior = handler -> GetField("bkg_prior");
+	qq_prior = handler -> GetField("qq_prior");
     }
 
     std::cout << "-------------------------------------------------------" << std::endl;
@@ -102,10 +104,11 @@ int main(int argc, char *argv[])
     std::cout << "ttHhadr_prior = " << ttHhadr_prior << std::endl;
     std::cout << "ttHlept_prior = " << ttHlept_prior << std::endl;
     std::cout << "bkg_prior = " << bkg_prior << std::endl;
+    std::cout << "qq_prior = " << qq_prior << std::endl;
 
     std::cout << "-------------------------------------------------------" << std::endl;
 
-    refclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior);
+    refclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior, qq_prior);
 
     Mor18Config* conf = new Mor18Config(MCpath, 41.37, true, mass_point);
     Mor18Config* conf_S = new Mor18Config(MCpath, 41.37, false, mass_point);

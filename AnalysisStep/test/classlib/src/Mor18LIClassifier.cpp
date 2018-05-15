@@ -60,12 +60,12 @@ void Mor18LIClassifier::SetEngineParameter(TString parameter_name, float paramet
     comb -> SetParameter(parameter_name, parameter_value);
 }
 
-void Mor18LIClassifier::SetPriors(float VBF_prior, float ggH_prior, float WHhadr_prior, float ZHhadr_prior, float WHlept_prior, float ZHlept_prior, float ZHMET_prior, float ttHhadr_prior, float ttHlept_prior, float bkg_prior)
+void Mor18LIClassifier::SetPriors(float VBF_prior, float ggH_prior, float WHhadr_prior, float ZHhadr_prior, float WHlept_prior, float ZHlept_prior, float ZHMET_prior, float ttHhadr_prior, float ttHlept_prior, float bkg_prior, float qq_prior)
 {
     Mor18Config conf;
 
     // update the discriminant collection with the new prior weights
-    coll = MLDiscriminantFactoryFullCategorySetDynamic::GenerateDiscriminantCollection(calibration_folder, config_path, conf, VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior);
+    coll = MLDiscriminantFactoryFullCategorySetDynamic::GenerateDiscriminantCollection(calibration_folder, config_path, conf, VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior, qq_prior);
 }
 
 // after the restructoring, only this method will remain, and it will overload the corresponding virtual method from the base class
@@ -96,7 +96,8 @@ int Mor18LIClassifier::ClassifyThisEvent(Tree* in)
 	{"ttHl", ttHLeptTaggedMor18},
 	{"ttHh", ttHHadrTaggedMor18},
 	{"ggH", UntaggedMor18},
-	{"bkg", UntaggedMor18} // redirect the background-like events into the untagged category as well
+	{"bkg", UntaggedMor18}, // redirect the background-like events into the untagged category as well
+	{"qq", UntaggedMor18}
     };
 
     return conversion[winner];
