@@ -24,7 +24,7 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   TString package_path = "/data_CMS/cms/wind/180515_ZX_qq_packaged/";
+   TString package_path = "/data_CMS/cms/wind/180515_ZX_qq_nomela_packaged/";
    TString engine = "tree";
    TString path = package_path + "CJLST_NTuples/";
 

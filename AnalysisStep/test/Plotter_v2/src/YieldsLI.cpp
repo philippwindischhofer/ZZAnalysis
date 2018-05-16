@@ -39,7 +39,7 @@ void YieldsLI::SetPackagePath(TString package_path, TString engine)
     float ZHMET_prior = handler -> GetField("ZHMET_prior");
     float ttHhadr_prior = handler -> GetField("ttHhadr_prior");
     float ttHlept_prior = handler -> GetField("ttHlept_prior");
-    float bkg_prior = handler -> GetField("bkg_prior");
+    float bkg_prior = handler -> GetField("ZX_prior");
     float qq_prior = handler -> GetField("qq_prior");
 
     std::cout << "-----------------------------------------------------------" << std::endl;
@@ -53,7 +53,7 @@ void YieldsLI::SetPackagePath(TString package_path, TString engine)
     std::cout << " ZHMET_prior = " << ZHMET_prior << std::endl;
     std::cout << " ttHhadr_prior = " << ttHhadr_prior << std::endl;
     std::cout << " ttHlept_prior = " << ttHlept_prior << std::endl;
-    std::cout << " bkg_prior = " << bkg_prior << std::endl;
+    std::cout << " ZX_prior = " << bkg_prior << std::endl;
     std::cout << " qq_prior = " << qq_prior << std::endl;
     std::cout << "-----------------------------------------------------------" << std::endl;
 

@@ -96,7 +96,7 @@ int Mor18LIClassifier::ClassifyThisEvent(Tree* in)
 	{"ttHl", ttHLeptTaggedMor18},
 	{"ttHh", ttHHadrTaggedMor18},
 	{"ggH", UntaggedMor18},
-	{"bkg", UntaggedMor18}, // redirect the background-like events into the untagged category as well
+	{"ZX", UntaggedMor18}, // redirect the background-like events into the untagged category as well
 	{"qq", UntaggedMor18}
     };
 

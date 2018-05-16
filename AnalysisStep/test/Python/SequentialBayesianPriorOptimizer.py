@@ -196,7 +196,7 @@ def save_priors(out_path, priors):
     confhandler.set_field('Priors', 'ZHhadr_prior', str(priors["zhhadr_prior"]))
     confhandler.set_field('Priors', 'WHhadr_prior', str(priors["whhadr_prior"]))
     confhandler.set_field('Priors', 'ZHMET_prior', str(priors["zhmet_prior"]))    
-    confhandler.set_field('Priors', "bkg_prior", str(priors["bkg_prior"]))
+    confhandler.set_field('Priors', "ZX_prior", str(priors["bkg_prior"]))
     confhandler.set_field('Priors', "qq_prior", str(priors["qq_prior"]))
     confhandler.save_configuration(out_path)
 

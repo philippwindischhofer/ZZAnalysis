@@ -6,7 +6,7 @@
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
 
-AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_ZXonly/settings.conf"
+AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_ZX_qq/settings.conf"
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 

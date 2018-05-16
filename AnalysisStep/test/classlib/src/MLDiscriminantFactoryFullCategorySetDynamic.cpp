@@ -31,7 +31,7 @@ DiscriminantCollection* MLDiscriminantFactoryFullCategorySetDynamic::GenerateDis
     priors["ZHMET"] = ZHMET_prior;
     priors["ttHh"] = ttHhadr_prior;
     priors["ttHl"] = ttHlept_prior;
-    priors["bkg"] = bkg_prior;
+    priors["ZX"] = bkg_prior;
     priors["qq"] = qq_prior;
 
     return GenerateDiscriminantCollection(calibration_dir, config_path, conf, priors);

@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 	ZHMET_prior = handler -> GetField("ZHMET_prior");
 	ttHhadr_prior = handler -> GetField("ttHhadr_prior");
 	ttHlept_prior = handler -> GetField("ttHlept_prior");
-	bkg_prior = handler -> GetField("bkg_prior");
+	bkg_prior = handler -> GetField("ZX_prior");
 	qq_prior = handler -> GetField("qq_prior");
     }
 

@@ -4,13 +4,7 @@ from trainlib.ModelFactoryFullCategorySet import ModelFactoryFullCategorySet
 import os
 import sys
 
-def main():
-    
-    if len(sys.argv) != 2:
-        print "Error: exactly 1 argument is required"
-
-    # the path of the current run
-    run_path = sys.argv[1]
+def distribute_training_settings(run_path):
 
     # load the configuration that is sitting there
     confhandler = ModelCollectionConfigFileHandler()
@@ -36,4 +30,11 @@ def main():
         outconf.save_configuration(training_settings_dir + "settings.conf")
 
 if __name__ == "__main__":
-    main()
+
+    if len(sys.argv) != 2:
+        print "Error: exactly 1 argument is required"
+
+    # the path of the current run
+    run_path = sys.argv[1]
+
+    distribute_training_settings(run_path)
