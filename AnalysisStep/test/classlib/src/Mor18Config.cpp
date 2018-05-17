@@ -1,6 +1,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 
-Mor18Config::Mor18Config(TString MCpath, float integrated_lumi, bool use_background, float mass_point) : Config(MCpath, integrated_lumi, use_background)
+Mor18Config::Mor18Config(TString MCpath, float integrated_lumi, bool use_background, float mass_point, bool use_rare_signals) : Config(MCpath, integrated_lumi, use_background)
 { 
     // the needed data files depend on the chosen mass point (in principle, the file names corresponding to a certain mass point can be arbitrary, thus keep the conversion as general as possible!)
     std::map<float, TString> mass_point_translation;
@@ -28,6 +28,13 @@ Mor18Config::Mor18Config(TString MCpath, float integrated_lumi, bool use_backgro
     routing.push_back(std::make_pair("ttH" + mass_point_suffix, new Routing(extraLeptons_0_cut, "ttH0lhist")));
     routing.push_back(std::make_pair("ttH" + mass_point_suffix, new Routing(extraLeptons_1_cut, "ttH1lhist")));
     routing.push_back(std::make_pair("ttH" + mass_point_suffix, new Routing(extraLeptons_2_cut, "ttH2lhist")));
+
+    // select if want to use the rare signals as well, but their MC files exist only for 125Gev!
+    if(use_rare_signals && mass_point == 125.0)
+    {
+	routing.push_back(std::make_pair("bbH125", new Routing(no_cut, "bbHhist")));
+	routing.push_back(std::make_pair("tqH125", new Routing(no_cut, "tqHhist")));
+    }
 
     if(use_background)
     {

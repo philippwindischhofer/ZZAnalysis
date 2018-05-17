@@ -26,7 +26,9 @@ std::vector<TString> Config::signal_hist_names()
 	"ZH2lhist", 
 	"ttH0lhist", 
 	"ttH1lhist", 
-	"ttH2lhist"
+	"ttH2lhist",
+	"bbHhist",
+	"tqHhist"
     };
     
     return signal_hist_names;
@@ -56,6 +58,8 @@ TString Config::source_label(TString histname)
 	{"ttH0lhist", "t#bar{t}H, t#bar{t} #rightarrow 0l + X"},
 	{"ttH1lhist", "t#bar{t}H, t#bar{t} #rightarrow 1l + X"},
 	{"ttH2lhist", "t#bar{t}H, t#bar{t} #rightarrow 2l + X"},
+	{"bbHhist", "bbH"},
+	{"tqHhist", "tH"},
 	{"qq4lhist", "q#bar{q} #rightarrow ZZ #rightarrow 4l"},
 	{"gg4lhist", "gg #rightarrow ZZ #rightarrow 4l"},
 	{"ZXhist", "Z + X"}
@@ -77,6 +81,8 @@ int Config::source_color(TString histname)
 	{"ttH0lhist", kCyan - 6},
 	{"ttH1lhist", kCyan - 2},
 	{"ttH2lhist", kCyan + 3},
+	{"bbHhist", kOrange - 2},
+	{"tqHhist", kAzure - 4},
 	{"qq4lhist", kGray},
 	{"gg4lhist", kGray + 2},
 	{"ZXhist", kBlack}
@@ -98,6 +104,8 @@ int Config::source_style(TString histname)
 	{"ttH0lhist", 1001},
 	{"ttH1lhist", 1001},
 	{"ttH2lhist", 1001},
+	{"bbHhist", 1001},
+	{"tqHhist", 1001},
 	{"qq4lhist", 3244},
 	{"gg4lhist", 3244},
 	{"ZXhist", 3244}

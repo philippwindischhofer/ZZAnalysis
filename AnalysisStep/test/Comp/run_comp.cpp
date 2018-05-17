@@ -19,8 +19,8 @@
 // TString name_a = "Mor18_{LI}";
 // TString name_b = "Mor18  (experimental)";
 
-TString name_a = "Mor18_{LI}";
-TString name_b = "Mor18";
+TString name_a = "Bayes";
+TString name_b = "Moriond 2018";
 
 float zoom_scale = 0.2;
 

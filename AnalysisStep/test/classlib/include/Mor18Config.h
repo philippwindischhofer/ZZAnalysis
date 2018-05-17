@@ -21,7 +21,7 @@
 class Mor18Config: public Config
 {
 public:
-    Mor18Config(TString MCpath = "/data_CMS/cms/wind/processed/", float integrated_lumi = 41.37, bool use_background = false, float mass_point = 125);
+    Mor18Config(TString MCpath = "/data_CMS/cms/wind/processed/", float integrated_lumi = 41.37, bool use_background = false, float mass_point = 125, bool use_rare_signals = false);
 
     virtual std::vector<int> categories();
     virtual TString cat_label(int category);
