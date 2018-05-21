@@ -25,18 +25,13 @@ std::map<TString, float> VotingMultiClassCombinator::Evaluate(Tree* in, Discrimi
 
 	//std::cout << category_pair.first << " / " << category_pair.second << " : " << LR << std::endl;
 	
-	if(LR > 0.0)
+	if(LR > 1.0)
 	{
-	    if(LR > 1.0)
-	    {
-		retval[category_pair.first]++;
-		//retval[category_pair.first]+=LR;
-	    }
-	    else
-	    {
-		retval[category_pair.second]++;
-		//retval[category_pair.second]+=1/LR;
-	    }
+	    retval[category_pair.first]++;
+	}
+	else
+	{
+	    retval[category_pair.second]++;
 	}
     }
 

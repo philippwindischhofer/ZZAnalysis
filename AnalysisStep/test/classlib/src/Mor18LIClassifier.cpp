@@ -16,6 +16,11 @@ Mor18LIClassifier::Mor18LIClassifier(TString calibration_folder, TString config_
 	std::cout << "using simple voting" << std::endl;
 	comb = new VotingMultiClassCombinator();
     }
+    else if(engine == "robin")
+    {
+	std::cout << "using round robin" << std::endl;
+	comb = new RRMultiClassCombinator();
+    }
     else if(engine == "rand")
     {
 	std::cout << "using RAND without KL corrections" << std::endl;

@@ -16,8 +16,48 @@ std::map<TString, float> MultiClassCombinator::Evaluate(Tree* in, DiscriminantCo
 
 TString MultiClassCombinator::GetWinningCategory()
 {
+    int total = 0;
+
+    // std::cout << " ---------------------------------------------- " << std::endl;
+    // for(auto cur: last_result)
+    // {
+    // 	std::cout << cur.first << " : " << cur.second << std::endl;
+    // 	total += cur.second;
+    // }
+    // std::cout << " ---------------------------------------------- " << std::endl;
+    // std::cout << " total = " << total << std::endl;
+    // std::cout << " ---------------------------------------------- " << std::endl;
+
     // look at the stored last_result and find the category that scored highest
     return find_max(last_result);
+}
+
+// this will return all leading categories, if there is a tie
+std::vector<TString> MultiClassCombinator::GetWinningCategories()
+{
+    std::vector<TString> winners;
+
+    // find first the value of the maximum
+    float max = std::numeric_limits<float>::min();
+
+    for(auto& cur: last_result)
+    {
+	if(cur.second > max)
+	{
+	    max = cur.second;
+	}
+    }
+
+    // then extract all categories that have this score
+    for(auto& cur: last_result)
+    {
+	if(cur.second == max)
+	{
+	    winners.push_back(cur.first);
+	}
+    }
+
+    return winners;
 }
 
 float MultiClassCombinator::GetWinningMargin()

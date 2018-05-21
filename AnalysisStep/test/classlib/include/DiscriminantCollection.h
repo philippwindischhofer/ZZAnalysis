@@ -28,6 +28,7 @@ class DiscriminantCollection
 {
 public:
     float Evaluate(std::pair<TString, TString> combination, Tree* in);
+    float EvaluatePrior(TString category);
     float EvaluateLog(std::pair<TString, TString> combination, Tree* in);
 
     float EvaluateKLCorrection(std::pair<TString, TString> combination, Tree* in, bool use_flat_priors);

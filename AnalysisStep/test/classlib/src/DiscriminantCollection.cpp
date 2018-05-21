@@ -26,6 +26,44 @@ float DiscriminantCollection::Evaluate(std::pair<TString, TString> combination, 
     return retval;
 }
 
+float DiscriminantCollection::EvaluatePrior(TString category)
+{
+    std::vector<TString> categories = GetCategories();
+    TString other_category;
+    float retval = 0;
+
+    // build a discriminant: just find another category that this one can be paired up with
+    for(auto cur: categories)
+    {
+	if(cur != category)
+	{
+	    other_category = cur;
+	    break;
+	}
+    }
+
+    std::pair<TString, TString> combination = std::make_pair(category, other_category);    
+
+    try
+    {
+	retval = discs.at(combination) -> GetH1Weight();
+    }
+    catch(const std::out_of_range& e)
+    {
+	try
+	{
+	    // in this case, perhaps the opposite direction exists
+	    retval = discs.at(std::make_pair(combination.second, combination.first)) -> GetH0Weight();
+	}
+	catch(const std::out_of_range& e)
+	{
+	    std::cerr << "requested discriminant does not exist!" << std::endl;
+	}
+    }
+
+    return retval;
+}
+
 float DiscriminantCollection::EvaluateLog(std::pair<TString, TString> combination, Tree* in)
 {
     return TMath::Log(Evaluate(combination, in));

@@ -34,6 +34,7 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/VotingMultiClassCombinator.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/RANDKLMultiClassCombinator.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/TreeKLMultiClassCombinator.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/RRMultiClassCombinator.h>
 
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>

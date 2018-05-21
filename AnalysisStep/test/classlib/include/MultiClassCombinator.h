@@ -31,6 +31,7 @@ public:
     virtual std::map<TString, float> Evaluate(Tree* in, DiscriminantCollection* coll);
 
     virtual TString GetWinningCategory();
+    virtual std::vector<TString> GetWinningCategories();
     virtual float GetWinningMargin();
 
     virtual void SetParameter(TString parameter_name, float parameter_value){engine_parameters[parameter_name] = parameter_value;};

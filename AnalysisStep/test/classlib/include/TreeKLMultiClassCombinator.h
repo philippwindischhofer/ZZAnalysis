@@ -10,6 +10,7 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <random>
 
 // ROOT
 #include "TApplication.h"
@@ -34,7 +35,7 @@ public:
     TreeKLMultiClassCombinator(bool use_KL);
     ~TreeKLMultiClassCombinator();
 
-    virtual std::map<TString, float> Evaluate(Tree* in, DiscriminantCollection* coll, int iterations);
+    virtual std::map<TString, float> Evaluate(Tree* in, DiscriminantCollection* coll, std::vector<TString> categories, int iterations);
     virtual std::map<TString, float> Evaluate(Tree* in, DiscriminantCollection* coll);
 
     void UseFlatPriorsInKL(bool use_flat_priors);

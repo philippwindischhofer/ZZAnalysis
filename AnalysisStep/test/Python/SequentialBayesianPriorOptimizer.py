@@ -44,8 +44,8 @@ priors_min["whlept_prior"] = eps
 priors_min["zhhadr_prior"] = 0.3
 priors_min["whhadr_prior"] = 0.3
 priors_min["zhmet_prior"] = eps
-priors_min["bkg_prior"] = eps
-priors_min["qq_prior"] = eps
+priors_min["bkg_prior"] = 1.0
+priors_min["qq_prior"] = 1.0
 
 priors_max = {}
 priors_max["ggh_prior"] = 3.0
@@ -277,7 +277,7 @@ def punzi_target_bkg(bkg_prior, qq_prior):
     params["min_iterations"] = 25
     params["max_iterations"] = 100
 
-    costval = punzi_target(priors, ["VBF1j", "VBF2j", "ttHlept", "ttHhadr", "VHlept", "VHhadr", "VHMET"], params, mode = "SB")
+    costval = punzi_target(priors, ["VBF1j", "VBF2j", "ttHlept", "ttHhadr", "VHlept", "VHhadr", "VHMET"], params, mode = "S")
     priors["target"] = costval
 
     save_params(os.path.join(out_dir, 'evaluations_bkg.txt'), priors, evalcnt)
