@@ -81,8 +81,8 @@ int Config::source_color(TString histname)
 	{"ttH0lhist", kCyan - 6},
 	{"ttH1lhist", kCyan - 2},
 	{"ttH2lhist", kCyan + 3},
-	{"bbHhist", kOrange - 3},
-	{"tqHhist", kMagenta + 3},
+	{"bbHhist", kGreen - 9},
+	{"tqHhist", kOrange - 3},
 	{"qq4lhist", kGray},
 	{"gg4lhist", kGray + 2},
 	{"ZXhist", kBlack}

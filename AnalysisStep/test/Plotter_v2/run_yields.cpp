@@ -24,7 +24,7 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   TString package_path = "/data_CMS/cms/wind/180518_optimized_hyperparameters_tree_packaged/";
+   TString package_path = "/data_CMS/cms/wind/180521_optimized_hyperparameters_nomela_packaged_tree/";
    TString engine = "tree";
    TString path = package_path + "CJLST_NTuples/";
 

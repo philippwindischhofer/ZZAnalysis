@@ -47,7 +47,7 @@ std::map<TString, float> TreeKLMultiClassCombinator::Evaluate(Tree* in, Discrimi
 
     if(winners.size() > 1)
     {
-	std::cout << "need to arbitrate after running with max_iterations" << std::endl;
+	//std::cout << "need to arbitrate after running with max_iterations" << std::endl;
 
 	std::vector<TString> playing_categories;
 
@@ -102,11 +102,11 @@ std::map<TString, float> TreeKLMultiClassCombinator::Evaluate(Tree* in, Discrimi
 	    retval[chosen_winner] = 1.0;
 	}
 
-	std::cout << "final retval: " << std::endl;
-	for(auto& cur: retval)
-	{
-	    std::cout << cur.first << " : " << cur.second << std::endl;
-	}
+	// std::cout << "final retval: " << std::endl;
+	// for(auto& cur: retval)
+	// {
+	//     std::cout << cur.first << " : " << cur.second << std::endl;
+	// }
     }
     
     return retval;

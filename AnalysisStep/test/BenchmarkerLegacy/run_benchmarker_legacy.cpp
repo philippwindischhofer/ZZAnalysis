@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 
     Mor18Config* conf = new Mor18Config(MCpath, lumi, true, mass_point);
     Mor18Config* conf_S = new Mor18Config(MCpath, lumi, false, mass_point);
+    Mor18Config* conf_all = new Mor18Config(MCpath, lumi, true, mass_point, true);
 
     std::cout << "-------------------------------------------------------" << std::endl;
     std::cout << "start_fraction = " << start_fraction << std::endl;
@@ -87,6 +88,9 @@ int main(int argc, char *argv[])
     PlottingUtils::make_SBfine_ratio(kFALSE, refclass, out_folder, "SB_fine", "no_cut_data", mZZ_cut, conf, start_fraction, end_fraction, false);
 
     PlottingUtils::make_punzi(kTRUE, refclass, out_folder, "punzi_S", "no_cut_data_S", mZZ_cut, conf_S, start_fraction, end_fraction, false);
+
+    PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB_all", "no_cut_data_all", "105 GeV < m_{4#font[12]{l}} < 140 GeV", mZZ_cut, conf_all, start_fraction, end_fraction, false);
+    PlottingUtils::make_S_barchart(kFALSE, refclass, out_folder, "categorization_S_all", "no_cut_data_all", "105 GeV < m_{4#font[12]{l}} < 140 GeV", mZZ_cut, conf_all, start_fraction, end_fraction, false);
 
     std::cout << "done" << std::endl;
 

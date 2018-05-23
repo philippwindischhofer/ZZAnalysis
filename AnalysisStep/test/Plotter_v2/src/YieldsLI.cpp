@@ -23,7 +23,7 @@ void YieldsLI::SetPackagePath(TString package_path, TString engine)
 {
     config_file_path = package_path + "settings.conf";
     calibration_dir = package_path + "calibration/";
-    priors_file_path = package_path + "priors_" + engine + "/priors.txt";
+    priors_file_path = package_path + "priors_" + engine + "/priors_bkg.txt";
 
     refclass = new Mor18Classifier();
     refclass = new Mor18LIClassifier(calibration_dir, config_file_path, engine);
@@ -59,7 +59,7 @@ void YieldsLI::SetPackagePath(TString package_path, TString engine)
 
     Mor18LIClassifier* refclass18 = static_cast<Mor18LIClassifier*>(refclass);
     refclass18 -> SetEngineParameter("min_iterations", 25);
-    refclass18 -> SetEngineParameter("max_iterations", 75);
+    refclass18 -> SetEngineParameter("max_iterations", 125);
 
     refclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior, qq_prior);
 }

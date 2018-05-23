@@ -10,7 +10,7 @@ mkdir -p $DEST_ROOT
 BENCHMARKER="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_benchmarker_legacy"
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
-SOURCE_ROOT="/data_CMS/cms/wind/CJLST_NTuples/"
+SOURCE_ROOT="/data_CMS/cms/wind/CJLST_NTuples_ZX_qq/"
 
 # mass points for which references (for training, validation and test) are required
 MASS_POINTS="120 125 130"

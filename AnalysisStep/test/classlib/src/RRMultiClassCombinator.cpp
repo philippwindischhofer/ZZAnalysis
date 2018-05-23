@@ -28,7 +28,7 @@ std::map<TString, float> RRMultiClassCombinator::Evaluate(Tree* in, Discriminant
 
     if(winners.size() > 1)
     {
-	std::cout << "need to arbitrate" << std::endl;
+	//std::cout << "need to arbitrate" << std::endl;
 
 	std::vector<TString> playing_categories;
 
@@ -36,20 +36,20 @@ std::map<TString, float> RRMultiClassCombinator::Evaluate(Tree* in, Discriminant
 	{
 	    // the winners from the previous step play now
 	    playing_categories = winners;
-	    std::cout << "now playing: " << std::endl;
-	    for(auto cur: playing_categories)
-		std::cout << cur << std::endl;
+	    // std::cout << "now playing: " << std::endl;
+	    // for(auto cur: playing_categories)
+	    // 	std::cout << cur << std::endl;
 
 	    retval = Evaluate(in, coll, playing_categories);
 	    winners = GetWinningCategories();
 
-	    std::cout << "retval: " << std::endl;
-	    for(auto cur: retval)
-		std::cout << cur.first << " : " << cur.second << std::endl;
+	    // std::cout << "retval: " << std::endl;
+	    // for(auto cur: retval)
+	    // 	std::cout << cur.first << " : " << cur.second << std::endl;
 
-	    std::cout << "winners: " << std::endl;
-	    for(auto cur: winners)
-		std::cout << cur << std::endl;
+	    // std::cout << "winners: " << std::endl;
+	    // for(auto cur: winners)
+	    // 	std::cout << cur << std::endl;
 	}
 	while(winners.size() < playing_categories.size() && winners.size() > 1);
 
@@ -58,7 +58,7 @@ std::map<TString, float> RRMultiClassCombinator::Evaluate(Tree* in, Discriminant
 	{
 	    retval.clear();
 
-	    std::cout << "intransitive loop detected, try to pick winner from priors" << std::endl;
+	    //std::cout << "intransitive loop detected, try to pick winner from priors" << std::endl;
 
 	    //while(1);
 	    
@@ -99,11 +99,11 @@ std::map<TString, float> RRMultiClassCombinator::Evaluate(Tree* in, Discriminant
 	    retval[chosen_winner] = 1.0;
 	}
 
-	std::cout << "final retval: " << std::endl;
-	for(auto& cur: retval)
-	{
-	    std::cout << cur.first << " : " << cur.second << std::endl;
-	}
+	// std::cout << "final retval: " << std::endl;
+	// for(auto& cur: retval)
+	// {
+	//     std::cout << cur.first << " : " << cur.second << std::endl;
+	// }
     }
 
     // otherwise, this contains the winner already
@@ -119,7 +119,7 @@ std::map<TString, float> RRMultiClassCombinator::Evaluate(Tree* in, Discriminant
     {
 	for(auto player_b = player_a + 1; player_b != categories.end(); player_b++) 
 	{
-	    std::cout << "playing " << *player_a << " vs. " << *player_b << std::endl;
+	    //std::cout << "playing " << *player_a << " vs. " << *player_b << std::endl;
 	    std::pair<TString, TString> category_pair = std::make_pair(*player_a, *player_b);
 
 	    float LR = coll -> Evaluate(category_pair, in);
@@ -127,12 +127,12 @@ std::map<TString, float> RRMultiClassCombinator::Evaluate(Tree* in, Discriminant
 	    if(LR > 1.0)
 	    {
 		retval[category_pair.first]++;
-		std::cout << category_pair.first << " won" << std::endl;
+		//std::cout << category_pair.first << " won" << std::endl;
 	    }
 	    else
 	    {
 		retval[category_pair.second]++;
-		std::cout << category_pair.second << " won" << std::endl;
+		//std::cout << category_pair.second << " won" << std::endl;
 	    }
 	}
     }    
