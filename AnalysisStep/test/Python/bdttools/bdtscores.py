@@ -10,7 +10,7 @@ from sklearn.metrics import mean_squared_error
 
 class BDTscorer:
 
-    def __init__(self, MC_path, list_input_length = 4, xgboost_params = 
+    def __init__(self, MC_path, list_input_length = 2, xgboost_params = 
                  {'eta': 0.01, 'silent': 1, 'gamma': 0.5, 'objective': 'binary:logistic', 'nthread': 10, 'eval_metric': 'rmse'}
 ):
         self.MC_path = MC_path

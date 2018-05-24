@@ -43,7 +43,7 @@ def main():
         print str(implist)
         return df
 
-    out_dir = "/data_CMS/cms/wind/InputConfigurations2.0/"
+    out_dir = "/data_CMS/cms/wind/InputConfigurations2.0_leading_jets/"
     MC_path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/"
 
     list_branches = ["Jet", "ExtraLep"]

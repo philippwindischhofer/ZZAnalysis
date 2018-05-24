@@ -12,7 +12,8 @@ SUBMIT_AUGMENTATION="run_distributed_augmentation.sh"
 #MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_ZXonly_033/"
 #MC_DIR="/data_CMS/cms/wind/CJLST_NTuples/"
 #MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013/"
-MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_ZX_qq/"
+#MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_ZX_qq/"
+MC_DIR="/data_CMS/cms/wind/CJLST_NTuples_ZX_qq_syst/"
 
 PARTS="training_chunks validation_chunks test_chunks"
 

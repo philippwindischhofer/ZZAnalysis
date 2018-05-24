@@ -16,9 +16,12 @@ float D_bkg_ME_disc(Tree* in);
 
 // discriminants that do not make use of QG tagging
 float DVBF2j_ME_disc(Tree* in);
+float DVBF2j_bkg_ME_disc(Tree* in);
+
 float DVBF1j_ME_disc(Tree* in);
 float DWHh_ME_disc(Tree* in);
 float DZHh_ME_disc(Tree* in);
+float DVH_bkg_ME_disc(Tree* in);
 
 float DWHZH_ME_disc(Tree* in);
 float DVBFWH_ME_disc(Tree* in);

@@ -87,6 +87,9 @@ void augment_tree(TString inpath, TString outpath, int randomize)
     output_tree -> Branch("D_VBF2j_WHh_ME", &(buffer -> D_VBF2j_WHh_ME), "D_VBF2j_WHh_ME/F");
     output_tree -> Branch("D_VBF2j_ZHh_ME", &(buffer -> D_VBF2j_ZHh_ME), "D_VBF2j_ZHh_ME/F");
 
+    output_tree -> Branch("D_VBF_dec_ME", &(buffer -> D_VBF_dec_ME), "D_VBF_dec_ME/F");
+    output_tree -> Branch("D_VH_dec_ME", &(buffer -> D_VH_dec_ME), "D_VH_dec_ME/F");
+
     TBranch* br_oew = (TBranch*)(buffer -> fChain -> GetListOfBranches() -> FindObject("overallEventWeight"));
     if(br_oew)
     {
@@ -196,6 +199,9 @@ void augment_tree(TString inpath, TString outpath, int randomize)
 	buffer -> D_WHh_ZHh_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DWHZH_ME_disc(buffer) : 0.0, 0.0, 1.0);
 	buffer -> D_VBF2j_WHh_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DVBFWH_ME_disc(buffer) : 0.0, 0.0, 1.0);
 	buffer -> D_VBF2j_ZHh_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DVBFZH_ME_disc(buffer) : 0.0, 0.0, 1.0);
+
+	buffer -> D_VBF_dec_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DVBF2j_bkg_ME_disc(buffer) : 0.0, 0.0, 1.0);
+	buffer -> D_VH_dec_ME = clamp_value(buffer -> nCleanedJetsPt30 >= 2 ? DVH_bkg_ME_disc(buffer) : 0.0, 0.0, 1.0);
 
 	// fill the masked ZZMass
 	if(buffer -> ZZMass > 150.0)

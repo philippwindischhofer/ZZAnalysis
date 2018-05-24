@@ -75,9 +75,9 @@ TString Mor18Config::cat_label(int category)
 	{VBF2jTaggedMor18, "#splitline{VBF-2jet}{ tagged}"},
 	{VHLeptTaggedMor18, "#splitline{VH-leptonic}{    tagged}"},
 	{VHHadrTaggedMor18, "#splitline{VH-hadronic}{     tagged}"},
-	{ttHLeptTaggedMor18, "#splitline{ttH leptonic}{   tagged}"},
-	{ttHHadrTaggedMor18, "#splitline{ttH hadronic}{   tagged}"},
-	{VHMETTaggedMor18, "#splitline{VH-E_{T}^{miss}}{ tagged}"}	
+	{ttHLeptTaggedMor18, "#splitline{t#bar{t}H-leptonic}{   tagged}"},
+	{ttHHadrTaggedMor18, "#splitline{t#bar{t}H-hadronic}{   tagged}"},
+	{VHMETTaggedMor18, "#splitline{VH-MET}{ tagged}"}	
     };
 
     return mapping[category];
@@ -124,9 +124,9 @@ TString Mor18Config::abs_cat_label(TString abs_cat)
 	{"VBF2jTaggedMor18", "#splitline{VBF-2jet}{ tagged}"},
 	{"VHLeptTaggedMor18", "#splitline{VH-leptonic}{    tagged}"},
 	{"VHHadrTaggedMor18", "#splitline{VH-hadronic}{     tagged}"},
-	{"ttHLeptTaggedMor18", "#splitline{ttH leptonic}{   tagged}"},
-	{"ttHHadrTaggedMor18", "#splitline{ttH hadronic}{   tagged}"},
-	{"VHMETTaggedMor18", "#splitline{VH-E_{T}^{miss}}{ tagged}"}	
+	{"ttHLeptTaggedMor18", "#splitline{t#bar{t}H-leptonic}{   tagged}"},
+	{"ttHHadrTaggedMor18", "#splitline{t#bar{t}H-hadronic}{   tagged}"},
+	{"VHMETTaggedMor18", "#splitline{VH-MET}{ tagged}"}	
     };
 
     return mapping[abs_cat];

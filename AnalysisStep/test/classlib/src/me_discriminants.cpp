@@ -7,6 +7,35 @@ float D_bkg_ME_disc(Tree* in)
     return retval;
 }
 
+float DVBF2j_bkg_ME_disc(Tree* in)
+{
+    int ZZFlav = (in -> Z1Flav) * (in -> Z2Flav);
+
+    float retval = D_bkg_VBFdec(
+	in -> p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal,
+	in -> p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal,
+	in -> p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal,
+	in -> p_JJVBF_BKG_MCFM_JECNominal,
+	in -> p_HadZH_BKG_MCFM_JECNominal,
+	in -> p_HadWH_BKG_MCFM_JECNominal,
+	in -> p_JJQCD_BKG_MCFM_JECNominal,
+	in -> p_HadZH_mavjj_JECNominal,
+	in -> p_HadZH_mavjj_true_JECNominal,
+	in -> p_HadWH_mavjj_JECNominal,
+	in -> p_HadWH_mavjj_true_JECNominal,
+	in -> pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal,
+	in -> pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal,
+	in -> pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal,
+	in -> pConst_JJVBF_BKG_MCFM_JECNominal,
+	in -> pConst_HadZH_BKG_MCFM_JECNominal,
+	in -> pConst_HadWH_BKG_MCFM_JECNominal,
+	in -> pConst_JJQCD_BKG_MCFM_JECNominal,
+	ZZFlav,
+	in -> ZZMass);
+    
+    return retval;
+}
+
 // need the raw MELA kinematic discriminants
 float DVBF2j_ME_disc(Tree* in)
 {
@@ -56,6 +85,35 @@ float DZHh_ME_disc(Tree* in)
 
     return retval;
 };
+
+float DVH_bkg_ME_disc(Tree* in)
+{
+    int ZZFlav = (in -> Z1Flav) * (in -> Z2Flav);
+
+    float retval = D_bkg_VHdec(
+	in -> p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal,
+	in -> p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal,
+	in -> p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal,
+	in -> p_JJVBF_BKG_MCFM_JECNominal,
+	in -> p_HadZH_BKG_MCFM_JECNominal,
+	in -> p_HadWH_BKG_MCFM_JECNominal,
+	in -> p_JJQCD_BKG_MCFM_JECNominal,
+	in -> p_HadZH_mavjj_JECNominal,
+	in -> p_HadZH_mavjj_true_JECNominal,
+	in -> p_HadWH_mavjj_JECNominal,
+	in -> p_HadWH_mavjj_true_JECNominal,
+	in -> pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal,
+	in -> pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal,
+	in -> pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal,
+	in -> pConst_JJVBF_BKG_MCFM_JECNominal,
+	in -> pConst_HadZH_BKG_MCFM_JECNominal,
+	in -> pConst_HadWH_BKG_MCFM_JECNominal,
+	in -> pConst_JJQCD_BKG_MCFM_JECNominal,
+	ZZFlav,
+	in -> ZZMass);
+
+    return retval;
+}
 
 // here come the "non-standard" discriminants between several *tagged* categories
 float DWHZH_ME_disc(Tree* in)

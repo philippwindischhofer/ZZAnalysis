@@ -40,6 +40,10 @@ public :
    float D_VBF2j_ZHh_ME;
    float D_bkg_ME;
 
+   // combined discriminants
+   float D_VBF_dec_ME;
+   float D_VH_dec_ME;
+
    // values for the ML-discriminants for this event (as computed by the neural networks and appended to the tree)
    float D_VBF_ggH_ML;
    float D_WHh_ggH_ML;
@@ -194,6 +198,21 @@ public :
    vector<float>   *fsrPhi;
    vector<short>   *fsrLept;
    Bool_t          passIsoPreFSR;
+   
+   // needed for the combined discriminants:
+   Float_t p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal;
+   Float_t p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal;
+   Float_t p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal;
+   Float_t p_HadZH_BKG_MCFM_JECNominal;
+   Float_t p_HadWH_BKG_MCFM_JECNominal;
+   Float_t pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal;
+   Float_t pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal;
+   Float_t pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal;
+   Float_t pConst_HadZH_BKG_MCFM_JECNominal;
+   Float_t pConst_HadWH_BKG_MCFM_JECNominal;
+   Float_t pConst_JJVBF_BKG_MCFM_JECNominal;
+   Float_t pConst_JJQCD_BKG_MCFM_JECNominal;
+
    Float_t         p_GG_SIG_ghg2_1_ghz1_1_JHUGen;
    Float_t         p_GG_SIG_ghg2_1_ghz1prime2_1E4_JHUGen;
    Float_t         p_GG_SIG_ghg2_1_ghz2_1_JHUGen;
@@ -592,6 +611,9 @@ public :
    TBranch* b_D_VBF2j_ZHh_ME;
    TBranch* b_D_bkg_ME;
 
+   TBranch* b_D_VBF_dec_ME;
+   TBranch* b_D_VH_dec_ME;
+
    TBranch* b_D_VBF_ggH_ML;
    TBranch* b_D_WHh_ggH_ML;
    TBranch* b_D_ZHh_ggH_ML;
@@ -713,6 +735,21 @@ public :
    TBranch        *b_fsrPhi;   //!
    TBranch        *b_fsrLept;   //!
    TBranch        *b_passIsoPreFSR;   //!
+
+   // needed for the new discriminants
+   TBranch* b_p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal;
+   TBranch* b_p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal;
+   TBranch* b_p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal;
+   TBranch* b_p_HadZH_BKG_MCFM_JECNominal;
+   TBranch* b_p_HadWH_BKG_MCFM_JECNominal;
+   TBranch* b_pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal;
+   TBranch* b_pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal;
+   TBranch* b_pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal;
+   TBranch* b_pConst_HadZH_BKG_MCFM_JECNominal;
+   TBranch* b_pConst_HadWH_BKG_MCFM_JECNominal;
+   TBranch* b_pConst_JJVBF_BKG_MCFM_JECNominal;
+   TBranch* b_pConst_JJQCD_BKG_MCFM_JECNominal;
+
    TBranch        *b_p_GG_SIG_ghg2_1_ghz1_1_JHUGen;   //!
    TBranch        *b_p_GG_SIG_ghg2_1_ghz1prime2_1E4_JHUGen;   //!
    TBranch        *b_p_GG_SIG_ghg2_1_ghz2_1_JHUGen;   //!
@@ -1164,6 +1201,9 @@ void Tree::Init(TTree *tree, TString input_file_name)
    D_VBF2j_ZHh_ME = 0;
    D_bkg_ME = 0;
 
+   D_VBF_dec_ME = 0;
+   D_VH_dec_ME = 0;
+
    D_VBF_ggH_ML = 0;
    D_WHh_ggH_ML = 0;
    D_ZHh_ggH_ML = 0;
@@ -1282,6 +1322,9 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetBranchAddress("D_VBF2j_ZHh_ME", &D_VBF2j_ZHh_ME, &b_D_VBF2j_ZHh_ME);
 
    fChain->SetBranchAddress("D_bkg_ME", &D_bkg_ME, &b_D_bkg_ME);
+
+   fChain->SetBranchAddress("D_VBF_dec_ME", &D_VBF_dec_ME, &b_D_VBF_dec_ME);
+   fChain->SetBranchAddress("D_VH_dec_ME", &D_VH_dec_ME, &b_D_VH_dec_ME);
 
    fChain->SetBranchAddress("D_VBF_ggH_ML", &D_VBF_ggH_ML, &b_D_VBF_ggH_ML);
    fChain->SetBranchAddress("D_WHh_ggH_ML", &D_WHh_ggH_ML, &b_D_WHh_ggH_ML);
@@ -1407,6 +1450,21 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetBranchAddress("fsrPhi", &fsrPhi, &b_fsrPhi);
    fChain->SetBranchAddress("fsrLept", &fsrLept, &b_fsrLept);
    fChain->SetBranchAddress("passIsoPreFSR", &passIsoPreFSR, &b_passIsoPreFSR);
+
+   // needed for the combined discriminants
+   fChain->SetBranchAddress("p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal", &p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal, &b_p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal);
+   fChain->SetBranchAddress("p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal", &p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal, &b_p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal);
+   fChain->SetBranchAddress("p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal", &p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal, &b_p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal);
+   fChain->SetBranchAddress("p_HadZH_BKG_MCFM_JECNominal", &p_HadZH_BKG_MCFM_JECNominal, &b_p_HadZH_BKG_MCFM_JECNominal);
+   fChain->SetBranchAddress("p_HadWH_BKG_MCFM_JECNominal", &p_HadWH_BKG_MCFM_JECNominal, &b_p_HadWH_BKG_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal", &pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal, &b_pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal", &pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal, &b_pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal", &pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal, &b_pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_HadZH_BKG_MCFM_JECNominal", &pConst_HadZH_BKG_MCFM_JECNominal, &b_pConst_HadZH_BKG_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_HadWH_BKG_MCFM_JECNominal", &pConst_HadWH_BKG_MCFM_JECNominal, &b_pConst_HadWH_BKG_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_JJVBF_BKG_MCFM_JECNominal", &pConst_JJVBF_BKG_MCFM_JECNominal, &b_pConst_JJVBF_BKG_MCFM_JECNominal);
+   fChain->SetBranchAddress("pConst_JJQCD_BKG_MCFM_JECNominal", &pConst_JJQCD_BKG_MCFM_JECNominal, &b_pConst_JJQCD_BKG_MCFM_JECNominal);
+
    fChain->SetBranchAddress("p_GG_SIG_ghg2_1_ghz1_1_JHUGen", &p_GG_SIG_ghg2_1_ghz1_1_JHUGen, &b_p_GG_SIG_ghg2_1_ghz1_1_JHUGen);
    fChain->SetBranchAddress("p_GG_SIG_ghg2_1_ghz1prime2_1E4_JHUGen", &p_GG_SIG_ghg2_1_ghz1prime2_1E4_JHUGen, &b_p_GG_SIG_ghg2_1_ghz1prime2_1E4_JHUGen);
    fChain->SetBranchAddress("p_GG_SIG_ghg2_1_ghz2_1_JHUGen", &p_GG_SIG_ghg2_1_ghz2_1_JHUGen, &b_p_GG_SIG_ghg2_1_ghz2_1_JHUGen);

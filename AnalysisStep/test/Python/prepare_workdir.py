@@ -152,31 +152,44 @@ def main():
 
     unused_files = [cur_file for cur_file in available_files if cur_file not in used_files]
 
-    # for all files that are not used for training, split them 50:50 into validation and test
+    # for all files that are not used for training, split them 50:50 into validation and test ...
     for unused_file in unused_files:
         source_dir = os.path.join(source_path, unused_file)
 
-        print "extracting 0.0 - 0.5 from " + unused_file
-            
-        dest_dir = os.path.join(validation_dir, unused_file)
-        if not os.path.exists(dest_dir):
-            os.makedirs(dest_dir)
-    
-        output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
-                                  os.path.join(dest_dir, root_file_name), str(0.0), str(0.5)])      
-        print output
+        # ... unless they are only needed to assess systematics, i.e. are not going to be used at all during the validation step
+        if "ext" in unused_file or "tuneup" in unused_file or "tunedown" in unused_file:
+            print "extracting 0.0 - 1.0 from " + unused_file
 
-        print "-- -- -- -- -- -- -- -- -- -- -- --"
+            dest_dir = os.path.join(test_dir, unused_file)
+            if not os.path.exists(dest_dir):
+                os.makedirs(dest_dir)
+                
+            output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
+                                      os.path.join(dest_dir, root_file_name), str(0.0), str(1.0)])      
+            print output
 
-        print "extracting 0.5 - 1.0 from " + unused_file
+        else:
+            print "extracting 0.0 - 0.5 from " + unused_file
             
-        dest_dir = os.path.join(test_dir, unused_file)
-        if not os.path.exists(dest_dir):
-            os.makedirs(dest_dir)
+            dest_dir = os.path.join(validation_dir, unused_file)
+            if not os.path.exists(dest_dir):
+                os.makedirs(dest_dir)
     
-        output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
-                                  os.path.join(dest_dir, root_file_name), str(0.5), str(1.0)])      
-        print output
+            output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
+                                      os.path.join(dest_dir, root_file_name), str(0.0), str(0.5)])      
+            print output
+
+            print "-- -- -- -- -- -- -- -- -- -- -- --"
+
+            print "extracting 0.5 - 1.0 from " + unused_file
+            
+            dest_dir = os.path.join(test_dir, unused_file)
+            if not os.path.exists(dest_dir):
+                os.makedirs(dest_dir)
+    
+            output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
+                                      os.path.join(dest_dir, root_file_name), str(0.5), str(1.0)])      
+            print output
     
     # now have all the needed files split apart, can now proceed to combine them into the training 
     # datasets that will end up in trainval
