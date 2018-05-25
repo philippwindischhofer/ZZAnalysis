@@ -27,6 +27,7 @@ int main( int argc, char *argv[] )
    TString package_path = "/data_CMS/cms/wind/180521_optimized_hyperparameters_nomela_packaged_tree/";
    TString engine = "tree";
    TString path = package_path + "CJLST_NTuples/";
+   //TString path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/";
 
    TString file_name = "/ZZ4lAnalysis.root";
    TString file_name_FR = "/FakeRates_SS_Moriond18.root";

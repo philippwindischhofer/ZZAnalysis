@@ -233,6 +233,9 @@ def main():
                                  os.path.join(dest_path, temp_dir, "scrambled", training_file, "validation", root_file_name)])
         print output
 
+    # call here the splitting of the files for systematics into multiple components
+    
+
     # at the end, chunk the ROOT files into many smaller ones, to keep the augmentation time short
     train_chunks_dir = os.path.join(dest_path, "training_chunks/")
     validation_chunks_dir = os.path.join(dest_path, "validation_chunks/")

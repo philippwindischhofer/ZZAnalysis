@@ -70,15 +70,15 @@ def main():
     df_fscores = pd.DataFrame()
 
     # the pairings with the ZX background category
-    df_fscores = select_input_features(("ggH", "ZX"), "D_ggH_bkg_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
-    df_fscores = select_input_features(("VBF", "ZX"), "D_VBF_bkg_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
-    df_fscores = select_input_features(("ZHl", "ZX"), "D_ZHl_bkg_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
-    df_fscores = select_input_features(("ZHh", "ZX"), "D_ZHh_bkg_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
-    df_fscores = select_input_features(("WHl", "ZX"), "D_WHl_bkg_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
-    df_fscores = select_input_features(("WHh", "ZX"), "D_WHh_bkg_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
-    df_fscores = select_input_features(("ZHMET", "ZX"), "D_ZHMET_bkg_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
-    df_fscores = select_input_features(("ttHh", "ZX"), "D_ttHh_bkg_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
-    df_fscores = select_input_features(("ttHl", "ZX"), "D_ttHl_bkg_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
+    df_fscores = select_input_features(("ggH", "ZX"), "D_ggH_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
+    df_fscores = select_input_features(("VBF", "ZX"), "D_VBF_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
+    df_fscores = select_input_features(("ZHl", "ZX"), "D_ZHl_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
+    df_fscores = select_input_features(("ZHh", "ZX"), "D_ZHh_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
+    df_fscores = select_input_features(("WHl", "ZX"), "D_WHl_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
+    df_fscores = select_input_features(("WHh", "ZX"), "D_WHh_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
+    df_fscores = select_input_features(("ZHMET", "ZX"), "D_ZHMET_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
+    df_fscores = select_input_features(("ttHh", "ZX"), "D_ttHh_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
+    df_fscores = select_input_features(("ttHl", "ZX"), "D_ttHl_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
 
     # the pairings with the qq background category
     df_fscores = select_input_features(("ggH", "qq"), "D_ggH_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
@@ -91,7 +91,7 @@ def main():
     df_fscores = select_input_features(("ZHMET", "qq"), "D_ZHMET_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
     df_fscores = select_input_features(("ttHh", "qq"), "D_ttHh_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
     df_fscores = select_input_features(("ttHl", "qq"), "D_ttHl_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
-    df_fscores = select_input_features(("ZX", "qq"), "D_bkg_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
+    df_fscores = select_input_features(("ZX", "qq"), "D_ZX_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
 
     # the pairings of the signal sources among themselves
     df_fscores = select_input_features(("VBF2j", "ggH2j"), "D_VBF_ggH_2j_ML", production_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores)
