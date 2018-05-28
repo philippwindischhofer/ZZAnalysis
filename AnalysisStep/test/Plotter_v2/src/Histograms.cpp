@@ -43,6 +43,16 @@ Histograms::Histograms( double lumi, string blinding )
    _s_category.push_back("ttHHadrTagged");
    _s_category.push_back("VHMETTagged");
    _s_category.push_back("Inclusive");
+
+   _s_category_plotlabel.push_back("untagged");
+   _s_category_plotlabel.push_back("VBF-1jet");
+   _s_category_plotlabel.push_back("VBF-2jet");
+   _s_category_plotlabel.push_back("VH-leptonic");
+   _s_category_plotlabel.push_back("VH-hadronic");
+   _s_category_plotlabel.push_back("ttH-leptonic");
+   _s_category_plotlabel.push_back("ttH-hadronic");
+   _s_category_plotlabel.push_back("VH-MET");
+   _s_category_plotlabel.push_back("Inclusive");
    
    _s_category_label.push_back("Untagged category");
    _s_category_label.push_back("VBF-1j tagged category");
@@ -610,20 +620,42 @@ Histograms::Histograms( double lumi)
    _s_category.push_back("ttHHadrTagged");
    _s_category.push_back("VHMETTagged");
    _s_category.push_back("Inclusive");
+
+   _s_category_plotlabel.push_back("untagged");
+   _s_category_plotlabel.push_back("VBF-1jet");
+   _s_category_plotlabel.push_back("VBF-2jet");
+   _s_category_plotlabel.push_back("VH-lept");
+   _s_category_plotlabel.push_back("VH-hadr");
+   _s_category_plotlabel.push_back("ttH-lept");
+   _s_category_plotlabel.push_back("ttH-hadr");
+   _s_category_plotlabel.push_back("VH-MET");
+   _s_category_plotlabel.push_back("Inclusive");
       
    _s_production_mode.push_back("ggH");
    _s_production_mode.push_back("qqH");
    _s_production_mode.push_back("WH_lep");
-	_s_production_mode.push_back("WH_had");
+   _s_production_mode.push_back("WH_had");
    _s_production_mode.push_back("ZH_lep");
-	_s_production_mode.push_back("ZH_had");
+   _s_production_mode.push_back("ZH_had");
    _s_production_mode.push_back("ttH_lep");
    _s_production_mode.push_back("ttH_had");
    _s_production_mode.push_back("bbH");
    _s_production_mode.push_back("tqH");
    _s_production_mode.push_back("qqZZ");
    _s_production_mode.push_back("ggZZ");
-   
+
+   _s_production_mode_plotlabel.push_back("ggH");
+   _s_production_mode_plotlabel.push_back("VBF");
+   _s_production_mode_plotlabel.push_back("WH-lept");
+   _s_production_mode_plotlabel.push_back("WH-hadr");
+   _s_production_mode_plotlabel.push_back("ZH-lept");
+   _s_production_mode_plotlabel.push_back("ZH-hadr");
+   _s_production_mode_plotlabel.push_back("ttH-lept");
+   _s_production_mode_plotlabel.push_back("ttH-hadr");
+   _s_production_mode_plotlabel.push_back("bbH");
+   _s_production_mode_plotlabel.push_back("tH");
+   _s_production_mode_plotlabel.push_back("qq #rightarrow ZZ");
+   _s_production_mode_plotlabel.push_back("gg #rightarrow ZZ");
 
    for ( int i_fs = 0; i_fs < num_of_final_states; i_fs++ )
    {
@@ -3423,7 +3455,7 @@ void Histograms::FillYieldGraphs( float M4l_down, float M4l_up , TString fit_opt
          } // i_fs 
 			
 			c->cd();
-			pav->AddText(_s_production_mode[i_prod_mode] + ", " + _s_category[i_cat]);
+			pav->AddText(_s_production_mode_plotlabel[i_prod_mode] + ", " + _s_category_plotlabel[i_cat]);
 			
 			yields_graph[Settings::fs2e2mu][i_cat][i_prod_mode]->Draw("AP");
 			yields_graph[Settings::fs4e][i_cat][i_prod_mode]->Draw("P");

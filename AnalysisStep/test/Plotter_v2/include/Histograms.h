@@ -162,6 +162,7 @@ private:
    vector<double> mass_points;
 
    vector<TString> _s_category, _s_category_label, _s_final_state, _s_process, _s_production_mode;
+   vector<TString> _s_category_plotlabel, _s_production_mode_plotlabel;
    string _histo_name, _histo_labels, _blinding;
    
    TString _graph_name, _fit_funct_name, _fs_label, _out_file_name;
