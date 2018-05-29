@@ -64,6 +64,10 @@
   <lib name="class_lib"/>
 </bin>
 
+<bin name="run_systematic_preparer" file="../test/SystematicPreparer/run_systematic_preparer.cpp">
+  <lib name="class_lib"/>
+</bin>
+
 <bin name="run_scrambler" file="../test/Scrambler/run_scrambler.cpp">
   <lib name="class_lib"/>
 </bin>

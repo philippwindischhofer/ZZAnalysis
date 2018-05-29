@@ -23,7 +23,7 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   TString path = "";
+   TString path = "/data_CMS/cms/wind/CJLST_NTuples_prepared_systematics/";
    TString file_name = "/ZZ4lAnalysis.root";
 	
    // Signal

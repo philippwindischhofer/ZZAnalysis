@@ -26,6 +26,8 @@ void extract_chunk(TString inpath, TString outpath, float start_fraction, float 
 {
     TString tree_name = "ClassTree";
 
+    std::cout << "reading from " << inpath << std::endl;
+
     TFile* input_file = new TFile(inpath, "read");
 
     // read the metadata
@@ -42,6 +44,8 @@ void extract_chunk(TString inpath, TString outpath, float start_fraction, float 
     Tree* buffer = new Tree();
     buffer -> Init(input_tree, inpath);
     Long64_t n_entries = buffer -> fChain -> GetEntriesFast();
+
+    std::cout << "have " << n_entries << " events available in this file" << std::endl;
 
     TTree* output_tree = (TTree*)(input_tree -> CloneTree(0));
     TH1F* output_metadata = (TH1F*)(input_metadata -> Clone());
@@ -90,6 +94,7 @@ void extract_chunk(TString inpath, TString outpath, float start_fraction, float 
     std::cout << "reweighting_factor = " << reweighting_factor << std::endl;
  
     // loop over the entries in chain
+    int entries_out = 0;
     for(Long64_t j_entry = (Long64_t)(n_entries * start_fraction); j_entry < (Long64_t)(n_entries * end_fraction); j_entry++)
     {
 	// get the correct tree in the chain that contains this event
@@ -106,6 +111,7 @@ void extract_chunk(TString inpath, TString outpath, float start_fraction, float 
 	buffer -> training_weight = training_weight;
 
 	output_tree -> Fill();
+	entries_out++;
     }
 
     output_file -> cd(tree_name);
@@ -114,6 +120,8 @@ void extract_chunk(TString inpath, TString outpath, float start_fraction, float 
 
     output_file -> Close();
     input_file -> Close();
+
+    std::cout << "wrote " << entries_out << " events" << std::endl;
 }
 
 int main( int argc, char *argv[] )

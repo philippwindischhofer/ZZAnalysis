@@ -3,6 +3,7 @@ import os
 import subprocess as sp
 import numpy as np
 import uuid
+import time
 
 from trainlib.ConfigFileHandler import ConfigFileHandler
 from trainlib.ConfigFileUtils import ConfigFileUtils    
@@ -79,162 +80,159 @@ def main():
     trainval_dir = os.path.join(dest_path, "trainval/")
     temp_dir = os.path.join(dest_path, "temp/")
 
-    # create these directories
-    if not os.path.exists(train_dir):
-        os.makedirs(train_dir)
+    # # create these directories
+    # if not os.path.exists(train_dir):
+    #     os.makedirs(train_dir)
     
-    if not os.path.exists(validation_dir):
-        os.makedirs(validation_dir)
+    # if not os.path.exists(validation_dir):
+    #     os.makedirs(validation_dir)
     
-    if not os.path.exists(test_dir):
-        os.makedirs(test_dir)
+    # if not os.path.exists(test_dir):
+    #     os.makedirs(test_dir)
     
-    if not os.path.exists(trainval_dir):
-        os.makedirs(trainval_dir)
+    # if not os.path.exists(trainval_dir):
+    #     os.makedirs(trainval_dir)
     
-    if not os.path.exists(temp_dir):
-        os.makedirs(temp_dir)
+    # if not os.path.exists(temp_dir):
+    #     os.makedirs(temp_dir)
 
-    training_files = [cur_file for cur_file in confhandler.get_sections() if "Global" not in cur_file]
-    available_files = next(os.walk(source_path))[1]
-    used_files = []
+    # training_files = [cur_file for cur_file in confhandler.get_sections() if "Global" not in cur_file]
+    # available_files = next(os.walk(source_path))[1]
+    # used_files = []
     
-    for training_file in training_files:
-        sect = confhandler.get_section(training_file)
+    # for training_file in training_files:
+    #     sect = confhandler.get_section(training_file)
     
-        print "--------------------------------------------------"
-        print "currently splitting: " + training_file
+    #     print "--------------------------------------------------"
+    #     print "currently splitting: " + training_file
     
-        source_files = ConfigFileUtils.parse_list(sect["source"], lambda x: x)
-        train_val_splits = ConfigFileUtils.parse_list(sect["train_val_split"], lambda x: float(x))
-        val_test_splits = ConfigFileUtils.parse_list(sect["val_test_split"], lambda x: float(x))
+    #     source_files = ConfigFileUtils.parse_list(sect["source"], lambda x: x)
+    #     train_val_splits = ConfigFileUtils.parse_list(sect["train_val_split"], lambda x: float(x))
+    #     val_test_splits = ConfigFileUtils.parse_list(sect["val_test_split"], lambda x: float(x))
     
-        # first split the needed files into 3 pieces, as dictated by the splits read from the config file
-        for source_file, train_val_split, val_test_split in zip(source_files, train_val_splits, val_test_splits):
+    #     # first split the needed files into 3 pieces, as dictated by the splits read from the config file
+    #     for source_file, train_val_split, val_test_split in zip(source_files, train_val_splits, val_test_splits):
         
-            print "extracting 0.0 - " + str(train_val_split) + " from " + source_file
+    #         print "extracting 0.0 - " + str(train_val_split) + " from " + source_file
         
-            dest_dir = os.path.join(train_dir, source_file)
-            if not os.path.exists(dest_dir):
-                os.makedirs(dest_dir)
+    #         dest_dir = os.path.join(train_dir, source_file)
+    #         if not os.path.exists(dest_dir):
+    #             os.makedirs(dest_dir)
     
-            output = sp.check_output([chunk_extractor, os.path.join(source_path, source_file, root_file_name),
-                                      os.path.join(dest_dir, root_file_name), str(0.0), str(train_val_split)])      
-            print output
+    #         output = sp.check_output([chunk_extractor, os.path.join(source_path, source_file, root_file_name),
+    #                                   os.path.join(dest_dir, root_file_name), str(0.0), str(train_val_split)])      
+    #         print output
         
-            print "-- -- -- -- -- -- -- -- -- -- -- --"
+    #         print "-- -- -- -- -- -- -- -- -- -- -- --"
         
-            print "extracting " + str(train_val_split) + " - " + str(val_test_split) + " from " + source_file
+    #         print "extracting " + str(train_val_split) + " - " + str(val_test_split) + " from " + source_file
         
-            dest_dir = os.path.join(validation_dir, source_file)
-            if not os.path.exists(dest_dir):
-                os.makedirs(dest_dir)
+    #         dest_dir = os.path.join(validation_dir, source_file)
+    #         if not os.path.exists(dest_dir):
+    #             os.makedirs(dest_dir)
     
-            output = sp.check_output([chunk_extractor, os.path.join(source_path, source_file, root_file_name),
-                                      os.path.join(dest_dir, root_file_name), str(train_val_split), str(val_test_split)])      
-            print output
+    #         output = sp.check_output([chunk_extractor, os.path.join(source_path, source_file, root_file_name),
+    #                                   os.path.join(dest_dir, root_file_name), str(train_val_split), str(val_test_split)])      
+    #         print output
         
-            print "-- -- -- -- -- -- -- -- -- -- -- --"
+    #         print "-- -- -- -- -- -- -- -- -- -- -- --"
         
-            print "extracting " + str(val_test_split) + " - 1.0 from " + source_file
+    #         print "extracting " + str(val_test_split) + " - 1.0 from " + source_file
         
-            dest_dir = os.path.join(test_dir, source_file)
-            if not os.path.exists(dest_dir):
-                os.makedirs(dest_dir)
+    #         dest_dir = os.path.join(test_dir, source_file)
+    #         if not os.path.exists(dest_dir):
+    #             os.makedirs(dest_dir)
     
-            output = sp.check_output([chunk_extractor, os.path.join(source_path, source_file, root_file_name),
-                                      os.path.join(dest_dir, root_file_name), str(val_test_split), str(1.0)])      
-            print output
+    #         output = sp.check_output([chunk_extractor, os.path.join(source_path, source_file, root_file_name),
+    #                                   os.path.join(dest_dir, root_file_name), str(val_test_split), str(1.0)])      
+    #         print output
         
-            used_files.append(source_file)
+    #         used_files.append(source_file)
     
-        print "--------------------------------------------------"
+    #     print "--------------------------------------------------"
 
-    unused_files = [cur_file for cur_file in available_files if cur_file not in used_files]
+    # unused_files = [cur_file for cur_file in available_files if cur_file not in used_files]
 
-    # for all files that are not used for training, split them 50:50 into validation and test ...
-    for unused_file in unused_files:
-        source_dir = os.path.join(source_path, unused_file)
+    # # for all files that are not used for training, split them 50:50 into validation and test ...
+    # for unused_file in unused_files:
+    #     source_dir = os.path.join(source_path, unused_file)
 
-        # ... unless they are only needed to assess systematics, i.e. are not going to be used at all during the validation step
-        if "ext" in unused_file or "tuneup" in unused_file or "tunedown" in unused_file:
-            print "extracting 0.0 - 1.0 from " + unused_file
+    #     # ... unless they are only needed to assess systematics, i.e. are not going to be used at all during the validation step
+    #     if "ext" in unused_file or "tuneup" in unused_file or "tunedown" in unused_file:
+    #         print "extracting 0.0 - 1.0 from " + unused_file
 
-            dest_dir = os.path.join(test_dir, unused_file)
-            if not os.path.exists(dest_dir):
-                os.makedirs(dest_dir)
+    #         dest_dir = os.path.join(test_dir, unused_file)
+    #         if not os.path.exists(dest_dir):
+    #             os.makedirs(dest_dir)
                 
-            output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
-                                      os.path.join(dest_dir, root_file_name), str(0.0), str(1.0)])      
-            print output
+    #         output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
+    #                                   os.path.join(dest_dir, root_file_name), str(0.0), str(1.0)])      
+    #         print output
 
-        else:
-            print "extracting 0.0 - 0.5 from " + unused_file
+    #     else:
+    #         print "extracting 0.0 - 0.5 from " + unused_file
             
-            dest_dir = os.path.join(validation_dir, unused_file)
-            if not os.path.exists(dest_dir):
-                os.makedirs(dest_dir)
+    #         dest_dir = os.path.join(validation_dir, unused_file)
+    #         if not os.path.exists(dest_dir):
+    #             os.makedirs(dest_dir)
     
-            output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
-                                      os.path.join(dest_dir, root_file_name), str(0.0), str(0.5)])      
-            print output
+    #         output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
+    #                                   os.path.join(dest_dir, root_file_name), str(0.0), str(0.5)])      
+    #         print output
 
-            print "-- -- -- -- -- -- -- -- -- -- -- --"
+    #         print "-- -- -- -- -- -- -- -- -- -- -- --"
 
-            print "extracting 0.5 - 1.0 from " + unused_file
+    #         print "extracting 0.5 - 1.0 from " + unused_file
             
-            dest_dir = os.path.join(test_dir, unused_file)
-            if not os.path.exists(dest_dir):
-                os.makedirs(dest_dir)
+    #         dest_dir = os.path.join(test_dir, unused_file)
+    #         if not os.path.exists(dest_dir):
+    #             os.makedirs(dest_dir)
     
-            output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
-                                      os.path.join(dest_dir, root_file_name), str(0.5), str(1.0)])      
-            print output
+    #         output = sp.check_output([chunk_extractor, os.path.join(source_dir, root_file_name),
+    #                                   os.path.join(dest_dir, root_file_name), str(0.5), str(1.0)])      
+    #         print output
     
-    # now have all the needed files split apart, can now proceed to combine them into the training 
-    # datasets that will end up in trainval
-    for training_file in training_files:
-        print "now building training dataset: " + training_file
-        sect = confhandler.get_section(training_file)
-        source_folders = ConfigFileUtils.parse_list(sect["source"], lambda x: x)
+    # # now have all the needed files split apart, can now proceed to combine them into the training 
+    # # datasets that will end up in trainval
+    # for training_file in training_files:
+    #     print "now building training dataset: " + training_file
+    #     sect = confhandler.get_section(training_file)
+    #     source_folders = ConfigFileUtils.parse_list(sect["source"], lambda x: x)
     
-        for mode in ["training", "validation"]:
+    #     for mode in ["training", "validation"]:
 
-            temp_dest_folder = os.path.join(dest_path, temp_dir, training_file, mode)
-            temp_dest_file = os.path.join(temp_dest_folder, root_file_name)
+    #         temp_dest_folder = os.path.join(dest_path, temp_dir, training_file, mode)
+    #         temp_dest_file = os.path.join(temp_dest_folder, root_file_name)
 
-            if not os.path.exists(temp_dest_folder):
-                os.makedirs(temp_dest_folder)
+    #         if not os.path.exists(temp_dest_folder):
+    #             os.makedirs(temp_dest_folder)
 
-            source_files = [os.path.join(dest_path, mode, cur_file, root_file_name) for cur_file in source_folders]
+    #         source_files = [os.path.join(dest_path, mode, cur_file, root_file_name) for cur_file in source_folders]
 
-            print "hadd " + temp_dest_file + " " + " ".join(source_files)
-            output = sp.check_output(["hadd", temp_dest_file] + source_files)      
-            print output
+    #         print "hadd " + temp_dest_file + " " + " ".join(source_files)
+    #         output = sp.check_output(["hadd", temp_dest_file] + source_files)      
+    #         print output
     
-            temp_scrambled_folder = os.path.join(dest_path, temp_dir, "scrambled", training_file, mode)
-            if not os.path.exists(temp_scrambled_folder):
-                os.makedirs(temp_scrambled_folder)
+    #         temp_scrambled_folder = os.path.join(dest_path, temp_dir, "scrambled", training_file, mode)
+    #         if not os.path.exists(temp_scrambled_folder):
+    #             os.makedirs(temp_scrambled_folder)
             
-            temp_scrambled_file = os.path.join(temp_scrambled_folder, root_file_name)
+    #         temp_scrambled_file = os.path.join(temp_scrambled_folder, root_file_name)
         
-            print scrambler + " " + temp_dest_file + " " + temp_scrambled_file
-            output = sp.check_output([scrambler, temp_dest_file, temp_scrambled_file])      
-            print output
+    #         print scrambler + " " + temp_dest_file + " " + temp_scrambled_file
+    #         output = sp.check_output([scrambler, temp_dest_file, temp_scrambled_file])      
+    #         print output
         
-        trainval_dest_folder = os.path.join(trainval_dir, training_file)
-        if not os.path.exists(trainval_dest_folder):
-            os.makedirs(trainval_dest_folder)
+    #     trainval_dest_folder = os.path.join(trainval_dir, training_file)
+    #     if not os.path.exists(trainval_dest_folder):
+    #         os.makedirs(trainval_dest_folder)
         
-        print "hadd " + os.path.join(trainval_dest_folder, root_file_name) + " " + os.path.join(dest_path, temp_dir, "scrambled", training_file, "training", root_file_name) + " " + os.path.join(dest_path, temp_dir, "scrambled", training_file, "validation", root_file_name)
+    #     print "hadd " + os.path.join(trainval_dest_folder, root_file_name) + " " + os.path.join(dest_path, temp_dir, "scrambled", training_file, "training", root_file_name) + " " + os.path.join(dest_path, temp_dir, "scrambled", training_file, "validation", root_file_name)
         
-        output = sp.check_output(["hadd", os.path.join(trainval_dest_folder, root_file_name),
-                                 os.path.join(dest_path, temp_dir, "scrambled", training_file, "training", root_file_name),
-                                 os.path.join(dest_path, temp_dir, "scrambled", training_file, "validation", root_file_name)])
-        print output
-
-    # call here the splitting of the files for systematics into multiple components
-    
+    #     output = sp.check_output(["hadd", os.path.join(trainval_dest_folder, root_file_name),
+    #                              os.path.join(dest_path, temp_dir, "scrambled", training_file, "training", root_file_name),
+    #                              os.path.join(dest_path, temp_dir, "scrambled", training_file, "validation", root_file_name)])
+    #     print output
 
     # at the end, chunk the ROOT files into many smaller ones, to keep the augmentation time short
     train_chunks_dir = os.path.join(dest_path, "training_chunks/")

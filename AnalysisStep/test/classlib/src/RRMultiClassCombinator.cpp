@@ -83,7 +83,7 @@ std::map<TString, float> RRMultiClassCombinator::Evaluate(Tree* in, Discriminant
 	    TString chosen_winner;
 	    if(winners_prior.size() > 1)
 	    {
-		std::cout << "try to pick winner randomly" << std::endl;
+		//std::cout << "try to pick winner randomly" << std::endl;
 		// choose one category from the loop at random and return it as the winner
 		std::random_device random_device;
 		std::mt19937 engine{random_device()};

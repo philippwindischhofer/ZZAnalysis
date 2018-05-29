@@ -28,7 +28,7 @@ def main():
         raw = raw.replace(')', ']')
         return raw
 
-    def select_input_features(category_pair, discriminant_name, scalar_branches, list_branches, list_pt_limits, confhandler, df_scores, threshold_fscore = 0.01):
+    def select_input_features(category_pair, discriminant_name, scalar_branches, list_branches, list_pt_limits, confhandler, df_scores, threshold_fscore = 0.05):
         implist = scorer.get_sorted_feature_importance_list(category_pair, scalar_branches, list_branches, list_pt_limits)
 
         impdict = {convert_varname(entry[0]): [entry[1]] for entry in implist}

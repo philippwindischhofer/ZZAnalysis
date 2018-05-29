@@ -805,7 +805,6 @@ void Systematics::FillSystematics_tuneUpDn( TString input_file_name)
 //========================================
 void Systematics::PrintSystematics_PU( )
 {
-	
     for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
     {
    	for ( int i_cat = 0; i_cat < num_of_categories ; i_cat++ )

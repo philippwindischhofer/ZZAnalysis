@@ -43,7 +43,7 @@ def main():
         merged_dirs = list(set(map(lambda x: re.sub('_chunk_.*$', '', x), available_dirs)))
     
         for merged_dir in merged_dirs:
-            chunks = sorted([cur_dir for cur_dir in available_dirs if merged_dir in cur_dir])
+            chunks = sorted([cur_dir for cur_dir in available_dirs if merged_dir + "_chunk_" in cur_dir])
     
             dest_folder = os.path.join(dest_dir, merged_dir)
             if not os.path.exists(dest_folder):
