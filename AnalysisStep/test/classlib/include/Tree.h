@@ -207,6 +207,10 @@ public :
 
    Bool_t          passIsoPreFSR;
    
+   // needed for systematics
+   vector<float>  *JetJERUp;
+   vector<float>  *JetJERDown;
+
    // needed for the combined discriminants:
    Float_t p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal;
    Float_t p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal;
@@ -784,6 +788,10 @@ public :
    TBranch* b_pConst_JJVBF_BKG_MCFM_JECNominal;
    TBranch* b_pConst_JJQCD_BKG_MCFM_JECNominal;
 
+   // needed for systematics
+   TBranch        *b_JetJERUp;
+   TBranch        *b_JetJERDown;
+
    TBranch        *b_p_GG_SIG_ghg2_1_ghz1_1_JHUGen;   //!
    TBranch        *b_p_GG_SIG_ghg2_1_ghz1prime2_1E4_JHUGen;   //!
    TBranch        *b_p_GG_SIG_ghg2_1_ghz2_1_JHUGen;   //!
@@ -1319,6 +1327,10 @@ void Tree::Init(TTree *tree, TString input_file_name)
    // for the two backgrounds among each other
    D_ZX_qq_ML = 0;
 
+   // for the systematics
+   JetJERUp = 0;
+   JetJERDown = 0;
+
    LepPt = 0;
    LepEta = 0;
    LepPhi = 0;
@@ -1524,6 +1536,10 @@ void Tree::Init(TTree *tree, TString input_file_name)
    fChain->SetBranchAddress("pConst_HadWH_BKG_MCFM_JECNominal", &pConst_HadWH_BKG_MCFM_JECNominal, &b_pConst_HadWH_BKG_MCFM_JECNominal);
    fChain->SetBranchAddress("pConst_JJVBF_BKG_MCFM_JECNominal", &pConst_JJVBF_BKG_MCFM_JECNominal, &b_pConst_JJVBF_BKG_MCFM_JECNominal);
    fChain->SetBranchAddress("pConst_JJQCD_BKG_MCFM_JECNominal", &pConst_JJQCD_BKG_MCFM_JECNominal, &b_pConst_JJQCD_BKG_MCFM_JECNominal);
+
+   // needed for systematics
+   fChain->SetBranchAddress("JetJERUp", &JetJERUp, &b_JetJERUp);
+   fChain->SetBranchAddress("JetJERDown", &JetJERDown, &b_JetJERDown);
 
    fChain->SetBranchAddress("p_GG_SIG_ghg2_1_ghz1_1_JHUGen", &p_GG_SIG_ghg2_1_ghz1_1_JHUGen, &b_p_GG_SIG_ghg2_1_ghz1_1_JHUGen);
    fChain->SetBranchAddress("p_GG_SIG_ghg2_1_ghz1prime2_1E4_JHUGen", &p_GG_SIG_ghg2_1_ghz1prime2_1E4_JHUGen, &b_p_GG_SIG_ghg2_1_ghz1prime2_1E4_JHUGen);

@@ -694,7 +694,7 @@ void Systematics::FillSystematics( TString input_file_name)
 	}
     } // end for loop
 	
-    cout << "[INFO] Systematics for " << input_file_name << " filled." << endl;
+    //cout << "[INFO] Systematics for " << input_file_name << " filled." << endl;
 }
 //==========================================================
 
@@ -805,31 +805,58 @@ void Systematics::FillSystematics_tuneUpDn( TString input_file_name)
 //========================================
 void Systematics::PrintSystematics_PU( )
 {
-    for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
-    {
-   	for ( int i_cat = 0; i_cat < num_of_categories ; i_cat++ )
-	{
-	    cout << _s_category.at(i_cat) << endl;
-	    cout << "Nominal = " << _expected_yield_PU[i_prod][i_cat] << endl;
-	    cout << "Up = " << _expected_yield_PU_UP[i_prod][i_cat] << endl;
-	    cout << "Down = " << _expected_yield_PU_DN[i_prod][i_cat] << endl;
-	    cout << endl;
-	}
-    }
+    // for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
+    // {
+    // 	for ( int i_cat = 0; i_cat < num_of_categories ; i_cat++ )
+    // 	{
+    // 	    cout << _s_category.at(i_cat) << endl;
+    // 	    cout << "Nominal = " << _expected_yield_PU[i_prod][i_cat] << endl;
+    // 	    cout << "Up = " << _expected_yield_PU_UP[i_prod][i_cat] << endl;
+    // 	    cout << "Down = " << _expected_yield_PU_DN[i_prod][i_cat] << endl;
+    // 	    cout << endl;
+    // 	}
+    // }
 	
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout << "[INFO] PileUp systematics for " << _s_category.at(i_cat) << endl;
+   	//cout << "[INFO] PileUp systematics for " << _s_category.at(i_cat) << endl;
+	cout << "[PileUp: " << _s_category.at(i_cat) << "]" << endl;
 	for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
 	{
-	    cout << _s_production_mode.at(i_prod)  << " : " << (_expected_yield_PU_UP[i_prod][i_cat]/_expected_yield_PU_UP[i_prod][Settings::inclusive])/(_expected_yield_PU[i_prod][i_cat]/_expected_yield_PU[i_prod][Settings::inclusive]) << "/" <<(_expected_yield_PU_DN[i_prod][i_cat]/_expected_yield_PU_DN[i_prod][Settings::inclusive])/(_expected_yield_PU[i_prod][i_cat]/_expected_yield_PU[i_prod][Settings::inclusive]) << endl;
+	    //cout << _s_production_mode.at(i_prod)  << " : " << (_expected_yield_PU_UP[i_prod][i_cat]/_expected_yield_PU_UP[i_prod][Settings::inclusive])/(_expected_yield_PU[i_prod][i_cat]/_expected_yield_PU[i_prod][Settings::inclusive]) << "/" <<(_expected_yield_PU_DN[i_prod][i_cat]/_expected_yield_PU_DN[i_prod][Settings::inclusive])/(_expected_yield_PU[i_prod][i_cat]/_expected_yield_PU[i_prod][Settings::inclusive]) << endl;
+	    float lower;
+	    float upper;
+
+	    if(_expected_yield_PU_UP[i_prod][i_cat] == 0.0 && _expected_yield_PU[i_prod][i_cat] == 0.0)
+	    {
+		lower = 1.0;
+	    }
+	    else
+	    {
+		lower = (_expected_yield_PU_UP[i_prod][i_cat]/_expected_yield_PU_UP[i_prod][Settings::inclusive])/(_expected_yield_PU[i_prod][i_cat]/_expected_yield_PU[i_prod][Settings::inclusive]);
+	    }
+
+	    if(_expected_yield_PU_DN[i_prod][i_cat] == 0.0 && _expected_yield_PU[i_prod][i_cat] == 0.0)
+	    {
+		upper = 1.0;
+	    }
+	    else
+	    {
+		upper = (_expected_yield_PU_DN[i_prod][i_cat]/_expected_yield_PU_DN[i_prod][Settings::inclusive])/(_expected_yield_PU[i_prod][i_cat]/_expected_yield_PU[i_prod][Settings::inclusive]);
+	    }
+
+	    //cout << _s_production_mode.at(i_prod) << " = " << (_expected_yield_PU_UP[i_prod][i_cat]/_expected_yield_PU_UP[i_prod][Settings::inclusive])/(_expected_yield_PU[i_prod][i_cat]/_expected_yield_PU[i_prod][Settings::inclusive]) << "; " <<(_expected_yield_PU_DN[i_prod][i_cat]/_expected_yield_PU_DN[i_prod][Settings::inclusive])/(_expected_yield_PU[i_prod][i_cat]/_expected_yield_PU[i_prod][Settings::inclusive]) << endl;
+
+	    cout << _s_production_mode.at(i_prod) << " = " << lower << "; " << upper << endl;
 	}
     }
 
-    cout << "[INFO] PileUp systematics for inclusive: " << endl;
+    //cout << "[INFO] PileUp systematics for inclusive: " << endl;
+    cout << "[PileUp: " << "inclusive" << "]" << endl;
     for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
     {
-	cout << _s_production_mode.at(i_prod)  << " : " << (_expected_yield_PU_UP[i_prod][Settings::inclusive]/_expected_yield_PU[i_prod][Settings::inclusive]) << "/" << (_expected_yield_PU_DN[i_prod][Settings::inclusive]/_expected_yield_PU[i_prod][Settings::inclusive]) << endl;
+	//cout << _s_production_mode.at(i_prod)  << " : " << (_expected_yield_PU_UP[i_prod][Settings::inclusive]/_expected_yield_PU[i_prod][Settings::inclusive]) << "/" << (_expected_yield_PU_DN[i_prod][Settings::inclusive]/_expected_yield_PU[i_prod][Settings::inclusive]) << endl;
+	cout << _s_production_mode.at(i_prod)  << " = " << (_expected_yield_PU_UP[i_prod][Settings::inclusive]/_expected_yield_PU[i_prod][Settings::inclusive]) << "; " << (_expected_yield_PU_DN[i_prod][Settings::inclusive]/_expected_yield_PU[i_prod][Settings::inclusive]) << endl;
     }
 }
 //========================================
@@ -840,24 +867,50 @@ void Systematics::PrintSystematics_PU( )
 void Systematics::PrintSystematics_JEC( )
 {
 	
-    for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
-    {
-   	for ( int i_cat = 0; i_cat < num_of_categories ; i_cat++ )
-	{
-	    cout << _s_category.at(i_cat) << endl;
-	    cout << "Nominal = " << _expected_yield_JEC[i_prod][i_cat] << endl;
-	    cout << "Up = " << _expected_yield_JEC_UP[i_prod][i_cat] << endl;
-	    cout << "Down = " << _expected_yield_JEC_DN[i_prod][i_cat] << endl;
-	    cout << endl;
-	}
-    }
+    // for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
+    // {
+    // 	for ( int i_cat = 0; i_cat < num_of_categories ; i_cat++ )
+    // 	{
+    // 	    cout << _s_category.at(i_cat) << endl;
+    // 	    cout << "Nominal = " << _expected_yield_JEC[i_prod][i_cat] << endl;
+    // 	    cout << "Up = " << _expected_yield_JEC_UP[i_prod][i_cat] << endl;
+    // 	    cout << "Down = " << _expected_yield_JEC_DN[i_prod][i_cat] << endl;
+    // 	    cout << endl;
+    // 	}
+    // }
 	
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout << "[INFO] JEC systematics for " << _s_category.at(i_cat) << endl;
+   	//cout << "[INFO] JEC systematics for " << _s_category.at(i_cat) << endl;
+   	cout << "[JEC: " << _s_category.at(i_cat) << "]" << endl;
 	for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
 	{
-	    cout << _s_production_mode.at(i_prod)  << " : " <<(_expected_yield_JEC_UP[i_prod][i_cat]/_expected_yield_JEC_UP[i_prod][Settings::inclusive])/(_expected_yield_JEC[i_prod][i_cat]/_expected_yield_JEC[i_prod][Settings::inclusive]) << "/" <<(_expected_yield_JEC_DN[i_prod][i_cat]/_expected_yield_JEC_DN[i_prod][Settings::inclusive])/(_expected_yield_JEC[i_prod][i_cat]/_expected_yield_JEC[i_prod][Settings::inclusive]) << endl;
+	    //cout << _s_production_mode.at(i_prod)  << " : " <<(_expected_yield_JEC_UP[i_prod][i_cat]/_expected_yield_JEC_UP[i_prod][Settings::inclusive])/(_expected_yield_JEC[i_prod][i_cat]/_expected_yield_JEC[i_prod][Settings::inclusive]) << "/" <<(_expected_yield_JEC_DN[i_prod][i_cat]/_expected_yield_JEC_DN[i_prod][Settings::inclusive])/(_expected_yield_JEC[i_prod][i_cat]/_expected_yield_JEC[i_prod][Settings::inclusive]) << endl;
+
+	    float lower;
+	    float upper;
+
+	    if(_expected_yield_JEC_UP[i_prod][i_cat] == 0.0 && _expected_yield_JEC[i_prod][i_cat] == 0.0)
+	    {
+		lower = 1.0;
+	    }
+	    else
+	    {
+		lower = (_expected_yield_JEC_UP[i_prod][i_cat]/_expected_yield_JEC_UP[i_prod][Settings::inclusive])/(_expected_yield_JEC[i_prod][i_cat]/_expected_yield_JEC[i_prod][Settings::inclusive]);
+	    }
+
+	    if(_expected_yield_JEC_DN[i_prod][i_cat] == 0.0 && _expected_yield_JEC[i_prod][i_cat] == 0.0)
+	    {
+		upper = 1.0;
+	    }
+	    else
+	    {
+		upper = (_expected_yield_JEC_DN[i_prod][i_cat]/_expected_yield_JEC_DN[i_prod][Settings::inclusive])/(_expected_yield_JEC[i_prod][i_cat]/_expected_yield_JEC[i_prod][Settings::inclusive]);
+	    }
+
+	    cout << _s_production_mode.at(i_prod)  << " = " << lower << "; " << upper << endl;
+
+	    //cout << _s_production_mode.at(i_prod)  << " = " <<(_expected_yield_JEC_UP[i_prod][i_cat]/_expected_yield_JEC_UP[i_prod][Settings::inclusive])/(_expected_yield_JEC[i_prod][i_cat]/_expected_yield_JEC[i_prod][Settings::inclusive]) << "; " <<(_expected_yield_JEC_DN[i_prod][i_cat]/_expected_yield_JEC_DN[i_prod][Settings::inclusive])/(_expected_yield_JEC[i_prod][i_cat]/_expected_yield_JEC[i_prod][Settings::inclusive]) << endl;
 	}
     }
 
@@ -883,10 +936,36 @@ void Systematics::PrintSystematics_BTag( )
 	
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout << "[INFO] BTag systematics for " << _s_category.at(i_cat) << endl;
+   	//cout << "[INFO] BTag systematics for " << _s_category.at(i_cat) << endl;
+   	cout << "[BTag: " << _s_category.at(i_cat) << "]" << endl;
 	for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
 	{
-	    cout << _s_production_mode.at(i_prod)  << " : " << (_expected_yield_BTag_UP[i_prod][i_cat]/_expected_yield_BTag_UP[i_prod][Settings::inclusive])/(_expected_yield_BTag[i_prod][i_cat]/_expected_yield_BTag[i_prod][Settings::inclusive]) << "/" <<(_expected_yield_BTag_DN[i_prod][i_cat]/_expected_yield_BTag_DN[i_prod][Settings::inclusive])/(_expected_yield_BTag[i_prod][i_cat]/_expected_yield_BTag[i_prod][Settings::inclusive]) << endl;
+	    //cout << _s_production_mode.at(i_prod)  << " : " << (_expected_yield_BTag_UP[i_prod][i_cat]/_expected_yield_BTag_UP[i_prod][Settings::inclusive])/(_expected_yield_BTag[i_prod][i_cat]/_expected_yield_BTag[i_prod][Settings::inclusive]) << "/" <<(_expected_yield_BTag_DN[i_prod][i_cat]/_expected_yield_BTag_DN[i_prod][Settings::inclusive])/(_expected_yield_BTag[i_prod][i_cat]/_expected_yield_BTag[i_prod][Settings::inclusive]) << endl;
+
+	    float lower;
+	    float upper;
+
+	    if(_expected_yield_BTag_UP[i_prod][i_cat] == 0.0 && _expected_yield_BTag[i_prod][i_cat] == 0.0)
+	    {
+		lower = 1.0;
+	    }
+	    else
+	    {
+		lower = (_expected_yield_BTag_UP[i_prod][i_cat]/_expected_yield_BTag_UP[i_prod][Settings::inclusive])/(_expected_yield_BTag[i_prod][i_cat]/_expected_yield_BTag[i_prod][Settings::inclusive]);
+	    }
+
+	    if(_expected_yield_BTag_DN[i_prod][i_cat] == 0.0 && _expected_yield_BTag[i_prod][i_cat] == 0.0)
+	    {
+		upper = 1.0;
+	    }
+	    else
+	    {
+		upper = (_expected_yield_BTag_DN[i_prod][i_cat]/_expected_yield_BTag_DN[i_prod][Settings::inclusive])/(_expected_yield_BTag[i_prod][i_cat]/_expected_yield_BTag[i_prod][Settings::inclusive]);
+	    }
+
+	    //cout << _s_production_mode.at(i_prod)  << " = " << (_expected_yield_BTag_UP[i_prod][i_cat]/_expected_yield_BTag_UP[i_prod][Settings::inclusive])/(_expected_yield_BTag[i_prod][i_cat]/_expected_yield_BTag[i_prod][Settings::inclusive]) << "; " <<(_expected_yield_BTag_DN[i_prod][i_cat]/_expected_yield_BTag_DN[i_prod][Settings::inclusive])/(_expected_yield_BTag[i_prod][i_cat]/_expected_yield_BTag[i_prod][Settings::inclusive]) << endl;
+
+	    cout << _s_production_mode.at(i_prod)  << " = " << lower << "; " << upper << endl;
 	}
     }
 
@@ -932,7 +1011,8 @@ void Systematics::PrintSystematics_muRmuFScale( )
 	
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout << "[INFO] QCD scale systematics for " << _s_category.at(i_cat) << endl;
+   	//cout << "[INFO] QCD scale systematics for " << _s_category.at(i_cat) << endl;
+   	cout << "[mu_R_mu_F: " << _s_category.at(i_cat) << "]" << endl;
 	for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
 	{
 	    muR_Up = (_expected_yield_muR_UP[i_prod][i_cat]/_expected_yield_muR_UP[i_prod][Settings::inclusive])/(_expected_yield_muR[i_prod][i_cat]/_expected_yield_muR[i_prod][Settings::inclusive]);
@@ -998,14 +1078,45 @@ void Systematics::PrintSystematics_PDFScale( )
 	
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout << "[INFO] PDF scale systematics for " << _s_category.at(i_cat) << endl;
+   	//cout << "[INFO] PDF scale systematics for " << _s_category.at(i_cat) << endl;
+   	cout << "[PDF_scale: " << _s_category.at(i_cat) << "]" << endl;
 	for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
 	{
-	    As_Up = (_expected_yield_As_UP[i_prod][i_cat]/_expected_yield_As_UP[i_prod][Settings::inclusive])/(_expected_yield_As[i_prod][i_cat]/_expected_yield_As[i_prod][Settings::inclusive]);
-	    As_Dn = (_expected_yield_As_DN[i_prod][i_cat]/_expected_yield_As_DN[i_prod][Settings::inclusive])/(_expected_yield_As[i_prod][i_cat]/_expected_yield_As[i_prod][Settings::inclusive]);
-			
-	    PDF_Up = (_expected_yield_PDF_UP[i_prod][i_cat]/_expected_yield_PDF_UP[i_prod][Settings::inclusive])/(_expected_yield_PDF[i_prod][i_cat]/_expected_yield_PDF[i_prod][Settings::inclusive]);
-	    PDF_Dn = (_expected_yield_PDF_DN[i_prod][i_cat]/_expected_yield_PDF_DN[i_prod][Settings::inclusive])/(_expected_yield_PDF[i_prod][i_cat]/_expected_yield_PDF[i_prod][Settings::inclusive]);
+	    if(_expected_yield_As_UP[i_prod][i_cat] > 0.0 && _expected_yield_As[i_prod][i_cat] > 0.0)
+	    {
+		As_Up = (_expected_yield_As_UP[i_prod][i_cat]/_expected_yield_As_UP[i_prod][Settings::inclusive])/(_expected_yield_As[i_prod][i_cat]/_expected_yield_As[i_prod][Settings::inclusive]);
+	    }
+	    else
+	    {
+		As_Up = 1.0;
+	    }
+
+	    if(_expected_yield_As_DN[i_prod][i_cat] > 0.0 && _expected_yield_As[i_prod][i_cat] > 0.0)
+	    {
+		As_Dn = (_expected_yield_As_DN[i_prod][i_cat]/_expected_yield_As_DN[i_prod][Settings::inclusive])/(_expected_yield_As[i_prod][i_cat]/_expected_yield_As[i_prod][Settings::inclusive]);
+	    }
+	    else
+	    {
+		As_Dn = 1.0;
+	    }
+	
+	    if(_expected_yield_PDF_UP[i_prod][i_cat] > 0.0 && _expected_yield_PDF[i_prod][i_cat] > 0.0)
+	    {
+		PDF_Up = (_expected_yield_PDF_UP[i_prod][i_cat]/_expected_yield_PDF_UP[i_prod][Settings::inclusive])/(_expected_yield_PDF[i_prod][i_cat]/_expected_yield_PDF[i_prod][Settings::inclusive]);
+	    }
+	    else
+	    {
+		PDF_Up = 1.0;
+	    }
+
+	    if(_expected_yield_PDF_DN[i_prod][i_cat] > 0.0 && _expected_yield_PDF[i_prod][i_cat] > 0.0)
+	    {
+		PDF_Dn = (_expected_yield_PDF_DN[i_prod][i_cat]/_expected_yield_PDF_DN[i_prod][Settings::inclusive])/(_expected_yield_PDF[i_prod][i_cat]/_expected_yield_PDF[i_prod][Settings::inclusive]);
+	    }
+	    else
+	    {
+		PDF_Dn = 1.0;
+	    }
 			
 	    if( i_cat == Settings::untagged && As_Up > 1. && PDF_Up > 1.) combination = 0;
 	    if( i_cat == Settings::untagged && As_Up > 1. && PDF_Up < 1.) combination = 1;
@@ -1016,10 +1127,15 @@ void Systematics::PrintSystematics_PDFScale( )
 //			cout << PDF_Up << " " << PDF_Dn << endl;
 //			cout << combination << endl;
 			
-	    if(combination == 0) cout << _s_production_mode.at(i_prod)  << " : " << 1. - sqrt(pow(1. - As_Dn,2)+pow(1. - PDF_Dn,2)) << "/" << 1. + sqrt(pow(As_Up - 1.,2)+pow(PDF_Up - 1.,2)) << endl;
-	    if(combination == 1) cout << _s_production_mode.at(i_prod)  << " : " << 1. - sqrt(pow(1. - As_Dn,2)+pow(1. - PDF_Up,2)) << "/" << 1. + sqrt(pow(As_Up - 1.,2)+pow(PDF_Dn - 1.,2)) << endl;
-	    if(combination == 2) cout << _s_production_mode.at(i_prod)  << " : " << 1. - sqrt(pow(1. - As_Up,2)+pow(1. - PDF_Dn,2)) << "/" << 1. + sqrt(pow(As_Dn - 1.,2)+pow(PDF_Up - 1.,2)) << endl;
-	    if(combination == 3) cout << _s_production_mode.at(i_prod)  << " : " << 1. - sqrt(pow(1. - As_Up,2)+pow(1. - PDF_Up,2)) << "/" << 1. + sqrt(pow(As_Dn - 1.,2)+pow(PDF_Dn - 1.,2)) << endl;
+	    // if(combination == 0) cout << _s_production_mode.at(i_prod)  << " : " << 1. - sqrt(pow(1. - As_Dn,2)+pow(1. - PDF_Dn,2)) << "/" << 1. + sqrt(pow(As_Up - 1.,2)+pow(PDF_Up - 1.,2)) << endl;
+	    // if(combination == 1) cout << _s_production_mode.at(i_prod)  << " : " << 1. - sqrt(pow(1. - As_Dn,2)+pow(1. - PDF_Up,2)) << "/" << 1. + sqrt(pow(As_Up - 1.,2)+pow(PDF_Dn - 1.,2)) << endl;
+	    // if(combination == 2) cout << _s_production_mode.at(i_prod)  << " : " << 1. - sqrt(pow(1. - As_Up,2)+pow(1. - PDF_Dn,2)) << "/" << 1. + sqrt(pow(As_Dn - 1.,2)+pow(PDF_Up - 1.,2)) << endl;
+	    // if(combination == 3) cout << _s_production_mode.at(i_prod)  << " : " << 1. - sqrt(pow(1. - As_Up,2)+pow(1. - PDF_Up,2)) << "/" << 1. + sqrt(pow(As_Dn - 1.,2)+pow(PDF_Dn - 1.,2)) << endl;
+
+	    if(combination == 0) cout << _s_production_mode.at(i_prod)  << " = " << 1. - sqrt(pow(1. - As_Dn,2)+pow(1. - PDF_Dn,2)) << "; " << 1. + sqrt(pow(As_Up - 1.,2)+pow(PDF_Up - 1.,2)) << endl;
+	    if(combination == 1) cout << _s_production_mode.at(i_prod)  << " = " << 1. - sqrt(pow(1. - As_Dn,2)+pow(1. - PDF_Up,2)) << "; " << 1. + sqrt(pow(As_Up - 1.,2)+pow(PDF_Dn - 1.,2)) << endl;
+	    if(combination == 2) cout << _s_production_mode.at(i_prod)  << " = " << 1. - sqrt(pow(1. - As_Up,2)+pow(1. - PDF_Dn,2)) << "; " << 1. + sqrt(pow(As_Dn - 1.,2)+pow(PDF_Up - 1.,2)) << endl;
+	    if(combination == 3) cout << _s_production_mode.at(i_prod)  << " = " << 1. - sqrt(pow(1. - As_Up,2)+pow(1. - PDF_Up,2)) << "; " << 1. + sqrt(pow(As_Dn - 1.,2)+pow(PDF_Dn - 1.,2)) << endl;
 	}
     }
 	
@@ -1044,13 +1160,38 @@ void Systematics::PrintSystematics_EWCorr( )
 	
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout << "[INFO] EWCorr systematics for " << _s_category.at(i_cat) << endl;
-	cout << _s_production_mode.at(Settings::qqToZZ)  << " : " << (_expected_yield_EWCorr_DN[Settings::qqToZZ][i_cat]/_expected_yield_EWCorr_DN[Settings::qqToZZ][Settings::inclusive])/(_expected_yield_EWCorr[Settings::qqToZZ][i_cat]/_expected_yield_EWCorr[Settings::qqToZZ][Settings::inclusive]) << "/" <<
-	    (_expected_yield_EWCorr_UP[Settings::qqToZZ][i_cat]/_expected_yield_EWCorr_UP[Settings::qqToZZ][Settings::inclusive])/(_expected_yield_EWCorr[Settings::qqToZZ][i_cat]/_expected_yield_EWCorr[Settings::qqToZZ][Settings::inclusive]) << endl;
+   	//cout << "[INFO] EWCorr systematics for " << _s_category.at(i_cat) << endl;
+   	cout << "[EWCorr: " << _s_category.at(i_cat) << "]" << endl;
+
+	float lower;
+	float upper;
+
+	if(_expected_yield_EWCorr_DN[Settings::qqToZZ][i_cat] == 0.0 && _expected_yield_EWCorr[Settings::qqToZZ][i_cat] == 0.0)
+	{
+	    lower = 1.0;
+	}
+	else
+	{
+	    lower = (_expected_yield_EWCorr_DN[Settings::qqToZZ][i_cat]/_expected_yield_EWCorr_DN[Settings::qqToZZ][Settings::inclusive])/(_expected_yield_EWCorr[Settings::qqToZZ][i_cat]/_expected_yield_EWCorr[Settings::qqToZZ][Settings::inclusive]);
+	}
+
+	if(_expected_yield_EWCorr_UP[Settings::qqToZZ][i_cat] == 0.0 && _expected_yield_EWCorr[Settings::qqToZZ][i_cat] == 0.0)
+	{
+	    upper = 1.0;
+	}
+	else
+	{
+	    upper = (_expected_yield_EWCorr_UP[Settings::qqToZZ][i_cat]/_expected_yield_EWCorr_UP[Settings::qqToZZ][Settings::inclusive])/(_expected_yield_EWCorr[Settings::qqToZZ][i_cat]/_expected_yield_EWCorr[Settings::qqToZZ][Settings::inclusive]);
+	}
+       
+	//cout << _s_production_mode.at(Settings::qqToZZ)  << " : " << (_expected_yield_EWCorr_DN[Settings::qqToZZ][i_cat]/_expected_yield_EWCorr_DN[Settings::qqToZZ][Settings::inclusive])/(_expected_yield_EWCorr[Settings::qqToZZ][i_cat]/_expected_yield_EWCorr[Settings::qqToZZ][Settings::inclusive]) << "/" << (_expected_yield_EWCorr_UP[Settings::qqToZZ][i_cat]/_expected_yield_EWCorr_UP[Settings::qqToZZ][Settings::inclusive])/(_expected_yield_EWCorr[Settings::qqToZZ][i_cat]/_expected_yield_EWCorr[Settings::qqToZZ][Settings::inclusive]) << endl;
+
+	cout << _s_production_mode.at(Settings::qqToZZ)  << " : " << lower << "; " << upper << endl;
     }
 
-    cout << "[INFO] EWCorr systematics for inclusive " << endl;
-    cout << _s_production_mode.at(Settings::qqToZZ)  << " : " << (_expected_yield_EWCorr_DN[Settings::qqToZZ][Settings::inclusive]/_expected_yield_EWCorr[Settings::qqToZZ][Settings::inclusive]) << "/" <<
+    //cout << "[INFO] EWCorr systematics for inclusive " << endl;
+    cout << "[EWCorr: " << "inclusive" << "]" << endl;
+    cout << _s_production_mode.at(Settings::qqToZZ)  << " : " << (_expected_yield_EWCorr_DN[Settings::qqToZZ][Settings::inclusive]/_expected_yield_EWCorr[Settings::qqToZZ][Settings::inclusive]) << "; " <<
 	(_expected_yield_EWCorr_UP[Settings::qqToZZ][Settings::inclusive]/_expected_yield_EWCorr[Settings::qqToZZ][Settings::inclusive]) << endl;
 	
 }
@@ -1074,18 +1215,20 @@ void Systematics::PrintSystematics_PythiaScale( )
 	
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout << "[INFO] Pythia Scale systematics for " << _s_category.at(i_cat) << endl;
+   	//cout << "[INFO] Pythia Scale systematics for " << _s_category.at(i_cat) << endl;
+   	cout << "[Pythia_scale: " << _s_category.at(i_cat) << "]" << endl;
 	for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
 	{
-	    cout << _s_production_mode.at(i_prod)  << " : " << (_expected_yield_PythiaScale_DN[i_prod][i_cat]/_expected_yield_PythiaScale_DN[i_prod][Settings::inclusive])/(_expected_yield_PythiaScale[i_prod][i_cat]/_expected_yield_PythiaScale[i_prod][Settings::inclusive]) << "/" <<
-		(_expected_yield_PythiaScale_UP[i_prod][i_cat]/_expected_yield_PythiaScale_UP[i_prod][Settings::inclusive])/(_expected_yield_PythiaScale[i_prod][i_cat]/_expected_yield_PythiaScale[i_prod][Settings::inclusive]) << endl;
+	    //cout << _s_production_mode.at(i_prod)  << " : " << (_expected_yield_PythiaScale_DN[i_prod][i_cat]/_expected_yield_PythiaScale_DN[i_prod][Settings::inclusive])/(_expected_yield_PythiaScale[i_prod][i_cat]/_expected_yield_PythiaScale[i_prod][Settings::inclusive]) << "/" << (_expected_yield_PythiaScale_UP[i_prod][i_cat]/_expected_yield_PythiaScale_UP[i_prod][Settings::inclusive])/(_expected_yield_PythiaScale[i_prod][i_cat]/_expected_yield_PythiaScale[i_prod][Settings::inclusive]) << endl;
+	    cout << _s_production_mode.at(i_prod)  << " = " << (_expected_yield_PythiaScale_DN[i_prod][i_cat]/_expected_yield_PythiaScale_DN[i_prod][Settings::inclusive])/(_expected_yield_PythiaScale[i_prod][i_cat]/_expected_yield_PythiaScale[i_prod][Settings::inclusive]) << "; " << (_expected_yield_PythiaScale_UP[i_prod][i_cat]/_expected_yield_PythiaScale_UP[i_prod][Settings::inclusive])/(_expected_yield_PythiaScale[i_prod][i_cat]/_expected_yield_PythiaScale[i_prod][Settings::inclusive]) << endl;
 	}
     }
 
-    cout << "[INFO] Pythia Scale systematics for inclusive: " << endl;
+    //cout << "[INFO] Pythia Scale systematics for inclusive: " << endl;
+    cout << "[Pythia_scale: " << "inclusive" << "]" << endl;
     for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
     {
-	cout << _s_production_mode.at(i_prod)  << " : " << (_expected_yield_PythiaScale_DN[i_prod][Settings::inclusive]/_expected_yield_PythiaScale[i_prod][Settings::inclusive]) << "/" <<
+	cout << _s_production_mode.at(i_prod)  << " = " << (_expected_yield_PythiaScale_DN[i_prod][Settings::inclusive]/_expected_yield_PythiaScale[i_prod][Settings::inclusive]) << "; " <<
 	    (_expected_yield_PythiaScale_UP[i_prod][Settings::inclusive]/_expected_yield_PythiaScale[i_prod][Settings::inclusive]) << endl;
     }
 }
@@ -1112,7 +1255,8 @@ void Systematics::PrintSystematics_PythiaTune( )
 	
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout << "[INFO] Pythia Tune systematics for " << _s_category.at(i_cat) << endl;
+   	//cout << "[INFO] Pythia Tune systematics for " << _s_category.at(i_cat) << endl;
+   	cout << "[Pythia_tune: " << _s_category.at(i_cat) << "]" << endl;
 	for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
 	{
 	    //Deal with low statistics in tuneup/tunedown samples
@@ -1121,9 +1265,9 @@ void Systematics::PrintSystematics_PythiaTune( )
 	    if( _expected_yield_PythiaTune_UP[i_prod][i_cat] == 0 ) Up_ratio = 0.;
 	    else Up_ratio = _expected_yield_PythiaTune_UP[i_prod][i_cat]/_expected_yield_PythiaTune_UP[i_prod][Settings::inclusive];
 	    Nominal_ratio = _expected_yield_PythiaTune[i_prod][i_cat]/_expected_yield_PythiaTune[i_prod][Settings::inclusive];
-			
-			
-	    cout << _s_production_mode.at(i_prod)  << " : " << (Dn_ratio)/(Nominal_ratio) << "/" << (Up_ratio)/(Nominal_ratio) << endl;
+					
+	    //cout << _s_production_mode.at(i_prod)  << " : " << (Dn_ratio)/(Nominal_ratio) << "/" << (Up_ratio)/(Nominal_ratio) << endl;
+	    cout << _s_production_mode.at(i_prod)  << " = " << (Dn_ratio)/(Nominal_ratio) << "; " << (Up_ratio)/(Nominal_ratio) << endl;
 	}
     }
 
@@ -1157,7 +1301,8 @@ void Systematics::PrintSystematics_QCDScale( )
 	
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout << "[INFO] QCD scale systematics for " << _s_category.at(i_cat) << endl;
+   	//cout << "[INFO] QCD scale systematics for " << _s_category.at(i_cat) << endl;
+   	cout << "[QCD_scale: " << _s_category.at(i_cat) << "]" << endl;
 	for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
 	{
 	    // Combine muR and muF
@@ -1171,13 +1316,12 @@ void Systematics::PrintSystematics_QCDScale( )
 	    if( muR_Up > 1. && muF_Up < 1.) combination_mu = 1;
 	    if( muR_Up < 1. && muF_Up > 1.) combination_mu = 2;
 	    if( muR_Up < 1. && muF_Up < 1.) combination_mu = 3;
-	    cout << "combination_mu = " << combination_mu << endl;
+	    // cout << "combination_mu = " << combination_mu << endl;
 	    if(combination_mu == 0) {mu_Dn = 1. - sqrt(pow(1. - muR_Dn,2)+pow(1. - muF_Dn,2));  mu_Up = 1. + sqrt(pow(muR_Up - 1.,2)+pow(muF_Up - 1.,2));}
 	    if(combination_mu == 1) {mu_Dn = 1. - sqrt(pow(1. - muR_Dn,2)+pow(1. - muF_Up,2));  mu_Up = 1. + sqrt(pow(muR_Up - 1.,2)+pow(muF_Dn - 1.,2));}
 	    if(combination_mu == 2) {mu_Dn = 1. - sqrt(pow(1. - muR_Up,2)+pow(1. - muF_Dn,2));  mu_Up = 1. + sqrt(pow(muR_Dn - 1.,2)+pow(muF_Up - 1.,2));}
 	    if(combination_mu == 3) {mu_Dn = 1. - sqrt(pow(1. - muR_Up,2)+pow(1. - muF_Up,2));  mu_Up = 1. + sqrt(pow(muR_Dn - 1.,2)+pow(muF_Dn - 1.,2));}
-			
-			
+					
 	    // Combine Pythia tune and Pythia scale
 	    PythiaScale_Up = (_expected_yield_PythiaScale_UP[i_prod][i_cat]/_expected_yield_PythiaScale_UP[i_prod][Settings::inclusive])/(_expected_yield_PythiaScale[i_prod][i_cat]/_expected_yield_PythiaScale[i_prod][Settings::inclusive]);
 	    if(_expected_yield_PythiaScale_UP[i_prod][i_cat] == 0) PythiaScale_Up = 1.;
@@ -1195,7 +1339,7 @@ void Systematics::PrintSystematics_QCDScale( )
 	    if( PythiaScale_Up > 1. && PythiaTune_Up < 1.) combination_Pythia = 1;
 	    if( PythiaScale_Up < 1. && PythiaTune_Up > 1.) combination_Pythia = 2;
 	    if( PythiaScale_Up < 1. && PythiaTune_Up < 1.) combination_Pythia = 3;
-	    cout << "combination_Pythia = " << combination_Pythia << endl;
+	    //cout << "combination_Pythia = " << combination_Pythia << endl;
 			
 	    if(combination_Pythia == 0) {Pythia_Dn = 1. - sqrt(pow(1. - PythiaScale_Dn,2)+pow(1. - PythiaTune_Dn,2));  Pythia_Up = 1. + sqrt(pow(PythiaScale_Up - 1.,2)+pow(PythiaTune_Up - 1.,2));}
 	    if(combination_Pythia == 1) {Pythia_Dn = 1. - sqrt(pow(1. - PythiaScale_Dn,2)+pow(1. - PythiaTune_Up,2));  Pythia_Up = 1. + sqrt(pow(PythiaScale_Up - 1.,2)+pow(PythiaTune_Dn - 1.,2));}
@@ -1206,14 +1350,28 @@ void Systematics::PrintSystematics_QCDScale( )
 	    comb_Up = 1. + sqrt(pow(Pythia_Up - 1.,2)+pow(mu_Up - 1.,2));
 	    comb_Dn = 1. - sqrt(pow(1. - Pythia_Dn,2)+pow(1. - mu_Dn,2));
 
-	    cout << _s_production_mode.at(i_prod)  << " : " << muR_Dn << "/" << muR_Up << endl;
-	    cout << _s_production_mode.at(i_prod)  << " : " << muF_Dn << "/" << muF_Up << endl;
-	    cout << _s_production_mode.at(i_prod)  << " : " << mu_Dn << "/" << mu_Up << endl;
-	    cout << _s_production_mode.at(i_prod)  << " : " << PythiaScale_Dn << "/" << PythiaScale_Up << endl;
-	    cout << _s_production_mode.at(i_prod)  << " : " << PythiaTune_Dn << "/" << PythiaTune_Up << endl;
-	    cout << _s_production_mode.at(i_prod)  << " : " << Pythia_Dn << "/" << Pythia_Up << endl;
-	    cout << _s_production_mode.at(i_prod)  << " : " << comb_Dn << "/" << comb_Up << endl;
-			
+	    // cout << _s_production_mode.at(i_prod)  << " : " << muR_Dn << "/" << muR_Up << endl;
+	    // cout << _s_production_mode.at(i_prod)  << " : " << muF_Dn << "/" << muF_Up << endl;
+	    // cout << _s_production_mode.at(i_prod)  << " : " << mu_Dn << "/" << mu_Up << endl;
+	    // cout << _s_production_mode.at(i_prod)  << " : " << PythiaScale_Dn << "/" << PythiaScale_Up << endl;
+	    // cout << _s_production_mode.at(i_prod)  << " : " << PythiaTune_Dn << "/" << PythiaTune_Up << endl;
+	    // cout << _s_production_mode.at(i_prod)  << " : " << Pythia_Dn << "/" << Pythia_Up << endl;
+	    // cout << _s_production_mode.at(i_prod)  << " : " << comb_Dn << "/" << comb_Up << endl;
+
+	    // cout << _s_production_mode.at(i_prod)  << " = " << muR_Dn << "; " << muR_Up << endl;
+	    // cout << _s_production_mode.at(i_prod)  << " = " << muF_Dn << "; " << muF_Up << endl;
+	    // cout << _s_production_mode.at(i_prod)  << " = " << mu_Dn << "; " << mu_Up << endl;
+	    // cout << _s_production_mode.at(i_prod) << "_noPythiaTune"  << " = " << PythiaScale_Dn << "; " << PythiaScale_Up << endl;
+	    // cout << _s_production_mode.at(i_prod)  << " = " << PythiaTune_Dn << "; " << PythiaTune_Up << endl;
+	    // cout << _s_production_mode.at(i_prod)  << " = " << Pythia_Dn << "; " << Pythia_Up << endl;
+	    if(isnan(comb_Dn) || isnan(comb_Up))
+	    {
+		cout << _s_production_mode.at(i_prod)  << " = " << PythiaScale_Dn << "; " << PythiaScale_Up << endl;			
+	    }
+	    else
+	    {
+		cout << _s_production_mode.at(i_prod)  << " = " << comb_Dn << "; " << comb_Up << endl;			
+	    }
 	}
     }
 }
@@ -1237,72 +1395,69 @@ void Systematics::PrintSystematics_THU_ggH( )
 //   }
 	
 
-    cout << "[INFO] THU_ggH_Mu systematics for " ;
+    //cout << "[INFO] THU_ggH_Mu systematics for " ;
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-    	cout <<_s_category.at(i_cat) << endl;
-	cout << _s_production_mode.at(Settings::ggH)  << " : " << (_expected_yield_THU_ggH_Mu_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_Mu[Settings::ggH][i_cat]) << endl;
+    	cout << "[THU_ggH_Mu: " << _s_category.at(i_cat) << "]" << endl;
+	//cout << _s_production_mode.at(Settings::ggH)  << " : " << (_expected_yield_THU_ggH_Mu_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_Mu[Settings::ggH][i_cat]) << endl;
+	cout << _s_production_mode.at(Settings::ggH)  << " = " << (_expected_yield_THU_ggH_Mu_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_Mu[Settings::ggH][i_cat]) << endl;
     }
 	
-    cout << "[INFO] THU_ggH_Res systematics for " ;
+    //cout << "[INFO] THU_ggH_Res systematics for " ;
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout <<_s_category.at(i_cat) << endl;
-	cout << _s_production_mode.at(Settings::ggH)  << " : " << (_expected_yield_THU_ggH_Res_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_Res[Settings::ggH][i_cat]) << endl;
+	cout << "[THU_ggH_Res: " << _s_category.at(i_cat) << "]" << endl;
+	cout << _s_production_mode.at(Settings::ggH)  << " = " << (_expected_yield_THU_ggH_Res_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_Res[Settings::ggH][i_cat]) << endl;
     }
 	
-    cout << "[INFO] THU_ggH_Mig01 systematics for " ;
+    //cout << "[INFO] THU_ggH_Mig01 systematics for " ;
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout <<_s_category.at(i_cat) << endl;
-	cout << _s_production_mode.at(Settings::ggH)  << " : " << (_expected_yield_THU_ggH_Mig01_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_Mig01_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_Mig01[Settings::ggH][i_cat]/_expected_yield_THU_ggH_Mig01[Settings::ggH][Settings::inclusive]) << endl;
+	cout << "[THU_ggH_Mig01: " << _s_category.at(i_cat) << "]" << endl;
+	cout << _s_production_mode.at(Settings::ggH)  << " = " << (_expected_yield_THU_ggH_Mig01_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_Mig01_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_Mig01[Settings::ggH][i_cat]/_expected_yield_THU_ggH_Mig01[Settings::ggH][Settings::inclusive]) << endl;
     }
 	
-    cout << "[INFO] THU_ggH_Mig12 systematics for " ;
+    //cout << "[INFO] THU_ggH_Mig12 systematics for " ;
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout <<_s_category.at(i_cat) << endl;
-	cout << _s_production_mode.at(Settings::ggH)  << " : " << (_expected_yield_THU_ggH_Mig12_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_Mig12_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_Mig12[Settings::ggH][i_cat]/_expected_yield_THU_ggH_Mig12[Settings::ggH][Settings::inclusive]) << endl;
+	cout << "[THU_ggH_Mig12: " << _s_category.at(i_cat) << "]" << endl;
+	cout << _s_production_mode.at(Settings::ggH)  << " = " << (_expected_yield_THU_ggH_Mig12_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_Mig12_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_Mig12[Settings::ggH][i_cat]/_expected_yield_THU_ggH_Mig12[Settings::ggH][Settings::inclusive]) << endl;
     }
 	
-    cout << "[INFO] THU_ggH_VBF2j systematics for " ;
+    //cout << "[INFO] THU_ggH_VBF2j systematics for " ;
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout <<_s_category.at(i_cat) << endl;
-	cout << _s_production_mode.at(Settings::ggH)  << " : " << (_expected_yield_THU_ggH_VBF2j_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_VBF2j_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_VBF2j[Settings::ggH][i_cat]/_expected_yield_THU_ggH_VBF2j[Settings::ggH][Settings::inclusive]) << endl;
+	cout << "[THU_ggH_VBF2j: " << _s_category.at(i_cat) << "]" << endl;
+	cout << _s_production_mode.at(Settings::ggH)  << " = " << (_expected_yield_THU_ggH_VBF2j_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_VBF2j_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_VBF2j[Settings::ggH][i_cat]/_expected_yield_THU_ggH_VBF2j[Settings::ggH][Settings::inclusive]) << endl;
     }
 	
-    cout << "[INFO] THU_ggH_VBF3j systematics for " ;
+    //cout << "[INFO] THU_ggH_VBF3j systematics for " ;
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout <<_s_category.at(i_cat) << endl;
-	cout << _s_production_mode.at(Settings::ggH)  << " : " << (_expected_yield_THU_ggH_VBF3j_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_VBF3j_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_VBF3j[Settings::ggH][i_cat]/_expected_yield_THU_ggH_VBF3j[Settings::ggH][Settings::inclusive]) << endl;
+	cout << "[THU_ggH_VBF3j: " << _s_category.at(i_cat) << "]" << endl;
+	cout << _s_production_mode.at(Settings::ggH)  << " = " << (_expected_yield_THU_ggH_VBF3j_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_VBF3j_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_VBF3j[Settings::ggH][i_cat]/_expected_yield_THU_ggH_VBF3j[Settings::ggH][Settings::inclusive]) << endl;
     }
 	
-    cout << "[INFO] THU_ggH_PT60 systematics for " ;
+    //cout << "[INFO] THU_ggH_PT60 systematics for " ;
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout <<_s_category.at(i_cat) << endl;
-	cout << _s_production_mode.at(Settings::ggH)  << " : " << (_expected_yield_THU_ggH_PT60_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_PT60_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_PT60[Settings::ggH][i_cat]/_expected_yield_THU_ggH_PT60[Settings::ggH][Settings::inclusive]) << endl;
+	cout << "[THU_ggH_PT60: " << _s_category.at(i_cat) << "]" << endl;
+	cout << _s_production_mode.at(Settings::ggH)  << " = " << (_expected_yield_THU_ggH_PT60_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_PT60_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_PT60[Settings::ggH][i_cat]/_expected_yield_THU_ggH_PT60[Settings::ggH][Settings::inclusive]) << endl;
     }
 	
-    cout << "[INFO] THU_ggH_PT120 systematics for " ;
+    //cout << "[INFO] THU_ggH_PT120 systematics for " ;
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout <<_s_category.at(i_cat) << endl;
-	cout << _s_production_mode.at(Settings::ggH)  << " : " << (_expected_yield_THU_ggH_PT120_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_PT120_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_PT120[Settings::ggH][i_cat]/_expected_yield_THU_ggH_PT120[Settings::ggH][Settings::inclusive]) << endl;
+	cout << "[THU_ggH_PT120: " << _s_category.at(i_cat) << "]" << endl;
+	cout << _s_production_mode.at(Settings::ggH)  << " = " << (_expected_yield_THU_ggH_PT120_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_PT120_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_PT120[Settings::ggH][i_cat]/_expected_yield_THU_ggH_PT120[Settings::ggH][Settings::inclusive]) << endl;
     }
 	
-    cout << "[INFO] THU_ggH_qmtop systematics for " ;
+    //cout << "[INFO] THU_ggH_qmtop systematics for " ;
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout <<_s_category.at(i_cat) << endl;
-	cout << _s_production_mode.at(Settings::ggH)  << " : " << (_expected_yield_THU_ggH_qmtop_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_qmtop_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_qmtop[Settings::ggH][i_cat]/_expected_yield_THU_ggH_qmtop[Settings::ggH][Settings::inclusive]) << endl;
+	cout << "[THU_ggH_qmtop: " << _s_category.at(i_cat) << "]" << endl;
+	cout << _s_production_mode.at(Settings::ggH)  << " = " << (_expected_yield_THU_ggH_qmtop_UP[Settings::ggH][i_cat]/_expected_yield_THU_ggH_qmtop_UP[Settings::ggH][Settings::inclusive])/(_expected_yield_THU_ggH_qmtop[Settings::ggH][i_cat]/_expected_yield_THU_ggH_qmtop[Settings::ggH][Settings::inclusive]) << endl;
     }
-	
-
-
-	
 }
 //========================================
 

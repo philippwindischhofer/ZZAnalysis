@@ -14,6 +14,7 @@
 
 // My own files
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/Systematics.h>
+#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/SystematicsLI.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/Variables.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/src/setTDRStyle.cpp>
 
@@ -23,7 +24,8 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   TString path = "/data_CMS/cms/wind/CJLST_NTuples_prepared_systematics/";
+   //TString path = "/data_CMS/cms/wind/180528_optimized_hyperparameters_selvars_leading_jets_metfix_merged/optimized/augmentation_test/";
+   TString path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/";
    TString file_name = "/ZZ4lAnalysis.root";
 	
    // Signal
@@ -62,7 +64,6 @@ int main( int argc, char *argv[] )
    TString bbH125         = path + "bbH125" + file_name;
 
    TString tqH125         = path + "tqH125" + file_name;
-
 	
    // Backgrounds
    TString ZZTo4l      = path + "ZZTo4l"                     + file_name;
@@ -74,7 +75,10 @@ int main( int argc, char *argv[] )
    TString ggZZ2e2tau  = path + "ggTo2e2tau_Contin_MCFM701"  + file_name;
    TString ggZZ2mu2tau = path + "ggTo2mu2tau_Contin_MCFM701" + file_name;
 	
-   Systematics *systematics = new Systematics();
+   Systematics* systematics = new Systematics();
+   
+   //SystematicsLI* systematics = new SystematicsLI();
+   //systematics -> SetPackagePath("/data_CMS/cms/wind/180528_optimized_hyperparameters_selvars_leading_jets_metfix_merged/optimized/", "robin");
 		
 //====================
 // Print Systematics
@@ -114,9 +118,9 @@ int main( int argc, char *argv[] )
    systematics->PrintSystematics_PU();
    systematics->PrintSystematics_JEC();
    systematics->PrintSystematics_BTag();
-   systematics->PrintSystematics_muRmuFScale();
-   systematics->PrintSystematics_PythiaScale();
-   systematics->PrintSystematics_PythiaTune();
+   //systematics->PrintSystematics_muRmuFScale();
+   //systematics->PrintSystematics_PythiaScale();
+   //systematics->PrintSystematics_PythiaTune();
    systematics->PrintSystematics_QCDScale();
    systematics->PrintSystematics_PDFScale();
    systematics->PrintSystematics_EWCorr();

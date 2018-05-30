@@ -71,8 +71,15 @@ void prepare_systematics(TString inpath, TString outpath, TString mode)
 	// such that systematics variations are transparent to all classifiers that run on this file later on
 	if(mode == "JEC_UP")
 	{
+	    // scale the jet pt up here
+	    for(unsigned int j = 0; j < buffer -> JetPt -> size(); j++)
+	    {
+		buffer -> JetPt -> at(j) = buffer -> JetJERUp -> at(j);
+	    }
+
 	    buffer -> nCleanedJetsPt30 = buffer -> nCleanedJetsPt30_jecUp;
 	    buffer -> nCleanedJetsPt30BTagged_bTagSF = buffer -> nCleanedJetsPt30BTagged_bTagSF_jecUp;
+	    buffer -> PFMET = buffer -> PFMET_jesUp;
 
 	    buffer -> pAux_JVBF_SIG_ghv1_1_JHUGen_JECNominal = buffer -> pAux_JVBF_SIG_ghv1_1_JHUGen_JECUp;
             buffer -> p_JVBF_SIG_ghv1_1_JHUGen_JECNominal = buffer -> p_JVBF_SIG_ghv1_1_JHUGen_JECUp;
@@ -140,8 +147,15 @@ void prepare_systematics(TString inpath, TString outpath, TString mode)
 	}
 	else if(mode == "JEC_DN")
 	{
+            // scale the jet pt down here
+	    for(unsigned int j = 0; j < buffer -> JetPt -> size(); j++)
+	    {
+		buffer -> JetPt -> at(j) = buffer -> JetJERDown -> at(j);
+	    }
+
 	    buffer -> nCleanedJetsPt30 = buffer -> nCleanedJetsPt30_jecDn;
 	    buffer -> nCleanedJetsPt30BTagged_bTagSF = buffer -> nCleanedJetsPt30BTagged_bTagSF_jecDn;
+	    buffer -> PFMET = buffer -> PFMET_jesDn;
 
 	    buffer -> pAux_JVBF_SIG_ghv1_1_JHUGen_JECNominal = buffer -> pAux_JVBF_SIG_ghv1_1_JHUGen_JECDn;
             buffer -> p_JVBF_SIG_ghv1_1_JHUGen_JECNominal = buffer -> p_JVBF_SIG_ghv1_1_JHUGen_JECDn;
