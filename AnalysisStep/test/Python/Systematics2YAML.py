@@ -34,8 +34,8 @@ class Systematics2YAML:
 
 def main():
 
-    if len(sys.argv) != 2:
-        print "Error: exactly 1 argument is required"
+    if len(sys.argv) != 3:
+        print "Error: exactly 2 arguments are required"
     
     # global settings
     categories = ["UnTagged", "VBF1jTagged", "VBF2jTagged", "VHLeptTagged", "VHHadrTagged", "ttHLeptTagged", "ttHHadrTagged", "VHMETTagged"]
@@ -53,7 +53,8 @@ def main():
                  'ggZZ': 'ggZZ_hzz'}
 
     input_file = sys.argv[1]
-    output_path = os.path.dirname(input_file)
+    output_path = sys.argv[2]
+    # output_path = os.path.dirname(input_file)
     
     output_file_expt = os.path.join(output_path, "systematics_expt_13TeV.yaml")
     output_file_th = os.path.join(output_path, "systematics_theory_13TeV.yaml")
@@ -67,6 +68,27 @@ def main():
     # --------------------------------
     # PileUp
     # --------------------------------
+    # the global, inclusive one
+    source_syst_name = 'PileUp'
+    YAML_syst_name = 'CMS_PileUp'
+    syst_type = 'lnN'
+    syst_expt.add_systematics(YAML_syst_name)
+
+    for category in categories:
+        syst_expt.add_category(YAML_syst_name, category)
+        cur_sect = confhandler.get_section(source_syst_name + ": " + "inclusive")
+
+        syst_expt.add_category_entry(YAML_syst_name, category, {'type': syst_type})
+
+        for process in processes.keys():
+            val_list = ConfigFileUtils.parse_list(cur_sect[process], lambda x: float(x))
+            val_string = str(val_list[0]) + "/" + str(val_list[1])
+            
+            if not(val_list[0] == 1.0 and val_list[1] == 1.0):
+                syst_expt.add_category_entry(YAML_syst_name, category, {processes[process]: val_string})            
+
+
+    # for each category
     source_syst_name = 'PileUp'
     YAML_syst_name = 'CMS_PileUp_cat'
     syst_type = 'lnN'
@@ -329,11 +351,15 @@ def main():
 
         syst_th.add_category_entry(YAML_syst_name, category, {'type': syst_type})
 
-        for process in ["ggH"]:
-            val = float(cur_sect[process])
+        process = "ggH"
+        val = float(cur_sect[process])
 
-            if not(val == 1.0):
-                syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+
+        # can use the same value as well for the ggZZ background! (here and in the following)
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes["ggZZ"]: val})            
 
     source_syst_name = 'THU_ggH_Res'
     YAML_syst_name = 'THU_ggH_Res'
@@ -346,12 +372,14 @@ def main():
 
         syst_th.add_category_entry(YAML_syst_name, category, {'type': syst_type})
 
-        for process in ["ggH"]:
-            val = float(cur_sect[process])
+        process = "ggH"
+        val = float(cur_sect[process])
 
-            if not(val == 1.0):
-                syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
 
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes["ggZZ"]: val})            
 
     source_syst_name = 'THU_ggH_Mig01'
     YAML_syst_name = 'THU_ggH_Mig01'
@@ -364,11 +392,14 @@ def main():
 
         syst_th.add_category_entry(YAML_syst_name, category, {'type': syst_type})
 
-        for process in ["ggH"]:
-            val = float(cur_sect[process])
+        process = "ggH"
+        val = float(cur_sect[process])
 
-            if not(val == 1.0):
-                syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes["ggZZ"]: val})            
 
     source_syst_name = 'THU_ggH_Mig12'
     YAML_syst_name = 'THU_ggH_Mig12'
@@ -381,11 +412,14 @@ def main():
 
         syst_th.add_category_entry(YAML_syst_name, category, {'type': syst_type})
 
-        for process in ["ggH"]:
-            val = float(cur_sect[process])
+        process = "ggH"
+        val = float(cur_sect[process])
 
-            if not(val == 1.0):
-                syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes["ggZZ"]: val})            
 
     source_syst_name = 'THU_ggH_VBF2j'
     YAML_syst_name = 'THU_ggH_VBF2j'
@@ -398,11 +432,14 @@ def main():
 
         syst_th.add_category_entry(YAML_syst_name, category, {'type': syst_type})
 
-        for process in ["ggH"]:
-            val = float(cur_sect[process])
+        process = "ggH"
+        val = float(cur_sect[process])
 
-            if not(val == 1.0):
-                syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes["ggZZ"]: val})            
 
     source_syst_name = 'THU_ggH_VBF3j'
     YAML_syst_name = 'THU_ggH_VBF3j'
@@ -415,11 +452,14 @@ def main():
 
         syst_th.add_category_entry(YAML_syst_name, category, {'type': syst_type})
 
-        for process in ["ggH"]:
-            val = float(cur_sect[process])
+        process = "ggH"
+        val = float(cur_sect[process])
 
-            if not(val == 1.0):
-                syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes["ggZZ"]: val})            
 
     source_syst_name = 'THU_ggH_PT60'
     YAML_syst_name = 'THU_ggH_PT60'
@@ -432,11 +472,14 @@ def main():
 
         syst_th.add_category_entry(YAML_syst_name, category, {'type': syst_type})
 
-        for process in ["ggH"]:
-            val = float(cur_sect[process])
+        process = "ggH"
+        val = float(cur_sect[process])
 
-            if not(val == 1.0):
-                syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes["ggZZ"]: val})            
 
     source_syst_name = 'THU_ggH_PT120'
     YAML_syst_name = 'THU_ggH_PT120'
@@ -449,11 +492,14 @@ def main():
 
         syst_th.add_category_entry(YAML_syst_name, category, {'type': syst_type})
 
-        for process in ["ggH"]:
-            val = float(cur_sect[process])
+        process = "ggH"
+        val = float(cur_sect[process])
 
-            if not(val == 1.0):
-                syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes["ggZZ"]: val})            
 
     source_syst_name = 'THU_ggH_qmtop'
     YAML_syst_name = 'THU_ggH_qmtop'
@@ -466,11 +512,14 @@ def main():
 
         syst_th.add_category_entry(YAML_syst_name, category, {'type': syst_type})
 
-        for process in ["ggH"]:
-            val = float(cur_sect[process])
+        process = "ggH"
+        val = float(cur_sect[process])
 
-            if not(val == 1.0):
-                syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes[process]: val})            
+
+        if not(val == 1.0):
+            syst_th.add_category_entry(YAML_syst_name, category, {processes["ggZZ"]: val})            
 
     syst_th.save(output_file_th)
 

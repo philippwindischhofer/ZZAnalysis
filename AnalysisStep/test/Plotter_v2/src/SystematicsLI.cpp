@@ -31,63 +31,63 @@ TString SystematicsLI::ChangeFolder(TString original, TString new_folder)
 
 void SystematicsLI::SetPackagePath(TString package_path, TString engine)
 {
-    // config_file_path = package_path + "settings.conf";
-    // calibration_dir = package_path + "calibration/";
-    // priors_file_path = package_path + "priors_" + engine + "/priors_bkg.txt";
+    config_file_path = package_path + "settings.conf";
+    calibration_dir = package_path + "calibration/";
+    priors_file_path = package_path + "priors_" + engine + "/priors.txt";
 
-    refclass = new Mor18Classifier();
-    // refclass = new Mor18LIClassifier(calibration_dir, config_file_path, engine);
+    //refclass = new Mor18Classifier();
+    refclass = new Mor18LIClassifier(calibration_dir, config_file_path, engine);
 
     // // load priors here and assign them etc.
-    // ConfigFileHandler* handler = new ConfigFileHandler(priors_file_path, "read");
-    // float VBF_prior = handler -> GetField("VBF_prior");
-    // float ggH_prior = handler -> GetField("ggH_prior");
-    // float WHhadr_prior = handler -> GetField("WHhadr_prior");
-    // float ZHhadr_prior = handler -> GetField("ZHhadr_prior");
-    // float WHlept_prior = handler -> GetField("WHlept_prior");
-    // float ZHlept_prior = handler -> GetField("ZHlept_prior");
-    // float ZHMET_prior = handler -> GetField("ZHMET_prior");
-    // float ttHhadr_prior = handler -> GetField("ttHhadr_prior");
-    // float ttHlept_prior = handler -> GetField("ttHlept_prior");
-    // float bkg_prior = handler -> GetField("ZX_prior");
-    // float qq_prior = handler -> GetField("qq_prior");
+    ConfigFileHandler* handler = new ConfigFileHandler(priors_file_path, "read");
+    float VBF_prior = handler -> GetField("VBF_prior");
+    float ggH_prior = handler -> GetField("ggH_prior");
+    float WHhadr_prior = handler -> GetField("WHhadr_prior");
+    float ZHhadr_prior = handler -> GetField("ZHhadr_prior");
+    float WHlept_prior = handler -> GetField("WHlept_prior");
+    float ZHlept_prior = handler -> GetField("ZHlept_prior");
+    float ZHMET_prior = handler -> GetField("ZHMET_prior");
+    float ttHhadr_prior = handler -> GetField("ttHhadr_prior");
+    float ttHlept_prior = handler -> GetField("ttHlept_prior");
+    float bkg_prior = handler -> GetField("ZX_prior");
+    float qq_prior = handler -> GetField("qq_prior");
 
-    // std::cout << "-----------------------------------------------------------" << std::endl;
-    // std::cout << " using the following priors: " << std::endl;
-    // std::cout << " VBF_prior = " << VBF_prior << std::endl;
-    // std::cout << " ggH_prior = " << ggH_prior << std::endl;
-    // std::cout << " WHhadr_prior = " << WHhadr_prior << std::endl;
-    // std::cout << " ZHhadr_prior = " << ZHhadr_prior << std::endl;
-    // std::cout << " WHlept_prior = " << WHlept_prior << std::endl;
-    // std::cout << " ZHlept_prior = " << ZHlept_prior << std::endl;
-    // std::cout << " ZHMET_prior = " << ZHMET_prior << std::endl;
-    // std::cout << " ttHhadr_prior = " << ttHhadr_prior << std::endl;
-    // std::cout << " ttHlept_prior = " << ttHlept_prior << std::endl;
-    // std::cout << " ZX_prior = " << bkg_prior << std::endl;
-    // std::cout << " qq_prior = " << qq_prior << std::endl;
-    // std::cout << "-----------------------------------------------------------" << std::endl;
+    std::cout << "-----------------------------------------------------------" << std::endl;
+    std::cout << " using the following priors: " << std::endl;
+    std::cout << " VBF_prior = " << VBF_prior << std::endl;
+    std::cout << " ggH_prior = " << ggH_prior << std::endl;
+    std::cout << " WHhadr_prior = " << WHhadr_prior << std::endl;
+    std::cout << " ZHhadr_prior = " << ZHhadr_prior << std::endl;
+    std::cout << " WHlept_prior = " << WHlept_prior << std::endl;
+    std::cout << " ZHlept_prior = " << ZHlept_prior << std::endl;
+    std::cout << " ZHMET_prior = " << ZHMET_prior << std::endl;
+    std::cout << " ttHhadr_prior = " << ttHhadr_prior << std::endl;
+    std::cout << " ttHlept_prior = " << ttHlept_prior << std::endl;
+    std::cout << " ZX_prior = " << bkg_prior << std::endl;
+    std::cout << " qq_prior = " << qq_prior << std::endl;
+    std::cout << "-----------------------------------------------------------" << std::endl;
 
-    // Mor18LIClassifier* refclass18 = static_cast<Mor18LIClassifier*>(refclass);
-    // refclass18 -> SetEngineParameter("min_iterations", 25);
-    // refclass18 -> SetEngineParameter("max_iterations", 125);
+    Mor18LIClassifier* refclass18 = static_cast<Mor18LIClassifier*>(refclass);
+    refclass18 -> SetEngineParameter("min_iterations", 25);
+    refclass18 -> SetEngineParameter("max_iterations", 125);
 
-    // refclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior, qq_prior);
+    refclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior, qq_prior);
 }
 
 void SystematicsLI::FillSystematics(TString input_file_name)
 {
-    std::cout << "SystematicsLI::FillSystematics" << std::endl;
+    //std::cout << "SystematicsLI::FillSystematics" << std::endl;
     
     // --------------------------------------------------------------------
     //  read here the original file without and modifications of its parameters
     // --------------------------------------------------------------------
 
-    std::cout << "original input file name: " << input_file_name << std::endl;
+    //std::cout << "original input file name: " << input_file_name << std::endl;
 
     TString cur_input_file_name = input_file_name;
     input_file = new TFile(cur_input_file_name);
 
-    std::cout << "currently reading COMMON from: " << cur_input_file_name;
+    //std::cout << "currently reading COMMON from: " << cur_input_file_name;
 
     hCounters = (TH1F*)input_file->Get("ClassTree/Counters");
     n_gen_events = (Long64_t)hCounters->GetBinContent(1);
@@ -101,7 +101,7 @@ void SystematicsLI::FillSystematics(TString input_file_name)
     Long64_t nentries = fChain->GetEntriesFast();
 
     Long64_t nbytes = 0, nb = 0;
-	
+
     for (Long64_t jentry=0; jentry<nentries;jentry++)
     {
 	Long64_t ientry = LoadTree(jentry);
@@ -154,10 +154,6 @@ void SystematicsLI::FillSystematics(TString input_file_name)
 	_event_weight_DN = ( xsec * _k_factor * overallEventWeight * (PUWeight == 0. ? 0. : PUWeight_Dn/PUWeight)  ) / gen_sum_weights;
 	//if ( input_file_name.Contains("ggH") ) _event_weight *= ggH_NNLOPS_weight; // reweight POWHEG ggH to NNLOPS
 
-	//============================================================
-	// prepare inclusive yields for the remaining runs
-	//============================================================
-
 	// Sum yields
 	_expected_yield_PU[_current_production_mode][_current_category]           += _event_weight;
 	_expected_yield_PU_UP[_current_production_mode][_current_category]        += _event_weight_UP;
@@ -167,11 +163,16 @@ void SystematicsLI::FillSystematics(TString input_file_name)
 	_expected_yield_PU_UP[_current_production_mode][Settings::inclusive]      += _event_weight_UP;
 	_expected_yield_PU_DN[_current_production_mode][Settings::inclusive]      += _event_weight_DN;
 
-	// Final event weight
+	//============================================================
+	// prepare inclusive yields for the remaining runs
+	//============================================================
+
+	_k_factor = calculate_K_factor(input_file_name);
 	_event_weight    = ( xsec * _k_factor * overallEventWeight) / gen_sum_weights;
 	_expected_yield_JEC[_current_production_mode][_current_category]           += _event_weight;
 	_expected_yield_JEC[_current_production_mode][Settings::inclusive]    += _event_weight;	
 
+	_k_factor = calculate_K_factor(input_file_name);
 	_event_weight    = ( xsec * _k_factor * overallEventWeight) / gen_sum_weights;
 	_expected_yield_BTag[_current_production_mode][_current_category]           += _event_weight;
 	_expected_yield_BTag[_current_production_mode][Settings::inclusive]           += _event_weight;
@@ -509,6 +510,8 @@ void SystematicsLI::FillSystematics(TString input_file_name)
 	}
     }		
 
+    
+
     // --------------------------------------------------------------------
 
     //============================================================
@@ -518,7 +521,7 @@ void SystematicsLI::FillSystematics(TString input_file_name)
     cur_input_file_name = ChangeFolder(input_file_name, GetFolder(input_file_name) + "_JEC_UP");
     input_file = new TFile(cur_input_file_name);
 
-    std::cout << "currently reading JEC_UP from: " << cur_input_file_name << std::endl;
+    //std::cout << "currently reading JEC_UP from: " << cur_input_file_name << std::endl;
 
     hCounters = (TH1F*)input_file->Get("ClassTree/Counters");
     n_gen_events = (Long64_t)hCounters->GetBinContent(1);
@@ -588,7 +591,7 @@ void SystematicsLI::FillSystematics(TString input_file_name)
     cur_input_file_name = ChangeFolder(input_file_name, GetFolder(input_file_name) + "_JEC_DN");
     input_file = new TFile(cur_input_file_name);
 
-    std::cout << "currently reading JEC_DN from: " << cur_input_file_name << std::endl;
+    //std::cout << "currently reading JEC_DN from: " << cur_input_file_name << std::endl;
 
     hCounters = (TH1F*)input_file->Get("ClassTree/Counters");
     n_gen_events = (Long64_t)hCounters->GetBinContent(1);
@@ -660,7 +663,7 @@ void SystematicsLI::FillSystematics(TString input_file_name)
     cur_input_file_name = ChangeFolder(input_file_name, GetFolder(input_file_name) + "_BTag_UP");
     input_file = new TFile(cur_input_file_name);
 
-    std::cout << "currently reading BTag_UP from: " << cur_input_file_name << std::endl;
+    //std::cout << "currently reading BTag_UP from: " << cur_input_file_name << std::endl;
 
     hCounters = (TH1F*)input_file->Get("ClassTree/Counters");
     n_gen_events = (Long64_t)hCounters->GetBinContent(1);
@@ -730,7 +733,7 @@ void SystematicsLI::FillSystematics(TString input_file_name)
     cur_input_file_name = ChangeFolder(input_file_name, GetFolder(input_file_name) + "_BTag_DN");
     input_file = new TFile(cur_input_file_name);
 
-    std::cout << "currently reading BTag_DN from: " << cur_input_file_name << std::endl;
+    //std::cout << "currently reading BTag_DN from: " << cur_input_file_name << std::endl;
 
     hCounters = (TH1F*)input_file->Get("ClassTree/Counters");
     n_gen_events = (Long64_t)hCounters->GetBinContent(1);
@@ -795,12 +798,12 @@ void SystematicsLI::FillSystematics(TString input_file_name)
 	_expected_yield_BTag_DN[_current_production_mode][Settings::inclusive] += _event_weight_DN;
     }
 
-    cout << "[INFO] Systematics for " << input_file_name << " filled." << endl;
+    //cout << "[INFO] Systematics for " << input_file_name << " filled." << endl;
 }
 
 void SystematicsLI::FillSystematics_tuneUpDn(TString input_file_name)
 {
-    std::cout << "SystematicsLI::FillSystematics_tuneUpDn" << std::endl;
+    //std::cout << "SystematicsLI::FillSystematics_tuneUpDn" << std::endl;
 
     input_file = new TFile(input_file_name);
 
@@ -876,5 +879,5 @@ void SystematicsLI::FillSystematics_tuneUpDn(TString input_file_name)
 	
     } // end for loop
     
-    cout << "[INFO] Systematics for " << input_file_name << " filled." << endl;
+    //cout << "[INFO] Systematics for " << input_file_name << " filled." << endl;
 }

@@ -24,39 +24,37 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   //TString path = "/data_CMS/cms/wind/180528_optimized_hyperparameters_selvars_leading_jets_metfix_merged/optimized/augmentation_test/";
-   TString path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/";
+   TString package_path = "/data_CMS/cms/wind/180531_optimized_hyperparameters_systematics_packaged/";
+   TString engine = "robin";
+   TString path = package_path + "CJLST_NTuples/";
+
+   //TString path = "/data_CMS/cms/wind/180528_optimized_hyperparameters_selvars_leading_jets_metfix_merged_systematics/optimized/augmentation_test/";
+   //TString path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/";
    TString file_name = "/ZZ4lAnalysis.root";
 	
    // Signal
-   TString ggH125         = path + "ggH125"          + file_name;
    TString ggH125ext      = path + "ggH125ext"       + file_name;
    TString ggH125_TU      = path + "ggH125_tuneup"   + file_name;
    TString ggH125_TD      = path + "ggH125_tunedown" + file_name;
 	
-   TString VBFH125        = path + "VBFH125"          + file_name;
    TString VBFH125ext     = path + "VBFH125ext"       + file_name;
    TString VBFH125_TU     = path + "VBFH125_tuneup"   + file_name;
    TString VBFH125_TD     = path + "VBFH125_tunedown" + file_name;
 	
-   TString WpH125         = path + "WplusH125"          + file_name;
    TString WpH125ext      = path + "WplusH125ext"       + file_name;
    TString WpH125_TU      = path + "WplusH125_tuneup"   + file_name;
    TString WpH125_TD      = path + "WplusH125_tunedown" + file_name;
 	
-   TString WmH125         = path + "WminusH125ext"       + file_name;
    TString WmH125ext      = path + "WminusH125ext"       + file_name;
    TString WmH125_TU      = path + "WminusH125_tuneup"   + file_name;
    TString WmH125_TD      = path + "WminusH125_tunedown" + file_name;
 
-   TString ZH125          = path + "ZH125"          + file_name;
    TString ZH125ext       = path + "ZH125ext"       + file_name;
 
    // don't have these available!!
    // TString ZH125_TU       = path + "ZH125_tuneup"   + file_name;
    // TString ZH125_TD       = path + "ZH125_tunedown" + file_name;
 	
-   TString ttH125         = path + "ttH125"          + file_name;
    TString ttH125ext      = path + "ttH125ext"       + file_name;
    TString ttH125_TU      = path + "ttH125_tuneup"   + file_name;
    TString ttH125_TD      = path + "ttH125_tunedown" + file_name;
@@ -75,10 +73,10 @@ int main( int argc, char *argv[] )
    TString ggZZ2e2tau  = path + "ggTo2e2tau_Contin_MCFM701"  + file_name;
    TString ggZZ2mu2tau = path + "ggTo2mu2tau_Contin_MCFM701" + file_name;
 	
-   Systematics* systematics = new Systematics();
+   //Systematics* systematics = new Systematics();
    
-   //SystematicsLI* systematics = new SystematicsLI();
-   //systematics -> SetPackagePath("/data_CMS/cms/wind/180528_optimized_hyperparameters_selvars_leading_jets_metfix_merged/optimized/", "robin");
+   SystematicsLI* systematics = new SystematicsLI();
+   systematics -> SetPackagePath(package_path, engine);
 		
 //====================
 // Print Systematics
@@ -91,7 +89,9 @@ int main( int argc, char *argv[] )
    systematics->FillSystematics(ZH125ext);
    systematics->FillSystematics(ttH125ext);
    systematics->FillSystematics(bbH125);
+
    systematics->FillSystematics(tqH125);
+
    systematics->FillSystematics(ZZTo4l);
    systematics->FillSystematics(ggZZ4e);
    systematics->FillSystematics(ggZZ4mu);
@@ -108,9 +108,6 @@ int main( int argc, char *argv[] )
    systematics->FillSystematics_tuneUpDn(WpH125_TD);
    systematics->FillSystematics_tuneUpDn(WmH125_TU);
    systematics->FillSystematics_tuneUpDn(WmH125_TD);
-
-//	systematics->FillSystematics_tuneUpDn(ZH125_TU);
-//	systematics->FillSystematics_tuneUpDn(ZH125_TD);
 
    systematics->FillSystematics_tuneUpDn(ttH125_TU);
    systematics->FillSystematics_tuneUpDn(ttH125_TD);

@@ -15,7 +15,7 @@ def main():
     dest_path = sys.argv[1]
 
     # global settings:
-    source_path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/"
+    source_path = "/data_CMS/cms/wind/CJLST_NTuples_prepared_systematics/"
     bin_dir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
     scrambler = os.path.join(bin_dir, "run_scrambler")
     chunk_extractor = os.path.join(bin_dir, "run_chunk_extractor")
@@ -80,21 +80,21 @@ def main():
     trainval_dir = os.path.join(dest_path, "trainval/")
     temp_dir = os.path.join(dest_path, "temp/")
 
-    # # create these directories
-    # if not os.path.exists(train_dir):
-    #     os.makedirs(train_dir)
+    # create these directories
+    if not os.path.exists(train_dir):
+        os.makedirs(train_dir)
     
-    # if not os.path.exists(validation_dir):
-    #     os.makedirs(validation_dir)
+    if not os.path.exists(validation_dir):
+        os.makedirs(validation_dir)
     
-    # if not os.path.exists(test_dir):
-    #     os.makedirs(test_dir)
+    if not os.path.exists(test_dir):
+        os.makedirs(test_dir)
     
-    # if not os.path.exists(trainval_dir):
-    #     os.makedirs(trainval_dir)
+    if not os.path.exists(trainval_dir):
+        os.makedirs(trainval_dir)
     
-    # if not os.path.exists(temp_dir):
-    #     os.makedirs(temp_dir)
+    if not os.path.exists(temp_dir):
+        os.makedirs(temp_dir)
 
     # training_files = [cur_file for cur_file in confhandler.get_sections() if "Global" not in cur_file]
     # available_files = next(os.walk(source_path))[1]
