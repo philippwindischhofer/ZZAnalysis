@@ -26,6 +26,10 @@
   <lib name="class_lib"/>
 </bin>
 
+<bin name="run_migration_matrix_plotter" file="../test/MigrationMatrixPlotter/run_migration_matrix_plotter.cpp">
+  <lib name="class_lib"/>
+</bin>
+
 <bin name="run_roc_plotter_me_optimization" file="../test/ROCPlotterMEOptimization/run_roc_plotter_me_optimization.cpp">
   <lib name="class_lib"/>
 </bin>

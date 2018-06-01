@@ -135,11 +135,11 @@ void Systematics::FillSystematics( TString input_file_name)
 {
     input_file = new TFile(input_file_name);
 
-    hCounters = (TH1F*)input_file->Get("ClassTree/Counters");
+    hCounters = (TH1F*)input_file->Get("ZZTree/Counters");
     n_gen_events = (Long64_t)hCounters->GetBinContent(1);
     gen_sum_weights = (Long64_t)hCounters->GetBinContent(40);
 	
-    input_tree = (TTree*)input_file->Get("ClassTree/candTree");
+    input_tree = (TTree*)input_file->Get("ZZTree/candTree");
     Init( input_tree, input_file_name );
 	
     if (fChain == 0) return;
@@ -704,11 +704,11 @@ void Systematics::FillSystematics_tuneUpDn( TString input_file_name)
 {
     input_file = new TFile(input_file_name);
 
-    hCounters = (TH1F*)input_file->Get("ClassTree/Counters");
+    hCounters = (TH1F*)input_file->Get("ZZTree/Counters");
     n_gen_events = (Long64_t)hCounters->GetBinContent(1);
     gen_sum_weights = (Long64_t)hCounters->GetBinContent(40);
 	
-    input_tree = (TTree*)input_file->Get("ClassTree/candTree");
+    input_tree = (TTree*)input_file->Get("ZZTree/candTree");
     Init( input_tree, input_file_name );
 	
     if (fChain == 0) return;

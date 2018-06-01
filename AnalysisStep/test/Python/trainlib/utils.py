@@ -3,11 +3,11 @@ from root_numpy import root2array, root2rec, tree2array
 import numpy as np
 import pandas as pd
 
-def get_size(filepath):
+def get_size(filepath, tree_name = "ClassTree"):
     print "skimming " + filepath
     f = TFile.Open(filepath)
 
-    tree_name = "ClassTree"
+    #tree_name = "ClassTree"
 
     size = f.Get(tree_name + "/candTree").GetEntries()
     f.Close()

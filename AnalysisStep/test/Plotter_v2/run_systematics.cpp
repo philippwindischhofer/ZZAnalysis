@@ -24,12 +24,13 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   TString package_path = "/data_CMS/cms/wind/180531_optimized_hyperparameters_systematics_packaged/";
-   TString engine = "robin";
-   TString path = package_path + "CJLST_NTuples/";
+   // TString package_path = "/data_CMS/cms/wind/180531_optimized_hyperparameters_systematics_packaged/";
+   // TString engine = "robin";
+   // TString path = package_path + "CJLST_NTuples/";
 
    //TString path = "/data_CMS/cms/wind/180528_optimized_hyperparameters_selvars_leading_jets_metfix_merged_systematics/optimized/augmentation_test/";
    //TString path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/";
+   TString path = "/data_CMS/cms/wind/MC_180218/";
    TString file_name = "/ZZ4lAnalysis.root";
 	
    // Signal
@@ -73,10 +74,10 @@ int main( int argc, char *argv[] )
    TString ggZZ2e2tau  = path + "ggTo2e2tau_Contin_MCFM701"  + file_name;
    TString ggZZ2mu2tau = path + "ggTo2mu2tau_Contin_MCFM701" + file_name;
 	
-   //Systematics* systematics = new Systematics();
+   Systematics* systematics = new Systematics();
    
-   SystematicsLI* systematics = new SystematicsLI();
-   systematics -> SetPackagePath(package_path, engine);
+   //SystematicsLI* systematics = new SystematicsLI();
+   //systematics -> SetPackagePath(package_path, engine);
 		
 //====================
 // Print Systematics
