@@ -203,6 +203,18 @@ int main(int argc, char *argv[])
 
     TCanvas* canv = new TCanvas("canv", "canv", 10, 10, 800, 600);
     gStyle -> SetOptStat(0);
+    canv -> SetTicks(1, 1);
+
+    // put the nice color palette
+    int num_colors = 3;
+    double stops[] = {0, 0.5, 1.0};
+    double reds[] = {0.9686274528503418,0.41708574, 0.031372550874948502};
+    double greens[] = {0.9843137264251709, 0.68063055, 0.18823529779911041};
+    double blues[] = {1.00, 0.83823146, 0.41960784792900085};
+    int num_internal_colors = 150;
+
+    TColor::CreateGradientColorTable(num_colors, stops, reds, greens, blues, num_internal_colors);
+
     //gStyle -> SetPalette(kOcean);
     //TColor::InvertPalette();
 
@@ -259,6 +271,14 @@ int main(int argc, char *argv[])
 	{
 	    x = migration_matrix -> GetXaxis() -> GetBinCenter(Mor18_cat + 1);
 	    y = migration_matrix -> GetYaxis() -> GetBinCenter(bayes_cat + 1);
+	    if(migration_matrix -> GetBinContent(Mor18_cat + 1, bayes_cat + 1) > 0.8)
+	    {
+		t.SetTextColor(kWhite);
+	    }
+	    else
+	    {
+		t.SetTextColor(kBlack);
+	    }
 	    t.DrawLatex(x, y, Form("%.2f", migration_matrix -> GetBinContent(Mor18_cat + 1, bayes_cat + 1)));
 	}
 	std::cout << std::endl;

@@ -110,9 +110,9 @@ int main(int argc, char *argv[])
 
     refclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior, qq_prior);
 
-    Mor18Config* conf = new Mor18Config(MCpath, 41.37, true, mass_point);
-    Mor18Config* conf_S = new Mor18Config(MCpath, 41.37, false, mass_point);
-    Mor18Config* conf_all = new Mor18Config(MCpath, 41.37, true, mass_point, true);
+    Mor18Config* conf = new Mor18Config(MCpath, 41.53, true, mass_point);
+    Mor18Config* conf_S = new Mor18Config(MCpath, 41.53, false, mass_point);
+    Mor18Config* conf_all = new Mor18Config(MCpath, 41.53, true, mass_point, true);
 
     // generate all plots on the validation dataset only! (i.e. the second half of each datafile)
     PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "105 GeV < m_{4#font[12]{l}} < 140 GeV", mZZ_cut, conf, start_fraction, end_fraction, false);

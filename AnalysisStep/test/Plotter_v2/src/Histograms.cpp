@@ -3454,23 +3454,23 @@ void Histograms::FillYieldGraphs( float M4l_down, float M4l_up , TString fit_opt
             
          } // i_fs 
 			
-			c->cd();
-			pav->AddText(_s_production_mode_plotlabel[i_prod_mode] + ", " + _s_category_plotlabel[i_cat]);
-			
-			yields_graph[Settings::fs2e2mu][i_cat][i_prod_mode]->Draw("AP");
-			yields_graph[Settings::fs4e][i_cat][i_prod_mode]->Draw("P");
-			yields_graph[Settings::fs4mu][i_cat][i_prod_mode]->Draw("P");
-			pav->Draw();
-			lgd->Draw();
-			
-			TString fit_name = _s_production_mode.at(i_prod_mode) + "_" + _s_category.at(i_cat);
-			
-			 _out_file_name = "Fits/" + _s_production_mode.at(i_prod_mode) + "_" + _s_category.at(i_cat);
-			 SavePlots(c, _out_file_name, "Fits");
-			
-			pav->Clear();
-			lgd->Clear();
-			c->Clear();
+	 c->cd();
+	 pav->AddText(_s_production_mode_plotlabel[i_prod_mode] + " in " + _s_category_plotlabel[i_cat] + " category");
+	 
+	 yields_graph[Settings::fs2e2mu][i_cat][i_prod_mode]->Draw("AP");
+	 yields_graph[Settings::fs4e][i_cat][i_prod_mode]->Draw("P");
+	 yields_graph[Settings::fs4mu][i_cat][i_prod_mode]->Draw("P");
+	 pav->Draw();
+	 lgd->Draw();
+	 
+	 TString fit_name = _s_production_mode.at(i_prod_mode) + "_" + _s_category.at(i_cat);
+	 
+	 _out_file_name = "Fits/" + _s_production_mode.at(i_prod_mode) + "_" + _s_category.at(i_cat);
+	 SavePlots(c, _out_file_name, "Fits");
+	 
+	 pav->Clear();
+	 lgd->Clear();
+	 c->Clear();
             
       } // i_cat
    } // i_prod_mode
