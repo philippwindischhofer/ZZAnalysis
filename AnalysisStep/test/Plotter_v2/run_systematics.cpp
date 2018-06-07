@@ -24,8 +24,9 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   TString package_path = "/data_CMS/cms/wind/180531_optimized_hyperparameters_systematics_packaged/";
-   TString engine = "tree";
+   //TString package_path = "/data_CMS/cms/wind/180531_optimized_hyperparameters_systematics_packaged/";
+   TString package_path = "/data_CMS/cms/wind/180607_optimized_hyperparameters_allvars/";
+   TString engine = "robin";
    TString path = package_path + "CJLST_NTuples/";
 
    //TString path = "/data_CMS/cms/wind/180528_optimized_hyperparameters_selvars_leading_jets_metfix_merged_systematics/optimized/augmentation_test/";
