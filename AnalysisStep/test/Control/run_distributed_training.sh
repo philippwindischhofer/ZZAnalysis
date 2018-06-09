@@ -6,6 +6,7 @@
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
 INPUT_CONFIG_FILE=$2
+HYPERPARAM_CONFIG_FILE=$3
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
@@ -17,6 +18,7 @@ BIN_DIR=$CAMPAIGN_DIR"bin/"
 
 # the needed part from the python sources
 CONFIG_FILE_GEN="ConfigFileSweeper.py"
+CONFIG_FILE_GEN_NOSWEEP="ConfigFileCreator.py"
 TRAINING_CONFIG_FILE_GEN="DistributeTrainingSettings.py"
 TRAINER="SampleTraining.py"
 PYTHON_LIB="trainlib"
@@ -28,10 +30,16 @@ echo "preparing filesystem for training campaign"
 
 mkdir -p $BIN_DIR
 cp -r $PYTHON_DIR_ORIGINAL$PYTHON_LIB $BIN_DIR
-cp $PYTHON_DIR_ORIGINAL$TRAINER $PYTHON_DIR_ORIGINAL$CONFIG_FILE_GEN $PYTHON_DIR_ORIGINAL$TRAINING_CONFIG_FILE_GEN $BIN_DIR
+cp $PYTHON_DIR_ORIGINAL$TRAINER $PYTHON_DIR_ORIGINAL$CONFIG_FILE_GEN $PYTHON_DIR_ORIGINAL$CONFIG_FILE_GEN_NOSWEEP $PYTHON_DIR_ORIGINAL$TRAINING_CONFIG_FILE_GEN $BIN_DIR
 
 # then, run the generation of the sub-config files
-#python $BIN_DIR$CONFIG_FILE_GEN $CAMPAIGN_DIR $INPUT_CONFIG_FILE
+if [[ -z "$HYPERPARAM_CONFIG_FILE" ]]; then
+    # no hyperparameter configs given -> use the campaign config file to sweep them
+    python $BIN_DIR$CONFIG_FILE_GEN $CAMPAIGN_DIR $INPUT_CONFIG_FILE
+else
+    # have fully specified hyperparameters; ignore any campaign config file that might presribe to sweep them
+    python $BIN_DIR$CONFIG_FILE_GEN_NOSWEEP $CAMPAIGN_DIR $INPUT_CONFIG_FILE $HYPERPARAM_CONFIG_FILE
+fi
 
 cd $CAMPAIGN_DIR
 
@@ -73,7 +81,7 @@ JOBS=`find * | grep run_training.sh$`
 for JOB in $JOBS
 do
     echo "launching training for " $CAMPAIGN_DIR$JOB
-    $JOB_SUBMITTER $CAMPAIGN_DIR$JOB
+    #$JOB_SUBMITTER $CAMPAIGN_DIR$JOB
 done
 
 cd $CURRENT_DIR

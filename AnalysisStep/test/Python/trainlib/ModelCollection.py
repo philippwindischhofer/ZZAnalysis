@@ -33,13 +33,19 @@ class ModelCollection:
         self.default_value = default_value
 
     @classmethod
-    def from_discriminant_endpieces(cls, cat_a, ep_a, cat_b, ep_b, input_config_file = None):
+    def from_discriminant_endpieces(cls, cat_a, ep_a, cat_b, ep_b, input_config_file = None, hyperparam_config_file = None):
         # open the input config file, if specified
         if input_config_file is not None:
             confhandler = ConfigFileHandler()
             confhandler.load_configuration(input_config_file)
         else:
             confhandler = None
+
+        if hyperparam_config_file is not None:
+            confhandler_hyperparams = ConfigFileHandler()
+            confhandler_hyperparams.load_configuration(hyperparam_config_file)
+        else:
+            confhandler_hyperparams = None
 
         mcoll_name = "D_" + cat_a.name + "_" + cat_b.name + "_ML"
         H1_stream = cat_a.datastream
@@ -80,6 +86,15 @@ class ModelCollection:
                 else:
                     print "-------------------------------------------------------------------------------"
                     print "!!! no input configuration entry found for model " + str(model_name) + " !!!"
+                    print "-------------------------------------------------------------------------------"
+
+            if confhandler_hyperparams is not None:
+                if model_name in confhandler_hyperparams.get_sections():
+                    print "found hyperparameter configuration entry for model " + str(model_name)
+                    hyperparams = ConfigFileUtils.parse_dict(confhandler_hyperparams.get_field(model_name, "hyperparameters"), lambda x: float(x))
+                else:
+                    print "-------------------------------------------------------------------------------"
+                    print "!!! no input hyperparameter entry found for model " + str(model_name) + " !!!"
                     print "-------------------------------------------------------------------------------"
             
             # now can construct all model components and add them to the collection
