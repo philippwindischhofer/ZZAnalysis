@@ -39,7 +39,15 @@ def main():
             cmd_file.write("#!/bin/bash\n")
             cmd_file.write(command)
 
-        output = sp.check_output([job_submitter, "-short", file_path])
+        while True:
+            try:
+                output = sp.check_output([job_submitter, "-short", file_path])
+                break
+            except sp.CalledProcessError:
+                print "-------------------------------------------------"
+                print " error submitting job, retrying ... "
+                print "-------------------------------------------------"
+
         print output
 
     def chunk_file(in_dir, out_root, base_name, number_chunks, cmd_dir):

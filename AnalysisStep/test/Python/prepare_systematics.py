@@ -18,7 +18,8 @@ def main():
     # list of files that will be processed by this script
     input_folders = ["ggH125ext", "VBFH125ext", "WplusH125ext", "WminusH125ext", "ZH125ext", "ttH125ext", "bbH125", "tqH125", "ZZTo4l", "ggTo4e_Contin_MCFM701", "ggTo4mu_Contin_MCFM701", "ggTo4tau_Contin_MCFM701", "ggTo2e2mu_Contin_MCFM701", "ggTo2e2tau_Contin_MCFM701", "ggTo2mu2tau_Contin_MCFM701"]
 
-    modes = ["JEC_UP", "JEC_DN", "BTag_UP", "BTag_DN"]
+    #modes = ["JEC_UP", "JEC_DN", "BTag_UP", "BTag_DN", "LEC_UP", "LEC_DN"]
+    modes = ["LEC_UP", "LEC_DN"]
 
     for input_folder in input_folders:
         for mode in modes:

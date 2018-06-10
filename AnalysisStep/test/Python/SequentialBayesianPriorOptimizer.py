@@ -51,7 +51,7 @@ priors_max = {}
 priors_max["ggh_prior"] = 3.0
 priors_max["tthhadr_prior"] = 0.4
 priors_max["tthlept_prior"] = 0.5
-priors_max["zhlept_prior"] = 0.6
+priors_max["zhlept_prior"] = 6.0
 priors_max["whlept_prior"] = 0.3
 priors_max["zhhadr_prior"] = 0.8
 priors_max["whhadr_prior"] = 0.8
@@ -576,7 +576,7 @@ def main():
     # then proceed with ZHlept and WHlept
     res = run_bayesian_optimization("VHlept", "evaluations_VHlept.txt", punzi_target_VHlept, {'zhlept_prior': (priors_min["zhlept_prior"], priors_max["zhlept_prior"]),
                                                                                               'whlept_prior': (priors_min["whlept_prior"], priors_max["whlept_prior"])}, 
-                                 init_points = 10, max_iterations = 40, patience = 40, alpha = 1.5e-6)
+                                 init_points = 10, max_iterations = 60, patience = 40, alpha = 1.5e-6)
     priors_best["zhlept_prior"] = res["zhlept_prior"]
     priors_best["whlept_prior"] = res["whlept_prior"]
     

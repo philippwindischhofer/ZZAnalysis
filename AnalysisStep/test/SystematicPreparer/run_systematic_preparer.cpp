@@ -18,6 +18,7 @@
 #include "TH1F.h"
 #include "TGraph.h"
 #include "TMultiGraph.h"
+#include "TRandom3.h"
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/me_discriminants.h>
@@ -228,6 +229,54 @@ void prepare_systematics(TString inpath, TString outpath, TString mode)
 	else if(mode == "BTag_DN")
 	{
 	    buffer -> nCleanedJetsPt30BTagged_bTagSF = buffer -> nCleanedJetsPt30BTagged_bTagSFDn;
+	}
+	else if(mode == "LEC_UP")
+	{
+	    for(unsigned int j = 0; j < buffer -> ExtraLepPt -> size(); j++)
+	    {
+		if(abs(buffer -> ExtraLepLepId -> at(j)) == 11)
+		{
+		    // have an electron: scale up by 0.3% in both barrel and endcap
+		    (buffer -> ExtraLepPt -> at(j)) *= (1 + 0.003);
+		}
+		else if(abs(buffer -> ExtraLepLepId -> at(j)) == 13)
+		{
+		    // have a muon: scale up by 5% * p_T / 1 TeV and smear by an additional 0.6%
+		    (buffer -> ExtraLepPt -> at(j)) *= (1 + 0.05 * (buffer -> ExtraLepPt -> at(j)) / 1000.0);
+
+		    TRandom3 rand;
+		    rand.SetSeed(abs(static_cast<int>(sin(buffer -> ExtraLepPhi -> at(j)) * 100000)));
+		    float smear = rand.Gaus(0, 1.);
+
+		    float sigma_up = 0.006 * (buffer -> ExtraLepPt -> at(j));
+
+		    buffer -> ExtraLepPt -> at(j) = std::max(0.0f, smear * sigma_up + buffer -> ExtraLepPt -> at(j));
+		}
+	    }
+	}
+	else if(mode == "LEC_DN")
+	{
+	    for(unsigned int j = 0; j < buffer -> ExtraLepPt -> size(); j++)
+	    {
+		if(abs(buffer -> ExtraLepLepId -> at(j)) == 11)
+		{
+		    // have an electron: scale down by 0.3% in both barrel and endcap
+		    (buffer -> ExtraLepPt -> at(j)) *= (1 - 0.003);
+		}
+		else if(abs(buffer -> ExtraLepLepId -> at(j)) == 13)
+		{
+		    // have a muon: scale down by 5% * p_T / 1 TeV and smear by an additional 0.6%
+		    (buffer -> ExtraLepPt -> at(j)) *= (1 - 0.05 * (buffer -> ExtraLepPt -> at(j)) / 1000.0);
+
+		    TRandom3 rand;
+		    rand.SetSeed(abs(static_cast<int>(sin(buffer -> ExtraLepPhi -> at(j)) * 100000)));
+		    float smear = rand.Gaus(0, 1.);
+
+		    float sigma_dn = 0.006 * (buffer -> ExtraLepPt -> at(j));
+
+		    buffer -> ExtraLepPt -> at(j) = std::max(0.0f, smear * sigma_dn + buffer -> ExtraLepPt -> at(j));
+		}
+	    }
 	}
 	else
 	{
