@@ -1,7 +1,21 @@
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/SystematicsLI.h>
 
-SystematicsLI::SystematicsLI()
-{ }
+SystematicsLI::SystematicsLI():Systematics()
+{ 
+    // prepare the vectors that will hold the different counts
+    std::vector<float> temp;
+    for(int i_prod = 0; i_prod < num_of_production_modes; i_prod++)
+    {
+	for(int i_cat = 0; i_cat < num_of_categories; i_cat++)
+	{
+	    temp.push_back(0);
+	}
+
+	_expected_yield_LEC.push_back(temp);
+	_expected_yield_LEC_UP.push_back(temp);
+	_expected_yield_LEC_DN.push_back(temp);
+    }
+}
 
 SystematicsLI::~SystematicsLI()
 { }
@@ -176,6 +190,11 @@ void SystematicsLI::FillSystematics(TString input_file_name)
 	_event_weight    = ( xsec * _k_factor * overallEventWeight) / gen_sum_weights;
 	_expected_yield_BTag[_current_production_mode][_current_category]           += _event_weight;
 	_expected_yield_BTag[_current_production_mode][Settings::inclusive]           += _event_weight;
+
+	_k_factor = calculate_K_factor(input_file_name);
+	_event_weight    = ( xsec * _k_factor * overallEventWeight) / gen_sum_weights;
+	_expected_yield_LEC[_current_production_mode][_current_category]           += _event_weight;
+	_expected_yield_LEC[_current_production_mode][Settings::inclusive]    += _event_weight;	
 
 	//============================================================
 	// muR Scale
@@ -510,7 +529,7 @@ void SystematicsLI::FillSystematics(TString input_file_name)
 	}
     }		
 
-    
+    delete input_file;
 
     // --------------------------------------------------------------------
 
@@ -584,6 +603,8 @@ void SystematicsLI::FillSystematics(TString input_file_name)
 
     }
 
+    delete input_file;
+
     //============================================================
     // read here the file with JEC_DN
     //============================================================
@@ -656,6 +677,8 @@ void SystematicsLI::FillSystematics(TString input_file_name)
 	_expected_yield_JEC_DN[_current_production_mode][Settings::inclusive] += _event_weight_DN;
     }
 
+    delete input_file;
+
     //============================================================
     // read here the file with BTag_UP
     //============================================================
@@ -725,6 +748,8 @@ void SystematicsLI::FillSystematics(TString input_file_name)
 	_expected_yield_BTag_UP[_current_production_mode][Settings::inclusive] += _event_weight_UP;
 
     }		
+    
+    delete input_file;
 
     //============================================================
     // read here the file with BTag_DN
@@ -797,6 +822,153 @@ void SystematicsLI::FillSystematics(TString input_file_name)
 	_expected_yield_BTag_DN[_current_production_mode][_current_category_BTag_DN] += _event_weight_DN;
 	_expected_yield_BTag_DN[_current_production_mode][Settings::inclusive] += _event_weight_DN;
     }
+
+    delete input_file;
+
+    //============================================================
+    // read here the file with LEC_UP
+    //============================================================
+    
+    cur_input_file_name = ChangeFolder(input_file_name, GetFolder(input_file_name) + "_LEC_UP");
+    input_file = new TFile(cur_input_file_name);
+
+    //std::cout << "currently reading LEC_UP from: " << cur_input_file_name << std::endl;
+
+    hCounters = (TH1F*)input_file->Get("ClassTree/Counters");
+    n_gen_events = (Long64_t)hCounters->GetBinContent(1);
+    gen_sum_weights = (Long64_t)hCounters->GetBinContent(40);
+	
+    input_tree = (TTree*)input_file->Get("ClassTree/candTree");
+    Init( input_tree, input_file_name );
+	
+    if (fChain == 0) return;
+
+    nentries = fChain->GetEntriesFast();
+
+    nbytes = 0, nb = 0;
+	
+    for (Long64_t jentry=0; jentry<nentries;jentry++)
+    {
+	Long64_t ientry = LoadTree(jentry);
+	if (ientry < 0) break;
+	nb = fChain->GetEntry(jentry);
+	nbytes += nb;
+		
+	if ( LepEta->size() != 4 )
+	{
+	    cout << "[ERROR] in event " << RunNumber << ":" << LumiNumber << ":" << EventNumber << ", stored " << LepEta->size() << " leptons instead of 4" << endl;
+	    continue;
+	}
+
+	if ( !(ZZsel >= 90) ) continue;
+	if ( ZZMass < 105. || ZZMass > 140. ) continue;
+
+	// Find current production mode
+	gen_assoc_lep_id_.push_back(GenAssocLep1Id);
+   	gen_assoc_lep_id_.push_back(GenAssocLep2Id);
+	_n_gen_assoc_lep = CountAssociatedLeptons();
+	_current_production_mode = find_current_production_mode( input_file_name, genExtInfo , _n_gen_assoc_lep);
+	gen_assoc_lep_id_.clear();
+		
+	// Final states
+	_current_final_state = FindFinalState();
+		
+	// Categories
+	for ( int j = 0; j < nCleanedJetsPt30; j++)
+	{
+	    jetPt[j] = JetPt->at(j);
+	    jetEta[j] = JetEta->at(j);
+	    jetPhi[j] = JetPhi->at(j);
+	    jetMass[j] = JetMass->at(j);
+	    jetQGL[j] = JetQGLikelihood->at(j);
+	    jetPgOverPq[j] = 1./JetQGLikelihood->at(j) - 1.;
+	}
+	
+	_current_category_LEC_UP = refclass -> ClassifyThisEvent(this);
+
+	// K factors
+	_k_factor = calculate_K_factor(input_file_name);
+
+	_event_weight_UP = ( xsec * _k_factor * overallEventWeight) / gen_sum_weights;
+	_expected_yield_LEC_UP[_current_production_mode][_current_category_LEC_UP] += _event_weight_UP;
+	_expected_yield_LEC_UP[_current_production_mode][Settings::inclusive] += _event_weight_UP;
+    }
+
+    delete input_file;
+
+    //============================================================
+    // read here the file with LEC_DN
+    //============================================================
+
+    cur_input_file_name = ChangeFolder(input_file_name, GetFolder(input_file_name) + "_LEC_DN");
+    input_file = new TFile(cur_input_file_name);
+
+    //std::cout << "currently reading LEC_DN from: " << cur_input_file_name << std::endl;
+
+    hCounters = (TH1F*)input_file->Get("ClassTree/Counters");
+    n_gen_events = (Long64_t)hCounters->GetBinContent(1);
+    gen_sum_weights = (Long64_t)hCounters->GetBinContent(40);
+	
+    input_tree = (TTree*)input_file->Get("ClassTree/candTree");
+    Init( input_tree, input_file_name );
+	
+    if (fChain == 0) return;
+
+    nentries = fChain->GetEntriesFast();
+
+    nbytes = 0, nb = 0;
+	
+    for (Long64_t jentry=0; jentry<nentries;jentry++)
+    {
+	Long64_t ientry = LoadTree(jentry);
+	if (ientry < 0) break;
+	nb = fChain->GetEntry(jentry);
+	nbytes += nb;
+		
+	if ( LepEta->size() != 4 )
+	{
+	    cout << "[ERROR] in event " << RunNumber << ":" << LumiNumber << ":" << EventNumber << ", stored " << LepEta->size() << " leptons instead of 4" << endl;
+	    continue;
+	}
+
+	if ( !(ZZsel >= 90) ) continue;
+	if ( ZZMass < 105. || ZZMass > 140. ) continue;
+
+	// Find current production mode
+	gen_assoc_lep_id_.push_back(GenAssocLep1Id);
+   	gen_assoc_lep_id_.push_back(GenAssocLep2Id);
+	_n_gen_assoc_lep = CountAssociatedLeptons();
+	_current_production_mode = find_current_production_mode( input_file_name, genExtInfo , _n_gen_assoc_lep);
+	gen_assoc_lep_id_.clear();
+		
+	// Final states
+	_current_final_state = FindFinalState();
+		
+	// Categories
+	for ( int j = 0; j < nCleanedJetsPt30; j++)
+	{
+	    jetPt[j] = JetPt->at(j);
+	    jetEta[j] = JetEta->at(j);
+	    jetPhi[j] = JetPhi->at(j);
+	    jetMass[j] = JetMass->at(j);
+	    jetQGL[j] = JetQGLikelihood->at(j);
+	    jetPgOverPq[j] = 1./JetQGLikelihood->at(j) - 1.;
+	}
+
+	_current_category_LEC_DN = refclass -> ClassifyThisEvent(this);
+		
+	// K factors
+	_k_factor = calculate_K_factor(input_file_name);
+
+	_event_weight_DN = ( xsec * _k_factor * overallEventWeight) / gen_sum_weights;
+	//if ( input_file_name.Contains("ggH") ) _event_weight *= ggH_NNLOPS_weight; // reweight POWHEG ggH to NNLOPS
+
+	// Sum yields
+	_expected_yield_LEC_DN[_current_production_mode][_current_category_LEC_DN] += _event_weight_DN;
+	_expected_yield_LEC_DN[_current_production_mode][Settings::inclusive] += _event_weight_DN;
+    }
+
+    delete input_file;
 
     //cout << "[INFO] Systematics for " << input_file_name << " filled." << endl;
 }
@@ -880,4 +1052,37 @@ void SystematicsLI::FillSystematics_tuneUpDn(TString input_file_name)
     } // end for loop
     
     //cout << "[INFO] Systematics for " << input_file_name << " filled." << endl;
+}
+
+void SystematicsLI::PrintSystematics_LEC()
+{
+    for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
+    {
+   	cout << "[LEC: " << _s_category.at(i_cat) << "]" << endl;
+	for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
+	{
+	    float lower;
+	    float upper;
+
+	    if(_expected_yield_LEC_UP[i_prod][i_cat] == 0.0 && _expected_yield_LEC[i_prod][i_cat] == 0.0)
+	    {
+		lower = 1.0;
+	    }
+	    else
+	    {
+		lower = (_expected_yield_LEC_UP[i_prod][i_cat]/_expected_yield_LEC_UP[i_prod][Settings::inclusive])/(_expected_yield_LEC[i_prod][i_cat]/_expected_yield_LEC[i_prod][Settings::inclusive]);
+	    }
+
+	    if(_expected_yield_LEC_DN[i_prod][i_cat] == 0.0 && _expected_yield_LEC[i_prod][i_cat] == 0.0)
+	    {
+		upper = 1.0;
+	    }
+	    else
+	    {
+		upper = (_expected_yield_LEC_DN[i_prod][i_cat]/_expected_yield_LEC_DN[i_prod][Settings::inclusive])/(_expected_yield_LEC[i_prod][i_cat]/_expected_yield_LEC[i_prod][Settings::inclusive]);
+	    }
+
+	    cout << _s_production_mode.at(i_prod)  << " = " << lower << "; " << upper << endl;
+	}
+    }
 }

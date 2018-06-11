@@ -48,7 +48,13 @@ public:
     void FillSystematics( TString );
     void FillSystematics_tuneUpDn( TString );
 
+    void PrintSystematics_LEC();
+
 private:
+    // for the new contribution of the lepton energy scale
+    std::vector<std::vector<float>> _expected_yield_LEC, _expected_yield_LEC_UP, _expected_yield_LEC_DN;
+    int _current_category_LEC_UP, _current_category_LEC_DN;
+
     TString ChangeFolder(TString, TString);
     TString GetFolder(TString);
 

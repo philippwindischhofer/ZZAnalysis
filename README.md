@@ -1,6 +1,11 @@
 ZZAnalysis
 ==========
 
+This is a modified version of the original [CJLST/ZZAnalysis](https://github.com/CJLST/ZZAnalysis), using Bayesian event categorization.
+
+Please see the [wiki](https://github.com/philippwindischhofer/ZZAnalysis/wiki) for the documentation.
+
+
 To install a complete CMSSW 8X area (including this package)
 ------------------------------
 Please use CMSSW_8_0_26_patch1.
@@ -50,7 +55,3 @@ git push origin miniAOD_80X
 ```
 
 Otherwise you can make a fork of the repository, develop therein, and make a pull request in the same way as for CMSSW.
-
-Code documentation
-------------------
-Please see the [gitHub wiki](https://github.com/CJLST/ZZAnalysis) for more documentation.

@@ -108,10 +108,31 @@ def main():
                 syst_expt.add_category_entry(YAML_syst_name, category, {processes[process]: val_string})            
 
     # --------------------------------
-    # Jet Scale
+    # Jet Energy Scale
     # --------------------------------
     source_syst_name = 'JEC'
     YAML_syst_name = 'CMS_scale_j_13TeV'
+    syst_type = 'lnN'
+    syst_expt.add_systematics(YAML_syst_name)
+
+    for category in categories:
+        syst_expt.add_category(YAML_syst_name, category)
+        cur_sect = confhandler.get_section(source_syst_name + ": " + category)
+
+        syst_expt.add_category_entry(YAML_syst_name, category, {'type': syst_type})
+
+        for process in processes.keys():
+            val_list = ConfigFileUtils.parse_list(cur_sect[process], lambda x: float(x))
+            val_string = str(val_list[0]) + "/" + str(val_list[1])
+
+            if not(val_list[0] == 1.0 and val_list[1] == 1.0):
+                syst_expt.add_category_entry(YAML_syst_name, category, {processes[process]: val_string})            
+
+    # --------------------------------
+    # Lepton Energy Scale
+    # --------------------------------
+    source_syst_name = 'LEC'
+    YAML_syst_name = 'CMS_scale_l_13TeV'
     syst_type = 'lnN'
     syst_expt.add_systematics(YAML_syst_name)
 

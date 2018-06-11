@@ -8,7 +8,8 @@ CAMPAIGN_DIR=$1
 
 #AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_ZX_qq/settings.conf"
 #AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_ZX_qq_syst/settings.conf"
-AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_with_systematics/settings.conf"
+#AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_with_systematics/settings.conf"
+AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_with_systematics_lepscale/settings.conf"
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
