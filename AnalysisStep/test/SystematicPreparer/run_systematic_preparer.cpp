@@ -232,17 +232,21 @@ void prepare_systematics(TString inpath, TString outpath, TString mode)
 	}
 	else if(mode == "LEC_UP")
 	{
+	    float s_e = 0.003;
+	    float s_mu = 0.05;
+
+	    // scale up all the associated leptons
 	    for(unsigned int j = 0; j < buffer -> ExtraLepPt -> size(); j++)
 	    {
 		if(abs(buffer -> ExtraLepLepId -> at(j)) == 11)
 		{
 		    // have an electron: scale up by 0.3% in both barrel and endcap
-		    (buffer -> ExtraLepPt -> at(j)) *= (1 + 0.003);
+		    (buffer -> ExtraLepPt -> at(j)) *= (1 + s_e);
 		}
 		else if(abs(buffer -> ExtraLepLepId -> at(j)) == 13)
 		{
 		    // have a muon: scale up by 5% * p_T / 1 TeV and smear by an additional 0.6%
-		    (buffer -> ExtraLepPt -> at(j)) *= (1 + 0.05 * (buffer -> ExtraLepPt -> at(j)) / 1000.0);
+		    (buffer -> ExtraLepPt -> at(j)) *= (1 + s_mu * (buffer -> ExtraLepPt -> at(j)) / 1000.0);
 
 		    TRandom3 rand;
 		    rand.SetSeed(abs(static_cast<int>(sin(buffer -> ExtraLepPhi -> at(j)) * 100000)));
@@ -253,9 +257,43 @@ void prepare_systematics(TString inpath, TString outpath, TString mode)
 		    buffer -> ExtraLepPt -> at(j) = std::max(0.0f, smear * sigma_up + buffer -> ExtraLepPt -> at(j));
 		}
 	    }
+
+	    // also scale up the invariant masses and p_t of the individual Z and ZZ candidates, for the worst case
+	    if(buffer -> Z1Flav == -121.0)
+	    {
+		// Z -> ee
+		buffer -> Z1Mass *= (1 + s_e);
+		buffer -> Z1Pt *= (1 + 2 * s_e);
+	    }
+	    else if(buffer -> Z1Flav == -169.0)
+	    {
+		// Z -> mumu
+		buffer -> Z1Mass *= (1 + s_mu * (buffer -> Z1Pt) / 1000.0);
+		buffer -> Z1Pt *= (1 + 2 * s_mu * (buffer -> Z1Pt) / 1000.0);
+	    }
+
+	    if(buffer -> Z2Flav == -121.0)
+	    {
+		// Z -> ee
+		buffer -> Z1Mass *= (1 + s_e);
+		buffer -> Z1Pt *= (1 + 2 * s_e);
+	    }
+	    else if(buffer -> Z2Flav == -169.0)
+	    {
+		// Z -> mumu
+		buffer -> Z2Mass *= (1 + s_mu * (buffer -> Z2Pt) / 1000.0);
+		buffer -> Z2Pt *= (1 + 2 * s_mu * (buffer -> Z2Pt) / 1000.0);
+	    }
+
+	    // scaling of the four-lepton invariant mass in the worst case
+	    buffer -> ZZPt *= (1 + 4 * s_e);
+	    buffer -> ZZMass *= (1 + s_e); // according to the AN, already this covers by far the actual variation
 	}
 	else if(mode == "LEC_DN")
 	{
+	    float s_e = 0.003;
+	    float s_mu = 0.05;
+
 	    for(unsigned int j = 0; j < buffer -> ExtraLepPt -> size(); j++)
 	    {
 		if(abs(buffer -> ExtraLepLepId -> at(j)) == 11)
@@ -277,6 +315,39 @@ void prepare_systematics(TString inpath, TString outpath, TString mode)
 		    buffer -> ExtraLepPt -> at(j) = std::max(0.0f, smear * sigma_dn + buffer -> ExtraLepPt -> at(j));
 		}
 	    }
+
+	    // also scale down the invariant masses and p_t of the individual Z and ZZ candidates
+	    // also scale up the invariant masses and p_t of the individual Z and ZZ candidates, for the worst case
+	    if(buffer -> Z1Flav == -121.0)
+	    {
+		// Z -> ee
+		buffer -> Z1Mass *= (1 - s_e);
+		buffer -> Z1Pt *= (1 - 2 * s_e);
+	    }
+	    else if(buffer -> Z1Flav == -169.0)
+	    {
+		// Z -> mumu
+		buffer -> Z1Mass *= (1 - s_mu * (buffer -> Z1Pt) / 1000.0);
+		buffer -> Z1Pt *= (1 - 2 * s_mu * (buffer -> Z1Pt) / 1000.0);
+	    }
+
+	    if(buffer -> Z2Flav == -121.0)
+	    {
+		// Z -> ee
+		buffer -> Z1Mass *= (1 - s_e);
+		buffer -> Z1Pt *= (1 - 2 * s_e);
+	    }
+	    else if(buffer -> Z2Flav == -169.0)
+	    {
+		// Z -> mumu
+		buffer -> Z2Mass *= (1 - s_mu * (buffer -> Z2Pt) / 1000.0);
+		buffer -> Z2Pt *= (1 - 2 * s_mu * (buffer -> Z2Pt) / 1000.0);
+	    }
+
+	    // scaling of the four-lepton invariant mass in the worst case
+	    buffer -> ZZPt *= (1 - 4 * s_e);
+	    buffer -> ZZMass *= (1 - s_e);	    
+	    buffer -> ZZMass_masked *= (1 - s_e);	    
 	}
 	else
 	{

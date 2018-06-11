@@ -30,6 +30,12 @@ do
     for part in $PARTS
     do
 	echo "starting augmentation for: " $part
-	sh $CONTROL_DIR_ORIGINAL$SUBMIT_AUGMENTATION $CAMPAIGN_DIR $MC_DIR$part"/" $CAMPAIGN_DIR$RUN"/augmentation_"$part"/" $CAMPAIGN_DIR$RUN"/settings_augmentation_"$part"/" $CAMPAIGN_DIR$RUN"/"
+	until sh $CONTROL_DIR_ORIGINAL$SUBMIT_AUGMENTATION $CAMPAIGN_DIR $MC_DIR$part"/" $CAMPAIGN_DIR$RUN"/augmentation_"$part"/" $CAMPAIGN_DIR$RUN"/settings_augmentation_"$part"/" $CAMPAIGN_DIR$RUN"/"
+	do
+	    echo "----------------------------------------------------------------"
+	    echo " error submitting job, retrying ..."
+	    echo "----------------------------------------------------------------"
+	    sleep 1
+	done
     done
 done
