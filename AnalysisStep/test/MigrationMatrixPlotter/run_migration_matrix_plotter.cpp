@@ -218,9 +218,10 @@ int main(int argc, char *argv[])
     //gStyle -> SetPalette(kOcean);
     //TColor::InvertPalette();
 
-    canv -> SetLeftMargin(0.15);
-    canv -> SetRightMargin(0.1);
-    canv -> SetBottomMargin(0.15);
+    canv -> SetLeftMargin(0.20);
+    canv -> SetRightMargin(0.01);
+    canv -> SetTopMargin(0.01);
+    canv -> SetBottomMargin(0.22);
 
     canv -> cd();
     migration_matrix -> Draw("col");
@@ -235,36 +236,38 @@ int main(int argc, char *argv[])
 
     // x axis first
     t.SetTextAlign(22);
-    t.SetTextSize(0.02);
-    y = gPad -> GetUymin() - 0.95 * migration_matrix -> GetYaxis() -> GetBinWidth(1);
+    t.SetTextSize(0.03);
+    t.SetTextAngle(-45);
+    y = gPad -> GetUymin() - 1.45 * migration_matrix -> GetYaxis() -> GetBinWidth(1);
     for(int i = 0; i < number_categories; i++)
     {
 	x = migration_matrix -> GetXaxis() -> GetBinCenter(i + 1);
 	t.DrawLatex(x, y, conf -> cat_label(i));
     }
 
-    t.SetTextSize(0.03);
-    t.DrawLatex(0.5 * (migration_matrix -> GetXaxis() -> GetBinCenter(number_categories)), y - 0.75 * migration_matrix -> GetYaxis() -> GetBinWidth(1), "current categorization");
+    t.SetTextSize(0.04);
+    t.SetTextAngle(0);
+    t.DrawLatex(0.5 * (migration_matrix -> GetXaxis() -> GetBinCenter(number_categories)), y - 0.95 * migration_matrix -> GetYaxis() -> GetBinWidth(1), "current categorization");
 
     // now y axis
-    t.SetTextSize(0.02);
+    t.SetTextSize(0.03);
     t.SetTextAlign(22);
-    x = gPad -> GetUxmin() - 1.05 * migration_matrix -> GetXaxis() -> GetBinWidth(1);
+    x = gPad -> GetUxmin() - 1.25 * migration_matrix -> GetXaxis() -> GetBinWidth(1);
     for(int i = 0; i < number_categories; i++)
     {
 	y = migration_matrix -> GetYaxis() -> GetBinCenter(i + 1);
 	t.DrawLatex(x, y, conf -> cat_label(i));
     }    
 
-    t.SetTextSize(0.03);
+    t.SetTextSize(0.04);
     t.SetTextAngle(90);
-    t.DrawLatex(x - 0.75 * migration_matrix -> GetXaxis() -> GetBinWidth(1), 0.5 * (migration_matrix -> GetXaxis() -> GetBinCenter(number_categories)), "Bayesian categorization");    
+    t.DrawLatex(x - 0.95 * migration_matrix -> GetXaxis() -> GetBinWidth(1), 0.5 * (migration_matrix -> GetXaxis() -> GetBinCenter(number_categories)), "Bayesian categorization");    
 
     canv -> SaveAs(package_path + "/category_migration.pdf");
 
     // give the values themselves
     t.SetTextAngle(0);
-    t.SetTextSize(0.02);
+    t.SetTextSize(0.03);
     for(int bayes_cat = 0; bayes_cat < number_categories; bayes_cat++)
     {
 	for(int Mor18_cat = 0; Mor18_cat < number_categories; Mor18_cat++)
