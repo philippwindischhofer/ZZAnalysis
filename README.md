@@ -1,9 +1,9 @@
-ZZAnalysis
-==========
+Bayes4Leptons
+=============
 
-This is a modified version of the original [CJLST/ZZAnalysis](https://github.com/CJLST/ZZAnalysis), using Bayesian event categorization.
+This is a modified version of the original [CJLST/ZZAnalysis](https://github.com/CJLST/ZZAnalysis), using Bayesian event categorization instead.
 
-Please see the [wiki](https://github.com/philippwindischhofer/ZZAnalysis/wiki) for the documentation.
+The comments below are for the installation of the original CMSSW environment. For instructions of how to use Bayesian classification, see the [wiki](https://github.com/philippwindischhofer/ZZAnalysis/wiki) instead.
 
 
 To install a complete CMSSW 8X area (including this package)
