@@ -5,6 +5,7 @@ This is a modified version of the original [CJLST/ZZAnalysis](https://github.com
 
 The comments below are for the installation of the original CMSSW environment. For instructions of how to use Bayesian classification, see the [wiki](https://github.com/philippwindischhofer/ZZAnalysis/wiki) instead.
 
+------------------------------
 
 To install a complete CMSSW 8X area (including this package)
 ------------------------------
