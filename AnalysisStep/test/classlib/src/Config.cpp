@@ -50,9 +50,9 @@ TString Config::source_label(TString histname)
     std::map<TString, TString> mapping = {
 	{"ggHhist", "ggH"}, 
 	{"VBFhist", "VBF"}, 
-	{"WHXhist", "WH, W #rightarrow X"},
+	{"WHXhist", "WH, W #rightarrow 0#font[12]{l} + X"},
 	{"WHlnuhist", "WH, W #rightarrow #font[12]{l}#nu"}, 
-	{"ZHXhist", "ZH, Z #rightarrow X"},
+	{"ZHXhist", "ZH, Z #rightarrow 0#font[12]{l}0#nu + X"},
 	{"ZHnunuhist", "ZH, Z #rightarrow #nu#bar{#nu}"},
 	{"ZH2lhist", "ZH, Z #rightarrow 2#font[12]{l}"},
 	{"ttH0lhist", "t#bar{t}H, t#bar{t} #rightarrow 0#font[12]{l} + X"},

@@ -27,7 +27,8 @@ int main( int argc, char *argv[] )
    //TString package_path = "/data_CMS/cms/wind/180531_optimized_hyperparameters_systematics_packaged/";
    //TString package_path = "/data_CMS/cms/wind/180607_optimized_hyperparameters_allvars/";
    //TString package_path = "/data_CMS/cms/wind/180607_optimized_hyperparameters_selvars_noextraleps_packaged/";
-   TString package_path = "/data_CMS/cms/wind/180611_optimized_hyperparameters_lepscalesyst_packaged/";
+   //TString package_path = "/data_CMS/cms/wind/180611_optimized_hyperparameters_lepscalesyst_packaged/";
+   TString package_path = "/data_CMS/cms/wind/180609_cumulative_95_packaged/";
    TString engine = "tree";
    TString path = package_path + "CJLST_NTuples/";
    

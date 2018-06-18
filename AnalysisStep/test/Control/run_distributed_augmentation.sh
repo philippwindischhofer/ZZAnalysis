@@ -75,7 +75,13 @@ JOBS=`find * | grep run_augmentation.sh$`
 for JOB in $JOBS
 do
     echo "launching augmentation for " $AUGMENTATION_SETTINGS_DIR$JOB
-    $JOB_SUBMITTER "-short" $AUGMENTATION_SETTINGS_DIR$JOB
+    until $JOB_SUBMITTER "-short" $AUGMENTATION_SETTINGS_DIR$JOB
+    do
+	echo "----------------------------------------------------------------"
+	echo " error submitting job, retrying ..."
+	echo "----------------------------------------------------------------"
+	sleep 1
+    done
 done
 
 cd $CURRENT_DIR

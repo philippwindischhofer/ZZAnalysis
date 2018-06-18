@@ -90,6 +90,10 @@ int Mor18LIClassifier::ClassifyThisEvent(Tree* in)
     {
 	VBF_cat = VBF1jTaggedMor18;
     }
+    // else if(in -> nCleanedJetsPt30 == 0)
+    // {
+    // 	VBF_cat = VHMETTaggedMor18;
+    // }
 
     std::map<TString, int> conversion = {
 	{"VBF", VBF_cat},
@@ -98,6 +102,7 @@ int Mor18LIClassifier::ClassifyThisEvent(Tree* in)
 	{"ZHl", VHLeptTaggedMor18},
 	{"WHl", VHLeptTaggedMor18},
 	{"ZHMET", VHMETTaggedMor18},
+	//{"ZHMET", UntaggedMor18},
 	{"ttHl", ttHLeptTaggedMor18},
 	{"ttHh", ttHHadrTaggedMor18},
 	{"ggH", UntaggedMor18},
