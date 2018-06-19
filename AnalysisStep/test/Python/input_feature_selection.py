@@ -102,14 +102,15 @@ def main():
         return df
 
 
-    out_dir = "/data_CMS/cms/wind/InputConfigurations2.0_cumulative/"
+    #out_dir = "/data_CMS/cms/wind/InputConfigurations2.0_cumulative/"
+    out_dir = "/data_CMS/cms/wind/InputConfigurations2.0_nodecay/"
     MC_path = "/data_CMS/cms/wind/CJLST_NTuples_prepared_systematics/"
 
     list_branches = ["Jet", "ExtraLep"]
     list_pt_limits = [30, 0]
     production_branches = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", "nExtraLep", 
                            "ZZMass_masked", "nExtraZ", "Z1Mass", "Z2Mass", "Z1Pt", "Z2Pt", "ZZMassErr", "ZZPt", "ZZEta", "ZZPhi", "Z1Flav", "Z2Flav"]
-    decay_branches = ["costhetastar", "helphi", "helcosthetaZ1", "helcosthetaZ2", "phistarZ1", "xi", "xistar"]
+    decay_branches = []#["costhetastar", "helphi", "helcosthetaZ1", "helcosthetaZ2", "phistarZ1", "xi", "xistar"]
 
     #campaign_name = raw_input("name of this configuration: ")
     campaign_name = sys.argv[1]
