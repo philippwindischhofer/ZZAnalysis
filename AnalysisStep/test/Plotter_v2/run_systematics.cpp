@@ -29,8 +29,10 @@ int main( int argc, char *argv[] )
    //TString package_path = "/data_CMS/cms/wind/180607_optimized_hyperparameters_selvars_noextraleps_packaged/";
    //TString package_path = "/data_CMS/cms/wind/180611_optimized_hyperparameters_lepscalesyst_packaged/";
    //TString package_path = "/data_CMS/cms/wind/180609_cumulative_95_packaged/";
-   TString package_path = "/data_CMS/cms/wind/180613_cumulative_80_packaged/";
-   TString engine = "robin";
+   //TString package_path = "/data_CMS/cms/wind/180613_cumulative_80_packaged/";
+   //TString package_path = "/data_CMS/cms/wind/180618_standard_hyperparams_report/";
+   TString package_path = "/data_CMS/cms/wind/180628_optimized_hyperparameters_qq_packaged/";
+   TString engine = "tree";
    TString path = package_path + "CJLST_NTuples/";
 
    //TString path = "/data_CMS/cms/wind/180528_optimized_hyperparameters_selvars_leading_jets_metfix_merged_systematics/optimized/augmentation_test/";

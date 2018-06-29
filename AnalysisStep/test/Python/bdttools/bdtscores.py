@@ -11,7 +11,7 @@ from sklearn.metrics import mean_squared_error
 class BDTscorer:
 
     def __init__(self, MC_path, list_input_length = 2, xgboost_params = 
-                 {'eta': 0.01, 'silent': 1, 'gamma': 0.5, 'objective': 'binary:logistic', 'nthread': 5, 'eval_metric': 'rmse'}
+                 {'eta': 0.01, 'silent': 1, 'gamma': 0.5, 'objective': 'binary:logistic', 'nthread': 20, 'eval_metric': 'rmse'}
 ):
         self.MC_path = MC_path
 
@@ -32,8 +32,8 @@ class BDTscorer:
                     "ttHh": {MC_path + "ttH125/ZZ4lAnalysis.root": cuts.ttHhadr_cut},
                     "ttHl": {MC_path + "ttH125/ZZ4lAnalysis.root": cuts.ttHlept_cut},
                     "ZHMET": {MC_path + "ZH125/ZZ4lAnalysis.root": cuts.ZHMET_cut},
-                    "ZX": {MC_path + "AllData/ZZ4lAnalysis.root": cuts.no_cut},
-                    "qq": {MC_path + "ZZTo4l/ZZ4lAnalysis.root": cuts.no_cut}
+                    "ZX": {MC_path + "AllData/ZZ4lAnalysis.root": cuts.mZZ_cut},
+                    "qq": {MC_path + "ZZTo4l/ZZ4lAnalysis.root": cuts.mZZ_cut}
                   }
         
         self.list_input_length = list_input_length

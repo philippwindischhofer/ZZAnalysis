@@ -45,7 +45,7 @@ priors_min["zhhadr_prior"] = 0.3
 priors_min["whhadr_prior"] = 0.3
 priors_min["zhmet_prior"] = eps
 priors_min["bkg_prior"] = 1.0
-priors_min["qq_prior"] = 1.0
+priors_min["qq_prior"] = 0.5
 
 priors_max = {}
 priors_max["ggh_prior"] = 3.0
@@ -57,7 +57,7 @@ priors_max["zhhadr_prior"] = 0.8
 priors_max["whhadr_prior"] = 0.8
 priors_max["zhmet_prior"] = 0.3
 priors_max["bkg_prior"] = 50
-priors_max["qq_prior"] = 50
+priors_max["qq_prior"] = 4
 
 # global evaluation counter
 evalcnt = 0

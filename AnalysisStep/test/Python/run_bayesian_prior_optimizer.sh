@@ -1,2 +1,0 @@
-#!/bin/bash
-python /home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/BayesianPriorOptimizer.py /data_CMS/cms/wind/180411_class_weights_Adam_optimized_softjets/input_columns_4/ /data_CMS/cms/wind/prior_evaluator/ tree &> /home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/testlog.txt
