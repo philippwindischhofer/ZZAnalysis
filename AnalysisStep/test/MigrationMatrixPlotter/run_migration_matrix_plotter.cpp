@@ -47,11 +47,11 @@ int main(int argc, char *argv[])
 {
     // produces the migration matrix for comparing nicely the old and new categorization
 
-    TString package_path = "/data_CMS/cms/wind/180531_optimized_hyperparameters_systematics_packaged/";
-    //TString package_path = "/data_CMS/cms/wind/180611_cumulative_85_packaged/";
+    //TString package_path = "/data_CMS/cms/wind/180531_optimized_hyperparameters_systematics_packaged/";
+    TString package_path = "/data_CMS/cms/wind/180611_cumulative_85_packaged/";
     //TString package_path = "/data_CMS/cms/wind/180609_cumulative_95_packaged/";
     //TString package_path = "/data_CMS/cms/wind/180628_optimized_hyperparameters_qq_packaged/";
-    TString engine = "tree";
+    TString engine = "robin";
 
     TString MCpath = package_path +  "/CJLST_NTuples/";
     TString config_file_path = package_path + "settings.conf";
