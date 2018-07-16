@@ -25,19 +25,24 @@ config = tf.ConfigProto(intra_op_parallelism_threads=10, inter_op_parallelism_th
 session = tf.Session(config = config)
 K.set_session(session)
 
-def augment_file(data_inpath, data_outpath, data_file, mcolls):
+#def augment_file(data_inpath, data_outpath, data_file, mcolls):
+def augment_file(in_folder, out_folder, tree_name, mcolls):
     # first, copy the original ROOT file to its destination, keeping the directory structure the same
-    data_outdir = data_outpath + data_file
-    if not os.path.exists(data_outdir):
-        os.makedirs(data_outdir)
+    #data_outdir = data_outpath + data_file
+    #if not os.path.exists(data_outdir):
+    #    os.makedirs(data_outdir)
+    if not os.path.exists(out_folder):
+        os.makedirs(out_folder)
 
-    data_outfile = data_outdir + Config.MC_filename
-    copyfile(data_inpath + data_file + Config.MC_filename, data_outfile)
+    data_outfile = os.path.join(out_folder, Config.MC_filename)
+    data_infile = os.path.join(in_folder, Config.MC_filename)
 
-    tree_name = "ClassTree"
+    copyfile(data_infile, data_outfile)
+
+    #tree_name = "ClassTree"
 
     # now, can read the file from its new location and change it
-    fcoll = FileCollection({data_outfile: cuts.no_cut}, 0.0, 1.0)
+    fcoll = FileCollection({data_outfile: cuts.no_cut}, 0.0, 1.0, tree_name = tree_name)
     length = fcoll.get_length()
 
     indata = utils.read_data(fcoll, start = 0, stop = length, branches = Config.branches, tree_name = tree_name)
@@ -71,20 +76,31 @@ def augment_file(data_inpath, data_outpath, data_file, mcolls):
 
 def main():
 
-    if len(sys.argv) != 6:
-        print "Error: exactly 5 arguments are required"
+    if len(sys.argv) != 5:
+        print "Error: exactly 4 arguments are required"
 
-    MC_dir = sys.argv[1]
-    data_file = sys.argv[2]
-    setting_dir = sys.argv[3]
-    training_path = sys.argv[4]
-    data_outpath = sys.argv[5]
+    in_folder = sys.argv[1]
+    out_folder = sys.argv[2]
+    tree_name = sys.argv[3]
+    run_dir = sys.argv[4]
 
     confhandler = ModelCollectionConfigFileHandler()
-    confhandler.load_configuration(setting_dir + "settings.conf")
-    mcolls = confhandler.GetModelCollection(weightpath = training_path)
+    confhandler.load_configuration(os.path.join(run_dir, "settings.conf"))
+    mcolls = confhandler.GetModelCollection(weightpath = os.path.join(run_dir, "training/"))
 
-    augment_file(MC_dir, data_outpath, data_file, mcolls)
+    augment_file(in_folder, out_folder, tree_name, mcolls)
+
+    # MC_dir = sys.argv[1]
+    # data_file = sys.argv[2]
+    # setting_dir = sys.argv[3]
+    # training_path = sys.argv[4]
+    # data_outpath = sys.argv[5]
+
+    # confhandler = ModelCollectionConfigFileHandler()
+    # confhandler.load_configuration(setting_dir + "settings.conf")
+    # mcolls = confhandler.GetModelCollection(weightpath = training_path)
+
+    # augment_file(MC_dir, data_outpath, data_file, mcolls)
 
 if __name__ == "__main__":
     main()

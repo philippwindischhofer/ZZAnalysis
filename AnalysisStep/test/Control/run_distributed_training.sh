@@ -1,41 +1,71 @@
 #!/bin/bash
 
 # ---------------------------------------------
+#  parse the given arguments
+# ---------------------------------------------
+POSARG=()
+
+while [[ $# -gt 0 ]]
+do
+key=$1
+
+case $key in
+    --hyperpar)
+    HYPERPARAM_CONFIG_FILE="$2"
+    shift
+    shift
+    ;;
+    --input)
+    INPUT_CONFIG_FILE="$2"
+    shift
+    shift
+    ;;
+    *)
+    POSARG+=("$1")
+    shift
+    ;;
+esac
+done
+
+# set back the positional arguments in case they will be needed later
+set -- "${POSARG[@]}"
+
+CAMPAIGN_DIR=$1
+
+echo "input_config_file = "$INPUT_CONFIG_FILE
+echo "hyperparam_config_file = "$HYPERPARAM_CONFIG_FILE
+
+# ---------------------------------------------
 #  global settings
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
-CAMPAIGN_DIR=$1
-INPUT_CONFIG_FILE=$2
-HYPERPARAM_CONFIG_FILE=$3
-
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
-# the directories where the original sources are located
-PYTHON_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/"
-
 # the (common) source directory for this campaign
-BIN_DIR=$CAMPAIGN_DIR"bin/"
+BIN_DIR=`pwd`"/../Python/"
 
 # the needed part from the python sources
 CONFIG_FILE_GEN="ConfigFileSweeper.py"
 CONFIG_FILE_GEN_NOSWEEP="ConfigFileCreator.py"
 TRAINING_CONFIG_FILE_GEN="DistributeTrainingSettings.py"
 TRAINER="SampleTraining.py"
-PYTHON_LIB="trainlib"
+
+CAMPAIGN_CONFIG_FILE=$CAMPAIGN_DIR"/campaign.conf"
 
 # ---------------------------------------------
 #  first, copy all the executables to the campaign folder
 # ---------------------------------------------
 echo "preparing filesystem for training campaign"
 
-mkdir -p $BIN_DIR
-cp -r $PYTHON_DIR_ORIGINAL$PYTHON_LIB $BIN_DIR
-cp $PYTHON_DIR_ORIGINAL$TRAINER $PYTHON_DIR_ORIGINAL$CONFIG_FILE_GEN $PYTHON_DIR_ORIGINAL$CONFIG_FILE_GEN_NOSWEEP $PYTHON_DIR_ORIGINAL$TRAINING_CONFIG_FILE_GEN $BIN_DIR
-
 # then, run the generation of the sub-config files
 if [[ -z "$HYPERPARAM_CONFIG_FILE" ]]; then
-    # no hyperparameter configs given -> use the campaign config file to sweep them
-    python $BIN_DIR$CONFIG_FILE_GEN $CAMPAIGN_DIR $INPUT_CONFIG_FILE
+    if [[ -e "$CAMPAIGN_CONFIG_FILE" ]]; then
+        # no hyperparameter configs given -> use the campaign config file to sweep them
+	python $BIN_DIR$CONFIG_FILE_GEN $CAMPAIGN_DIR $INPUT_CONFIG_FILE	
+    else
+	echo "ERROR: no hyperparameter configuration file given, and no file 'campaign.conf' in the campaign directory found as fallback! Please specify either the one or the other."
+	exit
+    fi
 else
     # have fully specified hyperparameters; ignore any campaign config file that might presribe to sweep them
     python $BIN_DIR$CONFIG_FILE_GEN_NOSWEEP $CAMPAIGN_DIR $INPUT_CONFIG_FILE $HYPERPARAM_CONFIG_FILE
@@ -81,7 +111,7 @@ JOBS=`find * | grep run_training.sh$`
 for JOB in $JOBS
 do
     echo "launching training for " $CAMPAIGN_DIR$JOB
-    $JOB_SUBMITTER $CAMPAIGN_DIR$JOB
+    #$JOB_SUBMITTER $CAMPAIGN_DIR$JOB
 done
 
 cd $CURRENT_DIR

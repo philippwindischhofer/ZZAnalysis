@@ -1,2 +1,0 @@
-#!/bin/bash
-python /home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/input_feature_selection.py combined_99_nomela n &> /data_CMS/cms/wind/InputConfigurations2.0/input_feature_selection_nomela.log

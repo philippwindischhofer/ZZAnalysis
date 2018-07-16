@@ -13,10 +13,10 @@ GLOBAL_SETTINGS_DIR=$5
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 # the directories where the original sources are located
-PYTHON_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/"
+#PYTHON_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/"
 
 # the (common) source directory for this campaign
-BIN_DIR=$CAMPAIGN_DIR"bin/"
+BIN_DIR=`pwd`"/../Python/"
 
 # the needed part from the python sources
 AUGMENTER="SingleAugmentation.py"
@@ -34,15 +34,6 @@ do
 done 
 
 echo $datafiles
-
-# ---------------------------------------------
-#  first, copy all the executables to the campaign folder
-# ---------------------------------------------
-echo "preparing filesystem for augmentation campaign"
-
-mkdir -p $BIN_DIR
-cp -r $PYTHON_DIR_ORIGINAL$PYTHON_LIB $BIN_DIR
-cp $PYTHON_DIR_ORIGINAL$AUGMENTER $BIN_DIR
 
 cd $CAMPAIGN_DIR
 
@@ -64,7 +55,7 @@ do
     AUGMENTATION_LOGFILE=$AUGMENTATION_SETTINGS_DIR$datafile"/log_augmentation.txt"
     
     echo "#!/bin/bash" > $AUGMENTATION_SCRIPT
-    echo "python" $BIN_DIR$AUGMENTER $MC_DIR $datafile $GLOBAL_SETTINGS_DIR $TRAINING_DIR $AUGMENTATION_DIR "&>" $AUGMENTATION_LOGFILE >> $AUGMENTATION_SCRIPT
+    echo "python" $BIN_DIR$AUGMENTER $MC_DIR$datafile $AUGMENTATION_DIR$datafile "ClassTree" $GLOBAL_SETTINGS_DIR "&>" $AUGMENTATION_LOGFILE >> $AUGMENTATION_SCRIPT
 done
 
 # now go back and launch all the jobs that have been prepared
@@ -77,10 +68,10 @@ do
     echo "launching augmentation for " $AUGMENTATION_SETTINGS_DIR$JOB
     until $JOB_SUBMITTER "-short" $AUGMENTATION_SETTINGS_DIR$JOB
     do
-	echo "----------------------------------------------------------------"
-	echo " error submitting job, retrying ..."
-	echo "----------------------------------------------------------------"
-	sleep 1
+    	echo "----------------------------------------------------------------"
+    	echo " error submitting job, retrying ..."
+    	echo "----------------------------------------------------------------"
+    	sleep 1
     done
 done
 
