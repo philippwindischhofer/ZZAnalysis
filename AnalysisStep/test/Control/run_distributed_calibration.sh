@@ -1,5 +1,35 @@
 #!/bin/bash
 
+if [[ -z "$ZZROOT" ]]; then
+    echo "ERROR: need to have ZZROOT set! Did you forget to source 'prepare_env.sh'?"
+    exit
+fi
+
+# ---------------------------------------------
+#  parse the given arguments
+# ---------------------------------------------
+POSARG=()
+
+while [[ $# -gt 0 ]]
+do
+key=$1
+
+case $key in
+    --mcdir)
+    MC_DIR="$2"
+    shift
+    shift
+    ;;
+    *)
+    POSARG+=("$1")
+    shift
+    ;;
+esac
+done
+
+# set back the positional arguments in case they will be needed later
+set -- "${POSARG[@]}"
+
 # ---------------------------------------------
 #  global settings
 # ---------------------------------------------
@@ -9,16 +39,19 @@ CAMPAIGN_DIR=$1
 #AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_ZX_qq/settings.conf"
 #AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_ZX_qq_syst/settings.conf"
 #AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_with_systematics/settings.conf"
-AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_with_systematics_lepscale/settings.conf"
+
+AUGMENTATION_SETTINGS=$MC_DIR"/settings.conf"
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 # the directories where the original sources are located
-BIN_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
-PYTHON_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/"
+#BIN_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
+BIN_DIR=$ZZROOT"/bin/slc6_amd64_gcc630/"
+#PYTHON_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/"
+PYTHON_DIR=$ZZROOT"/src/ZZAnalysis/AnalysisStep/test/Python/"
 
 # the (common) source directory for this campaign
-BIN_DIR=$CAMPAIGN_DIR"bin/"
+#BIN_DIR=$CAMPAIGN_DIR"bin/"
 
 # the needed part from the C++ sources
 CALIBRATOR="run_calibrator"
@@ -27,8 +60,8 @@ CALIBRATION_PREPARER="prepare_calibration.py"
 # ---------------------------------------------
 #  first, copy all the needed executables to the campaign folder
 # ---------------------------------------------
-mkdir -p $BIN_DIR
-cp $BIN_DIR_ORIGINAL$CALIBRATOR $BIN_DIR
+# mkdir -p $BIN_DIR
+# cp $BIN_DIR_ORIGINAL$CALIBRATOR $BIN_DIR
 
 cd $CAMPAIGN_DIR
 
@@ -59,7 +92,7 @@ do
 	echo "chunks already merged!"
     else
         # before can start the calibration, also need to prepare the combined *augmented* training, validation and test dataset for the background(s)
-	python $PYTHON_DIR_ORIGINAL$CALIBRATION_PREPARER $AUGMENTATION_SETTINGS $CAMPAIGN_DIR$RUN
+	python $PYTHON_DIR$CALIBRATION_PREPARER $AUGMENTATION_SETTINGS $CAMPAIGN_DIR$RUN
     fi
         
     # -----------------

@@ -1,6 +1,11 @@
 #!/bin/bash
 
-CONTROL_DIR_ORIGINAL=`pwd`
+if [[ -z "$ZZROOT" ]]; then
+    echo "ERROR: need to have ZZROOT set! Did you forget to source 'prepare_env.sh'?"
+    exit
+fi
+
+CONTROL_DIR_ORIGINAL=$ZZROOT"/src/ZZAnalysis/AnalysisStep/test/Control/"
 SUBMIT_AUGMENTATION="/run_distributed_augmentation.sh"
 
 PARTS="training_chunks validation_chunks test_chunks"

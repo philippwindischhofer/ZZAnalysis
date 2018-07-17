@@ -4,12 +4,47 @@
 TRAINING_MASS_POINT="125"
 
 # ---------------------------------------------
+#  parse the given arguments
+# ---------------------------------------------
+POSARG=()
+
+while [[ $# -gt 0 ]]
+do
+key=$1
+
+case $key in
+    --engine)
+    ENGINE="$2"
+    shift
+    shift
+    ;;
+    --mass)
+    MASS_POINT="$2"
+    shift
+    shift
+    ;;
+    --ref)
+    COMP_REF_DIR="$2"
+    shift
+    shift
+    ;;
+    *)
+    POSARG+=("$1")
+    shift
+    ;;
+esac
+done
+
+# set back the positional arguments in case they will be needed later
+set -- "${POSARG[@]}"
+
+# ---------------------------------------------
 #  global settings
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
-ENGINE=$2
-MASS_POINT=$3
+#ENGINE=$2
+#MASS_POINT=$3
 
 if [ -z $ENGINE ]
 then
@@ -23,22 +58,37 @@ then
     MASS_POINT=$TRAINING_MASS_POINT
 fi
 
+if [ -z $COMP_REF_DIR ]
+then
+    echo "ERROR: no reference provided - can not produce Punzi plots!"
+fi
+
 # ---------------------------------------------
 #  settings for this training campaign
 # ---------------------------------------------
-COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/training/"
-COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/validation/"
-COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/test/"
-COMP_REF_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/"
+#COMP_REF_DIR="/data_CMS/cms/wind/Mor18References/"
+
+COMP_REF_TRAINING_DIR=$COMP_REF_DIR$MASS_POINT"/training/"
+COMP_REF_VALIDATION_DIR=$COMP_REF_DIR$MASS_POINT"/validation/"
+COMP_REF_TEST_DIR=$COMP_REF_DIR$MASS_POINT"/test/"
+COMP_REF_DIR=$COMP_REF_DIR$MASS_POINT"/"
+
+# COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/training/"
+# COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/validation/"
+# COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/test/"
+# COMP_REF_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/"
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 # the directories where the original sources are located
-CONTROL_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Control/"
-BIN_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
+# CONTROL_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Control/"
+# BIN_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
+
+CONTROL_DIR=$ZZROOT"/src/ZZAnalysis/AnalysisStep/test/Control/"
+BIN_DIR=$ZZROOT"/bin/slc6_amd64_gcc630/"
 
 # the (common) source directory for this campaign
-BIN_DIR=$CAMPAIGN_DIR"bin/"
+#BIN_DIR=$CAMPAIGN_DIR"bin/"
 
 # the needed part from the C++ sources
 BENCHMARKER="run_benchmarker"
@@ -46,17 +96,17 @@ ROC_PLOTTER="run_roc_plotter"
 COMPARER="run_comp"
 
 # the needed part from the control sources
-RUN_PIPELINE="run_pipeline.sh"
-PLOT_POSTPROCESSOR="plot_postprocessing.sh"
+#RUN_PIPELINE="run_pipeline.sh"
+#PLOT_POSTPROCESSOR="plot_postprocessing.sh"
 
 # ---------------------------------------------
 #  first, copy all the executables to the campaign folder
 # ---------------------------------------------
 echo "preparing filesystem for training campaign"
 
-mkdir -p $BIN_DIR
-cp $BIN_DIR_ORIGINAL$BENCHMARKER $BIN_DIR_ORIGINAL$ROC_PLOTTER $BIN_DIR_ORIGINAL$COMPARER $BIN_DIR
-cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $BIN_DIR
+# mkdir -p $BIN_DIR
+# cp $BIN_DIR_ORIGINAL$BENCHMARKER $BIN_DIR_ORIGINAL$ROC_PLOTTER $BIN_DIR_ORIGINAL$COMPARER $BIN_DIR
+# cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $BIN_DIR
 
 cd $CAMPAIGN_DIR
 
@@ -74,17 +124,17 @@ do
     then
 
 	# need to take extra care: split everything into training, validation and test dataset!
-	BENCHMARK_TRAINING_DIR=$CAMPAIGN_DIR$RUN"benchmark_"$ENGINE"/"$MASS_POINT"/training/"
+	#BENCHMARK_TRAINING_DIR=$CAMPAIGN_DIR$RUN"benchmark_"$ENGINE"/"$MASS_POINT"/training/"
 	BENCHMARK_VALIDATION_DIR=$CAMPAIGN_DIR$RUN"benchmark_"$ENGINE"/"$MASS_POINT"/validation/"
 	BENCHMARK_TEST_DIR=$CAMPAIGN_DIR$RUN"benchmark_"$ENGINE"/"$MASS_POINT"/test/"
 
-	COMP_TRAINING_DIR=$CAMPAIGN_DIR$RUN"comp_"$ENGINE"/"$MASS_POINT"/training/"
+	#COMP_TRAINING_DIR=$CAMPAIGN_DIR$RUN"comp_"$ENGINE"/"$MASS_POINT"/training/"
 	COMP_VALIDATION_DIR=$CAMPAIGN_DIR$RUN"comp_"$ENGINE"/"$MASS_POINT"/validation/"
 	COMP_TEST_DIR=$CAMPAIGN_DIR$RUN"comp_"$ENGINE"/"$MASS_POINT"/test/"
 
-	ROC_DIR=$CAMPAIGN_DIR$RUN"ROCs/"
+	#ROC_DIR=$CAMPAIGN_DIR$RUN"ROCs/"
 
-	AUGMENTATION_TRAINING_DIR=$CAMPAIGN_DIR$RUN"augmentation_training/"
+	#AUGMENTATION_TRAINING_DIR=$CAMPAIGN_DIR$RUN"augmentation_training/"
 	AUGMENTATION_VALIDATION_DIR=$CAMPAIGN_DIR$RUN"augmentation_validation/"
 	AUGMENTATION_TEST_DIR=$CAMPAIGN_DIR$RUN"augmentation_test/"
 
@@ -92,18 +142,18 @@ do
 
 	mkdir -p $BENCHMARK_SETTINGS_DIR
 
-	mkdir -p $BENCHMARK_TRAINING_DIR
+	#mkdir -p $BENCHMARK_TRAINING_DIR
 	mkdir -p $BENCHMARK_VALIDATION_DIR
 	mkdir -p $BENCHMARK_TEST_DIR
 
-	mkdir -p $COMP_TRAINING_DIR
+	#mkdir -p $COMP_TRAINING_DIR
 	mkdir -p $COMP_VALIDATION_DIR
 	mkdir -p $COMP_TEST_DIR
 
-	mkdir -p $ROC_DIR
+	#mkdir -p $ROC_DIR
 
-	BENCHMARK_TRAINING_SCRIPT=$BENCHMARK_SETTINGS_DIR"run_benchmark_"$ENGINE"_training.sh"
-	BENCHMARK_TRAINING_LOGFILE=$BENCHMARK_SETTINGS_DIR"log_benchmark_"$ENGINE"_training.txt"
+	#BENCHMARK_TRAINING_SCRIPT=$BENCHMARK_SETTINGS_DIR"run_benchmark_"$ENGINE"_training.sh"
+	#BENCHMARK_TRAINING_LOGFILE=$BENCHMARK_SETTINGS_DIR"log_benchmark_"$ENGINE"_training.txt"
 
 	BENCHMARK_VALIDATION_SCRIPT=$BENCHMARK_SETTINGS_DIR"run_benchmark_"$ENGINE"_validation.sh"
 	BENCHMARK_VALIDATION_LOGFILE=$BENCHMARK_SETTINGS_DIR"log_benchmark_"$ENGINE"_validation.txt"
@@ -145,22 +195,22 @@ do
         # launch the comparison to the reference
 	echo $BIN_DIR$COMPARER $BENCHMARK_TEST_DIR $COMP_REF_TEST_DIR $COMP_TEST_DIR "&>>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
 
-	if [ "$(ls -A $ROC_DIR)" ]
-	then
-	    echo "ROCs already computed, skipping this step now"
-	else
-        # launch the plotting of ROCs
-	    echo $BIN_DIR$ROC_PLOTTER $AUGMENTATION_TEST_DIR $ROC_DIR "&>>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
+	# if [ "$(ls -A $ROC_DIR)" ]
+	# then
+	#     echo "ROCs already computed, skipping this step now"
+	# else
+        # # launch the plotting of ROCs
+	#     echo $BIN_DIR$ROC_PLOTTER $AUGMENTATION_TEST_DIR $ROC_DIR "&>>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
 
-	    cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $ROC_DIR
-	fi
+	#     cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $ROC_DIR
+	# fi
 
         # put the plot aggregation scripts into the folders where they are going to be needed
-	cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $CALIBRATION_TRAINING_DIR
-	cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $CALIBRATION_VALIDATION_DIR
-	cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $CALIBRATION_TEST_DIR
+	# cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $CALIBRATION_TRAINING_DIR
+	# cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $CALIBRATION_VALIDATION_DIR
+	# cp $CONTROL_DIR_ORIGINAL$PLOT_POSTPROCESSOR $CALIBRATION_TEST_DIR
     else
-	# are benchmarking on a mass point that is different from where the classifier was trained; don't need to respect the testing / training splits etc.
+	# are benchmarking on a mass point that is different from where the classifier was trained
 	BENCHMARK_DIR=$CAMPAIGN_DIR$RUN"benchmark_"$ENGINE"/"$MASS_POINT"/"
 
 	COMP_DIR=$CAMPAIGN_DIR$RUN"comp_"$ENGINE"/"$MASS_POINT"/"

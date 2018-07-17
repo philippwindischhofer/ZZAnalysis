@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ -z "$ZZROOT" ]]; then
+    echo "ERROR: need to have ZZROOT set! Did you forget to source 'prepare_env.sh'?"
+    exit
+fi
+
 # ---------------------------------------------
 #  global settings
 # ---------------------------------------------
@@ -16,7 +21,7 @@ JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 #PYTHON_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/"
 
 # the (common) source directory for this campaign
-BIN_DIR=`pwd`"/../Python/"
+BIN_DIR=$ZZROOT"/src/ZZAnalysis/AnalysisStep/test/Python/"
 
 # the needed part from the python sources
 AUGMENTER="SingleAugmentation.py"

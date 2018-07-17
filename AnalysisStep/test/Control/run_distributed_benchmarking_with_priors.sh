@@ -4,13 +4,53 @@
 TRAINING_MASS_POINT="125"
 
 # ---------------------------------------------
+#  parse the given arguments
+# ---------------------------------------------
+POSARG=()
+
+while [[ $# -gt 0 ]]
+do
+key=$1
+
+case $key in
+    --engine)
+    ENGINE="$2"
+    shift
+    shift
+    ;;
+    --mass)
+    MASS_POINT="$2"
+    shift
+    shift
+    ;;
+    --ref)
+    COMP_REF_DIR="$2"
+    shift
+    shift
+    ;;
+    --priors)
+    PRIOR_FILE="$2"
+    shift
+    shift
+    ;;
+    *)
+    POSARG+=("$1")
+    shift
+    ;;
+esac
+done
+
+# set back the positional arguments in case they will be needed later
+set -- "${POSARG[@]}"
+
+# ---------------------------------------------
 #  global settings
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
-ENGINE=$2
-MASS_POINT=$3
-PRIOR_FILE=$4
+#ENGINE=$2
+#MASS_POINT=$3
+#PRIOR_FILE=$4
 
 if [ -z $ENGINE ]
 then
@@ -33,18 +73,24 @@ fi
 # ---------------------------------------------
 #  settings for this training campaign
 # ---------------------------------------------
-COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/training/"
-COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/validation/"
-COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/test/"
-COMP_REF_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/"
+COMP_REF_TRAINING_DIR=$COMP_REF_DIR$MASS_POINT"/training/"
+COMP_REF_VALIDATION_DIR=$COMP_REF_DIR$MASS_POINT"/validation/"
+COMP_REF_TEST_DIR=$COMP_REF_DIR$MASS_POINT"/test/"
+COMP_REF_DIR=$COMP_REF_DIR$MASS_POINT"/"
+
+# COMP_REF_TRAINING_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/training/"
+# COMP_REF_VALIDATION_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/validation/"
+# COMP_REF_TEST_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/test/"
+# COMP_REF_DIR="/data_CMS/cms/wind/Mor18References/"$MASS_POINT"/"
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 # the directories where the original sources are located
-BIN_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
+#BIN_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
+BIN_DIR=$ZZROOT"/bin/slc6_amd64_gcc630/"
 
 # the (common) source directory for this campaign
-BIN_DIR=$CAMPAIGN_DIR"bin/"
+#BIN_DIR=$CAMPAIGN_DIR"bin/"
 
 # the needed part from the C++ sources
 BENCHMARKER="run_benchmarker"
@@ -55,8 +101,8 @@ COMPARER="run_comp"
 # ---------------------------------------------
 echo "preparing filesystem for training campaign"
 
-mkdir -p $BIN_DIR
-cp $BIN_DIR_ORIGINAL$BENCHMARKER $BIN_DIR_ORIGINAL$COMPARER $BIN_DIR
+#mkdir -p $BIN_DIR
+#cp $BIN_DIR_ORIGINAL$BENCHMARKER $BIN_DIR_ORIGINAL$COMPARER $BIN_DIR
 
 cd $CAMPAIGN_DIR
 
