@@ -46,14 +46,10 @@ class SimpleModel(Model):
 
         print "building network with " + str(self.number_input_columns) + " inputs"
 
-        in_layer = Input(shape = (self.number_input_columns,), name = self.name + '_input')
-        x = Dense(self.default_neurons)(in_layer)
-        x = BatchNormalization()(x)
-        x = Activation('relu')(x)
-        x = Dropout(self.default_dropout_rate)(x)
+        in_layer = x = Input(shape = (self.number_input_columns,), name = self.name + '_input')
 
         if self.hyperparameters is not None:
-            for layer in range(int(self.hyperparameters.get('number_layers', 0))):
+            for layer in range(int(self.hyperparameters.get('number_layers', 1))):
                 x = Dense(int(self.hyperparameters.get('number_neurons', self.default_neurons)))(x)
                 x = BatchNormalization()(x)
                 x = Activation('relu')(x)

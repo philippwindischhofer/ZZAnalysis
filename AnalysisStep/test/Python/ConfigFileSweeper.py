@@ -169,20 +169,16 @@ def augment_config(mcoll, parent_dir, iterables):
 
 def main():
     
-    if len(sys.argv) < 2:
-        print "Error: at least 1 argument is required"
+    if len(sys.argv) < 3:
+        print "Error: at least 2 arguments are required"
 
     campaign_dir = sys.argv[1]
-
-    if len(sys.argv) >= 3:
-        input_config_file = sys.argv[2]
-    else:
-        input_config_file = None
+    workdir = sys.argv[2]
 
     if len(sys.argv) >= 4:
-        hyperparam_config_file = sys.argv[3]
+        input_config_file = sys.argv[3]
     else:
-        hyperparam_config_file = None
+        input_config_file = None
 
     # make sure that the given directory ends with a /
     if not campaign_dir.endswith('/'):
@@ -239,7 +235,9 @@ def main():
     #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013//trainval/"
     #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZX_qq/trainval/"
     #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZX_qq_syst/trainval/"
-    MC_path = "/data_CMS/cms/wind/CJLST_NTuples_with_systematics/trainval/"
+    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_with_systematics/trainval/"
+
+    MC_path = os.path.join(workdir, "trainval/")
 
     model_type = confhandler.get_field('global', 'model_type')
 
@@ -251,7 +249,7 @@ def main():
 
     if model_type == 'SimpleModel':
         # using the full mass range for training, not using the 118/130GeV cut
-        mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, hyperparam_config_file = hyperparam_config_file, mass_point = mass_point)
+        mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, hyperparam_config_file = None, mass_point = mass_point)
 
         # exclusive version for full mass range
         #mcoll = ModelFactoryFullMassRangeDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, mass_point = mass_point)

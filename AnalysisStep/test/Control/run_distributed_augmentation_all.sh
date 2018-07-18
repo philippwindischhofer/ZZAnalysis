@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [[ -z "$ZZROOT" ]]; then
-    echo "ERROR: need to have ZZROOT set! Did you forget to source 'prepare_env.sh'?"
+if [[ -z "$CMSSW_BASE" ]]; then
+    echo "ERROR: need to have CMSSW_BASE set! Did you forget to run 'cmsenv'?"
     exit
 fi
 
-CONTROL_DIR_ORIGINAL=$ZZROOT"/src/ZZAnalysis/AnalysisStep/test/Control/"
+CONTROL_DIR_ORIGINAL=$CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Control/"
 SUBMIT_AUGMENTATION="/run_distributed_augmentation.sh"
 
 PARTS="training_chunks validation_chunks test_chunks"
@@ -20,7 +20,7 @@ do
 key=$1
 
 case $key in
-    --mcdir)
+    --workdir)
     MC_DIR="$2"
     shift
     shift

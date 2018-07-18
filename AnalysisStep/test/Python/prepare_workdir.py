@@ -9,14 +9,17 @@ from trainlib.ConfigFileHandler import ConfigFileHandler
 from trainlib.ConfigFileUtils import ConfigFileUtils    
 
 def main():
-    if len(sys.argv) != 2:
-        print "Error: exactly 1 argument is required!"
+    if len(sys.argv) != 3:
+        print "Error: exactly 2 arguments are required!"
 
-    dest_path = sys.argv[1]
+    source_path = sys.argv[1]
+    #source_path = "/data_CMS/cms/wind/CJLST_NTuples_prepared_systematics/"
+    dest_path = sys.argv[2]
 
     # global settings:
-    source_path = "/data_CMS/cms/wind/CJLST_NTuples_prepared_systematics/"
-    bin_dir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
+    zzroot = os.environ["CMSSW_BASE"]
+    bin_dir = os.path.join(zzroot, "bin/slc6_amd64_gcc630/")
+
     scrambler = os.path.join(bin_dir, "run_scrambler")
     chunk_extractor = os.path.join(bin_dir, "run_chunk_extractor")
 
@@ -31,7 +34,7 @@ def main():
     chunk_size = int(confhandler.get_field("Global", "chunk_size"))
 
     def submit_job(cmd_dir, command):
-        job_submitter = "/opt/exp_soft/cms/t3/t3submit_new"
+        job_submitter = os.environ["JOB_SUBMITTER"]
 
         filename = str(uuid.uuid4()) + ".sh"
         file_path = os.path.join(cmd_dir, filename)

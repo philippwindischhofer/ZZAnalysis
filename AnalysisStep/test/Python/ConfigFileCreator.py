@@ -33,6 +33,7 @@ def main():
     campaign_dir = sys.argv[1]
     input_config_file = sys.argv[2]
     hyperparam_config_file = sys.argv[3]
+    workdir = sys.argv[4]
 
     mass_point = 125.0
 
@@ -41,7 +42,8 @@ def main():
     if not os.path.exists(run_dir):
         os.makedirs(run_dir)
     
-    MC_path = "/data_CMS/cms/wind/CJLST_NTuples_with_systematics/trainval/"
+    #    MC_path = "/data_CMS/cms/wind/CJLST_NTuples_with_systematics/trainval/"
+    MC_path = os.path.join(workdir, "trainval/")
     mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, hyperparam_config_file = hyperparam_config_file, mass_point = mass_point)
 
     mconfhandler = ModelCollectionConfigFileHandler()

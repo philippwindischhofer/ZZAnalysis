@@ -43,8 +43,6 @@ done
 set -- "${POSARG[@]}"
 
 CAMPAIGN_DIR=$1
-#ENGINE=$2
-#PRIOR_FILE=$3
 
 if [ -z $ENGINE ]
 then
@@ -58,7 +56,6 @@ then
     PRIOR_FILE="priors.txt"
 fi
 
-#CONTROL_DIR="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Control/"
 CONTROL_DIR=$ZZROOT"/src/ZZAnalysis/AnalysisStep/test/Control/"
 BENCHMARKER="run_distributed_benchmarking_with_priors.sh"
 

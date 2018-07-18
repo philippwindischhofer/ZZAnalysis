@@ -15,7 +15,7 @@ do
 key=$1
 
 case $key in
-    --mcdir)
+    --workdir)
     MC_DIR="$2"
     shift
     shift
@@ -36,32 +36,17 @@ set -- "${POSARG[@]}"
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
 
-#AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_ZX_qq/settings.conf"
-#AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_ZX_qq_syst/settings.conf"
-#AUGMENTATION_SETTINGS="/data_CMS/cms/wind/CJLST_NTuples_with_systematics/settings.conf"
-
 AUGMENTATION_SETTINGS=$MC_DIR"/settings.conf"
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 # the directories where the original sources are located
-#BIN_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
 BIN_DIR=$ZZROOT"/bin/slc6_amd64_gcc630/"
-#PYTHON_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/"
 PYTHON_DIR=$ZZROOT"/src/ZZAnalysis/AnalysisStep/test/Python/"
-
-# the (common) source directory for this campaign
-#BIN_DIR=$CAMPAIGN_DIR"bin/"
 
 # the needed part from the C++ sources
 CALIBRATOR="run_calibrator"
 CALIBRATION_PREPARER="prepare_calibration.py"
-
-# ---------------------------------------------
-#  first, copy all the needed executables to the campaign folder
-# ---------------------------------------------
-# mkdir -p $BIN_DIR
-# cp $BIN_DIR_ORIGINAL$CALIBRATOR $BIN_DIR
 
 cd $CAMPAIGN_DIR
 

@@ -150,8 +150,7 @@ def cost_func(delta_pi, alpha, m):
     return cost
 
 def punzi_target(priors, relevant_classes, params, mode = "S"):
-    # bin_dir = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
-    zzroot = os.environ["ZZROOT"]
+    zzroot = os.environ["CMSSW_BASE"]
     bin_dir = os.path.join(zzroot, "bin/slc6_amd64_gcc630/")
     cost_function_evaluator = "run_prior_evaluator"
     

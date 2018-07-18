@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [[ -z "$ZZROOT" ]]; then
-    echo "ERROR: need to have ZZROOT set! Did you forget to source 'prepare_env.sh'?"
+if [[ -z "$CMSSW_BASE" ]]; then
+    echo "ERROR: need to have CMSSW_BASE set! Did you forget to run 'cmsenv'?"
     exit
 fi
 
@@ -32,7 +32,6 @@ set -- "${POSARG[@]}"
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
 CAMPAIGN_DIR=$1
-#ENGINE=$2
 
 if [ -z $ENGINE ]
 then
@@ -42,12 +41,8 @@ fi
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
-# the directories where the original sources are located
-#BIN_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/"
-#PYTHON_DIR_ORIGINAL="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/test/Python/"
-
-BIN_DIR=$ZZROOT"/bin/slc6_amd64_gcc630/"
-PYTHON_DIR=$ZZROOT"/src/ZZAnalysis/AnalysisStep/test/Python/"
+BIN_DIR=$CMSSW_BASE"/bin/slc6_amd64_gcc630/"
+PYTHON_DIR=$CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Python/"
 
 # the (common) source directory for this campaign
 BIN_DIR=$CAMPAIGN_DIR"bin/"
@@ -57,16 +52,6 @@ BIN_DIR=$CAMPAIGN_DIR"bin/"
 PRIOR_OPTIMIZER="SequentialBayesianPriorOptimizer.py"
 PYTHON_LIB="trainlib"
 PRIOR_EVALUATOR="run_prior_evaluator"
-
-# ---------------------------------------------
-#  first, copy all the executables to the campaign folder
-# ---------------------------------------------
-echo "preparing filesystem for training campaign"
-
-# mkdir -p $BIN_DIR
-# cp $PYTHON_DIR_ORIGINAL$PRIOR_OPTIMIZER $BIN_DIR
-# cp -r $PYTHON_DIR_ORIGINAL$PYTHON_LIB $BIN_DIR
-# cp $BIN_DIR_ORIGINAL$PRIOR_EVALUATOR $BIN_DIR
 
 cd $CAMPAIGN_DIR
 

@@ -1,11 +1,42 @@
 #!/bin/bash
 
-# the source and destination directories
-SOURCE_ROOT=$1
-DEST_ROOT=$2
+if [[ -z "$CMSSW_BASE" ]]; then
+    echo "ERROR: need to have CMSSW_BASE set! Did you forget to run 'cmsenv'?"
+    exit
+fi
+
+# ---------------------------------------------
+#  parse the given arguments
+# ---------------------------------------------
+POSARG=()
+
+while [[ $# -gt 0 ]]
+do
+key=$1
+
+case $key in
+    --source)
+    SOURCE_ROOT="$2"
+    shift
+    shift
+    ;;
+    --dest)
+    DEST_ROOT="$2"
+    shift
+    shift
+    ;;
+    *)
+    POSARG+=("$1")
+    shift
+    ;;
+esac
+done
+
+# set back the positional arguments in case they will be needed later
+set -- "${POSARG[@]}"
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
-FILE_PREPARER="/home/llr/cms/wind/cmssw/CMSSW_9_4_2/bin/slc6_amd64_gcc630/run_augment_single_tree"
+FILE_PREPARER=$CMSSW_BASE"/bin/slc6_amd64_gcc630/run_augment_single_tree"
 
 SOURCE_FILE_NAME="ZZ4lAnalysis.root"
 
@@ -24,7 +55,6 @@ do
     PREPARATION_LOGFILE=$DEST_ROOT"log_preparation_"${SOURCE_FOLDER%/}".txt"
 
     echo "#!/bin/bash" > $PREPARATION_SCRIPT
-    echo "source /home/llr/cms/wind/se.sh" >> $PREPARATION_SCRIPT
     echo $FILE_PREPARER $SOURCE_PATH $DEST_PATH "1" "&>" $PREPARATION_LOGFILE >> $PREPARATION_SCRIPT
 done
 
@@ -34,5 +64,11 @@ JOBS=`find * | grep run_preparation.*.sh$`
 for JOB in $JOBS
 do
     echo "launching " $DEST_ROOT$JOB
-    $JOB_SUBMITTER "-short" $DEST_ROOT$JOB
+    until $JOB_SUBMITTER "-short" $DEST_ROOT$JOB
+    do
+	echo "----------------------------------------------------------------"
+    	echo " error submitting job, retrying ..."
+    	echo "----------------------------------------------------------------"
+    	sleep 1
+    done
 done
