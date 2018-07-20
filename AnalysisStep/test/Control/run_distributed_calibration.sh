@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [[ -z "$ZZROOT" ]]; then
-    echo "ERROR: need to have ZZROOT set! Did you forget to source 'prepare_env.sh'?"
+if [[ -z "$CMSSW_BASE" ]]; then
+    echo "ERROR: need to have CMSSW_BASE set! Did you forget to run 'cmsenv'?"
     exit
 fi
 
@@ -41,8 +41,8 @@ AUGMENTATION_SETTINGS=$MC_DIR"/settings.conf"
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 # the directories where the original sources are located
-BIN_DIR=$ZZROOT"/bin/slc6_amd64_gcc630/"
-PYTHON_DIR=$ZZROOT"/src/ZZAnalysis/AnalysisStep/test/Python/"
+BIN_DIR=$CMSSW_BASE"/bin/slc6_amd64_gcc630/"
+PYTHON_DIR=$CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Python/"
 
 # the needed part from the C++ sources
 CALIBRATOR="run_calibrator"

@@ -94,9 +94,9 @@ double costfunc(const double* params)
 
 int main( int argc, char *argv[] )
 {
-    if(argc != 17)
+    if(argc != 18)
     {
-    	std::cerr << "Error: exactly 16 arguments are required" << std::endl;
+    	std::cerr << "Error: exactly 17 arguments are required" << std::endl;
     }
 
     // set default values
@@ -131,6 +131,7 @@ int main( int argc, char *argv[] )
     qq_prior = std::stof(argv[15]);
 
     TString switchval = argv[16];
+    refdir = argv[17];
 
     if(switchval == "S")
     {
@@ -154,6 +155,7 @@ int main( int argc, char *argv[] )
     }
 
     std::cout << "run_dir = " << run_dir << std::endl;
+    std::cout << "ref_dir = " << refdir << std::endl;
     std::cout << "engine = " << engine << std::endl;
     std::cout << "out_dir = " << outdir << std::endl;
     std::cout << "min_iterations = " << min_iterations << std::endl;
@@ -164,7 +166,9 @@ int main( int argc, char *argv[] )
 
     // can also try to use the validation reference of the legacy classifier as reference for the optimization
     // Note: this really just takes the *scalings*, i.e. the reference values for the achievable Punzi purity from the other classifier -> should be OK!
-    refdir = "/data_CMS/cms/wind/Mor18References/125/validation/";
+    // refdir = "/data_CMS/cms/wind/Mor18References/125/validation/";
+
+    refdir += "/125/validation/";
 
     varclass = new Mor18LIClassifier(run_dir + "calibration_validation/", run_dir + "settings.conf", engine);
 

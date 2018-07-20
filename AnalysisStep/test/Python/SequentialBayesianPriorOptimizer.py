@@ -65,6 +65,7 @@ evalcnt = 0
 # other global settings
 run_dir = ""
 out_dir = ""
+ref_dir = ""
 engine = ""
 
 def load_file(path, keys):
@@ -156,7 +157,7 @@ def punzi_target(priors, relevant_classes, params, mode = "S"):
     
     output = check_output([bin_dir + cost_function_evaluator, run_dir, out_dir, engine, str(params["min_iterations"]), str(params["max_iterations"]), str(priors["ggh_prior"]), str(priors["whhadr_prior"]), 
               str(priors["zhhadr_prior"]), str(priors["whlept_prior"]), str(priors["zhlept_prior"]), str(priors["zhmet_prior"]), 
-              str(priors["tthhadr_prior"]), str(priors["tthlept_prior"]), str(priors["bkg_prior"]), str(priors["qq_prior"]), mode])
+              str(priors["tthhadr_prior"]), str(priors["tthlept_prior"]), str(priors["bkg_prior"]), str(priors["qq_prior"]), mode, ref_dir])
 
     if mode == "S":
         punzi_file = "Mor18_punzi_S_comp.conf"
@@ -549,18 +550,21 @@ def main():
     
     global run_dir
     global out_dir
+    global ref_dir
     global engine
     
-    if len(sys.argv) != 4:
-        print "Error: exactly 3 arguments are required"
+    if len(sys.argv) != 5:
+        print "Error: exactly 4 arguments are required"
         
     run_dir = sys.argv[1]
     out_dir = sys.argv[2]
     engine = sys.argv[3]
+    ref_dir = sys.argv[4]
 
     print run_dir
     print out_dir
     print engine
+    print ref_dir
 
     # start by fixing the ggH_prior by optimizing Punzi in the two VBF categories
     res = run_bayesian_optimization("ggH", "evaluations_ggH.txt", punzi_target_ggH, {'ggh_prior': (priors_min["ggh_prior"], priors_max["ggh_prior"])}, 
