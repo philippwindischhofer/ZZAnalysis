@@ -78,7 +78,7 @@ COMP_REF_DIR=$COMP_REF_DIR$MASS_POINT"/"
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 # the directories where the original sources are located
-BIN_DIR=$ZZROOT"/bin/slc6_amd64_gcc630/"
+BIN_DIR=$CMSSW_BASE"/bin/slc6_amd64_gcc630/"
 
 # the needed part from the C++ sources
 BENCHMARKER="run_benchmarker"

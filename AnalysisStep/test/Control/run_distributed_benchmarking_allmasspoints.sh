@@ -2,8 +2,8 @@
 
 MASS_POINTS="120 125 130"
 
-if [[ -z "$ZZROOT" ]]; then
-    echo "ERROR: need to have ZZROOT set! Did you forget to source 'prepare_env.sh'?"
+if [[ -z "$CMSSW_BASE" ]]; then
+    echo "ERROR: need to have CMSSW_BASE set! Did you forget to run 'cmsenv'?"
     exit
 fi
 
@@ -46,7 +46,7 @@ then
     ENGINE="tree"
 fi
 
-CONTROL_DIR=$ZZROOT"/src/ZZAnalysis/AnalysisStep/test/Control/"
+CONTROL_DIR=$CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Control/"
 BENCHMARKER="run_distributed_benchmarking.sh"
 
 for MASS_POINT in $MASS_POINTS
