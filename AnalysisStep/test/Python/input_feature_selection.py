@@ -7,21 +7,21 @@ import sys
 
 def main():
 
-    def append_variables(confhandler, impdict, threshold_fscore):
-        section_name = impdict["discriminant"]
-        confhandler.new_section(section_name)
+    # def append_variables(confhandler, impdict, threshold_fscore):
+    #     section_name = impdict["discriminant"]
+    #     confhandler.new_section(section_name)
 
-        periodic_inputs = []
-        nonperiodic_inputs = []
-        for key, val in impdict.iteritems():
-            if val[0] > threshold_fscore and key is not "discriminant":
-                if "phi" in key or "Phi" in key or "xi" in key or "xistar" in key:
-                    periodic_inputs.append(key)
-                else:
-                    nonperiodic_inputs.append(key)
+    #     periodic_inputs = []
+    #     nonperiodic_inputs = []
+    #     for key, val in impdict.iteritems():
+    #         if val[0] > threshold_fscore and key is not "discriminant":
+    #             if "phi" in key or "Phi" in key or "xi" in key or "xistar" in key:
+    #                 periodic_inputs.append(key)
+    #             else:
+    #                 nonperiodic_inputs.append(key)
 
-        confhandler.set_field(section_name, "nonperiodic_columns", ConfigFileUtils.serialize_list(nonperiodic_inputs, lambda x: x))
-        confhandler.set_field(section_name, "periodic_columns", ConfigFileUtils.serialize_list(periodic_inputs, lambda x: x))
+    #     confhandler.set_field(section_name, "nonperiodic_columns", ConfigFileUtils.serialize_list(nonperiodic_inputs, lambda x: x))
+    #     confhandler.set_field(section_name, "periodic_columns", ConfigFileUtils.serialize_list(periodic_inputs, lambda x: x))
 
     def append_variables_raw(confhandler, impdict):
         section_name = impdict["discriminant"]
@@ -44,32 +44,32 @@ def main():
         raw = raw.replace(')', ']')
         return raw
 
-    def select_input_features(category_pair, discriminant_name, scalar_branches, list_branches, list_pt_limits, confhandler, df_scores, threshold_fscore = 0.05):
-        # temporary fix: for any discriminant that involves Z+X, do not use PF-MET (for the data / MC comparison would otherwise be potentially biased)
-        if "ZX" in category_pair[0] or "ZX" in category_pair[1]:
-            print "blocking PFMET for category pair " + category_pair[0] + " / " + category_pair[1]
-            scalar_branches.remove("PFMET")
+    # def select_input_features(category_pair, discriminant_name, scalar_branches, list_branches, list_pt_limits, confhandler, df_scores, threshold_fscore = 0.05):
+    #     # temporary fix: for any discriminant that involves Z+X, do not use PF-MET (for the data / MC comparison would otherwise be potentially biased)
+    #     if "ZX" in category_pair[0] or "ZX" in category_pair[1]:
+    #         print "blocking PFMET for category pair " + category_pair[0] + " / " + category_pair[1]
+    #         scalar_branches.remove("PFMET")
 
-        print "will select input features from: " + str(scalar_branches + list_branches)
+    #     print "will select input features from: " + str(scalar_branches + list_branches)
 
-        implist = scorer.get_sorted_feature_importance_list(category_pair, scalar_branches, list_branches, list_pt_limits)
+    #     implist = scorer.get_sorted_feature_importance_list(category_pair, scalar_branches, list_branches, list_pt_limits)
 
-        print implist
+    #     print implist
 
-        impdict = {convert_varname(entry[0]): [entry[1]] for entry in implist}
-        impdict["discriminant"] = discriminant_name
+    #     impdict = {convert_varname(entry[0]): [entry[1]] for entry in implist}
+    #     impdict["discriminant"] = discriminant_name
 
-        print "impdict: " + str(impdict)
+    #     print "impdict: " + str(impdict)
 
-        append_variables(confhandler, impdict, threshold_fscore)
+    #     append_variables(confhandler, impdict, threshold_fscore)
 
-        df = df_scores.append(pd.DataFrame.from_dict(impdict))
+    #     df = df_scores.append(pd.DataFrame.from_dict(impdict))
 
-        print str(implist)
-        return df
+    #     print str(implist)
+    #     return df
 
     def select_input_features_cumulative(category_pair, discriminant_name, scalar_branches, list_branches, list_pt_limits, confhandler, df_scores, cumulative_threshold = 0.99):
-        print "using threshold = " + str(cumulative_threshold)
+        print "using cumulative threshold = " + str(cumulative_threshold)
 
         # temporary fix: for any discriminant that involves Z+X, do not use PF-MET (for the data / MC comparison would otherwise be potentially biased)
         if "ZX" in category_pair[0] or "ZX" in category_pair[1]:
@@ -135,28 +135,28 @@ def main():
     df_fscores = pd.DataFrame()
 
     # the pairings with the ZX background category
-    df_fscores = select_input_features(("ggH", "ZX"), "D_ggH_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("VBF", "ZX"), "D_VBF_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("ZHl", "ZX"), "D_ZHl_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("ZHh", "ZX"), "D_ZHh_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("WHl", "ZX"), "D_WHl_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("WHh", "ZX"), "D_WHh_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("ZHMET", "ZX"), "D_ZHMET_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("ttHh", "ZX"), "D_ttHh_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("ttHl", "ZX"), "D_ttHl_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ggH", "ZX"), "D_ggH_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("VBF", "ZX"), "D_VBF_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ZHl", "ZX"), "D_ZHl_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ZHh", "ZX"), "D_ZHh_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("WHl", "ZX"), "D_WHl_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("WHh", "ZX"), "D_WHh_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ZHMET", "ZX"), "D_ZHMET_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ttHh", "ZX"), "D_ttHh_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ttHl", "ZX"), "D_ttHl_ZX_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
 
     # the pairings with the qq background category
-    df_fscores = select_input_features(("ggH", "qq"), "D_ggH_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("ggH", "qq"), "D_ggH_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("VBF", "qq"), "D_VBF_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("ZHl", "qq"), "D_ZHl_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("ZHh", "qq"), "D_ZHh_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("WHl", "qq"), "D_WHl_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("WHh", "qq"), "D_WHh_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("ZHMET", "qq"), "D_ZHMET_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("ttHh", "qq"), "D_ttHh_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("ttHl", "qq"), "D_ttHl_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
-    df_fscores = select_input_features(("ZX", "qq"), "D_ZX_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ggH", "qq"), "D_ggH_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ggH", "qq"), "D_ggH_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("VBF", "qq"), "D_VBF_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ZHl", "qq"), "D_ZHl_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ZHh", "qq"), "D_ZHh_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("WHl", "qq"), "D_WHl_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("WHh", "qq"), "D_WHh_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ZHMET", "qq"), "D_ZHMET_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ttHh", "qq"), "D_ttHh_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ttHl", "qq"), "D_ttHl_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
+    df_fscores = select_input_features_cumulative(("ZX", "qq"), "D_ZX_qq_ML", production_branches + decay_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
 
     # the pairings of the signal sources among themselves
     df_fscores = select_input_features_cumulative(("VBF2j", "ggH2j"), "D_VBF_ggH_2j_ML", production_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
