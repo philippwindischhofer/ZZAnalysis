@@ -7,52 +7,17 @@ The comments below are for the installation of the original CMSSW environment. F
 
 ------------------------------
 
-To install a complete CMSSW 8X area (including this package)
+To install the necessary environment from scratch:
 ------------------------------
-Please use CMSSW_8_0_26_patch1.
+mkdir cmssw
+cd cmssw
+scram p CMSSW CMSSW_9_4_2
 
-Download and execute the setup script:
-```
-wget -O ${TMPDIR}/checkout_80X.csh https://raw.githubusercontent.com/CJLST/ZZAnalysis/miniAOD_80X/checkout_80X.csh
+wget -O ${TMPDIR}/checkout_9X_bayes.csh https://raw.githubusercontent.com/philippwindischhofer/ZZAnalysis/experimental/checkout_9X_bayes.csh 
 cd $CMSSW_BASE/src
 cmsenv
-chmod u+x ${TMPDIR}/checkout_80X.csh
-${TMPDIR}/checkout_80X.csh
-```
+chmod u+x ${TMPDIR}/checkout_9X_bayes.csh
+${TMPDIR}/checkout_9X_bayes.csh 
 
-To install a complete CMSSW 9X area (including this package)
-------------------------------
-Please use CMSSW_9_4_4.
-
-Download and execute the setup script:
-```
-wget -O ${TMPDIR}/checkout_9X.csh https://raw.githubusercontent.com/CJLST/ZZAnalysis/miniAOD_80X/checkout_9X.csh
-cd $CMSSW_BASE/src
-cmsenv
-chmod u+x ${TMPDIR}/checkout_9X.csh
-${TMPDIR}/checkout_9X.csh
-```
-
-To update this package from the release
-------------------------------------------
-In the package directory, simply issue
-```
-git pull
-```
-
-To commit and push new changes
-------------------------------
-To commit directly (you need write access to the repository):
-```
-git pull
-[edit files]
-```
-Once you are ready to commit
-```
-git pull
-git add [files to be added]
-git commit -m ["commit message"] [files to be added]
-git push origin miniAOD_80X
-```
-
-Otherwise you can make a fork of the repository, develop therein, and make a pull request in the same way as for CMSSW.
+cd ZZAnalysis/AnalysisStep/bin
+scram b

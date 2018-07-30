@@ -1,7 +1,7 @@
 #!/bin/tcsh -fe
 #
 # Instructions:
-# wget -O ${TMPDIR}/checkout_9X_bayes.csh https://raw.githubusercontent.com/philippwindischhofer/ZZAnalysis/miniAOD_80X/checkout_9X.csh
+# wget -O ${TMPDIR}/checkout_9X_bayes.csh https://raw.githubusercontent.com/philippwindischhofer/ZZAnalysis/experimental/checkout_9X_bayes.csh
 # cd $CMSSW_BASE/src
 # cmsenv
 # chmod u+x ${TMPDIR}/checkout_9X_bayes.csh
