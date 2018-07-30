@@ -101,14 +101,15 @@ def main():
         print str(implist)
         return df
 
+    if len(sys.argv) != 6:
+        print "Error: exactly 5 arguments are required"
+        return
+
     out_dir = sys.argv[1]
     campaign_name = sys.argv[2]
     MC_path = sys.argv[3]
     usemela = sys.argv[4]
     threshold = float(sys.argv[5])
-
-    # out_dir = "/data_CMS/cms/wind/InputConfigurations2.0_leading_jets/"
-    # MC_path = "/data_CMS/cms/wind/CJLST_NTuples_prepared_systematics/"
 
     # input variables that are stored as lists
     list_branches = ["Jet", "ExtraLep"]

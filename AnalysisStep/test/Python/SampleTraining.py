@@ -21,7 +21,6 @@ def main():
         print "Error: exactly 2 arguments are required"
 
     #/data_CMS/cms/wind/CJLST_NTuples/
-    #MC_dir = sys.argv[1]
     setting_dir = sys.argv[1]
     training_dir = sys.argv[2]
 
