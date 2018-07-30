@@ -43,7 +43,7 @@ sed -i 's@class HTXSRivetProducer : public edm::stream::EDProducer<> {@class HTX
 
 #ZZAnalysis
 git clone https://github.com/philippwindischhofer/ZZAnalysis.git ZZAnalysis
-(cd ZZAnalysis; git checkout miniAOD_80X)
+(cd ZZAnalysis; git checkout experimental)
 
 #MuScleFit: probably tbf
 #git clone https://github.com/scasasso/usercode MuScleFit
