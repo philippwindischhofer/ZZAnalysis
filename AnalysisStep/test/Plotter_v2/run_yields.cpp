@@ -24,25 +24,23 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   //TString package_path = "/data_CMS/cms/wind/180531_optimized_hyperparameters_systematics_packaged/";
-   //TString package_path = "/data_CMS/cms/wind/180607_optimized_hyperparameters_allvars/";
-   //TString package_path = "/data_CMS/cms/wind/180607_optimized_hyperparameters_selvars_noextraleps_packaged/";
-   //TString package_path = "/data_CMS/cms/wind/180611_optimized_hyperparameters_lepscalesyst_packaged/";
-   //TString package_path = "/data_CMS/cms/wind/180609_cumulative_95_packaged/";
-   //TString package_path = "/data_CMS/cms/wind/180613_cumulative_80_packaged/";
-   //TString package_path = "/data_CMS/cms/wind/180618_standard_hyperparams_report/";
-   TString package_path = "/data_CMS/cms/wind/180628_optimized_hyperparameters_qq_packaged/";
-   TString engine = "tree";
-   TString path = package_path + "CJLST_NTuples/";
-   
-   //TString path = "/data_CMS/cms/wind/180528_optimized_hyperparameters_selvars_leading_jets_metfix_merged_systematics/optimized/augmentation_test/";
+   if(argc != 3)
+   {
+       std::cerr << "Error: exactly 2 arguments are required" << std::endl;
+       return(-1);
+   }
+
+   TString package_path = argv[1];
+   TString engine = argv[2];
+   TString cmssw_base = std::getenv("CMSSW_BASE");
+   TString path = package_path + "/augmentation_test/";
 
    TString file_name = "/ZZ4lAnalysis.root";
    TString file_name_FR = "/FakeRates_SS_Moriond18.root";
    
    //Data
    TString Data        = path + "AllData" + file_name;
-   TString FakeRates   = "/home/llr/cms/wind/cmssw/CMSSW_9_4_2/src/ZZAnalysis/AnalysisStep/data/FakeRates" + file_name_FR;
+   TString FakeRates   = cmssw_base + "/src/ZZAnalysis/AnalysisStep/data/FakeRates" + file_name_FR;
    
    // Signal
    TString ggH120      = path + "ggH120" + file_name;

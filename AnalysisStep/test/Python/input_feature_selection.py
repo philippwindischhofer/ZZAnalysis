@@ -101,27 +101,26 @@ def main():
         print str(implist)
         return df
 
+    out_dir = sys.argv[1]
+    campaign_name = sys.argv[2]
+    MC_path = sys.argv[3]
+    usemela = sys.argv[4]
+    threshold = float(sys.argv[5])
 
-    #out_dir = "/data_CMS/cms/wind/InputConfigurations2.0_cumulative/"
-    out_dir = "/data_CMS/cms/wind/InputConfigurations2.0_leading_jets/"
-    MC_path = "/data_CMS/cms/wind/CJLST_NTuples_prepared_systematics/"
+    # out_dir = "/data_CMS/cms/wind/InputConfigurations2.0_leading_jets/"
+    # MC_path = "/data_CMS/cms/wind/CJLST_NTuples_prepared_systematics/"
 
+    # input variables that are stored as lists
     list_branches = ["Jet", "ExtraLep"]
+
+    # limit pt values for these lists: here, jets are only used if their pt > 30GeV, no restrictions are placed on leptons
     list_pt_limits = [30, 0]
+
+    # scalar (i.e. non-list) input variables
     production_branches = ["PFMET", "nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF", "nExtraLep", 
                            "ZZMass_masked", "nExtraZ", "Z1Mass", "Z2Mass", "Z1Pt", "Z2Pt", "ZZMassErr", "ZZPt", "ZZEta", "ZZPhi", "Z1Flav", "Z2Flav"]
     decay_branches = ["costhetastar", "helphi", "helcosthetaZ1", "helcosthetaZ2", "phistarZ1", "xi", "xistar"]
 
-    #campaign_name = raw_input("name of this configuration: ")
-    #campaign_name = sys.argv[1]
-    campaign_name = 'combined_99_bkg'
-
-    #usemela = raw_input("use MELA (y/n)? ")
-    #usemela = sys.argv[2]
-    usemela = 'y'
-
-    #threshold = float(sys.argv[3])
-    threshold = 1.00
     print "using cumulative_threshold = " + str(threshold)
 
     if "y" in usemela:
@@ -198,7 +197,7 @@ def main():
     df_fscores = select_input_features_cumulative(("ttHl", "VBF"), "D_ttHl_VBF_ML", production_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
     df_fscores = select_input_features_cumulative(("ttHl", "WHh"), "D_ttHl_WHh_ML", production_branches + MELA_branches, list_branches, list_pt_limits, confhandler, df_fscores, threshold)
 
-    # confhandler.save_configuration(os.path.join(out_dir, campaign_name + "_inputs.conf"))
+    confhandler.save_configuration(os.path.join(out_dir, campaign_name + "_inputs.conf"))
     df_fscores.to_csv(os.path.join(out_dir, campaign_name + "_fscore_table_bkg.csv"))
 
 if __name__ == "__main__":

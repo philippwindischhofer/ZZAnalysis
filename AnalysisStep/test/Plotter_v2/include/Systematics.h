@@ -40,20 +40,21 @@ public:
 	
 	void FillSystematics( TString );
 	void FillSystematics_tuneUpDn( TString );
-	void PrintSystematics_PU( );
-	void PrintSystematics_JEC( );
-	void PrintSystematics_BTag( );
-	void PrintSystematics_muRmuFScale( );
-	void PrintSystematics_PythiaScale( );
-	void PrintSystematics_PythiaTune( );
-	void PrintSystematics_QCDScale( );
-	void PrintSystematics_PDFScale( );
-	void PrintSystematics_EWCorr( );
-	void PrintSystematics_THU_ggH( );
+	void PrintSystematics_PU(TString file);
+	void PrintSystematics_JEC(TString file);
+	void PrintSystematics_BTag(TString file);
+	void PrintSystematics_muRmuFScale(TString file);
+	void PrintSystematics_PythiaScale(TString file);
+	void PrintSystematics_PythiaTune(TString file);
+	void PrintSystematics_QCDScale(TString file);
+	void PrintSystematics_PDFScale(TString file);
+	void PrintSystematics_EWCorr(TString file);
+	void PrintSystematics_THU_ggH(TString file);
 
 	
 protected:
 
+	fstream reopen_file(TString file);
 	float calculate_K_factor( TString );
    int FindFinalState();
    int find_current_production_mode( TString , int, int);

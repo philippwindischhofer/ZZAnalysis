@@ -46,7 +46,7 @@ TString SystematicsLI::ChangeFolder(TString original, TString new_folder)
 void SystematicsLI::SetPackagePath(TString package_path, TString engine)
 {
     config_file_path = package_path + "settings.conf";
-    calibration_dir = package_path + "calibration/";
+    calibration_dir = package_path + "calibration_validation/";
     priors_file_path = package_path + "priors_" + engine + "/priors_bkg.txt";
 
     //refclass = new Mor18Classifier();
@@ -90,6 +90,8 @@ void SystematicsLI::SetPackagePath(TString package_path, TString engine)
 
 void SystematicsLI::FillSystematics(TString input_file_name)
 {
+    std::cout << "filling systematics for " + input_file_name << std::endl;
+    
     //std::cout << "SystematicsLI::FillSystematics" << std::endl;
     
     // --------------------------------------------------------------------
@@ -975,6 +977,8 @@ void SystematicsLI::FillSystematics(TString input_file_name)
 
 void SystematicsLI::FillSystematics_tuneUpDn(TString input_file_name)
 {
+    std::cout << "filling tune up/dn systematics for " + input_file_name << std::endl;
+
     //std::cout << "SystematicsLI::FillSystematics_tuneUpDn" << std::endl;
 
     input_file = new TFile(input_file_name);
@@ -1054,11 +1058,13 @@ void SystematicsLI::FillSystematics_tuneUpDn(TString input_file_name)
     //cout << "[INFO] Systematics for " << input_file_name << " filled." << endl;
 }
 
-void SystematicsLI::PrintSystematics_LEC()
+void SystematicsLI::PrintSystematics_LEC(TString file)
 {
+    fstream fout = reopen_file(file);
+
     for ( int i_cat = 0; i_cat < num_of_categories - 1; i_cat++ )
     {
-   	cout << "[LEC: " << _s_category.at(i_cat) << "]" << endl;
+   	fout << "[LEC: " << _s_category.at(i_cat) << "]" << endl;
 	for ( int i_prod = 0; i_prod < num_of_production_modes; i_prod++ )
 	{
 	    float lower;
@@ -1082,7 +1088,9 @@ void SystematicsLI::PrintSystematics_LEC()
 		upper = (_expected_yield_LEC_DN[i_prod][i_cat]/_expected_yield_LEC_DN[i_prod][Settings::inclusive])/(_expected_yield_LEC[i_prod][i_cat]/_expected_yield_LEC[i_prod][Settings::inclusive]);
 	    }
 
-	    cout << _s_production_mode.at(i_prod)  << " = " << lower << "; " << upper << endl;
+	    fout << _s_production_mode.at(i_prod)  << " = " << lower << "; " << upper << endl;
 	}
     }
+
+    fout.close();
 }

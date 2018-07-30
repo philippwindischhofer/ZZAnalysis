@@ -22,7 +22,7 @@ YieldsLI::~YieldsLI()
 void YieldsLI::SetPackagePath(TString package_path, TString engine)
 {
     config_file_path = package_path + "settings.conf";
-    calibration_dir = package_path + "calibration/";
+    calibration_dir = package_path + "calibration_validation/";
     priors_file_path = package_path + "priors_" + engine + "/priors_bkg.txt";
 
     //refclass = new Mor18Classifier();

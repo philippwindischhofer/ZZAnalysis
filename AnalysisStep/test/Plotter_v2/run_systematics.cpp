@@ -24,20 +24,17 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   //TString package_path = "/data_CMS/cms/wind/180531_optimized_hyperparameters_systematics_packaged/";
-   //TString package_path = "/data_CMS/cms/wind/180607_optimized_hyperparameters_allvars/";
-   //TString package_path = "/data_CMS/cms/wind/180607_optimized_hyperparameters_selvars_noextraleps_packaged/";
-   //TString package_path = "/data_CMS/cms/wind/180611_optimized_hyperparameters_lepscalesyst_packaged/";
-   //TString package_path = "/data_CMS/cms/wind/180609_cumulative_95_packaged/";
-   //TString package_path = "/data_CMS/cms/wind/180613_cumulative_80_packaged/";
-   //TString package_path = "/data_CMS/cms/wind/180618_standard_hyperparams_report/";
-   TString package_path = "/data_CMS/cms/wind/180628_optimized_hyperparameters_qq_packaged/";
-   TString engine = "tree";
-   TString path = package_path + "CJLST_NTuples/";
+   if(argc != 4)
+   {
+       std::cerr << "Error: exactly 3 arguments are required" << std::endl;
+       return(-1);
+   }
 
-   //TString path = "/data_CMS/cms/wind/180528_optimized_hyperparameters_selvars_leading_jets_metfix_merged_systematics/optimized/augmentation_test/";
-   //TString path = "/data_CMS/cms/wind/CJLST_NTuples_prepared/";
-   //TString path = "/data_CMS/cms/wind/MC_180218/";
+   TString package_path = argv[1];
+   TString engine = argv[2];
+   TString output_file = argv[3];
+
+   TString path = package_path + "/augmentation_test/";
    TString file_name = "/ZZ4lAnalysis.root";
 	
    // Signal
@@ -80,8 +77,6 @@ int main( int argc, char *argv[] )
    TString ggZZ2e2mu   = path + "ggTo2e2mu_Contin_MCFM701"   + file_name;
    TString ggZZ2e2tau  = path + "ggTo2e2tau_Contin_MCFM701"  + file_name;
    TString ggZZ2mu2tau = path + "ggTo2mu2tau_Contin_MCFM701" + file_name;
-	
-   //Systematics* systematics = new Systematics();
    
    SystematicsLI* systematics = new SystematicsLI();
    systematics -> SetPackagePath(package_path, engine);
@@ -120,17 +115,14 @@ int main( int argc, char *argv[] )
    systematics->FillSystematics_tuneUpDn(ttH125_TU);
    systematics->FillSystematics_tuneUpDn(ttH125_TD);
 
-   systematics->PrintSystematics_PU();
-   systematics->PrintSystematics_JEC();
-   systematics->PrintSystematics_BTag();
-   //systematics->PrintSystematics_muRmuFScale();
-   //systematics->PrintSystematics_PythiaScale();
-   //systematics->PrintSystematics_PythiaTune();
-   systematics->PrintSystematics_QCDScale();
-   systematics->PrintSystematics_PDFScale();
-   systematics->PrintSystematics_EWCorr();
-   systematics->PrintSystematics_THU_ggH();
-   systematics->PrintSystematics_LEC();
+   systematics->PrintSystematics_PU(output_file);
+   systematics->PrintSystematics_JEC(output_file);
+   systematics->PrintSystematics_BTag(output_file);
+   systematics->PrintSystematics_QCDScale(output_file);
+   systematics->PrintSystematics_PDFScale(output_file);
+   systematics->PrintSystematics_EWCorr(output_file);
+   systematics->PrintSystematics_THU_ggH(output_file);
+   systematics->PrintSystematics_LEC(output_file);
 	
    delete systematics;
 }

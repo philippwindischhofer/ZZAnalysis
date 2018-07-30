@@ -48,7 +48,7 @@ public:
     void FillSystematics( TString );
     void FillSystematics_tuneUpDn( TString );
 
-    void PrintSystematics_LEC();
+    void PrintSystematics_LEC(TString file);
 
 private:
     // for the new contribution of the lepton energy scale
