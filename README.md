@@ -22,4 +22,6 @@ ${TMPDIR}/checkout_9X_bayes.csh
 
 cd ZZAnalysis/AnalysisStep/bin
 scram b
+
+pip install --user -r ./ZZAnalysis/AnalysisStep/test/Python/requirements.txt
 ```
