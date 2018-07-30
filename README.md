@@ -3,12 +3,13 @@ Bayes4Leptons
 
 This is a modified version of the original [CJLST/ZZAnalysis](https://github.com/CJLST/ZZAnalysis), using Bayesian event categorization instead.
 
-The comments below are for the installation of the original CMSSW environment. For instructions of how to use Bayesian classification, see the [wiki](https://github.com/philippwindischhofer/ZZAnalysis/wiki) instead.
+See below for how to get the analysis environment installed. For instructions of how to train and use Bayesian classification, see the [wiki](https://github.com/philippwindischhofer/ZZAnalysis/wiki) instead.
 
 ------------------------------
 
 To install the necessary environment from scratch:
 ------------------------------
+```
 mkdir cmssw
 cd cmssw
 scram p CMSSW CMSSW_9_4_2
@@ -21,3 +22,4 @@ ${TMPDIR}/checkout_9X_bayes.csh
 
 cd ZZAnalysis/AnalysisStep/bin
 scram b
+```
