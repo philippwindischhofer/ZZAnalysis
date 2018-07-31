@@ -20,6 +20,7 @@ from trainlib.ModelFactoryFullMassRangeDynamic import ModelFactoryFullMassRangeD
 
 from trainlib.ModelFactoryFullCategorySetDynamic import ModelFactoryFullCategorySetDynamic
 from trainlib.ModelFactoryFullCategorySetDynamicInclusive import ModelFactoryFullCategorySetDynamicInclusive
+from trainlib.SimpleModelFactoryDynamic import SimpleModelFactoryDynamic
 
 from trainlib.ConfigFileHandler import ConfigFileHandler
 from trainlib.ModelCollectionConfigFileHandler import ModelCollectionConfigFileHandler
@@ -226,19 +227,7 @@ def main():
                     else:
                         iterables[sweep_name].add(sweep_scope, sweep_parameter, start_list, end_list, sweep_behaviour)
 
-    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples/trainval/"
-    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZXonly/trainval/"
-    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZXonly_033/trainval/"
-    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZXonly_022/trainval/"
-    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZXonly_016/trainval/"
-    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZXonly_013/trainval/"
-    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZX_qq_013//trainval/"
-    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZX_qq/trainval/"
-    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_ZX_qq_syst/trainval/"
-    #MC_path = "/data_CMS/cms/wind/CJLST_NTuples_with_systematics/trainval/"
-
     MC_path = os.path.join(workdir, "trainval/")
-
     model_type = confhandler.get_field('global', 'model_type')
 
     # get the mass point from the global config file in a way that ensures backward compatibility
@@ -249,10 +238,8 @@ def main():
 
     if model_type == 'SimpleModel':
         # using the full mass range for training, not using the 118/130GeV cut
-        mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, hyperparam_config_file = None, mass_point = mass_point)
-
-        # exclusive version for full mass range
-        #mcoll = ModelFactoryFullMassRangeDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, mass_point = mass_point)
+        #mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, hyperparam_config_file = None, mass_point = mass_point)
+        mcoll = SimpleModelFactoryDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, hyperparam_config_file = None, mass_point = mass_point)
     elif model_type == 'CombinedModel':
         mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateCombinedModelCollections(MC_path)
         

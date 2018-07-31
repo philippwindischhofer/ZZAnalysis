@@ -42,11 +42,19 @@ JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 # the directories where the original sources are located
 BIN_DIR=$CMSSW_BASE"/bin/slc6_amd64_gcc630/"
+BUILDFILE_DIR=$CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/bin/"
 PYTHON_DIR=$CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Python/"
 
 # the needed part from the C++ sources
 CALIBRATOR="run_calibrator"
 CALIBRATION_PREPARER="prepare_calibration.py"
+HEADER_GENERATOR="GenerateHeaderFiles.py"
+
+# from the calibration step onwards, C++ takes over. The number and type of defined categories is visible from C++ in the branch names in the augmented trees that hold the evaluated neural networks.
+# for the configuration found in categories.conf, make the list of branches and recompile the C++ codebase with them
+python $PYTHON_DIR$HEADER_GENERATOR
+cd $BUILDFILE_DIR
+scram b
 
 cd $CAMPAIGN_DIR
 

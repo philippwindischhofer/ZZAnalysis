@@ -9,4 +9,8 @@ class DiscriminantEndpiece:
 
     def __getitem__(self, key):
         return self.endpiece_components[key]
-    
+
+    @classmethod
+    def from_config(cls, config_section):
+        endpiece_name = config_section["name"]
+        return cls(endpiece_name)

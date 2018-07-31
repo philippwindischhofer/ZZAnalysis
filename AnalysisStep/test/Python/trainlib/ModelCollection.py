@@ -69,6 +69,7 @@ class ModelCollection:
                 model_name = mcoll_name
 
             cuts = ep_a[cur_comp].component_cut
+            cuts_s = ep_a[cur_comp].component_cut_s
             model_basetype = ep_a[cur_comp].model_basetype
             hyperparams = ep_a[cur_comp].model_hyperparams
             preprocessor_basetype = ep_a[cur_comp].preprocessor_basetype
@@ -98,7 +99,7 @@ class ModelCollection:
                     print "-------------------------------------------------------------------------------"
             
             # now can construct all model components and add them to the collection
-            pre = preprocessor_basetype(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = cuts)
+            pre = preprocessor_basetype(name = model_name + "_input", nonperiodic_columns = nonperiodic_columns, periodic_columns = periodic_columns, cuts = cuts, cuts_s = cuts_s)
             mod = model_basetype(model_name, pre.number_processed_columns(), hyperparams)
             sett = TrainingConfig()
 

@@ -130,18 +130,16 @@ class BDTscorer:
 
         return dmatrix
 
-    def get_feature_importance_list_BDT(self, disc_pair, scalar_branches, list_branches, pt_limits):
-        H1_name = disc_pair[0]
-        H0_name = disc_pair[1]
+    def get_feature_importance_list_BDT(self, H1_stream, H0_stream, scalar_branches, list_branches, pt_limits):
 
-        # get the training data for the BDT ...
-        H1_coll_train = FileCollection(self.collections[H1_name], 0.0, 0.5)
-        H0_coll_train = FileCollection(self.collections[H0_name], 0.0, 0.5)
+        H1_coll_train = FileCollection(H1_stream, 0.0, 0.5)
+        H0_coll_train = FileCollection(H0_stream, 0.0, 0.5)
+
         dtrain = self.get_data_dmatrix(H1_coll_train, H0_coll_train, Config.branches, scalar_branches, list_branches, pt_limits)
 
-        # ... and the validation data as well
-        H1_coll_val = FileCollection(self.collections[H1_name], 0.5, 1.0)
-        H0_coll_val = FileCollection(self.collections[H0_name], 0.5, 1.0)
+        H1_coll_val = FileCollection(H1_stream, 0.5, 1.0)
+        H0_coll_val = FileCollection(H0_stream, 0.5, 1.0)
+
         dval = self.get_data_dmatrix(H1_coll_val, H0_coll_val, Config.branches, scalar_branches, list_branches, pt_limits)
 
         evallist = [(dtrain, 'train'), (dval, 'eval')]
@@ -177,9 +175,9 @@ class BDTscorer:
         used_variables = {key: val / float(score_sum) for key, val in sorted(best_imp.iteritems(), key = lambda x: x[1], reverse = True)}           
         return best_params, dtrain.feature_names, used_variables
 
-    def get_sorted_feature_importance_list(self, disc, scalar_branches, list_branches, pt_limits):
+    def get_sorted_feature_importance_list(self, H1_stream, H0_stream, scalar_branches, list_branches, pt_limits):
 
-        _, _, implist = self.get_feature_importance_list_BDT(disc, scalar_branches, list_branches, pt_limits)
+        _, _, implist = self.get_feature_importance_list_BDT(H1_stream, H0_stream, scalar_branches, list_branches, pt_limits)
 
         # sort the used variables according to their importance
         sorted_implist = []

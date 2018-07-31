@@ -20,6 +20,7 @@ from trainlib.ModelFactoryFullMassRangeDynamic import ModelFactoryFullMassRangeD
 
 from trainlib.ModelFactoryFullCategorySetDynamic import ModelFactoryFullCategorySetDynamic
 from trainlib.ModelFactoryFullCategorySetDynamicInclusive import ModelFactoryFullCategorySetDynamicInclusive
+from trainlib.SimpleModelFactoryDynamic import SimpleModelFactoryDynamic
 
 from trainlib.ConfigFileHandler import ConfigFileHandler
 from trainlib.ModelCollectionConfigFileHandler import ModelCollectionConfigFileHandler
@@ -27,8 +28,8 @@ from trainlib.ConfigFileUtils import ConfigFileUtils
 
 def main():
     
-    if len(sys.argv) != 4:
-        print "Error: exactly 3 arguments is required"
+    if len(sys.argv) != 5:
+        print "Error: exactly 4 arguments is required"
 
     campaign_dir = sys.argv[1]
     input_config_file = sys.argv[2]
@@ -42,9 +43,11 @@ def main():
     if not os.path.exists(run_dir):
         os.makedirs(run_dir)
     
-    #    MC_path = "/data_CMS/cms/wind/CJLST_NTuples_with_systematics/trainval/"
     MC_path = os.path.join(workdir, "trainval/")
-    mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, hyperparam_config_file = hyperparam_config_file, mass_point = mass_point)
+
+    # this always uses SimpleModel by default (more complicated models are accessible through ConfigFileSweeper when performing a sweep of network hyperparameters etc.)
+    #mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, hyperparam_config_file = hyperparam_config_file, mass_point = mass_point)
+    mcoll = SimpleModelFactoryDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, hyperparam_config_file = hyperparam_config_file, mass_point = mass_point)
 
     mconfhandler = ModelCollectionConfigFileHandler()
     mconfhandler.ToConfiguration(mcoll)

@@ -35,7 +35,7 @@ case $key in
     shift
     shift
     ;;
-    --MC)
+    --workdir)
     MC_PATH="$2"
     shift
     shift
@@ -58,4 +58,4 @@ set -- "${POSARG[@]}"
 mkdir -p $DEST_ROOT
 
 # run the input variable selection
-python $PYTHON_DIR$INPUT_VARIABLE_SELECTOR $DEST_ROOT $CAMPAIGN_NAME $MC_PATH $USEMELA $THRESHOLD
+python $PYTHON_DIR$INPUT_VARIABLE_SELECTOR $DEST_ROOT $CAMPAIGN_NAME $MC_PATH"/trainval/" $USEMELA $THRESHOLD

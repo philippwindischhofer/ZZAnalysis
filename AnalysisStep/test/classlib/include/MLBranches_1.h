@@ -1,0 +1,116 @@
+/*   This file was auto generated on 2018-07-31 17:27. Do NOT edit manually!    */
+
+
+float D_VBF_WHh_ML;
+float D_VBF_ZHh_ML;
+float D_VBF_ZHl_ML;
+float D_VBF_WHl_ML;
+float D_VBF_ZHMET_ML;
+float D_VBF_ttHh_ML;
+float D_VBF_ttHl_ML;
+float D_VBF_ggH_ML;
+float D_VBF_ZX_ML;
+float D_VBF_qq_ML;
+float D_WHh_ZHh_ML;
+float D_WHh_ZHl_ML;
+float D_WHh_WHl_ML;
+float D_WHh_ZHMET_ML;
+float D_WHh_ttHh_ML;
+float D_WHh_ttHl_ML;
+float D_WHh_ggH_ML;
+float D_WHh_ZX_ML;
+float D_WHh_qq_ML;
+float D_ZHh_ZHl_ML;
+float D_ZHh_WHl_ML;
+float D_ZHh_ZHMET_ML;
+float D_ZHh_ttHh_ML;
+float D_ZHh_ttHl_ML;
+float D_ZHh_ggH_ML;
+float D_ZHh_ZX_ML;
+float D_ZHh_qq_ML;
+float D_ZHl_WHl_ML;
+float D_ZHl_ZHMET_ML;
+float D_ZHl_ttHh_ML;
+float D_ZHl_ttHl_ML;
+float D_ZHl_ggH_ML;
+float D_ZHl_ZX_ML;
+float D_ZHl_qq_ML;
+float D_WHl_ZHMET_ML;
+float D_WHl_ttHh_ML;
+float D_WHl_ttHl_ML;
+float D_WHl_ggH_ML;
+float D_WHl_ZX_ML;
+float D_WHl_qq_ML;
+float D_ZHMET_ttHh_ML;
+float D_ZHMET_ttHl_ML;
+float D_ZHMET_ggH_ML;
+float D_ZHMET_ZX_ML;
+float D_ZHMET_qq_ML;
+float D_ttHh_ttHl_ML;
+float D_ttHh_ggH_ML;
+float D_ttHh_ZX_ML;
+float D_ttHh_qq_ML;
+float D_ttHl_ggH_ML;
+float D_ttHl_ZX_ML;
+float D_ttHl_qq_ML;
+float D_ggH_ZX_ML;
+float D_ggH_qq_ML;
+float D_ZX_qq_ML;
+
+
+std::map<TString, float*> ML_discriminants = {
+	{"D_VBF_WHh_ML", &D_VBF_WHh_ML},
+	{"D_VBF_ZHh_ML", &D_VBF_ZHh_ML},
+	{"D_VBF_ZHl_ML", &D_VBF_ZHl_ML},
+	{"D_VBF_WHl_ML", &D_VBF_WHl_ML},
+	{"D_VBF_ZHMET_ML", &D_VBF_ZHMET_ML},
+	{"D_VBF_ttHh_ML", &D_VBF_ttHh_ML},
+	{"D_VBF_ttHl_ML", &D_VBF_ttHl_ML},
+	{"D_VBF_ggH_ML", &D_VBF_ggH_ML},
+	{"D_VBF_ZX_ML", &D_VBF_ZX_ML},
+	{"D_VBF_qq_ML", &D_VBF_qq_ML},
+	{"D_WHh_ZHh_ML", &D_WHh_ZHh_ML},
+	{"D_WHh_ZHl_ML", &D_WHh_ZHl_ML},
+	{"D_WHh_WHl_ML", &D_WHh_WHl_ML},
+	{"D_WHh_ZHMET_ML", &D_WHh_ZHMET_ML},
+	{"D_WHh_ttHh_ML", &D_WHh_ttHh_ML},
+	{"D_WHh_ttHl_ML", &D_WHh_ttHl_ML},
+	{"D_WHh_ggH_ML", &D_WHh_ggH_ML},
+	{"D_WHh_ZX_ML", &D_WHh_ZX_ML},
+	{"D_WHh_qq_ML", &D_WHh_qq_ML},
+	{"D_ZHh_ZHl_ML", &D_ZHh_ZHl_ML},
+	{"D_ZHh_WHl_ML", &D_ZHh_WHl_ML},
+	{"D_ZHh_ZHMET_ML", &D_ZHh_ZHMET_ML},
+	{"D_ZHh_ttHh_ML", &D_ZHh_ttHh_ML},
+	{"D_ZHh_ttHl_ML", &D_ZHh_ttHl_ML},
+	{"D_ZHh_ggH_ML", &D_ZHh_ggH_ML},
+	{"D_ZHh_ZX_ML", &D_ZHh_ZX_ML},
+	{"D_ZHh_qq_ML", &D_ZHh_qq_ML},
+	{"D_ZHl_WHl_ML", &D_ZHl_WHl_ML},
+	{"D_ZHl_ZHMET_ML", &D_ZHl_ZHMET_ML},
+	{"D_ZHl_ttHh_ML", &D_ZHl_ttHh_ML},
+	{"D_ZHl_ttHl_ML", &D_ZHl_ttHl_ML},
+	{"D_ZHl_ggH_ML", &D_ZHl_ggH_ML},
+	{"D_ZHl_ZX_ML", &D_ZHl_ZX_ML},
+	{"D_ZHl_qq_ML", &D_ZHl_qq_ML},
+	{"D_WHl_ZHMET_ML", &D_WHl_ZHMET_ML},
+	{"D_WHl_ttHh_ML", &D_WHl_ttHh_ML},
+	{"D_WHl_ttHl_ML", &D_WHl_ttHl_ML},
+	{"D_WHl_ggH_ML", &D_WHl_ggH_ML},
+	{"D_WHl_ZX_ML", &D_WHl_ZX_ML},
+	{"D_WHl_qq_ML", &D_WHl_qq_ML},
+	{"D_ZHMET_ttHh_ML", &D_ZHMET_ttHh_ML},
+	{"D_ZHMET_ttHl_ML", &D_ZHMET_ttHl_ML},
+	{"D_ZHMET_ggH_ML", &D_ZHMET_ggH_ML},
+	{"D_ZHMET_ZX_ML", &D_ZHMET_ZX_ML},
+	{"D_ZHMET_qq_ML", &D_ZHMET_qq_ML},
+	{"D_ttHh_ttHl_ML", &D_ttHh_ttHl_ML},
+	{"D_ttHh_ggH_ML", &D_ttHh_ggH_ML},
+	{"D_ttHh_ZX_ML", &D_ttHh_ZX_ML},
+	{"D_ttHh_qq_ML", &D_ttHh_qq_ML},
+	{"D_ttHl_ggH_ML", &D_ttHl_ggH_ML},
+	{"D_ttHl_ZX_ML", &D_ttHl_ZX_ML},
+	{"D_ttHl_qq_ML", &D_ttHl_qq_ML},
+	{"D_ggH_ZX_ML", &D_ggH_ZX_ML},
+	{"D_ggH_qq_ML", &D_ggH_qq_ML},
+	{"D_ZX_qq_ML", &D_ZX_qq_ML}};

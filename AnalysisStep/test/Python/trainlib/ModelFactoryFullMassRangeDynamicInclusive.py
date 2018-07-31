@@ -16,7 +16,7 @@ class ModelFactoryFullMassRangeDynamicInclusive:
         global_max_epochs = 100
         global_hyperparams = {'number_layers': 2, 'number_neurons': 128}
 
-        # some shortcuts
+        # some shortcuts concerning the default variables that are used for category pairings in case nothing else is specified
         nonperiodic_variables_default_0j = ["PFMET", "Z1Pt", "Z2Pt", "Z1Mass", "Z2Mass", "ZZPt", "ZZEta", "ZZMass", "ZZMassErr"]
         nonperiodic_variables_default_1j = nonperiodic_variables_default_0j + ["nCleanedJetsPt30BTagged_bTagSF"]
         nonperiodic_variables_default = nonperiodic_variables_default_0j + ["nCleanedJetsPt30", "nCleanedJetsPt30BTagged_bTagSF"]
