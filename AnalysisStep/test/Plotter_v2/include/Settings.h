@@ -59,14 +59,16 @@ public:
       Eta4l				   = 26,
 		Pt_leading        = 27,
       Pt_trailing       = 28,
-      SIP_leading       = 29,
-      SIP_trailing      = 30,
-      ISO_leading       = 31,
-      ISO_trailing      = 32,
-      NExtraLep         = 33,
-      NJets				   = 34,
-      NJetsBTagged      = 35,
-      M4l_110150_HighKD = 36,
+		Eta_leading       = 29,
+      Eta_trailing      = 30,
+      SIP_leading       = 31,
+      SIP_trailing      = 32,
+      ISO_leading       = 33,
+      ISO_trailing      = 34,
+      NExtraLep         = 35,
+      NJets				   = 36,
+      NJetsBTagged      = 37,
+      M4l_110150_HighKD = 38,
       MAX_NUM_OF_1D_PLOT_NAMES
    };
    
@@ -79,14 +81,16 @@ public:
    
    enum _2D_error_plot_name 
    {
-      KDvsM4l          = 0,
-      KDvsM4lZoomed    = 1,
-      KDvsM4lHighMass  = 2,
-      D1jetvsM4lZoomed = 3,
-      D2jetvsM4lZoomed = 4,
-      DWHvsM4lZoomed   = 5,
-      DZHvsM4lZoomed   = 6,
-      DVHvsM4lZoomed   = 7,
+      KDvsM4l            = 0,
+      KDvsM4lZoomed      = 1,
+      KDvsM4lHighMass    = 2,
+      D1jetvsM4lZoomed   = 3,
+      D2jetvsM4lZoomed   = 4,
+      DWHvsM4lZoomed     = 5,
+      DZHvsM4lZoomed     = 6,
+      DVHvsM4lZoomed     = 7,
+      DVBFDECvsM4lZoomed = 8,
+      DVHDECvsM4lZoomed  = 9,
       MAX_NUM_OF_2D_ERROR_PLOT_NAMES
    };
    

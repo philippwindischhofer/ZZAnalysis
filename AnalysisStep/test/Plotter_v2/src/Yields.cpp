@@ -10,6 +10,7 @@ Yields::Yields( double lumi ):Tree()
    histo_map["Yields"] = yields_histos;
 
    _lumi = lumi;
+   _merge_2e2mu = true;
    _current_process = -999;
    _k_factor = 1;
    _current_final_state = -999;
@@ -32,10 +33,10 @@ Yields::Yields( double lumi ):Tree()
    _tclr->GetColor("#5f3f3f");
    
    // Z+X SS factors
-   _fs_ROS_SS.push_back(1.01005);//4e
-   _fs_ROS_SS.push_back(1.05217);//4mu
-   _fs_ROS_SS.push_back(1.0024);//2e2mu
-   _fs_ROS_SS.push_back(1.0052);//2mu2e
+   _fs_ROS_SS.push_back(1.00868);//4e
+   _fs_ROS_SS.push_back(1.04015);//4mu
+   _fs_ROS_SS.push_back(1.00823);//2e2mu
+   _fs_ROS_SS.push_back(1.0049);//2mu2e
    
    vector<float> temp;
    for ( int i_fs = 0; i_fs < num_of_final_states; i_fs++ )
@@ -59,6 +60,14 @@ Yields::~Yields()
 }
 //====================
 
+
+//===================================================================
+void Yields::Split_2e2mu()
+{
+	_merge_2e2mu = false;
+	yields_histos->Split_2e2mu();
+}
+//===================================================================
 
 
 //=====================================================
@@ -138,7 +147,7 @@ void Yields::MakeHistograms( TString input_file_name )
 													 true,// Use VHMET category
 													 false);// Use QG tagging
       // K factors
-      if ( APPLY_K_FACTORS ) _k_factor = calculate_K_factor(input_file_name);
+		_k_factor = calculate_K_factor(input_file_name);
 
       // Final event weight
       _event_weight = (_lumi * 1000 * xsec * _k_factor * overallEventWeight) / gen_sum_weights;
@@ -225,7 +234,7 @@ void Yields::Calculate_SS_ZX_Yields( TString input_file_data_name, TString  inpu
          _expected_yield_SR[i_fs][Settings::inclusive]   += _expected_yield_SR[i_fs][i_cat];   //calculate expected yield for inclusive category
          _number_of_events_CR[i_fs][Settings::inclusive] += _number_of_events_CR[i_fs][i_cat];
          
-         if ( MERGE_2E2MU )
+         if ( _merge_2e2mu )
          {
             _expected_yield_SR[Settings::fs2e2mu][i_cat]       += _expected_yield_SR[Settings::fs2mu2e][i_cat];   //merge 2e2mu and 2mu2e final state
             _number_of_events_CR[Settings::fs2e2mu][i_cat]     += _number_of_events_CR[Settings::fs2mu2e][i_cat];
@@ -246,7 +255,7 @@ void Yields::Calculate_SS_ZX_Yields( TString input_file_data_name, TString  inpu
    cout << "[INFO] Control printout." << endl << "!!! Numbers shoud be identical to yields from SS method !!!" << endl;
    for ( int i_fs = 0; i_fs < num_of_final_states - 1; i_fs++ )
    {
-      if ( MERGE_2E2MU && i_fs == Settings::fs2mu2e) continue;
+      if ( _merge_2e2mu && i_fs == Settings::fs2mu2e) continue;
       cout << "Category: " << Settings::inclusive << "   Final state: " << i_fs << endl;
       cout << _expected_yield_SR[i_fs][Settings::inclusive] << " +/- " <<
       _expected_yield_SR[i_fs][Settings::inclusive]/sqrt(_number_of_events_CR[i_fs][Settings::inclusive]) << " (stat., evt: " <<
@@ -260,6 +269,173 @@ void Yields::Calculate_SS_ZX_Yields( TString input_file_data_name, TString  inpu
    cout << "[INFO] Z+X yields calculated using SS method." << endl;
 }
 //===============================================================================
+
+
+//=====================================================
+void Yields::ProduceDataROOTFiles( TString input_file_name , TString output_folder_name )
+{
+
+   input_file = new TFile(input_file_name);
+
+   hCounters = (TH1F*)input_file->Get("ZZTree/Counters");
+	
+   input_tree = (TTree*)input_file->Get("ZZTree/candTree");
+   Init( input_tree, input_file_name );
+	
+   if (fChain == 0) return;
+
+   Long64_t nentries = fChain->GetEntriesFast();
+
+   Long64_t nbytes = 0, nb = 0;
+	
+	_s_final_state.push_back("4e");
+   _s_final_state.push_back("4mu");
+   _s_final_state.push_back("2e2mu");
+	
+	_s_category.push_back("UntaggedMor18");
+   _s_category.push_back("VBF1JetTaggedMor18");
+   _s_category.push_back("VBF2JetTaggedMor18");
+   _s_category.push_back("VHLeptTaggedMor18");
+   _s_category.push_back("VHHadrTaggedMor18");
+   _s_category.push_back("ttHLeptTaggedMor18");
+   _s_category.push_back("ttHHadrTaggedMor18");
+	
+	TString file_name;
+	
+   for (Long64_t jentry=0; jentry<nentries;jentry++)
+   {
+      Long64_t ientry = LoadTree(jentry);
+      if (ientry < 0) break;
+      nb = fChain->GetEntry(jentry);
+      nbytes += nb;
+		
+      if ( LepEta->size() != 4 )
+      {
+         cout << "[ERROR] in event " << RunNumber << ":" << LumiNumber << ":" << EventNumber << ", stored " << LepEta->size() << " leptons instead of 4" << endl;
+         continue;
+      }
+
+      if ( !(ZZsel >= 90) ) continue;
+		
+      // Final states
+      _current_final_state = FindFinalState();
+		
+      // Categories
+      for ( int j = 0; j < nCleanedJetsPt30; j++)
+      {
+         jetPt[j] = JetPt->at(j);
+         jetEta[j] = JetEta->at(j);
+         jetPhi[j] = JetPhi->at(j);
+         jetMass[j] = JetMass->at(j);
+         jetQGL[j] = JetQGLikelihood->at(j);
+         jetPgOverPq[j] = 1./JetQGLikelihood->at(j) - 1.;
+      }
+
+		_current_category = categoryMor18(nExtraLep,
+													 nExtraZ,
+													 nCleanedJetsPt30,
+													 nCleanedJetsPt30BTagged_bTagSF,
+													 jetQGL,
+													 p_JJQCD_SIG_ghg2_1_JHUGen_JECNominal,
+													 p_JQCD_SIG_ghg2_1_JHUGen_JECNominal,
+													 p_JJVBF_SIG_ghv1_1_JHUGen_JECNominal,
+													 p_JVBF_SIG_ghv1_1_JHUGen_JECNominal,
+													 pAux_JVBF_SIG_ghv1_1_JHUGen_JECNominal,
+													 p_HadWH_SIG_ghw1_1_JHUGen_JECNominal,
+													 p_HadZH_SIG_ghz1_1_JHUGen_JECNominal,
+													 p_HadWH_mavjj_JECNominal,
+													 p_HadWH_mavjj_true_JECNominal,
+													 p_HadZH_mavjj_JECNominal,
+													 p_HadZH_mavjj_true_JECNominal,
+													 jetPhi,
+													 ZZMass,
+													 PFMET,
+													 false,// Use VHMET category
+													 false);// Use QG tagging
+		
+	   // Calculate kinematic discriminants
+      if(_current_category == Settings::VBF_2j_tagged)
+      {
+		    _kd[_current_final_state][_current_category].push_back(D_bkg_VBFdec(  p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal,
+										p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal,
+										p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal,
+										p_JJVBF_BKG_MCFM_JECNominal,
+										p_HadZH_BKG_MCFM_JECNominal,
+										p_HadWH_BKG_MCFM_JECNominal,
+										p_JJQCD_BKG_MCFM_JECNominal,
+										p_HadZH_mavjj_JECNominal,
+										p_HadZH_mavjj_true_JECNominal,
+										p_HadWH_mavjj_JECNominal,
+										p_HadWH_mavjj_true_JECNominal,
+										pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal,
+										pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal,
+										pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal,
+										pConst_JJVBF_BKG_MCFM_JECNominal,
+										pConst_HadZH_BKG_MCFM_JECNominal,
+										pConst_HadWH_BKG_MCFM_JECNominal,
+										pConst_JJQCD_BKG_MCFM_JECNominal,
+										Z1Flav*Z2Flav,
+										ZZMass));
+		}
+		
+		else if(_current_category == Settings::VH_hadron_tagged)
+		{
+			 _kd[_current_final_state][_current_category].push_back(D_bkg_VHdec(   p_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal,
+										p_HadZH_S_SIG_ghz1_1_MCFM_JECNominal,
+										p_HadWH_S_SIG_ghw1_1_MCFM_JECNominal,
+										p_JJVBF_BKG_MCFM_JECNominal,
+										p_HadZH_BKG_MCFM_JECNominal,
+										p_HadWH_BKG_MCFM_JECNominal,
+										p_JJQCD_BKG_MCFM_JECNominal,
+										p_HadZH_mavjj_JECNominal,
+										p_HadZH_mavjj_true_JECNominal,
+										p_HadWH_mavjj_JECNominal,
+										p_HadWH_mavjj_true_JECNominal,
+										pConst_JJVBF_S_SIG_ghv1_1_MCFM_JECNominal,
+										pConst_HadZH_S_SIG_ghz1_1_MCFM_JECNominal,
+										pConst_HadWH_S_SIG_ghw1_1_MCFM_JECNominal,
+										pConst_JJVBF_BKG_MCFM_JECNominal,
+										pConst_HadZH_BKG_MCFM_JECNominal,
+										pConst_HadWH_BKG_MCFM_JECNominal,
+										pConst_JJQCD_BKG_MCFM_JECNominal,
+										Z1Flav*Z2Flav,
+										ZZMass));
+		}
+      else _kd[_current_final_state][_current_category].push_back(p_GG_SIG_ghg2_1_ghz1_1_JHUGen / ( p_GG_SIG_ghg2_1_ghz1_1_JHUGen + p_QQB_BKG_MCFM*getDbkgkinConstant(Z1Flav*Z2Flav,ZZMass) ));
+		
+      _mass[_current_final_state][_current_category].push_back(ZZMass);
+		
+   } // end for loop
+	
+	system("mkdir -p " + output_folder_name);
+	
+	for ( int i_fs = 0; i_fs < num_of_final_states - 2; i_fs++ )
+   {
+      for ( int i_cat = 0; i_cat < num_of_categories - 2; i_cat++ )
+      {
+      	file_name = output_folder_name + "/data_obs_" + _s_category.at(i_cat) + "_" + _s_final_state.at(i_fs) + ".root";
+         data_root_file = new TFile(file_name, "recreate");
+         data_obs = new TTree("data_obs","data_obs");
+         data_obs->Branch("mass4l",&mass4l,"mass4l/D");
+         if( i_cat == Settings::VBF_2j_tagged ) data_obs->Branch("kdCoarse",&kd,"kdCoarse/D");
+         else if( i_cat == Settings::VH_hadron_tagged ) data_obs->Branch("kdCoarse",&kd,"kdCoarse/D");
+         else data_obs->Branch("kd",&kd,"kd/D");
+			
+         for (unsigned int i_event = 0; i_event < _mass[i_fs][i_cat].size(); i_event++ )
+         {
+         	mass4l = _mass[i_fs][i_cat].at(i_event);
+         	kd = _kd[i_fs][i_cat].at(i_event);
+         	data_obs->Fill();
+			}
+			
+			data_obs->Write();
+			data_root_file->Close();
+      }
+   }
+	
+   cout << "[INFO] Histograms for " << input_file_name << " filled." << endl;
+}
+//=====================================================
 
 
 
@@ -501,7 +677,7 @@ int Yields::FindFinalState()
       cerr << "[ERROR] in event " << RunNumber << ":" << LumiNumber << ":" << EventNumber << ", Z1Flav = " << Z1Flav << endl;
    }
    
-   if ( MERGE_2E2MU && final_state == Settings::fs2mu2e ) final_state = Settings::fs2e2mu;
+   if ( _merge_2e2mu && final_state == Settings::fs2mu2e ) final_state = Settings::fs2e2mu;
 
    return final_state;
 }

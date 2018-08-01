@@ -15,6 +15,13 @@ using namespace std;
 using namespace PDGHelpers;
 using namespace HiggsComparators;
 
+//if this is false, for 2017 MC, reweight from the default PDF, NNPDF31_nnlo_hessian_pdfas, to NNPDF31_nlo_hessian_pdfas and its variations
+//                               and use the hessian  method to get the systematics.
+//if this is true,               reweight                                                   to NNPDF30_nlo_nf_5_pdfas    and its variations
+//                               and use the replicas method to get the systematics.
+//FIXME: only applies to POWHEG samples, not to madgraph.  Madgraph is always reweighted to NNPDF31_nlo_hessian_pdfas.
+//(LO samples like JHUGen and MCFM only have one pdf, NNPDF31_lo_as_0130.  Phantom only has NNPDF31_nnlo_hessian_pdfas.)
+const constexpr static bool useNNPDF30 = true;
 
 LHEHandler::LHEHandler(edm::Handle<LHEEventProduct>* lhe_evt_, int VVMode_, int VVDecayMode_, bool doKinematics_, int year_) :
 VVMode(VVMode_),
@@ -75,13 +82,13 @@ float LHEHandler::getLHEWeight(unsigned int whichWeight, float defaultValue) con
   else return defaultValue;
 }
 float LHEHandler::getLHEWeight_PDFVariationUpDn(int whichUpDn, float defaultValue) const{
-  if (whichUpDn>0 && LHEWeight_PDFVariationUpDn.size()>1) return LHEWeight_PDFVariationUpDn.at(1);
-  else if (whichUpDn<0 && LHEWeight_PDFVariationUpDn.size()>0) return LHEWeight_PDFVariationUpDn.at(0);
+  if (whichUpDn<0 && LHEWeight_PDFVariationUpDn.size()>1) return LHEWeight_PDFVariationUpDn.at(1);
+  else if (whichUpDn>0 && LHEWeight_PDFVariationUpDn.size()>0) return LHEWeight_PDFVariationUpDn.at(0);
   else return defaultValue;
 }
 float LHEHandler::getLHEWeigh_AsMZUpDn(int whichUpDn, float defaultValue) const{
-  if (whichUpDn>0 && LHEWeight_AsMZUpDn.size()>1) return LHEWeight_AsMZUpDn.at(1);
-  else if (whichUpDn<0 && LHEWeight_AsMZUpDn.size()>0) return LHEWeight_AsMZUpDn.at(0);
+  if (whichUpDn<0 && LHEWeight_AsMZUpDn.size()>1) return LHEWeight_AsMZUpDn.at(1);
+  else if (whichUpDn>0 && LHEWeight_AsMZUpDn.size()>0) return LHEWeight_AsMZUpDn.at(0);
   else return defaultValue;
 }
 float const& LHEHandler::getPDFScale() const{ return PDFScale; }
@@ -235,11 +242,16 @@ void LHEHandler::readEvent(){
 
       //powheg
       else if (weightstype == unknown && wgtid == 2000) {weightstype = powheg; /*but do nothing, this is an NNLO variation*/}
+      else if (weightstype == powheg && 1500 <= wgtid && wgtid <= 1602 && useNNPDF30) {
+        if (wgtid == 1500) {founddefaultNLOweight = true; defaultNLOweight = wgtval;}
+        else LHEPDFVariationWgt.push_back(wgtval);
+      }
       else if (weightstype == powheg && 1500 <= wgtid && wgtid <= 1602) {/*do nothing, these are the NLO pdf for NNPDF30 and variations*/}
       else if (weightstype == powheg && wgtid == 1700)                  {/*do nothing, this is the NNLO pdf for NNPDF30*/}
       else if (weightstype == powheg && (wgtid == 1800 || wgtid == 1850 || wgtid == 1900 || wgtid == 1950)) {/*do nothing, these are LO pdfs*/}
       else if (weightstype == powheg && 2001 <= wgtid && wgtid <= 2111) {/*do nothing, these are more NNLO variations*/}
       else if (weightstype == powheg && wgtid >= 4000)                  {/*do nothing, these are other various weights*/}
+      else if (weightstype == powheg && 3000 <= wgtid && wgtid <= 3102 && useNNPDF30) {/*do nothing, these are the NLO pdf for NNPDF31 and variations*/}
       else if (weightstype == powheg && wgtid == 3000) {founddefaultNLOweight = true; defaultNLOweight = wgtval;}
       else if (weightstype == powheg && 3001 <= wgtid && wgtid <= 3102) LHEPDFVariationWgt.push_back(wgtval);
 
@@ -285,37 +297,43 @@ void LHEHandler::readEvent(){
 
   // Find the proper PDF and alphas(mZ) variations
   if (!LHEWeight.empty()){
-    switch (year) {
-      case 2016: {
-        std::sort(LHEPDFVariationWgt.begin(), LHEPDFVariationWgt.end(), compareAbs);
-        float centralWeight = LHEWeight.at(0);
-        LHEWeight_PDFVariationUpDn.push_back(findNearestOneSigma(centralWeight, 1, LHEPDFVariationWgt));
-        LHEWeight_PDFVariationUpDn.push_back(findNearestOneSigma(centralWeight, -1, LHEPDFVariationWgt));
-        if (LHEPDFAlphaSMZWgt.size()>1){
-          float asdn = LHEPDFAlphaSMZWgt.at(0);
-          float asup = LHEPDFAlphaSMZWgt.at(1);
-          // Rescale alphas(mZ) variations from 0.118+-0.001 to 0.118+-0.0015
-          LHEWeight_AsMZUpDn.push_back(centralWeight + (asup-centralWeight)*1.5);
-          LHEWeight_AsMZUpDn.push_back(centralWeight + (asdn-centralWeight)*1.5);
-        }
-        break;
+    if (year == 2016 || (year == 2017 && useNNPDF30)) {
+      float centralWeight, divideby;
+      if (year == 2016) {
+        centralWeight = LHEWeight.at(0);
+        divideby = 1;
+      } else if (year == 2017) {
+        centralWeight = defaultNLOweight;
+        divideby = reweightNNLOtoNLO();
+      } else {
+        throw cms::Exception("LHEWeights") << "Unknown year " << year;
       }
-      case 2017: {
-        //https://arxiv.org/pdf/1706.00428v2.pdf page 88
-        //we are working with NNPDF31_nlo_hessian_pdfas
-        //see the routine starting on line 101 of PDFSet.cc in LHAPDF-6.2.1
-        //based on NNPDF31_nlo_hessian_pdfas.info, which confirms that errorType() is symmhessian+as
-        float centralWeight = defaultNLOweight;
-        if (centralWeight == 0) {
-          LHEWeight_PDFVariationUpDn = {0, 0};
-          LHEWeight_AsMZUpDn = {0, 0};
-          edm::LogWarning warning("ZeroWeight");
-          warning << "default NLO PDF weight is 0\nIncoming particle id and pz:";
-          for (const auto& p : particleList)
-            if (p->genStatus == -1)
-              warning << "\n" << p->id << " " << p->z();
-          break;
-        }
+      std::sort(LHEPDFVariationWgt.begin(), LHEPDFVariationWgt.end(), compareAbs);
+      LHEWeight_PDFVariationUpDn.push_back(findNearestOneSigma(centralWeight, 1, LHEPDFVariationWgt) / divideby);
+      LHEWeight_PDFVariationUpDn.push_back(findNearestOneSigma(centralWeight, -1, LHEPDFVariationWgt) / divideby);
+      if (LHEPDFAlphaSMZWgt.size()>1){
+        float asdn = LHEPDFAlphaSMZWgt.at(0);
+        float asup = LHEPDFAlphaSMZWgt.at(1);
+        // Rescale alphas(mZ) variations from 0.118+-0.001 to 0.118+-0.0015
+        // 0.001 is valid both for the alternates used in 2016 and for NNPDF30_nlo_nf_5_pdfas in 2017
+        LHEWeight_AsMZUpDn.push_back((centralWeight + (asup-centralWeight)*1.5) / divideby);
+        LHEWeight_AsMZUpDn.push_back((centralWeight + (asdn-centralWeight)*1.5) / divideby);
+      }
+    } else if (year == 2017 && !useNNPDF30) {
+      //https://arxiv.org/pdf/1706.00428v2.pdf page 88
+      //we are working with NNPDF31_nlo_hessian_pdfas
+      //see the routine starting on line 101 of PDFSet.cc in LHAPDF-6.2.1
+      //based on NNPDF31_nlo_hessian_pdfas.info, which confirms that errorType() is symmhessian+as
+      float centralWeight = defaultNLOweight;
+      if (centralWeight == 0) {
+        LHEWeight_PDFVariationUpDn = {0, 0};
+        LHEWeight_AsMZUpDn = {0, 0};
+        edm::LogWarning warning("ZeroWeight");
+        warning << "default NLO PDF weight is 0\nIncoming particle id and pz:";
+        for (const auto& p : particleList)
+          if (p->genStatus == -1)
+            warning << "\n" << p->id << " " << p->z();
+      } else {
 
         float errorsquared = 0;
         for (const auto& wt : LHEPDFVariationWgt) {
@@ -333,11 +351,9 @@ void LHEHandler::readEvent(){
           LHEWeight_AsMZUpDn.push_back((centralWeight + (asup-centralWeight)*0.75) / reweightNNLOtoNLO());
           LHEWeight_AsMZUpDn.push_back((centralWeight + (asdn-centralWeight)*0.75) / reweightNNLOtoNLO());
         }
-        break;
       }
-      default: {
-        throw cms::Exception("LHEWeights") << "Unknown year " << year;
-      }
+    } else {
+      throw cms::Exception("LHEWeights") << "Unknown year " << year;
     }
   }
   //

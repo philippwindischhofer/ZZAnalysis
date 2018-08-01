@@ -17,11 +17,68 @@ if os.path.exists("src") and not os.path.exists("src/.gitignore"):
   with open("src/.gitignore", "w") as f:
     f.write("yellowhiggs\n.gitignore\npip-delete-this-directory.txt")
 from utilities import cache, cd, CJLSTproduction, TFile
+from uncertainties import ufloat
 
 basemass = 300
 oldfilterefficiencyZH = 0.15038
-filterefficiencyZH = 0.1483
-filterefficiencyttH = 0.1544
+
+def fractionofevents(k, n):
+  """https://indico.cern.ch/event/66256/contributions/2071577/attachments/1017176/1447814/EfficiencyErrors.pdf"""
+  k = 1.0 * k
+  n = 1.0 * n
+  return ufloat(k/n, sqrt((k+1)*(k+2)/((n+2)*(n+3)) - (k+1)**2/(n+2)**2))
+
+filterefficiencyZH = {
+   115: ufloat(0.151500269022, 0.000317064542205),
+   120: ufloat(0.150882730885, 0.000316547042032),
+   124: ufloat(0.150238679931, 0.000199972318324),
+   125: ufloat(0.150301533517, 0.000198361407366),
+   126: ufloat(0.149949160647, 0.000195846329258),
+   130: ufloat(0.149730397214, 0.000313067204368),
+   135: ufloat(0.149101620862, 0.000307244711546),
+   140: ufloat(0.148835749184, 0.000314138563982),
+   145: ufloat(0.149343603958, 0.000313105598547),
+   150: ufloat(0.148952618917, 0.000313051550898),
+   155: ufloat(0.148893383823, 0.000305192270228),
+   160: ufloat(0.148609068856, 0.000307309106588),
+   165: ufloat(0.14874807231, 0.000311224104232),
+   170: ufloat(0.148699054776, 4.79851663246e-05),
+   175: ufloat(0.148699054776, 4.79851663246e-05),
+   180: ufloat(0.148699054776, 4.79851663246e-05),
+   190: ufloat(0.148699054776, 4.79851663246e-05),
+   200: ufloat(0.148699054776, 4.79851663246e-05),
+   210: ufloat(0.148699054776, 4.79851663246e-05),
+   230: ufloat(0.148699054776, 4.79851663246e-05),
+   250: ufloat(0.148699054776, 4.79851663246e-05),
+   270: ufloat(0.148699054776, 4.79851663246e-05),
+   300: ufloat(0.148699054776, 4.79851663246e-05),
+   350: ufloat(0.148699054776, 4.79851663246e-05),
+   400: ufloat(0.148699054776, 4.79851663246e-05),
+   450: ufloat(0.148699054776, 4.79851663246e-05),
+   500: ufloat(0.148699054776, 4.79851663246e-05),
+   550: ufloat(0.148699054776, 4.79851663246e-05),
+   600: ufloat(0.148699054776, 4.79851663246e-05),
+   700: ufloat(0.148699054776, 4.79851663246e-05),
+   750: ufloat(0.148699054776, 4.79851663246e-05),
+   800: ufloat(0.148699054776, 4.79851663246e-05),
+   900: ufloat(0.148699054776, 4.79851663246e-05),
+  1000: ufloat(0.148699054776, 4.79851663246e-05),
+  1500: ufloat(0.148699054776, 4.79851663246e-05),
+  2000: ufloat(0.148699054776, 4.79851663246e-05),
+  2500: ufloat(0.148699054776, 4.79851663246e-05),
+  3000: ufloat(0.148699054776, 4.79851663246e-05),
+}
+filterefficiencyttH = {
+   115: ufloat(0.156154458507, 0.000503363081236),
+   120: ufloat(0.15436065317, 0.000326320718877),
+   124: ufloat(0.154360966586, 0.000200543095323),
+   125: ufloat(0.154289847279, 0.000202214809929),
+   126: ufloat(0.154519233122, 0.00020117290656),
+   130: ufloat(0.15355776319, 0.000318423458146),
+   135: ufloat(0.153328436188, 0.000318002294109),
+   140: ufloat(0.154013895423, 0.000316743049026),
+   145: ufloat(0.153150725225, 0.000316015307614),
+}
 
 YR4data_BR_4l = {
   120: 0.0001659,
@@ -50,10 +107,10 @@ def BR_fromoldspreadsheet(p, m):
 def BR_YR3(mass, productionmode):
   if productionmode in ("ZH", "ttH") and mass < 300:
     result = BR_fromoldspreadsheet(productionmode, mass)
-    if 120 <= m <= 130:
-      result *= YR4data_BR_ZZ[m] / yellowhiggs.br(m, "ZZ")[0]
+    if 120 <= mass <= 130:
+      result *= YR4data_BR_ZZ[mass] / yellowhiggs.br(mass, "ZZ")[0]
     if productionmode == "ZH":
-      result *= filterefficiencyZH / oldfilterefficiencyZH
+      result *= filterefficiencyZH[mass].nominal_value / oldfilterefficiencyZH
     return result
 
   mass = int(str(mass))
@@ -63,11 +120,11 @@ def BR_YR3(mass, productionmode):
     return .5*(BR_YR3(mass+1, productionmode)+BR_YR3(mass-1, productionmode))
 
   if productionmode in ("ggH", "VBF", "WplusH", "WminusH"):
-    if 120 <= m <= 130:
-      result *= YR4data_BR_4l[m] / yellowhiggs.br(m, "llll(e,mu,tau)")[0]
+    if 120 <= mass <= 130:
+      result *= YR4data_BR_4l[mass] / yellowhiggs.br(mass, "llll(e,mu,tau)")[0]
     return result
 
-  if 120 <= m <= 130: assert False
+  if 120 <= mass <= 130: assert False
 
   #need to get ZZ2l2x BR
   #from the comment here: https://github.com/CJLST/ZZAnalysis/blob/454fffb5842f470e71e89348a6de7a8d30f4a813/AnalysisStep/test/prod/samples_2016_MC.csv#L5-L6
@@ -78,9 +135,9 @@ def BR_YR3(mass, productionmode):
 
   result += yellowhiggs.br(mass, "llqq(e,mu,tau)")[0] + yellowhiggs.br(mass, "llnunu(e,mu,tau)")[0] - 9*yellowhiggs.br(mass, "enuemunumu")[0]
   if productionmode == "ZH":
-    result *= filterefficiencyZH
+    result *= filterefficiencyZH[mass].nominal_value
   elif productionmode == "ttH":
-    result *= filterefficiencyttH
+    result *= filterefficiencyttH[mass].nominal_value
   else:
     assert False, productionmode
 
@@ -159,7 +216,7 @@ def averageBR(productionmode, mass, year):
     productionmode = "VBFH"
   folder = "{}{:d}".format(productionmode, mass)
 
-  if not os.path.exists("/data3/Higgs"): raise RuntimeError("Have to run this on lxcms03")
+  if not os.path.exists(production): raise RuntimeError("Have to run this on lxcms03")
 
   """
   for 2017 MC, genHEPMCweight is reweighted to the NLO PDF
@@ -175,7 +232,7 @@ def averageBR(productionmode, mass, year):
     2017: "genHEPMCweight_NNLO",
   }[year]
 
-  with TFile("/data3/Higgs/"+production+"/"+folder+"/ZZ4lAnalysis.root") as f:
+  with TFile(production+"/"+folder+"/ZZ4lAnalysis.root") as f:
     if not f: return float("nan"), float("nan")
     try:
       t = f.ZZTree.Get("candTree")
@@ -219,8 +276,30 @@ def averageBR(productionmode, mass, year):
     bothtrees = itertools.chain(t, failedt)
 #    bothtrees = itertools.islice(bothtrees, 5)
 
+    """
+    Now we're going to take a weighted average of the per-event BR.
+    The weights for the average are the weight of the event, WITHOUT
+    the JHUGen corrections.
+
+    Reason for excluding them: imagine a mass shape with 2 peaks, both
+    having a cross section of 1.  Now imagine that the first one decays
+    decays only to ZZ, and the second one only to bbbar.  This procedure
+    gives a branching fraction of 0.5.  If we included JHUGen in the
+    weight, we would end up with a branching fraction of 1, which is
+    obviously wrong.
+
+    For 2016 MC, all we need is the sign of the weight, because the
+    absolute value of the POWHEG part is the same for all events.
+    For 2017 MC, we need the PDF reweighting part as well as the sign.
+    Either possibility is taken care of by this formula:
+    entry.genHEPMCweight / abs(getattr(entry, genHEPMCweight))
+    """
     BR, weights, weights_rwttoBW = \
-      zip(*([multiplyweight * abs(getattr(entry, genHEPMCweight)), entry.genHEPMCweight, entry.genHEPMCweight*entry.p_Gen_CPStoBWPropRewgt if productionmode not in ("ZH", "WplusH", "WminusH") else float("nan")] for entry in bothtrees))
+      zip(*([
+        multiplyweight * abs(getattr(entry, genHEPMCweight)),
+        entry.genHEPMCweight / abs(getattr(entry, genHEPMCweight)),
+        entry.genHEPMCweight / abs(getattr(entry, genHEPMCweight))*entry.p_Gen_CPStoBWPropRewgt if productionmode not in ("ZH", "WplusH", "WminusH") else float("nan")
+      ] for entry in bothtrees))
 
     return numpy.average(BR, weights=weights), numpy.average(BR, weights=weights_rwttoBW)
 
@@ -254,8 +333,8 @@ def update_spreadsheet(filename, p, m, year, BR):
             BRforthisrow = BR
             if "_scale" in row["identifier"] or "_tune" in row["identifier"]:
               if year == 2016:
-                if p == "ZH": BRforthisrow /= filterefficiencyZH
-                if p == "ttH": BRforthisrow /= filterefficiencyttH
+                if p == "ZH": BRforthisrow /= filterefficiencyZH[m].nominal_value
+                if p == "ttH": BRforthisrow /= filterefficiencyttH[m].nominal_value
               elif year == 2017:
                 pass
               else:
@@ -286,7 +365,6 @@ if __name__ == "__main__":
   parser.add_argument("-p", action="append", choices="ggH VBF ZH WplusH WminusH ttH".split())
   parser.add_argument("--minimum-mass", type=float, default=0)
   parser.add_argument("--maximum-mass", type=float, default=float("inf"))
-  parser.add_argument("--update-spreadsheet", action="store_true")
   parser.add_argument("year", type=int)
   args = parser.parse_args()
 
@@ -302,8 +380,7 @@ if __name__ == "__main__":
 
       print(line.format(p, m, BR))
       if numpy.isnan(BR): BR = 999
-      if args.update_spreadsheet:
-        update_spreadsheet(
-          os.path.join(os.path.dirname(__file__), "../prod/samples_{}_MC.csv".format(args.year)),
-          p, m, args.year, BR
-        )
+      update_spreadsheet(
+        os.path.join(os.path.dirname(__file__), "../prod/samples_{}_MC.csv".format(args.year)),
+        p, m, args.year, BR
+      )

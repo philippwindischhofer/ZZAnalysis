@@ -37,10 +37,6 @@
 #include <ZZAnalysis/AnalysisStep/interface/cConstants.h>
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
 
-// BOOLS
-#define APPLY_K_FACTORS 1
-#define MERGE_2E2MU 1
-
 using namespace std;
 
 class Yields: public Tree
@@ -67,6 +63,8 @@ public:
    void Print( TString );
    void Print( TString, float, float );
    void PrintLatexTables( TString, float, float );
+   void Split_2e2mu();
+   void ProduceDataROOTFiles( TString, TString );
    
 protected:
 
@@ -82,6 +80,8 @@ protected:
    TH1F* hCounters;
    
    Long64_t n_gen_events;
+	
+   bool _merge_2e2mu;
    
    float jetPt[99];
    float jetEta[99];
@@ -101,8 +101,17 @@ protected:
    double gen_sum_weights, _event_weight;
    
    vector< vector <float> > _expected_yield_SR, _number_of_events_CR;
+   vector<TString> _s_category, _s_final_state;
+	
    vector<int>   gen_assoc_lep_id_;
    vector<float> _fs_ROS_SS;
+	
+	TFile *data_root_file;
+	TTree *data_obs;
+	Double_t mass4l;
+	Double_t kd;
+   vector<float> _mass[num_of_final_states][num_of_categories];
+   vector<float> _kd[num_of_final_states][num_of_categories];
    
 };
 #endif

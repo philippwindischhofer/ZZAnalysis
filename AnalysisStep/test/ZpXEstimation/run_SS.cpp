@@ -22,11 +22,11 @@ int main( int argc, char *argv[] )
    
    TString path = "";
    TString file_name = "/ZZ4lAnalysis.root";
-   
+	
    TString Data    = path + "AllData"        + file_name;
    TString WZ      = path + "WZTo3LNu"       + file_name;
    TString ZZ      = path + "ZZTo4l"         + file_name;
-   TString ttbar   = path + "TTTo2L2Nu"     + file_name;
+   TString ttbar   = path + "TTTo2L2Nu"      + file_name;
    TString DY      = path + "DYJetsToLL_M50" + file_name;
 	
    bool SubtractWZ = true;
@@ -36,7 +36,7 @@ int main( int argc, char *argv[] )
    float pT_bins[] = {5, 7, 10, 20, 30, 40, 50, 80};
 
    SSmethod *ss = new SSmethod();
-   ss->SetLumi(41.37);
+   ss->SetLumi(41.53);
 
    ///////////////////////////////////
    // Fill control histos           //

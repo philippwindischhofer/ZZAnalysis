@@ -35,7 +35,6 @@
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/Variables.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/Cosmetics.h>
 
-
 using namespace std;
 
 const int num_of_production_modes    = Settings::num_of_production_modes;
@@ -54,11 +53,14 @@ class Histograms
 public:
    Histograms( double );
    Histograms( double, string );
+   Histograms( string );
    ~Histograms();
    
    void FillM4l( float, float, int, int, int );
    void FillM4lZX( float, float, int, int );
-   
+	
+   void FillM4lCombination( float, float, int );
+	
    void FillMZ1( float, float, float, int, int, int );
    void FillMZ1ZX( float, float, float, int, int );
    
@@ -91,13 +93,14 @@ public:
    
    void FillMZ1vsMZ2( float, float, float, float, int, int, int );
    
-   void FillVectors( float, float, float, int, float, float, float, float, float, int, int) ;
-   void FillDvsM4l( float, float, int, float, float, float, float, float, float, int, int, int );
+   void FillVectors( float, float, float, float, float, int, float, float, float, float, float, int, int) ;
+   void FillDvsM4l( float, float, float, float, int, float, float, float, float, float, float, int, int, int );
+   void FillDvsM4l_ZX( float, float, float, float, int, float, int, int );
    
    void FillYields( float, float, int, int, int );
 	
-   void FillOthers( float, float, float, float, float, float, float, float, float, float, int, int, int, float, float, int, int, int );
-   void FillOthersZX( float, float, float, float, float, float, float, float, float, float, int, int, int, float, float, int, int );
+   void FillOthers( float, float, float, float, float, float, float, float, float, float, float, float, int, int, int, float, float, float, float, int, int, int );
+   void FillOthersZX( float, float, float, float, float, float, float, float, float, float, float, float, int, int, int, float, float, float, float, int, int );
    
    void SaveHistos( string );
    void SaveYieldHistos( string );
@@ -106,6 +109,7 @@ public:
    void DeleteYieldsHistos();
    
    void FillInclusive();
+   void FillInclusiveCombination();
    void FillInclusiveYields();
    
    void SmoothHistograms();
@@ -113,7 +117,8 @@ public:
    
    void GetHistos( TString );
    void GetYieldsHistos( TString );
-   
+	
+   void plot_Combination( TString );
    void plot_1D_single( TString, TString, TString, int, int );
    void plot_1D_all_cat( TString, TString, TString );
    void plot_1D_all_fs( TString, TString, TString );
@@ -139,19 +144,25 @@ public:
    
    bool GetVarLogX( TString );
    bool GetVarLogY( TString );
+	
+   void Split_2e2mu();
+	
+   bool _merge_2e2mu;
    
    TLegend *CreateLegend( string, TH1F*, TH1F*, TH1F*, TH1F*, TH1F* );
-   TLegend *CreateLegendVBF( string, TH1F*, TH1F*, TH1F*, TH1F*, TH1F* ,TH1F* );
-   TLegend *CreateLegendVH( string, TH1F*, TH1F*, TH1F*, TH1F*, TH1F* ,TH1F* );
+   TLegend *CreateLegendVBF( string, TH1F*, TH1F*, TH1F*, TH1F*, TH1F* ,TH1F*, bool );
+   TLegend *CreateLegendVH( string, TH1F*, TH1F*, TH1F*, TH1F*, TH1F* ,TH1F*, bool);
    TLegend *CreateLegendttH( string, TH1F*, TH1F*, TH1F*, TH1F*, TH1F* ,TH1F* );
    TLegend *Create2DLegend( string, TH2F*, TH2F*, TH2F* );
    TLegend *Create2DErrorLegend( string, TGraphErrors*, TGraphErrors*, TGraphErrors* );
-   TLegend *Create2DLegendAllCat( string, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors* );
+   TLegend *Create2DLegendAllCat_KD( string, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors* );
+   TLegend *Create2DLegendAllCat_DVBFDEC( string, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors*);
+   TLegend *Create2DLegendAllCat_DVHDEC( string, TGraphErrors*, TGraphErrors*, TGraphErrors*, TGraphErrors*);
    
    TPaveText *CreateCutText( string, TString);
    TPaveText *CreateCatText( string, TString);
    
-   TLine *CreateDashedLine( int );
+   TLine *CreateDashedLine(float, float, float, float);
    
 
 private:
@@ -195,6 +206,7 @@ private:
    
    // MC
    TH2F *histos_2DError[num_of_2D_error_plot_names][num_of_final_states][num_of_categories][num_of_processes];
+   TH2F *histos_2DError_ZX[num_of_2D_error_plot_names][num_of_final_states][num_of_categories];
    
 //==========================
 // Graphs for yields vs mH
