@@ -48,12 +48,13 @@ PYTHON_DIR=$CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Python/"
 # the needed part from the C++ sources
 CALIBRATOR="run_calibrator"
 CALIBRATION_PREPARER="prepare_calibration.py"
-HEADER_GENERATOR="GenerateHeaderFiles.py"
+HEADER_GENERATOR="CreateHeaderFiles.py"
 
 # from the calibration step onwards, C++ takes over. The number and type of defined categories is visible from C++ in the branch names in the augmented trees that hold the evaluated neural networks.
 # for the configuration found in categories.conf, make the list of branches and recompile the C++ codebase with them
 python $PYTHON_DIR$HEADER_GENERATOR
 cd $BUILDFILE_DIR
+scram b clean
 scram b
 
 cd $CAMPAIGN_DIR
