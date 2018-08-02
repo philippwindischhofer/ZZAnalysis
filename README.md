@@ -10,16 +10,24 @@ See below for how to get the analysis environment installed. For instructions of
 To install the necessary environment from scratch:
 ------------------------------
 ```
+# get a CMSSW environment
 mkdir cmssw
 cd cmssw
 scram p CMSSW CMSSW_9_4_2
 
+# run the checkout script
 wget -O ${TMPDIR}/checkout_9X_bayes.csh https://raw.githubusercontent.com/philippwindischhofer/ZZAnalysis/experimental/checkout_9X_bayes.csh 
 cd $CMSSW_BASE/src
 cmsenv
 chmod u+x ${TMPDIR}/checkout_9X_bayes.csh
 ${TMPDIR}/checkout_9X_bayes.csh 
 
-cd ZZAnalysis/AnalysisStep/bin
+# initial build
+cd $CMSSW_BASE/src/ZZAnalysis/AnalysisStep/bin
 scram b
+
+# install Python requirements
+cd $CMSSW_BASE/src/ZZAnalysis/AnalysisStep/test/Python/
+pip install --user -r requirements.txt
+
 ```

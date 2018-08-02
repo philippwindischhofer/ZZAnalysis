@@ -45,17 +45,19 @@ double ComputeKFactor(TString input_file_name, Tree* in)
 
 int main(int argc, char *argv[])
 {
+    if(argc != 3)
+    {
+	std::cerr << "Error: exactly 2 arguments are required" << std::endl;
+	return(-1);
+    }
+
     // produces the migration matrix for comparing nicely the old and new categorization
+    TString package_path = argv[1]; //"/data_CMS/cms/wind/180611_cumulative_85_packaged/";
+    TString engine = argv[2]; //"robin";
 
-    //TString package_path = "/data_CMS/cms/wind/180531_optimized_hyperparameters_systematics_packaged/";
-    TString package_path = "/data_CMS/cms/wind/180611_cumulative_85_packaged/";
-    //TString package_path = "/data_CMS/cms/wind/180609_cumulative_95_packaged/";
-    //TString package_path = "/data_CMS/cms/wind/180628_optimized_hyperparameters_qq_packaged/";
-    TString engine = "robin";
-
-    TString MCpath = package_path +  "/CJLST_NTuples/";
+    TString MCpath = package_path +  "/augmentation_test/";
     TString config_file_path = package_path + "settings.conf";
-    TString calibration_dir = package_path + "/calibration/";
+    TString calibration_dir = package_path + "/calibration_validation/";
     TString priors_file_path = package_path + "/priors_" + engine + "/priors_bkg.txt";
     
     Mor18Config* conf = new Mor18Config(MCpath, 41.37, false, 125.0, true);

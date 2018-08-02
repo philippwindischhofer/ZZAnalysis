@@ -20,7 +20,6 @@ def main():
     if len(sys.argv) != 3:
         print "Error: exactly 2 arguments are required"
 
-    #/data_CMS/cms/wind/CJLST_NTuples/
     setting_dir = sys.argv[1]
     training_dir = sys.argv[2]
 
