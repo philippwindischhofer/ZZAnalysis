@@ -23,7 +23,7 @@ case $key in
     shift
     ;;
     --ref)
-    COMP_REF_DIR="$2"
+    COMP_REF_DIR="$2/"
     shift
     shift
     ;;
@@ -37,8 +37,7 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
-CAMPAIGN_DIR=$1
-#ENGINE=$2
+CAMPAIGN_DIR=$1"/"
 
 if [ -z $ENGINE ]
 then

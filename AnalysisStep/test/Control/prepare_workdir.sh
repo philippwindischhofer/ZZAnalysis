@@ -18,12 +18,12 @@ key=$1
 
 case $key in
     --source)
-    SOURCE_ROOT="$2"
+    SOURCE_ROOT="$2/"
     shift
     shift
     ;;
     --dest)
-    DEST_ROOT="$2"
+    DEST_ROOT="$2/"
     shift
     shift
     ;;

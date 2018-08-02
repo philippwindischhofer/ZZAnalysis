@@ -16,7 +16,7 @@ key=$1
 
 case $key in
     --workdir)
-    MC_DIR="$2"
+    MC_DIR="$2/"
     shift
     shift
     ;;
@@ -34,7 +34,7 @@ set -- "${POSARG[@]}"
 #  global settings
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
-CAMPAIGN_DIR=$1
+CAMPAIGN_DIR=$1"/"
 
 AUGMENTATION_SETTINGS=$MC_DIR"/settings.conf"
 

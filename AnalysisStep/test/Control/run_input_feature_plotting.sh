@@ -19,7 +19,7 @@ key=$1
 
 case $key in
     --dest)
-    DEST_ROOT="$2"
+    DEST_ROOT="$2/"
     shift
     shift
     ;;

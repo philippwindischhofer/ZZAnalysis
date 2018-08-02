@@ -26,7 +26,7 @@ case $key in
     shift
     ;;
     --workdir)
-    WORKDIR="$2"
+    WORKDIR="$2/"
     shift
     shift
     ;;
@@ -40,7 +40,7 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
-CAMPAIGN_DIR=$1
+CAMPAIGN_DIR=$1"/"
 
 echo "input_config_file = "$INPUT_CONFIG_FILE
 echo "hyperparam_config_file = "$HYPERPARAM_CONFIG_FILE

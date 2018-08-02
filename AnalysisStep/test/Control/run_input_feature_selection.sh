@@ -26,7 +26,7 @@ case $key in
     shift
     ;;	
     --dest)
-    DEST_ROOT="$2"
+    DEST_ROOT="$2/"
     shift
     shift
     ;;
@@ -36,7 +36,7 @@ case $key in
     shift
     ;;
     --workdir)
-    MC_PATH="$2"
+    MC_PATH="$2/"
     shift
     shift
     ;;

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CURRENT_DIR=`pwd`
-CAMPAIGN_DIR=$1
+CAMPAIGN_DIR=$1"/"
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 

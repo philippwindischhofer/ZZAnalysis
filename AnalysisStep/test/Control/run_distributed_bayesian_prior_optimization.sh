@@ -18,7 +18,7 @@ case $key in
     shift
     ;;
     --ref)
-    REF_DIR="$2"
+    REF_DIR="$2/"
     shift
     shift
     ;;
@@ -36,12 +36,12 @@ set -- "${POSARG[@]}"
 #  global settings
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
-CAMPAIGN_DIR=$1
+CAMPAIGN_DIR=$1"/"
 
 if [ -z $ENGINE ]
 then
-    echo "no engine name provided, using default: rand_KL"
-    ENGINE="rand_KL"
+    echo "no engine name provided, using default: tree"
+    ENGINE="tree"
 fi
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
@@ -53,7 +53,6 @@ PYTHON_DIR=$CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Python/"
 BIN_DIR=$CAMPAIGN_DIR"bin/"
 
 # the needed part from the C++ sources
-#PRIOR_OPTIMIZER="BayesianPriorOptimizer.py"
 PRIOR_OPTIMIZER="SequentialBayesianPriorOptimizer.py"
 PYTHON_LIB="trainlib"
 PRIOR_EVALUATOR="run_prior_evaluator"

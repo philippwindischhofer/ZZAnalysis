@@ -34,7 +34,7 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
-RUN_DIR=$1
+RUN_DIR=$1"/"
 
 # run the yield parameterization
 $BIN_DIR$YIELD_PREPARER $RUN_DIR $ENGINE

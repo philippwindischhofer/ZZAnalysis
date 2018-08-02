@@ -9,11 +9,11 @@ fi
 #  global settings
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
-CAMPAIGN_DIR=$1
-SOURCE_ROOT=$2
-DEST_ROOT=$3
+CAMPAIGN_DIR=$1"/"
+SOURCE_ROOT=$2"/"
+DEST_ROOT=$3"/"
 AUGMENTATION_SETTINGS_ROOT=$4
-GLOBAL_SETTINGS_DIR=$5
+GLOBAL_SETTINGS_DIR=$5"/"
 
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 

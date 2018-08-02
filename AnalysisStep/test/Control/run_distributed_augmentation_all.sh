@@ -21,7 +21,7 @@ key=$1
 
 case $key in
     --workdir)
-    MC_DIR="$2"
+    MC_DIR="$2/"
     shift
     shift
     ;;
@@ -35,7 +35,7 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
-CAMPAIGN_DIR=$1
+CAMPAIGN_DIR=$1"/"
 
 cd $CAMPAIGN_DIR
 RUN_DIRLIST=`ls -d */ | egrep -v 'bin|statistics'`

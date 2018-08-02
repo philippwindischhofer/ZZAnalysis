@@ -24,7 +24,7 @@ case $key in
     shift
     ;;
     --ref)
-    COMP_REF_DIR="$2"
+    COMP_REF_DIR="$2/"
     shift
     shift
     ;;
@@ -47,7 +47,7 @@ set -- "${POSARG[@]}"
 #  global settings
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
-CAMPAIGN_DIR=$1
+CAMPAIGN_DIR=$1"/"
 
 if [ -z $ENGINE ]
 then

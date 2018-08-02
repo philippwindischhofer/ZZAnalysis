@@ -10,7 +10,7 @@ if [[ "$#" -ne 1 ]]; then
     exit
 fi
 
-DIR=$1
+DIR=$1"/"
 
 # call the python script that handles the rest
 python $CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Python/prepare_systematics.py" $DIR

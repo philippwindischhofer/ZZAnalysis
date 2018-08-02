@@ -36,7 +36,7 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
-RUN_DIR=$1
+RUN_DIR=$1"/"
 
 # create output directory
 SYSTEMATICS_DIR=$RUN_DIR"/systematic_uncertainties_"$ENGINE"/"
