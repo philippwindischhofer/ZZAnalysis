@@ -58,6 +58,7 @@ double costfunc(const double* params)
     float WP_VBF1j = (float)params[1];
     float WP_WHh = (float)params[2];
     float WP_ZHh = (float)params[3];
+
     varclass18 -> SetWPs(WP_VBF2j, WP_VBF1j, WP_WHh, WP_ZHh);
 
     std::cout << "-------------------------------------------------------" << std::endl;
@@ -69,7 +70,7 @@ double costfunc(const double* params)
     std::cout << "WP_ZHh = " << WP_ZHh << std::endl;
 
     // evaluate the Punzi value with this (modified) Classifier now; compute it using the first half of the available data only
-    PlottingUtils::make_punzi(kTRUE, varclass, outdir, "punzi_S", "no_cut_data", no_cut, conf, 0.0, 0.5, false);
+    PlottingUtils::make_punzi(kTRUE, varclass, outdir, "punzi_S", "no_cut_data_S", mZZ_cut, conf, 0.0, 1.0, false);
     
     // load low the Punzi histogram of the optimized classifier and compare the two. From this point onwards, is exactly the same as in "Comp"
     float zoom_scale = 1.0;
@@ -104,17 +105,18 @@ double costfunc(const double* params)
 
 int main( int argc, char *argv[] )
 {
-    if(argc != 4)
+    if(argc != 5)
     {
-	std::cerr << "Error: exactly 3 arguments are required" << std::endl;
+	std::cerr << "Error: exactly 4 arguments are required" << std::endl;
     }
 
-    refdir = argv[1];
-    float lumi = std::stof(argv[2]);
-    outdir = argv[3];
+    TString MC_dir = argv[1];
+    refdir = argv[2];
+    float lumi = std::stof(argv[3]);
+    outdir = argv[4];
 
-    // also here, even though have half of the dataset available for validation, optimize (and evaluate on) the signal Punzis only - no background due to limited statistics
-    conf = new Mor18Config("/data_CMS/cms/wind/CJLST_NTuples/", lumi, false);
+    // also here, even though have half of the dataset available for validation, optimize (and evaluate on) the signal Punzis only: restricts the single-category counting experiments to signal-like slices, as for the actual analysis
+    conf = new Mor18Config(MC_dir, lumi, false);
 
     // start the optimization with the currently used values
     float WP_VBF2j_init = 0.46386;
@@ -137,9 +139,6 @@ int main( int argc, char *argv[] )
 
     min -> SetLimitedVariable(0, "WP_VBF2j", var[0], step[0], 0.0, 1.0);
     min -> SetLimitedVariable(1, "WP_VBF1j", var[1], step[1], 0.0, 1.0);
-    // min -> SetFixedVariable(2, "WP_WHh", WP_WHh_init);
-    // min -> SetFixedVariable(3, "WP_ZHh", WP_ZHh_init);
-
     min -> SetLimitedVariable(2, "WP_WHh", var[2], step[2], 0.0, 1.0);
     min -> SetLimitedVariable(3, "WP_ZHh", var[3], step[3], 0.0, 1.0);
 
