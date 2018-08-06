@@ -27,6 +27,11 @@ case $key in
     shift
     shift
     ;;
+    --WP)
+    WP_FILE="$2"
+    shift
+    shift
+    ;;
     *)
     POSARG+=("$1")
     shift
@@ -69,17 +74,17 @@ do
 	BENCHMARK_TEST_LOGFILE=$TEST_DIR"log.txt"
 
 	echo "#!/bin/bash" > $BENCHMARK_VALIDATION_SCRIPT
-	echo $BENCHMARKER $SOURCE_ROOT"/validation/" $VALIDATION_DIR "0.0" "1.0" $LUMI $MASS_POINT "&>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
+	echo $BENCHMARKER $SOURCE_ROOT"/validation/" $VALIDATION_DIR "0.0" "1.0" $LUMI $MASS_POINT $WP_FILE "&>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
 
 	echo "#!/bin/bash" > $BENCHMARK_TEST_SCRIPT
-	echo $BENCHMARKER $SOURCE_ROOT"/test/" $TEST_DIR "0.0" "1.0" $LUMI $MASS_POINT "&>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
+	echo $BENCHMARKER $SOURCE_ROOT"/test/" $TEST_DIR "0.0" "1.0" $LUMI $MASS_POINT $WP_FILE "&>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
     else
 	# this is a mass point that was not used for training, do not have to respect any splitting
 	BENCHMARK_SCRIPT=$DEST_DIR"/run_reference.sh"
 	BENCHMARK_LOGFILE=$DEST_DIR"/log.txt"
 
 	echo "#!/bin/bash" > $BENCHMARK_SCRIPT
-	echo $BENCHMARKER $SOURCE_ROOT"/test/" $DEST_DIR"/" "0.0" "1.0" $LUMI $MASS_POINT "&>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
+	echo $BENCHMARKER $SOURCE_ROOT"/test/" $DEST_DIR"/" "0.0" "1.0" $LUMI $MASS_POINT $WP_FILE "&>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
     fi
 done
 

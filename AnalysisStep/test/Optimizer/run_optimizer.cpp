@@ -129,9 +129,9 @@ int main( int argc, char *argv[] )
 
     //ROOT::Math::Minimizer* min = ROOT::Math::Factory::CreateMinimizer("Minuit2", "");
     ROOT::Math::Minimizer* min = new ROOT::Math::GSLSimAnMinimizer();
-    min -> SetMaxFunctionCalls(500);
-    min -> SetMaxIterations(500);
-    min -> SetTolerance(0.1);
+    min -> SetMaxFunctionCalls(5000);
+    min -> SetMaxIterations(5000);
+    min -> SetTolerance(0.01);
     min -> SetPrintLevel(1);
 
     ROOT::Math::Functor f(&costfunc, 4);

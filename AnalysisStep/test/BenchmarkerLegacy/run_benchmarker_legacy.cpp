@@ -41,9 +41,6 @@ int main(int argc, char *argv[])
     float lumi = std::atof(argv[5]);
     float mass_point = std::atof(argv[6]);
 
-    //TString MCpath = "/data_CMS/cms/wind/CJLST_NTuples_prepared/";
-    //TString MCpath = "/data_CMS/cms/wind/CJLST_NTuples/";
-
     // switch here between the classifier based on trained discriminants or the one based only on the available MELA values
     Classifier* refclass = new Mor18Classifier();
 
