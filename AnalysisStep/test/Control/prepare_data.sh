@@ -14,14 +14,15 @@ while [[ $# -gt 0 ]]
 do
 key=$1
 
+# this can overwrite globally set environment variables
 case $key in
     --source)
-    SOURCE_ROOT="$2/"
+    MC_DIR="$2"
     shift
     shift
     ;;
     --dest)
-    DEST_ROOT="$2/"
+    MC_PREPARED_DIR="$2"
     shift
     shift
     ;;
@@ -35,38 +36,41 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
+MC_DIR=$MC_DIR"/"
+MC_PREPARED_DIR=$MC_PREPARED_DIR"/"
+
 JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 FILE_PREPARER=$CMSSW_BASE"/bin/slc6_amd64_gcc630/run_augment_single_tree"
 
 SOURCE_FILE_NAME="ZZ4lAnalysis.root"
 
-cd $SOURCE_ROOT
+cd $MC_DIR
 SOURCE_FOLDERS=`ls -d */`
 
-mkdir -p $DEST_ROOT
+mkdir -p $MC_PREPARED_DIR
 
 for SOURCE_FOLDER in $SOURCE_FOLDERS
 do
-    SOURCE_PATH=$SOURCE_ROOT$SOURCE_FOLDER$SOURCE_FILE_NAME
-    DEST_PATH=$DEST_ROOT$SOURCE_FOLDER$SOURCE_FILE_NAME
+    SOURCE_PATH=$MC_DIR$SOURCE_FOLDER$SOURCE_FILE_NAME
+    DEST_PATH=$MC_PREPARED_DIR$SOURCE_FOLDER$SOURCE_FILE_NAME
     
     # create the destination directory tree
-    mkdir -p $DEST_ROOT$SOURCE_FOLDER
+    mkdir -p $MC_PREPARED_DIR$SOURCE_FOLDER
 
-    PREPARATION_SCRIPT=$DEST_ROOT"run_preparation_"${SOURCE_FOLDER%/}".sh"
-    PREPARATION_LOGFILE=$DEST_ROOT"log_preparation_"${SOURCE_FOLDER%/}".txt"
+    PREPARATION_SCRIPT=$MC_PREPARED_DIR"run_preparation_"${SOURCE_FOLDER%/}".sh"
+    PREPARATION_LOGFILE=$MC_PREPARED_DIR"log_preparation_"${SOURCE_FOLDER%/}".txt"
 
     echo "#!/bin/bash" > $PREPARATION_SCRIPT
     echo $FILE_PREPARER $SOURCE_PATH $DEST_PATH "1" "&>" $PREPARATION_LOGFILE >> $PREPARATION_SCRIPT
 done
 
-cd $DEST_ROOT
+cd $MC_PREPARED_DIR
 JOBS=`find * | grep run_preparation.*.sh$`
 
 for JOB in $JOBS
 do
-    echo "launching " $DEST_ROOT$JOB
-    until $JOB_SUBMITTER "-short" $DEST_ROOT$JOB
+    echo "launching " $MC_PREPARED_DIR$JOB
+    until $JOB_SUBMITTER "-short" $MC_PREPARED_DIR$JOB
     do
 	echo "----------------------------------------------------------------"
     	echo " error submitting job, retrying ..."

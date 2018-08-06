@@ -41,14 +41,15 @@ int main( int argc, char *argv[] )
     TString indir_a = argv[1];
     TString indir_b = argv[2];
     TString out_folder = argv[3];
+    float lumi = std::atof(argv[4]);
 
-    if(argc == 5)
+    if(argc == 6)
     {
-	zoom_scale = std::stof(argv[4]);
+	zoom_scale = std::stof(argv[5]);
     }
 
     // choose the category set that is used on both sides of the comparison
-    Mor18Config* conf = new Mor18Config("", 41.37, true);
+    Mor18Config* conf = new Mor18Config("", lumi, true);
 
     // compare the punzi values computed on signal + background ...
     CompUtils::compare_punzi(indir_a, indir_b, name_a, name_b, conf -> storage_prefix() + punzi_infile, punzi_hist_name, out_folder, conf -> storage_prefix() + punzi_outfile, zoom_scale, conf);

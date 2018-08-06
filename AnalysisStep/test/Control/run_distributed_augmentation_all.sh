@@ -21,7 +21,7 @@ key=$1
 
 case $key in
     --workdir)
-    MC_DIR="$2/"
+    MC_TRAINING_DIR="$2/"
     shift
     shift
     ;;
@@ -35,7 +35,8 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
-CAMPAIGN_DIR=$1"/"
+CAMPAIGN_DIR="${1:-$CAMPAIGN_DIR}"
+CAMPAIGN_DIR=$CAMPAIGN_DIR"/"
 
 cd $CAMPAIGN_DIR
 RUN_DIRLIST=`ls -d */ | egrep -v 'bin|statistics'`
@@ -48,6 +49,6 @@ do
     for part in $PARTS
     do
 	echo "starting augmentation for: " $part
-	sh $CONTROL_DIR_ORIGINAL$SUBMIT_AUGMENTATION $CAMPAIGN_DIR $MC_DIR$part"/" $CAMPAIGN_DIR$RUN"/augmentation_"$part"/" $CAMPAIGN_DIR$RUN"/settings_augmentation_"$part"/" $CAMPAIGN_DIR$RUN"/"
+	sh $CONTROL_DIR_ORIGINAL$SUBMIT_AUGMENTATION $CAMPAIGN_DIR $MC_TRAINING_DIR$part"/" $CAMPAIGN_DIR$RUN"/augmentation_"$part"/" $CAMPAIGN_DIR$RUN"/settings_augmentation_"$part"/" $CAMPAIGN_DIR$RUN"/"
     done
 done

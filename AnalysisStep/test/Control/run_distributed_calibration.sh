@@ -16,7 +16,7 @@ key=$1
 
 case $key in
     --workdir)
-    MC_DIR="$2/"
+    MC_TRAINING_DIR="$2/"
     shift
     shift
     ;;
@@ -34,11 +34,11 @@ set -- "${POSARG[@]}"
 #  global settings
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
-CAMPAIGN_DIR=$1"/"
 
-AUGMENTATION_SETTINGS=$MC_DIR"/settings.conf"
+CAMPAIGN_DIR="${1:-$CAMPAIGN_DIR}"
+CAMPAIGN_DIR=$CAMPAIGN_DIR"/"
 
-JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
+AUGMENTATION_SETTINGS=$MC_TRAINING_DIR"/settings.conf"
 
 # the directories where the original sources are located
 BIN_DIR=$CMSSW_BASE"/bin/slc6_amd64_gcc630/"

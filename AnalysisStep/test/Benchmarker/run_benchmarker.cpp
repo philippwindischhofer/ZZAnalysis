@@ -41,11 +41,12 @@ int main(int argc, char *argv[])
 
     float start_fraction = std::atof(argv[5]);
     float end_fraction = std::atof(argv[6]);
+    float lumi = std::atof(argv[7]);
 
-    TString engine = "rand_KL";
-    if(argc >= 8)
+    TString engine = "tree";
+    if(argc >= 9)
     {
-	engine = argv[7];
+	engine = argv[8];
     }
 
     TString config_path = calibration_folder + "../settings.conf";
@@ -69,10 +70,10 @@ int main(int argc, char *argv[])
     float bkg_prior = 1.0;
     float qq_prior = 1.0;
 
-    if(argc == 9)
+    if(argc == 10)
     {
 	// // the path to the prior file was given -> read the priors that were optimized on the training dataset, and evaluate the classification performance on the validation dataset
-	TString prior_path = argv[8];
+	TString prior_path = argv[9];
 	ConfigFileHandler* handler = new ConfigFileHandler(prior_path, "read");
 	VBF_prior = handler -> GetField("VBF_prior");
 	ggH_prior = handler -> GetField("ggH_prior");
@@ -110,9 +111,9 @@ int main(int argc, char *argv[])
 
     refclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior, qq_prior);
 
-    Mor18Config* conf = new Mor18Config(MCpath, 41.53, true, mass_point);
-    Mor18Config* conf_S = new Mor18Config(MCpath, 41.53, false, mass_point);
-    Mor18Config* conf_all = new Mor18Config(MCpath, 41.53, true, mass_point, true);
+    Mor18Config* conf = new Mor18Config(MCpath, lumi, true, mass_point);
+    Mor18Config* conf_S = new Mor18Config(MCpath, lumi, false, mass_point);
+    Mor18Config* conf_all = new Mor18Config(MCpath, lumi, true, mass_point, true);
 
     // generate all plots on the validation dataset only! (i.e. the second half of each datafile)
     PlottingUtils::make_SB_barchart(kTRUE, refclass, out_folder, "categorization_SB", "no_cut_data", "105 GeV < m_{4#font[12]{l}} < 140 GeV", mZZ_cut, conf, start_fraction, end_fraction, false);

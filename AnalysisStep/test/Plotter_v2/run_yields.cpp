@@ -24,14 +24,16 @@ int main( int argc, char *argv[] )
 {
    setTDRStyle();
 	
-   if(argc != 3)
+   if(argc != 4)
    {
-       std::cerr << "Error: exactly 2 arguments are required" << std::endl;
+       std::cerr << "Error: exactly 3 arguments are required" << std::endl;
        return(-1);
    }
 
    TString package_path = argv[1];
    TString engine = argv[2];
+   float lumi = std::atof(argv[3]);
+
    TString cmssw_base = std::getenv("CMSSW_BASE");
    TString path = package_path + "/augmentation_test/";
 
@@ -94,9 +96,9 @@ int main( int argc, char *argv[] )
    TString ggZZ2e2tau  = path + "ggTo2e2tau_Contin_MCFM701" + file_name;
    TString ggZZ2mu2tau = path + "ggTo2mu2tau_Contin_MCFM701" + file_name;
    
-   //Yields* yields = new Yields(41.37);
+   //Yields* yields = new Yields(lumi);
 
-   YieldsLI *yields = new YieldsLI( 41.53 );
+   YieldsLI *yields = new YieldsLI(lumi);
    yields -> SetPackagePath(package_path, engine);
    
 //===============

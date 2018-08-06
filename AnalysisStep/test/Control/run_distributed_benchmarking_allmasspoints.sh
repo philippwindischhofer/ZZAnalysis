@@ -37,7 +37,8 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
-CAMPAIGN_DIR=$1"/"
+CAMPAIGN_DIR="${1:-$CAMPAIGN_DIR}"
+CAMPAIGN_DIR=$CAMPAIGN_DIR"/"
 
 if [ -z $ENGINE ]
 then

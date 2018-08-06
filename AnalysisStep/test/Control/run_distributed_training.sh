@@ -26,7 +26,7 @@ case $key in
     shift
     ;;
     --workdir)
-    WORKDIR="$2/"
+    MC_TRAINING_DIR="$2/"
     shift
     shift
     ;;
@@ -40,7 +40,8 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
-CAMPAIGN_DIR=$1"/"
+CAMPAIGN_DIR="${1:-$CAMPAIGN_DIR}"
+CAMPAIGN_DIR=$CAMPAIGN_DIR"/"
 
 echo "input_config_file = "$INPUT_CONFIG_FILE
 echo "hyperparam_config_file = "$HYPERPARAM_CONFIG_FILE
@@ -49,7 +50,6 @@ echo "hyperparam_config_file = "$HYPERPARAM_CONFIG_FILE
 #  global settings
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
-JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 # the (common) source directory for this campaign
 BIN_DIR=$CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Python/"
@@ -71,14 +71,14 @@ echo "preparing filesystem for training campaign"
 if [[ -z "$HYPERPARAM_CONFIG_FILE" ]]; then
     if [[ -e "$CAMPAIGN_CONFIG_FILE" ]]; then
         # no hyperparameter configs given -> use the campaign config file to sweep them
-	python $BIN_DIR$CONFIG_FILE_GEN $CAMPAIGN_DIR $WORKDIR $INPUT_CONFIG_FILE
+	python $BIN_DIR$CONFIG_FILE_GEN $CAMPAIGN_DIR $MC_TRAINING_DIR $INPUT_CONFIG_FILE
     else
 	echo "ERROR: no hyperparameter configuration file given, and no file 'campaign.conf' in the campaign directory found as fallback! Please specify either the one or the other."
 	exit
     fi
 else
     # have fully specified hyperparameters; ignore any campaign config file that might presribe to sweep them
-    python $BIN_DIR$CONFIG_FILE_GEN_NOSWEEP $CAMPAIGN_DIR $INPUT_CONFIG_FILE $HYPERPARAM_CONFIG_FILE $WORKDIR
+    python $BIN_DIR$CONFIG_FILE_GEN_NOSWEEP $CAMPAIGN_DIR $INPUT_CONFIG_FILE $HYPERPARAM_CONFIG_FILE $MC_TRAINING_DIR
 fi
 
 cd $CAMPAIGN_DIR

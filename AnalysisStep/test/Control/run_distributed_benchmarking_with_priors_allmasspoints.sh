@@ -10,6 +10,9 @@ fi
 # ---------------------------------------------
 #  parse the given arguments
 # ---------------------------------------------
+#  default values
+PRIOR_FILE="priors_bkg.txt"
+
 POSARG=()
 
 while [[ $# -gt 0 ]]
@@ -23,7 +26,7 @@ case $key in
     shift
     ;;
     --ref)
-    COMP_REF_DIR="$2/"
+    LEGACY_REF_DIR="$2/"
     shift
     shift
     ;;
@@ -42,7 +45,8 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
-CAMPAIGN_DIR=$1"/"
+CAMPAIGN_DIR="${1:-$CAMPAIGN_DIR}"
+CAMPAIGN_DIR=$CAMPAIGN_DIR"/"
 
 if [ -z $ENGINE ]
 then
@@ -61,5 +65,5 @@ BENCHMARKER="run_distributed_benchmarking_with_priors.sh"
 
 for MASS_POINT in $MASS_POINTS
 do
-    sh $CONTROL_DIR$BENCHMARKER $CAMPAIGN_DIR "--engine" $ENGINE "--mass" $MASS_POINT "--ref" $COMP_REF_DIR "--priors" $PRIOR_FILE
+    sh $CONTROL_DIR$BENCHMARKER $CAMPAIGN_DIR "--engine" $ENGINE "--mass" $MASS_POINT "--ref" $LEGACY_REF_DIR "--priors" $PRIOR_FILE
 done

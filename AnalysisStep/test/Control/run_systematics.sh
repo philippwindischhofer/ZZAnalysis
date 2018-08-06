@@ -36,14 +36,23 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
-RUN_DIR=$1"/"
+CAMPAIGN_DIR="${1:-$CAMPAIGN_DIR}"
+CAMPAIGN_DIR=$CAMPAIGN_DIR"/"
 
-# create output directory
-SYSTEMATICS_DIR=$RUN_DIR"/systematic_uncertainties_"$ENGINE"/"
-mkdir -p $SYSTEMATICS_DIR
+cd $CAMPAIGN_DIR
+RUN_DIRLIST=`ls -d */ | egrep -v 'bin|statistics'`
 
-# run the determination of the systematics
-$BIN_DIR$SYSTEMATICS_PREPARER $RUN_DIR $ENGINE $SYSTEMATICS_DIR"/systematics_raw.txt"
+for RUN in $RUN_DIRLIST
+do
+    RUN_DIR=$CAMPAIGN_DIR$RUN
 
-# convert them into the proper YAML files
-python $PYTHON_DIR$SYSTEMATICS_CONVERTER $SYSTEMATICS_DIR"/systematics_raw.txt" $SYSTEMATICS_DIR
+    # create output directory
+    SYSTEMATICS_DIR=$RUN_DIR"/systematic_uncertainties_"$ENGINE"/"
+    mkdir -p $SYSTEMATICS_DIR
+
+    # run the determination of the systematics
+    $BIN_DIR$SYSTEMATICS_PREPARER $RUN_DIR $ENGINE $SYSTEMATICS_DIR"/systematics_raw.txt"
+
+    # convert them into the proper YAML files
+    python $PYTHON_DIR$SYSTEMATICS_CONVERTER $SYSTEMATICS_DIR"/systematics_raw.txt" $SYSTEMATICS_DIR
+done

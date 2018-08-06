@@ -5,8 +5,6 @@ if [[ -z "$CMSSW_BASE" ]]; then
     exit
 fi
 
-export JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
-
 # ---------------------------------------------
 #  parse the given arguments
 # ---------------------------------------------
@@ -18,12 +16,12 @@ key=$1
 
 case $key in
     --source)
-    SOURCE_ROOT="$2/"
+    MC_PREPARED_DIR="$2"
     shift
     shift
     ;;
     --dest)
-    DEST_ROOT="$2/"
+    MC_TRAINING_DIR="$2"
     shift
     shift
     ;;
@@ -37,5 +35,8 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
+MC_PREPARED_DIR=$MC_PREPARED_DIR"/"
+MC_TRAINING_DIR=$MC_TRAINING_DIR"/"
+
 # call the python script that actually takes care of all the work
-python $CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Python/prepare_workdir.py" $SOURCE_ROOT $DEST_ROOT
+python $CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Python/prepare_workdir.py" $MC_PREPARED_DIR $MC_TRAINING_DIR

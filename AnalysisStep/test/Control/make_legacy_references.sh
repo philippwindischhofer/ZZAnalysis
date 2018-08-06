@@ -18,12 +18,12 @@ case $key in
     shift
     ;;
     --source)
-    SOURCE_ROOT="$2/"
+    MC_TRAINING_DATA="$2"
     shift
     shift
     ;;
     --dest)
-    DEST_ROOT="$2/"
+    LEGACY_REF_DIR="$2"
     shift
     shift
     ;;
@@ -42,10 +42,12 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
-BENCHMARKER=$CMSSW_BASE"/bin/slc6_amd64_gcc630/run_benchmarker_legacy"
-JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
+MC_TRAINING_DATA=$MC_TRAINING_DATA"/"
+LEGACY_REF_DIR=$LEGACY_REF_DIR"/"
 
-mkdir -p $DEST_ROOT
+BENCHMARKER=$CMSSW_BASE"/bin/slc6_amd64_gcc630/run_benchmarker_legacy"
+
+mkdir -p $LEGACY_REF_DIR
 
 # mass points for which references (for training, validation and test) are required
 MASS_POINTS="120 125 130"
@@ -53,7 +55,7 @@ TRAINING_MASS_POINT="125"
 
 for MASS_POINT in $MASS_POINTS
 do
-    DEST_DIR=$DEST_ROOT$MASS_POINT
+    DEST_DIR=$LEGACY_REF_DIR$MASS_POINT
     mkdir -p $DEST_DIR
 
     cd $DEST_DIR
@@ -74,28 +76,28 @@ do
 	BENCHMARK_TEST_LOGFILE=$TEST_DIR"log.txt"
 
 	echo "#!/bin/bash" > $BENCHMARK_VALIDATION_SCRIPT
-	echo $BENCHMARKER $SOURCE_ROOT"/validation/" $VALIDATION_DIR "0.0" "1.0" $LUMI $MASS_POINT $WP_FILE "&>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
+	echo $BENCHMARKER $MC_TRAINING_DATA"/validation/" $VALIDATION_DIR "0.0" "1.0" $LUMI $MASS_POINT $WP_FILE "&>" $BENCHMARK_VALIDATION_LOGFILE >> $BENCHMARK_VALIDATION_SCRIPT
 
 	echo "#!/bin/bash" > $BENCHMARK_TEST_SCRIPT
-	echo $BENCHMARKER $SOURCE_ROOT"/test/" $TEST_DIR "0.0" "1.0" $LUMI $MASS_POINT $WP_FILE "&>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
+	echo $BENCHMARKER $MC_TRAINING_DATA"/test/" $TEST_DIR "0.0" "1.0" $LUMI $MASS_POINT $WP_FILE "&>" $BENCHMARK_TEST_LOGFILE >> $BENCHMARK_TEST_SCRIPT
     else
 	# this is a mass point that was not used for training, do not have to respect any splitting
 	BENCHMARK_SCRIPT=$DEST_DIR"/run_reference.sh"
 	BENCHMARK_LOGFILE=$DEST_DIR"/log.txt"
 
 	echo "#!/bin/bash" > $BENCHMARK_SCRIPT
-	echo $BENCHMARKER $SOURCE_ROOT"/test/" $DEST_DIR"/" "0.0" "1.0" $LUMI $MASS_POINT $WP_FILE "&>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
+	echo $BENCHMARKER $MC_TRAINING_DATA"/test/" $DEST_DIR"/" "0.0" "1.0" $LUMI $MASS_POINT $WP_FILE "&>" $BENCHMARK_LOGFILE >> $BENCHMARK_SCRIPT
     fi
 done
 
-cd $DEST_ROOT
+cd $LEGACY_REF_DIR
 
 JOBS=`find * | grep run_reference.sh$`
 
 for JOB in $JOBS
 do
-    echo "lauching benchmarking for " $DEST_ROOT$JOB
-    until $JOB_SUBMITTER "-short" $DEST_ROOT$JOB
+    echo "lauching benchmarking for " $LEGACY_REF_DIR$JOB
+    until $JOB_SUBMITTER "-short" $LEGACY_REF_DIR$JOB
     do
     	echo "----------------------------------------------------------------"
     	echo " error submitting job, retrying ..."

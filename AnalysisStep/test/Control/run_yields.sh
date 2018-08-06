@@ -19,11 +19,17 @@ do
 key=$1
 
 case $key in
+    --lumi)
+    LUMI="$2"
+    shift
+    shift
+    ;;
     --engine)
     ENGINE="$2"
     shift
     shift
     ;;
+
     *)
     POSARG+=("$1")
     shift
@@ -34,16 +40,25 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
-RUN_DIR=$1"/"
+CAMPAIGN_DIR="${1:-$CAMPAIGN_DIR}"
+CAMPAIGN_DIR=$CAMPAIGN_DIR"/"
 
-# run the yield parameterization
-$BIN_DIR$YIELD_PREPARER $RUN_DIR $ENGINE
+cd $CAMPAIGN_DIR
+RUN_DIRLIST=`ls -d */ | egrep -v 'bin|statistics'`
 
-sleep 3
+for RUN in $RUN_DIRLIST
+do
+    RUN_DIR=$CAMPAIGN_DIR$RUN
+    YIELDS_DIR=$RUN_DIR"/yield_parameterization_"$ENGINE"/"
 
-# move the resulting output into the training directory
-YIELDS_DIR=$RUN_DIR"/yield_parameterization_"$ENGINE"/"
-mkdir -p $YIELDS_DIR
-mv $CONTROL_DIR"/Fits/" $YIELDS_DIR
-mv $CONTROL_DIR"/ROOT_files/" $YIELDS_DIR
-mv $CONTROL_DIR"/YAML_files/" $YIELDS_DIR
+    # run the yield parameterization
+    $BIN_DIR$YIELD_PREPARER $RUN_DIR $ENGINE $LUMI
+
+    sleep 3
+
+    # move the resulting output into the training directory
+    mkdir -p $YIELDS_DIR
+    mv "Fits/" $YIELDS_DIR
+    mv "ROOT_files/" $YIELDS_DIR
+    mv "YAML_files/" $YIELDS_DIR
+done

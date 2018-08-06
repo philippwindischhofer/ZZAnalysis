@@ -18,7 +18,7 @@ case $key in
     shift
     ;;
     --ref)
-    REF_DIR="$2/"
+    LEGACY_REF_DIR="$2"
     shift
     shift
     ;;
@@ -36,15 +36,17 @@ set -- "${POSARG[@]}"
 #  global settings
 # ---------------------------------------------
 CURRENT_DIR=`pwd`
-CAMPAIGN_DIR=$1"/"
+
+CAMPAIGN_DIR="${1:-$CAMPAIGN_DIR}"
+CAMPAIGN_DIR=$CAMPAIGN_DIR"/"
+
+LEGACY_REF_DIR=$LEGACY_REF_DIR"/"
 
 if [ -z $ENGINE ]
 then
     echo "no engine name provided, using default: tree"
     ENGINE="tree"
 fi
-
-JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
 
 BIN_DIR=$CMSSW_BASE"/bin/slc6_amd64_gcc630/"
 PYTHON_DIR=$CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Python/"
@@ -77,7 +79,7 @@ do
     echo "#!/bin/bash" > $PRIOR_SCRIPT
 
     # launch the optimization
-    echo "python" $PYTHON_DIR$PRIOR_OPTIMIZER $CAMPAIGN_DIR$RUN $PRIOR_DIR $ENGINE $REF_DIR "&>" $PRIOR_LOGFILE >> $PRIOR_SCRIPT
+    echo "python" $PYTHON_DIR$PRIOR_OPTIMIZER $CAMPAIGN_DIR$RUN $PRIOR_DIR $ENGINE $LEGACY_REF_DIR "&>" $PRIOR_LOGFILE >> $PRIOR_SCRIPT
 done
 
 # now go back and launch all the jobs that have been prepared

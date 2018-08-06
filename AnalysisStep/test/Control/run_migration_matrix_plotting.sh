@@ -33,7 +33,16 @@ done
 # set back the positional arguments in case they will be needed later
 set -- "${POSARG[@]}"
 
-RUN_DIR=$1"/"
+CAMPAIGN_DIR="${1:-$CAMPAIGN_DIR}"
+CAMPAIGN_DIR=$CAMPAIGN_DIR"/"
 
-# run the migration matrix plotting
-$BIN_DIR$PLOTTER $RUN_DIR $ENGINE
+cd $CAMPAIGN_DIR
+RUN_DIRLIST=`ls -d */ | egrep -v 'bin|statistics'`
+
+for RUN in $RUN_DIRLIST
+do
+    RUN_DIR=$CAMPAIGN_DIR$RUN
+
+    # run the migration matrix plotting
+    $BIN_DIR$PLOTTER $RUN_DIR $ENGINE
+done

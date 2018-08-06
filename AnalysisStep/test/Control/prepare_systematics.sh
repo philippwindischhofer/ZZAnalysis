@@ -5,12 +5,9 @@ if [[ -z "$CMSSW_BASE" ]]; then
     exit
 fi
 
-if [[ "$#" -ne 1 ]]; then
-    echo "Usage: $0 DIR"
-    exit
-fi
+MC_PREPARED_DIR="${1:-$MC_PREPARED_DIR}"
 
-DIR=$1"/"
+MC_PREPARED_DIR=$MC_PREPARED_DIR"/"
 
 # call the python script that handles the rest
-python $CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Python/prepare_systematics.py" $DIR
+python $CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Python/prepare_systematics.py" $MC_PREPARED_DIR

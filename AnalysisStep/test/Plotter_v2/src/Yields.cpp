@@ -277,9 +277,9 @@ void Yields::ProduceDataROOTFiles( TString input_file_name , TString output_fold
 
    input_file = new TFile(input_file_name);
 
-   hCounters = (TH1F*)input_file->Get("ZZTree/Counters");
+   hCounters = (TH1F*)input_file->Get("ClassTree/Counters");
 	
-   input_tree = (TTree*)input_file->Get("ZZTree/candTree");
+   input_tree = (TTree*)input_file->Get("ClassTree/candTree");
    Init( input_tree, input_file_name );
 	
    if (fChain == 0) return;

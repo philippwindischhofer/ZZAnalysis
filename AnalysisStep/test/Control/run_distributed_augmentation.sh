@@ -15,8 +15,6 @@ DEST_ROOT=$3"/"
 AUGMENTATION_SETTINGS_ROOT=$4
 GLOBAL_SETTINGS_DIR=$5"/"
 
-JOB_SUBMITTER="/opt/exp_soft/cms/t3/t3submit_new"
-
 # Python source directory
 BIN_DIR=$CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Python/"
 
