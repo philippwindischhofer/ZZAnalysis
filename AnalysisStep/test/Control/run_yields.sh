@@ -61,4 +61,5 @@ do
     mv "Fits/" $YIELDS_DIR
     mv "ROOT_files/" $YIELDS_DIR
     mv "YAML_files/" $YIELDS_DIR
+    mv "DataROOTFiles/" $YIELDS_DIR
 done
