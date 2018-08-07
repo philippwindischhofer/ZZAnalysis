@@ -1,6 +1,5 @@
 print "starting imports..."
 
-from trainlib.ModelCollection import ModelCollection
 from trainlib.ModelCollectionConfigFileHandler import ModelCollectionConfigFileHandler
 import tensorflow as tf
 from keras import backend as K

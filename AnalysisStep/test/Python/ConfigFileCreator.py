@@ -7,19 +7,8 @@ import sys
 
 from trainlib.config import Config
 from trainlib.SimpleModel import SimpleModel
-from trainlib.CombinedModel import CombinedModel
 
 # fix the naming!
-from trainlib.ModelFactory import ModelFactory
-from trainlib.ModelFactoryFullCategorySetOptimizedInputs import ModelFactoryFullCategorySetOptimizedInputs
-from trainlib.ModelFactoryFullCategorySetOptimizedInputsInclusive import ModelFactoryFullCategorySetOptimizedInputsInclusive
-from trainlib.ModelFactoryFullCategorySetOptimizedInputsCombined import ModelFactoryFullCategorySetOptimizedInputsCombined
-
-from trainlib.ModelFactoryFullMassRangeDynamicInclusive import ModelFactoryFullMassRangeDynamicInclusive
-from trainlib.ModelFactoryFullMassRangeDynamic import ModelFactoryFullMassRangeDynamic
-
-from trainlib.ModelFactoryFullCategorySetDynamic import ModelFactoryFullCategorySetDynamic
-from trainlib.ModelFactoryFullCategorySetDynamicInclusive import ModelFactoryFullCategorySetDynamicInclusive
 from trainlib.SimpleModelFactoryDynamic import SimpleModelFactoryDynamic
 
 from trainlib.ConfigFileHandler import ConfigFileHandler
@@ -46,7 +35,6 @@ def main():
     MC_path = os.path.join(workdir, "trainval/")
 
     # this always uses SimpleModel by default (more complicated models are accessible through ConfigFileSweeper when performing a sweep of network hyperparameters etc.)
-    #mcoll = ModelFactoryFullMassRangeDynamicInclusive.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, hyperparam_config_file = hyperparam_config_file, mass_point = mass_point)
     mcoll = SimpleModelFactoryDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, hyperparam_config_file = hyperparam_config_file, mass_point = mass_point)
 
     mconfhandler = ModelCollectionConfigFileHandler()

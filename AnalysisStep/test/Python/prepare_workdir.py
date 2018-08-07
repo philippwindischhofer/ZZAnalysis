@@ -13,7 +13,6 @@ def main():
         print "Error: exactly 2 arguments are required!"
 
     source_path = sys.argv[1]
-    #source_path = "/data_CMS/cms/wind/CJLST_NTuples_prepared_systematics/"
     dest_path = sys.argv[2]
 
     # global settings:

@@ -1,6 +1,5 @@
 from trainlib.ModelCollection import ModelCollection
 from trainlib.ModelCollectionConfigFileHandler import ModelCollectionConfigFileHandler
-from trainlib.ModelFactoryFullCategorySet import ModelFactoryFullCategorySet
 import os
 import sys
 

@@ -4,7 +4,6 @@ import tensorflow as tf
 from keras import backend as K
 from trainlib.SimpleModel import SimpleModel
 from trainlib.ModelCollection import ModelCollection
-from trainlib.ModelFactory import ModelFactory
 from trainlib.FileCollection import FileCollection
 from trainlib.Trainer import Trainer
 from trainlib.ModelCollectionConfigFileHandler import ModelCollectionConfigFileHandler

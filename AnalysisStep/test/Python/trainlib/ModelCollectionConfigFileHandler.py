@@ -8,7 +8,6 @@ from ConfigFileHandler import ConfigFileHandler
 from ConfigFileUtils import ConfigFileUtils
 from SimpleModel import SimpleModel
 from CombinedModel import CombinedModel
-from ModelFactory import ModelFactory
 from ModelCollection import ModelCollection
 from PCAWhiteningPreprocessor import PCAWhiteningPreprocessor
 from FlexiblePCAWhiteningPreprocessor import FlexiblePCAWhiteningPreprocessor

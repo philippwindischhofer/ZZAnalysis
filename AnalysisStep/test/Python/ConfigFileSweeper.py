@@ -7,19 +7,8 @@ import sys
 
 from trainlib.config import Config
 from trainlib.SimpleModel import SimpleModel
-from trainlib.CombinedModel import CombinedModel
 
 # fix the naming!
-from trainlib.ModelFactory import ModelFactory
-from trainlib.ModelFactoryFullCategorySetOptimizedInputs import ModelFactoryFullCategorySetOptimizedInputs
-from trainlib.ModelFactoryFullCategorySetOptimizedInputsInclusive import ModelFactoryFullCategorySetOptimizedInputsInclusive
-from trainlib.ModelFactoryFullCategorySetOptimizedInputsCombined import ModelFactoryFullCategorySetOptimizedInputsCombined
-
-from trainlib.ModelFactoryFullMassRangeDynamicInclusive import ModelFactoryFullMassRangeDynamicInclusive
-from trainlib.ModelFactoryFullMassRangeDynamic import ModelFactoryFullMassRangeDynamic
-
-from trainlib.ModelFactoryFullCategorySetDynamic import ModelFactoryFullCategorySetDynamic
-from trainlib.ModelFactoryFullCategorySetDynamicInclusive import ModelFactoryFullCategorySetDynamicInclusive
 from trainlib.SimpleModelFactoryDynamic import SimpleModelFactoryDynamic
 
 from trainlib.ConfigFileHandler import ConfigFileHandler
@@ -239,9 +228,9 @@ def main():
     if model_type == 'SimpleModel':
         # using the full mass range for training, not using the 118/130GeV cut
         mcoll = SimpleModelFactoryDynamic.GenerateSimpleModelCollections(MC_path, input_config_file = input_config_file, hyperparam_config_file = None, mass_point = mass_point)
-    elif model_type == 'CombinedModel':
-        mcoll = ModelFactoryFullCategorySetOptimizedInputs.GenerateCombinedModelCollections(MC_path)
-        
+    else:
+        raise NotImplementedError
+
     iterate(iterables, {}, lambda it: augment_config(mcoll, campaign_dir, it))
 
 if __name__ == "__main__":
