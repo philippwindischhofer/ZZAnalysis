@@ -12,7 +12,6 @@
   <lib name="class_lib"/>
 </library>
 
-<!-- benchmarks a certain classifier on the MC -->
 <bin name="run_benchmarker" file="../test/Benchmarker/run_benchmarker.cpp">
   <lib name="class_lib"/>
 </bin>
@@ -21,21 +20,7 @@
   <lib name="class_lib"/>
 </bin>
 
-<!-- tool for plotting ROC curves of individual binary discriminants -->
-<bin name="run_roc_plotter" file="../test/ROCPlotter/run_roc_plotter.cpp">
-  <lib name="class_lib"/>
-</bin>
-
 <bin name="run_migration_matrix_plotter" file="../test/MigrationMatrixPlotter/run_migration_matrix_plotter.cpp">
-  <lib name="class_lib"/>
-</bin>
-
-<bin name="run_roc_plotter_me_optimization" file="../test/ROCPlotterMEOptimization/run_roc_plotter_me_optimization.cpp">
-  <lib name="class_lib"/>
-</bin>
-
-<!-- generic tool for plotting profiles (= histograms) -->
-<bin name="run_profiler" file="../test/Profiler/run_profiler.cpp">
   <lib name="class_lib"/>
 </bin>
 
@@ -47,20 +32,11 @@
   <lib name="class_lib"/>  
 </bin>
 
-<bin name="run_WP_evaluator" file="../test/WPEvaluator/run_WP_evaluator.cpp">
-  <lib name="class_lib"/>  
-</bin>
-
 <bin name="run_calibrator" file="../test/Calibrator/run_calibrator.cpp">
   <lib name="class_lib"/>
 </bin>
 
-<!-- compares different classifiers -->
 <bin name="run_comp" file="../test/Comp/run_comp.cpp">
-  <lib name="class_lib"/>
-</bin>
-
-<bin name="run_augment_tree" file="../test/Python/AugmentTree/run_augment_tree.cpp">
   <lib name="class_lib"/>
 </bin>
 
@@ -78,18 +54,6 @@
 
 <bin name="run_chunk_extractor" file="../test/ChunkExtractor/run_chunk_extractor.cpp">
   <lib name="class_lib"/>
-</bin>
-
-<bin name="run_mask_tree" file="../test/Python/MaskTree/run_mask_tree.cpp">
-  <lib name="class_lib"/>
-</bin>
-
-<bin name="run_bias_checker" file="../test/MCBiasChecker/run_bias_checker.cpp">
-  <lib name="class_lib"/>  
-</bin>
-
-<bin name="run_helloworld" file="../test/HelloWorld/run_helloworld.cpp">
-  <lib name="class_lib"/>  
 </bin>
 
 <bin   name="run_yields" file="../test/Plotter_v2/run_yields.cpp">
