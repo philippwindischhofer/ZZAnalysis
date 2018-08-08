@@ -7,11 +7,9 @@ import re
 from ConfigFileHandler import ConfigFileHandler
 from ConfigFileUtils import ConfigFileUtils
 from SimpleModel import SimpleModel
-from CombinedModel import CombinedModel
 from ModelCollection import ModelCollection
 from PCAWhiteningPreprocessor import PCAWhiteningPreprocessor
 from FlexiblePCAWhiteningPreprocessor import FlexiblePCAWhiteningPreprocessor
-from CombinedPreprocessor import CombinedPreprocessor
 from ConfigFileUtils import ConfigFileUtils
 from config import TrainingConfig
 

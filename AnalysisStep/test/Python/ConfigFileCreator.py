@@ -18,7 +18,7 @@ from trainlib.ConfigFileUtils import ConfigFileUtils
 def main():
     
     if len(sys.argv) != 5:
-        print "Error: exactly 4 arguments is required"
+        print "Error: exactly 4 arguments are required"
 
     campaign_dir = sys.argv[1]
     input_config_file = sys.argv[2]

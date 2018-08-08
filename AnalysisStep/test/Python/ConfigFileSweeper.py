@@ -219,6 +219,8 @@ def main():
     MC_path = os.path.join(workdir, "trainval/")
     model_type = confhandler.get_field('global', 'model_type')
 
+    print input_config_file
+
     # get the mass point from the global config file in a way that ensures backward compatibility
     try:
         mass_point = float(confhandler.get_field('global', 'mass_point'))
