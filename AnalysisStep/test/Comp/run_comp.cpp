@@ -14,7 +14,6 @@
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/CompUtils.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18ConfigReducedCategorySet.h>
 
 // TString name_a = "Mor18_{LI}";
 // TString name_b = "Mor18  (experimental)";

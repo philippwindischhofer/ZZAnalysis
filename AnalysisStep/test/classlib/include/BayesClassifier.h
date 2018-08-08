@@ -1,5 +1,5 @@
-#ifndef Mor18LIClassifier_h
-#define Mor18LIClassifier_h
+#ifndef BayesClassifier_h
+#define BayesClassifier_h
 
 // C++
 #include <iostream>
@@ -28,23 +28,20 @@
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/DiscriminantCollection.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/MEDiscriminantFactory.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactory.h>
+
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactoryFullCategorySetDynamic.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/VotingMultiClassCombinator.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/RANDKLMultiClassCombinator.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/TreeKLMultiClassCombinator.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/TreeMultiClassCombinator.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/RRMultiClassCombinator.h>
 
 #include <ZZAnalysis/AnalysisStep/interface/Category.h>
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
 #include <ZZAnalysis/AnalysisStep/interface/cConstants.h>
 
-class Mor18LIClassifier: public Classifier
+class BayesClassifier: public Classifier
 {
 public:
-    Mor18LIClassifier(TString calibration_folder, TString config_path, TString engine = "voting");
-    ~Mor18LIClassifier();
+    BayesClassifier(TString calibration_folder, TString config_path, TString engine = "voting");
+    ~BayesClassifier();
 
     int ClassifyThisEvent(Tree* in);
 

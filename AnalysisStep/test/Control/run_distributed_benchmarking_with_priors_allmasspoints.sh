@@ -10,8 +10,6 @@ fi
 # ---------------------------------------------
 #  parse the given arguments
 # ---------------------------------------------
-#  default values
-PRIOR_FILE="priors_bkg.txt"
 
 POSARG=()
 
@@ -32,6 +30,11 @@ case $key in
     ;;
     --priors)
     PRIOR_FILE="$2"
+    shift
+    shift
+    ;;
+    --lumi)
+    LUMI="$2"
     shift
     shift
     ;;
@@ -56,8 +59,8 @@ fi
 
 if [ -z $PRIOR_FILE ]
 then
-    echo "no prior file provided, using default: priors.txt"
-    PRIOR_FILE="priors.txt"
+    echo "no prior file provided, using default: priors_bkg.txt"
+    PRIOR_FILE="priors_bkg.txt"
 fi
 
 CONTROL_DIR=$CMSSW_BASE"/src/ZZAnalysis/AnalysisStep/test/Control/"
@@ -65,5 +68,5 @@ BENCHMARKER="run_distributed_benchmarking_with_priors.sh"
 
 for MASS_POINT in $MASS_POINTS
 do
-    sh $CONTROL_DIR$BENCHMARKER $CAMPAIGN_DIR "--engine" $ENGINE "--mass" $MASS_POINT "--ref" $LEGACY_REF_DIR "--priors" $PRIOR_FILE
+    sh $CONTROL_DIR$BENCHMARKER $CAMPAIGN_DIR "--engine" $ENGINE "--mass" $MASS_POINT "--ref" $LEGACY_REF_DIR "--priors" $PRIOR_FILE "--lumi" $LUMI
 done

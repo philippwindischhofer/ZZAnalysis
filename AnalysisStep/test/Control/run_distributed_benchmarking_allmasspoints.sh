@@ -27,6 +27,11 @@ case $key in
     shift
     shift
     ;;
+    --lumi)
+    LUMI="$2"
+    shift
+    shift
+    ;;
     *)
     POSARG+=("$1")
     shift
@@ -51,5 +56,5 @@ BENCHMARKER="run_distributed_benchmarking.sh"
 
 for MASS_POINT in $MASS_POINTS
 do
-    sh $CONTROL_DIR$BENCHMARKER $CAMPAIGN_DIR "--engine" $ENGINE "--mass" $MASS_POINT "--ref" $COMP_REF_DIR
+    sh $CONTROL_DIR$BENCHMARKER $CAMPAIGN_DIR "--engine" $ENGINE "--mass" $MASS_POINT "--ref" $COMP_REF_DIR "--lumi" $LUMI
 done

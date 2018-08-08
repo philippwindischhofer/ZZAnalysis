@@ -1,6 +1,6 @@
-#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/SystematicsLI.h>
+#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/SystematicsBayes.h>
 
-SystematicsLI::SystematicsLI():Systematics()
+SystematicsBayes::SystematicsBayes():Systematics()
 { 
     // prepare the vectors that will hold the different counts
     std::vector<float> temp;
@@ -17,16 +17,16 @@ SystematicsLI::SystematicsLI():Systematics()
     }
 }
 
-SystematicsLI::~SystematicsLI()
+SystematicsBayes::~SystematicsBayes()
 { }
 
-TString SystematicsLI::GetFolder(TString original)
+TString SystematicsBayes::GetFolder(TString original)
 {
     std::vector<std::string> components = ConfigFileUtils::Split(original.Data(), "/");
     return components.end()[-2];
 }
 
-TString SystematicsLI::ChangeFolder(TString original, TString new_folder)
+TString SystematicsBayes::ChangeFolder(TString original, TString new_folder)
 {
     std::vector<std::string> components = ConfigFileUtils::Split(original.Data(), "/");
     std::string retval = "/";
@@ -43,14 +43,14 @@ TString SystematicsLI::ChangeFolder(TString original, TString new_folder)
     return retval;      
 }
 
-void SystematicsLI::SetPackagePath(TString package_path, TString engine)
+void SystematicsBayes::SetPackagePath(TString package_path, TString engine)
 {
     config_file_path = package_path + "settings.conf";
     calibration_dir = package_path + "calibration_validation/";
     priors_file_path = package_path + "priors_" + engine + "/priors_bkg.txt";
 
     //refclass = new Mor18Classifier();
-    refclass = new Mor18LIClassifier(calibration_dir, config_file_path, engine);
+    refclass = new BayesClassifier(calibration_dir, config_file_path, engine);
 
     // // load priors here and assign them etc.
     ConfigFileHandler* handler = new ConfigFileHandler(priors_file_path, "read");
@@ -81,18 +81,18 @@ void SystematicsLI::SetPackagePath(TString package_path, TString engine)
     std::cout << " qq_prior = " << qq_prior << std::endl;
     std::cout << "-----------------------------------------------------------" << std::endl;
 
-    Mor18LIClassifier* refclass18 = static_cast<Mor18LIClassifier*>(refclass);
+    BayesClassifier* refclass18 = static_cast<BayesClassifier*>(refclass);
     refclass18 -> SetEngineParameter("min_iterations", 25);
     refclass18 -> SetEngineParameter("max_iterations", 125);
 
     refclass18 -> SetPriors(VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior, qq_prior);
 }
 
-void SystematicsLI::FillSystematics(TString input_file_name)
+void SystematicsBayes::FillSystematics(TString input_file_name)
 {
     std::cout << "filling systematics for " + input_file_name << std::endl;
     
-    //std::cout << "SystematicsLI::FillSystematics" << std::endl;
+    //std::cout << "SystematicsBayes::FillSystematics" << std::endl;
     
     // --------------------------------------------------------------------
     //  read here the original file without and modifications of its parameters
@@ -975,11 +975,11 @@ void SystematicsLI::FillSystematics(TString input_file_name)
     //cout << "[INFO] Systematics for " << input_file_name << " filled." << endl;
 }
 
-void SystematicsLI::FillSystematics_tuneUpDn(TString input_file_name)
+void SystematicsBayes::FillSystematics_tuneUpDn(TString input_file_name)
 {
     std::cout << "filling tune up/dn systematics for " + input_file_name << std::endl;
 
-    //std::cout << "SystematicsLI::FillSystematics_tuneUpDn" << std::endl;
+    //std::cout << "SystematicsBayes::FillSystematics_tuneUpDn" << std::endl;
 
     input_file = new TFile(input_file_name);
 
@@ -1058,7 +1058,7 @@ void SystematicsLI::FillSystematics_tuneUpDn(TString input_file_name)
     //cout << "[INFO] Systematics for " << input_file_name << " filled." << endl;
 }
 
-void SystematicsLI::PrintSystematics_LEC(TString file)
+void SystematicsBayes::PrintSystematics_LEC(TString file)
 {
     fstream fout = reopen_file(file);
 

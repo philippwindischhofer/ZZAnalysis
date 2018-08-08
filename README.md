@@ -31,3 +31,13 @@ cd $CMSSW_BASE/src/ZZAnalysis/AnalysisStep/test/Python/
 pip install --user -r requirements.txt
 
 ```
+
+To set up Tensorflow as default backend for Keras, create (or modify) the file `~/.keras/keras.json` with the following content
+```
+{
+    "epsilon": 1e-07, 
+    "floatx": "float32", 
+    "image_data_format": "channels_last", 
+    "backend": "tensorflow"
+}
+```

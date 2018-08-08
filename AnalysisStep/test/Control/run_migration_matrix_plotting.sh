@@ -23,6 +23,11 @@ case $key in
     shift
     shift
     ;;
+    --lumi)
+    LUMI="$2"
+    shift
+    shift
+    ;;
     *)
     POSARG+=("$1")
     shift
@@ -44,5 +49,5 @@ do
     RUN_DIR=$CAMPAIGN_DIR$RUN
 
     # run the migration matrix plotting
-    $BIN_DIR$PLOTTER $RUN_DIR $ENGINE
+    $BIN_DIR$PLOTTER $RUN_DIR $ENGINE $LUMI
 done

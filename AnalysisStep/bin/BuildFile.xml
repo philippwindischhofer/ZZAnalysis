@@ -24,10 +24,6 @@
   <lib name="class_lib"/>
 </bin>
 
-<bin name="run_optimizer" file="../test/Optimizer/run_optimizer.cpp">
-  <lib name="class_lib"/>  
-</bin>
-
 <bin name="run_prior_evaluator" file="../test/PriorEvaluator/run_prior_evaluator.cpp">
   <lib name="class_lib"/>  
 </bin>

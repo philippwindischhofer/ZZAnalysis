@@ -21,9 +21,8 @@
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/PlottingUtils.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18ConfigReducedCategorySet.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Classifier.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18LIClassifier.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/BayesClassifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/ConfigFileHandler.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/cuts.h>
 
@@ -45,28 +44,29 @@ double ComputeKFactor(TString input_file_name, Tree* in)
 
 int main(int argc, char *argv[])
 {
-    if(argc != 3)
+    if(argc != 4)
     {
-	std::cerr << "Error: exactly 2 arguments are required" << std::endl;
+	std::cerr << "Error: exactly 3 arguments are required" << std::endl;
 	return(-1);
     }
 
     // produces the migration matrix for comparing nicely the old and new categorization
     TString package_path = argv[1]; //"/data_CMS/cms/wind/180611_cumulative_85_packaged/";
     TString engine = argv[2]; //"robin";
+    float lumi = std::stof(argv[3]);
 
     TString MCpath = package_path +  "/augmentation_test/";
     TString config_file_path = package_path + "settings.conf";
     TString calibration_dir = package_path + "/calibration_validation/";
     TString priors_file_path = package_path + "/priors_" + engine + "/priors_bkg.txt";
     
-    Mor18Config* conf = new Mor18Config(MCpath, 41.37, false, 125.0, true);
+    Mor18Config* conf = new Mor18Config(MCpath, lumi, false, 125.0, true);
     std::vector<std::pair<TString, Routing*>> routings = conf -> get_routing();
 
     int number_categories = conf -> categories().size();
 
     // prepare the classifiers
-    Classifier* bayes_cat = new Mor18LIClassifier(calibration_dir, config_file_path, engine);
+    Classifier* bayes_cat = new BayesClassifier(calibration_dir, config_file_path, engine);
     // load priors here and assign them etc.
     ConfigFileHandler* handler = new ConfigFileHandler(priors_file_path, "read");
     float VBF_prior = handler -> GetField("VBF_prior");
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     std::cout << " qq_prior = " << qq_prior << std::endl;
     std::cout << "-----------------------------------------------------------" << std::endl;
 
-    Mor18LIClassifier* bayes_cat18 = static_cast<Mor18LIClassifier*>(bayes_cat);
+    BayesClassifier* bayes_cat18 = static_cast<BayesClassifier*>(bayes_cat);
     bayes_cat18 -> SetEngineParameter("min_iterations", 25);
     bayes_cat18 -> SetEngineParameter("max_iterations", 125);
 

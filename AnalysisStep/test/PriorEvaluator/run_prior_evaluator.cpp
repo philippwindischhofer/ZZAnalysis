@@ -21,7 +21,7 @@
 
 // use the local style for the histograms
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/PlottingUtils.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18LIClassifier.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/BayesClassifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/CatPlotter.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/utils.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
@@ -43,10 +43,12 @@ TString punzi_hist_name = "punzi_purity";
 TString refdir;
 TString outdir;
 
+float lumi;
+
 // build the classifier whose parameters are going to be optimized
 Classifier* varclass;
 
-Mor18LIClassifier* varclass18;
+BayesClassifier* varclass18;
 Mor18Config* conf;
 
 // evaluates the cost when using certain values for the working points
@@ -94,9 +96,9 @@ double costfunc(const double* params)
 
 int main( int argc, char *argv[] )
 {
-    if(argc != 18)
+    if(argc != 19)
     {
-    	std::cerr << "Error: exactly 17 arguments are required" << std::endl;
+    	std::cerr << "Error: exactly 18 arguments are required" << std::endl;
     }
 
     // set default values
@@ -132,6 +134,7 @@ int main( int argc, char *argv[] )
 
     TString switchval = argv[16];
     refdir = argv[17];
+    lumi = std::stof(argv[18]);
 
     if(switchval == "S")
     {
@@ -141,7 +144,7 @@ int main( int argc, char *argv[] )
 	punzi_histname = "punzi_S";
 	punzi_outfile = "punzi_S_comp";
 
-	conf = new Mor18Config(run_dir + "augmentation_validation/", 41.37, false);
+	conf = new Mor18Config(run_dir + "augmentation_validation/", lumi, false);
     }
     else if(switchval == "SB")
     {
@@ -151,7 +154,7 @@ int main( int argc, char *argv[] )
 	punzi_histname = "punzi";
 	punzi_outfile = "punzi_comp";
 
-	conf = new Mor18Config(run_dir + "augmentation_validation/", 41.37, true);
+	conf = new Mor18Config(run_dir + "augmentation_validation/", lumi, true);
     }
 
     std::cout << "run_dir = " << run_dir << std::endl;
@@ -161,18 +164,11 @@ int main( int argc, char *argv[] )
     std::cout << "min_iterations = " << min_iterations << std::endl;
     std::cout << "max_iteratins = " << max_iterations << std::endl;
 
-    // use the corresponding benchmark scenario without optimized priors as reference
-    // refdir = run_dir + "benchmark_" + engine + "_validation/";
-
-    // can also try to use the validation reference of the legacy classifier as reference for the optimization
-    // Note: this really just takes the *scalings*, i.e. the reference values for the achievable Punzi purity from the other classifier -> should be OK!
-    // refdir = "/data_CMS/cms/wind/Mor18References/125/validation/";
-
     refdir += "/125/validation/";
 
-    varclass = new Mor18LIClassifier(run_dir + "calibration_validation/", run_dir + "settings.conf", engine);
+    varclass = new BayesClassifier(run_dir + "calibration_validation/", run_dir + "settings.conf", engine);
 
-    varclass18 = static_cast<Mor18LIClassifier*>(varclass);
+    varclass18 = static_cast<BayesClassifier*>(varclass);
 
     // this sets the quality of the evaluation, i.e. its noise level
     varclass18 -> SetEngineParameter("min_iterations", min_iterations); // 25 is default

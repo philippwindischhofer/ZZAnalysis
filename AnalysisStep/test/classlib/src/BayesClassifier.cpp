@@ -1,6 +1,6 @@
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18LIClassifier.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/BayesClassifier.h>
 
-Mor18LIClassifier::Mor18LIClassifier(TString calibration_folder, TString config_path, TString engine)
+BayesClassifier::BayesClassifier(TString calibration_folder, TString config_path, TString engine)
 {
     // set the path to where the augmented files are (even though this information is not needed for the classification step)
     Mor18Config conf(calibration_folder + "../augmentation/");
@@ -11,61 +11,32 @@ Mor18LIClassifier::Mor18LIClassifier(TString calibration_folder, TString config_
     // prepare the discriminant collection without any priors
     coll = MLDiscriminantFactoryFullCategorySetDynamic::GenerateDiscriminantCollection(calibration_folder, config_path, conf);
 
-    if(engine == "voting")
-    {
-	std::cout << "using simple voting" << std::endl;
-	comb = new VotingMultiClassCombinator();
-    }
-    else if(engine == "robin")
+    if(engine == "robin")
     {
 	std::cout << "using round robin" << std::endl;
 	comb = new RRMultiClassCombinator();
     }
-    else if(engine == "rand")
-    {
-	std::cout << "using RAND without KL corrections" << std::endl;
-	comb = new RANDKLMultiClassCombinator(false);
-    }
-    else if(engine == "rand_KL")
-    {
-	std::cout << "using RAND with KL corrections" << std::endl;
-	comb = new RANDKLMultiClassCombinator(true);
-	static_cast<RANDKLMultiClassCombinator*>(comb) -> UseFlatPriorsInKL(false);
-    }
-    else if(engine == "rand_KL_flat")
-    {
-	std::cout << "using RAND with KL corrections and FLAT priors" << std::endl;
-	comb = new RANDKLMultiClassCombinator(true);
-	static_cast<RANDKLMultiClassCombinator*>(comb) -> UseFlatPriorsInKL(true);
-    }
     else if(engine == "tree")
     {
-	std::cout << "using TREE without KL corrections" << std::endl;
-	comb = new TreeKLMultiClassCombinator(false);
+	std::cout << "using tree (single elimination tournament)" << std::endl;
+	comb = new TreeMultiClassCombinator();
     }
-    else if(engine == "tree_KL")
+    else
     {
-	std::cout << "using TREE with KL corrections" << std::endl;
-	comb = new TreeKLMultiClassCombinator(true);
-	static_cast<TreeKLMultiClassCombinator*>(comb) -> UseFlatPriorsInKL(false);
-    }
-    else if(engine == "tree_KL_flat")
-    {
-	std::cout << "using TREE with KL corrections and FLAT priors" << std::endl;
-	comb = new TreeKLMultiClassCombinator(true);
-	static_cast<TreeKLMultiClassCombinator*>(comb) -> UseFlatPriorsInKL(true);
+	std::cerr << "Error: requested engine '" + engine + "' not implemented!" << std::endl;
+	return;
     }
 }
 
-Mor18LIClassifier::~Mor18LIClassifier()
+BayesClassifier::~BayesClassifier()
 {  }
 
-void Mor18LIClassifier::SetEngineParameter(TString parameter_name, float parameter_value)
+void BayesClassifier::SetEngineParameter(TString parameter_name, float parameter_value)
 {
     comb -> SetParameter(parameter_name, parameter_value);
 }
 
-void Mor18LIClassifier::SetPriors(float VBF_prior, float ggH_prior, float WHhadr_prior, float ZHhadr_prior, float WHlept_prior, float ZHlept_prior, float ZHMET_prior, float ttHhadr_prior, float ttHlept_prior, float bkg_prior, float qq_prior)
+void BayesClassifier::SetPriors(float VBF_prior, float ggH_prior, float WHhadr_prior, float ZHhadr_prior, float WHlept_prior, float ZHlept_prior, float ZHMET_prior, float ttHhadr_prior, float ttHlept_prior, float bkg_prior, float qq_prior)
 {
     Mor18Config conf;
 
@@ -73,7 +44,7 @@ void Mor18LIClassifier::SetPriors(float VBF_prior, float ggH_prior, float WHhadr
     coll = MLDiscriminantFactoryFullCategorySetDynamic::GenerateDiscriminantCollection(calibration_folder, config_path, conf, VBF_prior, ggH_prior, WHhadr_prior, ZHhadr_prior, WHlept_prior, ZHlept_prior, ZHMET_prior, ttHhadr_prior, ttHlept_prior, bkg_prior, qq_prior);
 }
 
-int Mor18LIClassifier::ClassifyThisEvent(Tree* in)
+int BayesClassifier::ClassifyThisEvent(Tree* in)
 {
     comb -> Evaluate(in, coll);
     TString winner = comb -> GetWinningCategory();

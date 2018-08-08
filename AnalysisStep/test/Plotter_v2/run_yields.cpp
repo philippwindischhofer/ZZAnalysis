@@ -14,7 +14,7 @@
 #include "TStyle.h"
 
 // My own files
-#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/YieldsLI.h>
+#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/YieldsBayes.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/Variables.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/src/setTDRStyle.cpp>
 
@@ -98,7 +98,7 @@ int main( int argc, char *argv[] )
    
    //Yields* yields = new Yields(lumi);
 
-   YieldsLI *yields = new YieldsLI(lumi);
+   YieldsBayes *yields = new YieldsBayes(lumi);
    yields -> SetPackagePath(package_path, engine);
    
 //===============

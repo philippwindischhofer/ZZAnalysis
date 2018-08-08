@@ -1,9 +1,9 @@
 // Include classes
-#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/YieldsLI.h>
+#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/YieldsBayes.h>
 
 // Constructor
 //=======================
-YieldsLI::YieldsLI( double lumi ) : Yields(lumi)
+YieldsBayes::YieldsBayes( double lumi ) : Yields(lumi)
 {
 
 }
@@ -13,20 +13,20 @@ YieldsLI::YieldsLI( double lumi ) : Yields(lumi)
 
 // Destructor
 //====================
-YieldsLI::~YieldsLI()
+YieldsBayes::~YieldsBayes()
 {
 
 }
 //====================
 
-void YieldsLI::SetPackagePath(TString package_path, TString engine)
+void YieldsBayes::SetPackagePath(TString package_path, TString engine)
 {
     config_file_path = package_path + "settings.conf";
     calibration_dir = package_path + "calibration_validation/";
     priors_file_path = package_path + "priors_" + engine + "/priors_bkg.txt";
 
     //refclass = new Mor18Classifier();
-    refclass = new Mor18LIClassifier(calibration_dir, config_file_path, engine);
+    refclass = new BayesClassifier(calibration_dir, config_file_path, engine);
 
     // load priors here and assign them etc.
     ConfigFileHandler* handler = new ConfigFileHandler(priors_file_path, "read");
@@ -57,7 +57,7 @@ void YieldsLI::SetPackagePath(TString package_path, TString engine)
     std::cout << " qq_prior = " << qq_prior << std::endl;
     std::cout << "-----------------------------------------------------------" << std::endl;
 
-    Mor18LIClassifier* refclass18 = static_cast<Mor18LIClassifier*>(refclass);
+    BayesClassifier* refclass18 = static_cast<BayesClassifier*>(refclass);
     refclass18 -> SetEngineParameter("min_iterations", 25);
     refclass18 -> SetEngineParameter("max_iterations", 125);
 
@@ -66,10 +66,10 @@ void YieldsLI::SetPackagePath(TString package_path, TString engine)
 
 
 //=====================================================
-void YieldsLI::MakeHistograms( TString input_file_name )
+void YieldsBayes::MakeHistograms( TString input_file_name )
 {
 
-    std::cout << "YieldsLI Histogramming" << std::endl;
+    std::cout << "YieldsBayes Histogramming" << std::endl;
 
    input_file = new TFile(input_file_name);
 
@@ -131,9 +131,9 @@ void YieldsLI::MakeHistograms( TString input_file_name )
 
 
 //===============================================================================
-void YieldsLI::Calculate_SS_ZX_Yields( TString input_file_data_name, TString  input_file_FR_name )
+void YieldsBayes::Calculate_SS_ZX_Yields( TString input_file_data_name, TString  input_file_FR_name )
 {
-    std::cout << "YieldsLI SSZX" << std::endl;
+    std::cout << "YieldsBayes SSZX" << std::endl;
 
    FakeRates *FR = new FakeRates( input_file_FR_name );
    

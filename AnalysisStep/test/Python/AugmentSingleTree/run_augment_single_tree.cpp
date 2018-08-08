@@ -19,7 +19,6 @@
 #include "TGraph.h"
 #include "TMultiGraph.h"
 
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/me_discriminants.h>
 
 float clamp_value(float val, float min, float max)
@@ -239,9 +238,6 @@ void augment_tree(TString inpath, TString outpath, int randomize)
 
 int main( int argc, char *argv[] )
 {
-    // take the very original files and augment them
-    Mor18Config* conf = new Mor18Config("/data_CMS/cms/tsculac/CJLST_NTuples/", 35.9, true);
-
     if(argc != 4)
     {
 	std::cerr << "Error: exactly 3 arguments are required" << std::endl;

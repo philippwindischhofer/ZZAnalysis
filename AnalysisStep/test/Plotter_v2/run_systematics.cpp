@@ -14,7 +14,7 @@
 
 // My own files
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/Systematics.h>
-#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/SystematicsLI.h>
+#include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/SystematicsBayes.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/include/Variables.h>
 #include <ZZAnalysis/AnalysisStep/test/Plotter_v2/src/setTDRStyle.cpp>
 
@@ -78,7 +78,7 @@ int main( int argc, char *argv[] )
    TString ggZZ2e2tau  = path + "ggTo2e2tau_Contin_MCFM701"  + file_name;
    TString ggZZ2mu2tau = path + "ggTo2mu2tau_Contin_MCFM701" + file_name;
    
-   SystematicsLI* systematics = new SystematicsLI();
+   SystematicsBayes* systematics = new SystematicsBayes();
    systematics -> SetPackagePath(package_path, engine);
 		
 //====================

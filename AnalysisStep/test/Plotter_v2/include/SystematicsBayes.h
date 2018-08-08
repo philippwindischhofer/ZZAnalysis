@@ -1,5 +1,5 @@
-#ifndef SystematicsLI_h
-#define SystematicsLI_h
+#ifndef SystematicsBayes_h
+#define SystematicsBayes_h
 
 // C++
 #include <iostream>
@@ -32,16 +32,16 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/ConfigFileHandler.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/ConfigFileUtils.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18LIClassifier.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/BayesClassifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Classifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/FakeRates.h>
 
-class SystematicsLI: public Systematics
+class SystematicsBayes: public Systematics
 {
 public:
-    SystematicsLI();
-    ~SystematicsLI();
+    SystematicsBayes();
+    ~SystematicsBayes();
 
     void SetPackagePath(TString, TString);
 

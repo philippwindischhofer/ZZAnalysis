@@ -20,9 +20,7 @@
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/PlottingUtils.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18ConfigReducedCategorySet.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Classifier.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18LIClassifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/ConfigFileHandler.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/cuts.h>
 

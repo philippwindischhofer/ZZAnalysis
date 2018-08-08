@@ -22,6 +22,11 @@ case $key in
     shift
     shift
     ;;
+    --lumi)
+    LUMI="$2"
+    shift
+    shift
+    ;;
     *)
     POSARG+=("$1")
     shift
@@ -79,7 +84,7 @@ do
     echo "#!/bin/bash" > $PRIOR_SCRIPT
 
     # launch the optimization
-    echo "python" $PYTHON_DIR$PRIOR_OPTIMIZER $CAMPAIGN_DIR$RUN $PRIOR_DIR $ENGINE $LEGACY_REF_DIR "&>" $PRIOR_LOGFILE >> $PRIOR_SCRIPT
+    echo "python" $PYTHON_DIR$PRIOR_OPTIMIZER $CAMPAIGN_DIR$RUN $PRIOR_DIR $ENGINE $LEGACY_REF_DIR $LUMI "&>" $PRIOR_LOGFILE >> $PRIOR_SCRIPT
 done
 
 # now go back and launch all the jobs that have been prepared

@@ -20,17 +20,15 @@
 
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/PlottingUtils.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18ConfigReducedCategorySet.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Classifier.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18LIClassifier.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/BayesClassifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/ConfigFileHandler.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/cuts.h>
 
 int main(int argc, char *argv[])
 {
-    if(argc < 7)
+    if(argc < 8)
     {
-	std::cerr << "Error: at least 6 arguments are required" << std::endl;
+	std::cerr << "Error: at least 7 arguments are required" << std::endl;
 	return(-1);
     }
 
@@ -50,8 +48,8 @@ int main(int argc, char *argv[])
     }
 
     TString config_path = calibration_folder + "../settings.conf";
-    Classifier* refclass = new Mor18LIClassifier(calibration_folder, config_path, engine);
-    Mor18LIClassifier* refclass18 = static_cast<Mor18LIClassifier*>(refclass);
+    Classifier* refclass = new BayesClassifier(calibration_folder, config_path, engine);
+    BayesClassifier* refclass18 = static_cast<BayesClassifier*>(refclass);
 	
     // put intermediate-quality engine settings
     refclass18 -> SetEngineParameter("min_iterations", 50);

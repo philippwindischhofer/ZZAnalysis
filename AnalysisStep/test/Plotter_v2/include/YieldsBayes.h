@@ -1,5 +1,5 @@
-#ifndef YieldsLI_h
-#define YieldsLI_h
+#ifndef YieldsBayes_h
+#define YieldsBayes_h
 
 // C++
 #include <iostream>
@@ -30,7 +30,7 @@
 // Include classes
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Tree.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/ConfigFileHandler.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18LIClassifier.h>
+#include <ZZAnalysis/AnalysisStep/test/classlib/include/BayesClassifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Classifier.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Mor18Config.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/FakeRates.h>
@@ -49,13 +49,13 @@
 
 using namespace std;
 
-class YieldsLI: public Yields
+class YieldsBayes: public Yields
 {
 
 public:
 
-   YieldsLI( double );
-   ~YieldsLI();
+   YieldsBayes( double );
+   ~YieldsBayes();
 
    void SetPackagePath(TString, TString);
    

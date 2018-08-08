@@ -25,8 +25,6 @@
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/Discriminant.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/DiscriminantCollection.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/EventStream.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/MEDiscriminantFactory.h>
-#include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactory.h>
 #include <ZZAnalysis/AnalysisStep/test/classlib/include/MLDiscriminantFactoryFullCategorySetDynamic.h>
 
 #include <ZZAnalysis/AnalysisStep/interface/Discriminants.h>
@@ -258,18 +256,17 @@ void calibrate_discriminant_collection(DiscriminantCollection* coll, Config& con
 
 int main(int argc, char *argv[])
 {    
-    if(argc != 6)
+    if(argc != 5)
     {
-	std::cerr << "Error: exactly 5 arguments are required" << std::endl;
+	std::cerr << "Error: exactly 4 arguments are required" << std::endl;
 	return(-1);
     }
 
     TString MCpath = argv[1];
-    TString switchval = argv[2];
-    TString out_folder = argv[3];
+    TString out_folder = argv[2];
 
-    float start_fraction = std::atof(argv[4]);
-    float end_fraction = std::atof(argv[5]);
+    float start_fraction = std::atof(argv[3]);
+    float end_fraction = std::atof(argv[4]);
 
     Mor18Config conf(MCpath);
 
@@ -278,22 +275,8 @@ int main(int argc, char *argv[])
     std::cout << "start_fraction = " << start_fraction << std::endl;
     std::cout << "end_fraction = " << end_fraction << std::endl;
 
-    // switches between the trained discriminants (ML) or MELA values only (ME)
-    if(switchval == "ME")
-    {
-	coll = MEDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
-    }
-    else if(switchval = "ML")
-    {
-	//coll = MLDiscriminantFactory::GenerateDiscriminantCollection(out_folder, conf);
-	TString config_path = out_folder + "../settings.conf";
-	coll = MLDiscriminantFactoryFullCategorySetDynamic::GenerateDiscriminantCollection(out_folder, config_path, conf);
-    }
-    else
-    {
-	std::cerr << "Error: did not specify any correct option (ME / ML)" << std::endl;
-	return(-1);
-    }
+    TString config_path = out_folder + "../settings.conf";
+    coll = MLDiscriminantFactoryFullCategorySetDynamic::GenerateDiscriminantCollection(out_folder, config_path, conf);
 	
     calibrate_discriminant_collection(coll, conf, out_folder, start_fraction, end_fraction);
 
